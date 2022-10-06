@@ -36,8 +36,7 @@ async function loginUser(email, password) {
   if (!user) throw new APIError(400, 'No user found against email', '', '');
 
   if (password && password.length) {
-    const pass_compare =
-      (await bcrypt.compare(password, user.password)) && user.email === email;
+    const pass_compare = (await bcrypt.compare(password, user.password)) && user.email === email;
 
     if (!pass_compare) throw new APIError(401, 'Invalid credentials', '', '');
   }
