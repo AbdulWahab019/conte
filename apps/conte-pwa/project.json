@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/conte-pwa",
         "index": "apps/conte-pwa/src/index.html",
@@ -17,10 +19,16 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/conte-pwa/src/favicon.ico",
-          "apps/conte-pwa/src/assets"
+          "apps/conte-pwa/src/assets",
+          "apps/conte-pwa/src/manifest.webmanifest",
+          "apps/conte-pwa/src/manifest.webmanifest"
         ],
-        "styles": ["apps/conte-pwa/src/styles.scss"],
-        "scripts": []
+        "styles": [
+          "apps/conte-pwa/src/styles.scss"
+        ],
+        "scripts": [],
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/conte-pwa/ngsw-config.json"
       },
       "configurations": {
         "production": {
@@ -87,7 +95,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/conte-pwa"],
+      "outputs": [
+        "coverage/apps/conte-pwa"
+      ],
       "options": {
         "jestConfig": "apps/conte-pwa/jest.config.ts",
         "passWithNoTests": true
