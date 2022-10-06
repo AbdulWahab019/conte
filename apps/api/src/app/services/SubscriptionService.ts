@@ -1,7 +1,7 @@
 import { APIError } from '../utils/apiError';
 import { getSubscriptionById } from '../utils/stripe';
 
-async function isSubscribed(sub_id) {
+async function isSubscribed(sub_id: string) {
   try {
     let is_subscribed = false;
 
@@ -10,7 +10,7 @@ async function isSubscribed(sub_id) {
 
     return { is_subscribed };
   } catch (err) {
-    throw new APIError(err.statusCode, err.type, err, err.extra);
+    throw new APIError(err.statusCode, err.type, err);
   }
 }
 

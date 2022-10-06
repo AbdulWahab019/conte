@@ -1,14 +1,12 @@
-// import * as dotenv from 'dotenv';
-// dotenv.config();
-import { environment } from '../src/environments/environment';
-require('express-async-errors');
+import 'express-async-errors';
 import * as express from 'express';
+
+import { environment } from '../src/environments/environment';
 import { routes } from './app/routes';
+import { sequelize } from './config/db';
 
 const PORT = environment.PORT;
 const app = express();
-
-import { sequelize } from './config/db';
 
 sequelize
   .authenticate()

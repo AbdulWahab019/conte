@@ -40,4 +40,5 @@ Thumbs.db
 
 .angular
 
-apps/api/src/environments/*
+apps/api/src/environments/environment.ts
+apps/api/src/environments/environment.prod.ts
