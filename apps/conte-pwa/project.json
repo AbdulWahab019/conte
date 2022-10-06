@@ -24,7 +24,8 @@
           "apps/conte-pwa/src/manifest.webmanifest"
         ],
         "styles": [
-          "apps/conte-pwa/src/styles.scss"
+          "apps/conte-pwa/src/styles.scss",
+          "node_modules/bootstrap/dist/css/bootstrap.min.css"
         ],
         "scripts": [],
         "serviceWorker": true,
