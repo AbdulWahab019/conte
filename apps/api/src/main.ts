@@ -1,10 +1,11 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+// import * as dotenv from 'dotenv';
+// dotenv.config();
+import { environment } from '../src/environments/environment';
 require('express-async-errors');
 import * as express from 'express';
 import { routes } from './app/routes';
 
-const PORT = process.env.PORT;
+const PORT = environment.PORT;
 const app = express();
 
 import { sequelize } from './config/db';
@@ -20,9 +21,7 @@ app.use(express.json());
 routes(app);
 
 app.listen(PORT, () => {
-  console.log(
-    `${process.env.ENV}: Application running at http://localhost:${PORT}`
-  );
+  console.log(`${environment.ENV}: Application running at http://localhost:${PORT}`);
 });
 
 export = app;

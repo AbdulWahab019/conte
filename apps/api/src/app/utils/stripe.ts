@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+import { environment } from '../../environments/environment';
+const stripe = new Stripe(environment.STRIPE_SECRET_KEY, {
   apiVersion: null,
 });
 

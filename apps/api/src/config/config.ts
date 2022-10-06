@@ -1,11 +1,12 @@
 import { Dialect } from 'sequelize';
+import { environment } from '../environments/environment';
 
 const config = {
-  database: process.env.SQL_DATABASE,
-  username: process.env.SQL_USERNAME,
-  password: process.env.SQL_PASSWORD,
-  host: process.env.SQL_SERVER,
-  port: Number(process.env.SQL_PORT),
+  database: environment.SQL_DATABASE,
+  username: environment.SQL_USERNAME,
+  password: environment.SQL_PASSWORD,
+  host: environment.SQL_SERVER,
+  port: Number(environment.SQL_PORT),
   dialect: 'mssql' as Dialect,
   logging: false,
 };

@@ -5,7 +5,7 @@ async function createAccount(req, res) {
   const { email, password } = req.body;
 
   const apiResp = await createUserAccount(email, password);
-  return sendResponse(res, 200, 'Success', apiResp);
+  return sendResponse(res, 201, 'Success', apiResp);
 }
 
 async function accountLogin(req, res) {
