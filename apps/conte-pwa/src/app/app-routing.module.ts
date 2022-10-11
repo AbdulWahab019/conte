@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
 
 const routes: Routes = [
   {
@@ -8,7 +9,8 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: '/',
   },
-  { path: '', component: SplashScreenComponent  },
+  { path: '', component: SplashScreenComponent },
+  { path: 'authentication', component: AuthenticationComponent },
 ];
 
 @NgModule({

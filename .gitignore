@@ -40,5 +40,8 @@ Thumbs.db
 
 .angular
 
+# Environments
 apps/api/src/environments/environment.ts
 apps/api/src/environments/environment.prod.ts
+apps/conte-pwa/src/environments/environment.ts
+apps/conte-pwa/src/environments/environment.prod.ts
