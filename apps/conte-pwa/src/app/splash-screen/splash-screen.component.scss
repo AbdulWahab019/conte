@@ -1,0 +1,26 @@
+.container-fluid {
+  height: 100%;
+  position: relative;
+  padding: 5%;
+}
+
+.splash-screen {
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  border-radius: 8px;
+  flex-wrap: wrap;
+    
+  .logo-container {
+    width: 100%;
+    .logo {
+      height: 30vh;
+      width: 35vh;
+    }
+  }
+
+  .spinner-border {
+    height: 7vh;
+    width: 7vh;
+  }
+}
