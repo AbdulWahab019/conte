@@ -1,13 +1,13 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 
-export interface UserAccountDefinedAttributes {
+export interface UserDefinedAttributes {
   id: number;
   email: string;
   password: string;
 }
 
-export interface UserAccountModel extends Model<UserAccountModel, UserAccountDefinedAttributes> {
+export interface UserModel extends Model<UserModel, UserDefinedAttributes> {
   id: number;
   email: string;
   password: string;
@@ -15,10 +15,10 @@ export interface UserAccountModel extends Model<UserAccountModel, UserAccountDef
   updatedAt: string;
 }
 
-export const UserAccount = sequelize.define<UserAccountModel, UserAccountDefinedAttributes>('UserAccount', {
+export const User = sequelize.define<UserModel, UserDefinedAttributes>('user', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
 });
 
-UserAccount.sync();
+User.sync({ alter: true });

@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { body } from 'express-validator';
 
-import { accountLogin, createAccount } from '../controllers/UserAccountController';
+import { accountLogin, createAccount } from '../controllers/UserController';
 import { validate } from '../middlewares/validation';
 
 const router = express.Router();
