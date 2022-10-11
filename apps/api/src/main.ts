@@ -4,6 +4,7 @@ import * as express from 'express';
 import { environment } from '../src/environments/environment';
 import { routes } from './app/routes';
 import { sequelize } from './config/db';
+import * as cors from 'cors';
 
 const PORT = environment.PORT;
 const app = express();
@@ -15,7 +16,7 @@ sequelize
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+app.use(cors({ origin: true, credentials: true }));
 routes(app);
 
 app.listen(PORT, () => {
