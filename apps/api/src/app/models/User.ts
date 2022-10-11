@@ -27,4 +27,4 @@ export const User = sequelize.define<UserModel, UserDefinedAttributes>('user', {
   is_orientation_video_watched: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 });
 
-User.sync({ alter: true });
+User.sync();

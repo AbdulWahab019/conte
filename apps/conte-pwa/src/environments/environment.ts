@@ -4,5 +4,5 @@
 
 export const environment = {
   production: false,
-  ACCOUNT: 'http://localhost:3333/account',
+  AUTH: 'http://localhost:3333/auth',
 };

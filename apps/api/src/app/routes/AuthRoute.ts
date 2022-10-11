@@ -8,7 +8,7 @@ import { EMAIL_REQUIRED, INVALID_PASSWORD_LENGTH, PASSWORD_REQUIRED } from '../u
 const router = express.Router();
 
 router.post(
-  '/',
+  '/register',
   body('email').notEmpty().withMessage(EMAIL_REQUIRED),
   body('password').notEmpty().withMessage(PASSWORD_REQUIRED).isLength({ min: 8 }).withMessage(INVALID_PASSWORD_LENGTH),
   body('confirm_password').custom(validateConfirmPassword),
