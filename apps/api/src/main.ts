@@ -1,18 +1,25 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
+import 'express-async-errors';
 import * as express from 'express';
 
+import { environment } from '../src/environments/environment';
+import { routes } from './app/routes';
+import { sequelize } from './config/db';
+
+const PORT = environment.PORT;
 const app = express();
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to api!' });
+sequelize
+  .authenticate()
+  .then(() => console.log('Connection has been established successfully.'))
+  .catch((error) => console.log('Unable to connect to database: ', error));
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+routes(app);
+
+app.listen(PORT, () => {
+  console.log(`${environment.ENV}: Application running at http://localhost:${PORT}`);
 });
 
-const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+export = app;
