@@ -1,0 +1,30 @@
+.container-fluid {
+  height: 100%;
+  padding: 5%;
+}
+
+.splash-screen {
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+    ellipse at right bottom,
+    rgb(50, 51, 62) 0%,
+    rgb(5, 107, 25) 100%,
+  );
+  border-radius: 8px;
+  flex-wrap: wrap;
+    
+  .logo-container {
+    width: 100%;
+    .logo {
+      height: 30vh;
+      width: 35vh;
+    }
+  }
+
+  .spinner-border {
+    color: white;
+    height: 7vh;
+    width: 7vh;
+  }
+}
