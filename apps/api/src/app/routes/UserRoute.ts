@@ -2,30 +2,24 @@ import * as express from 'express';
 import { body } from 'express-validator';
 
 import { accountLogin, createAccount } from '../controllers/UserController';
-import { validate } from '../middlewares/validation';
+import { validate, validateConfirmPassword } from '../middlewares/validation';
+import { EMAIL_REQUIRED, INVALID_PASSWORD_LENGTH, PASSWORD_REQUIRED } from '../utils/constants';
 
 const router = express.Router();
 
 router.post(
   '/',
-  body('email').notEmpty().withMessage('Email is required.'),
-  body('password')
-    .notEmpty()
-    .withMessage('Password is required.')
-    .isLength({ min: 8 })
-    .withMessage('Password length must be 8 or more characters'),
-  body('confirm_password').custom((value, { req }) => {
-    if (value !== req.body.password) throw new Error('Password and confirm password should be same');
-    return true;
-  }),
+  body('email').notEmpty().withMessage(EMAIL_REQUIRED),
+  body('password').notEmpty().withMessage(PASSWORD_REQUIRED).isLength({ min: 8 }).withMessage(INVALID_PASSWORD_LENGTH),
+  body('confirm_password').custom(validateConfirmPassword),
   validate,
   createAccount
 );
 
 router.post(
   '/login',
-  body('email').notEmpty().withMessage('Email is required.'),
-  body('password').notEmpty().withMessage('Password is required.'),
+  body('email').notEmpty().withMessage(EMAIL_REQUIRED),
+  body('password').notEmpty().withMessage(PASSWORD_REQUIRED),
   validate,
   accountLogin
 );
