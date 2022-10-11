@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@conte/data": ["libs/data/src/index.ts"],
+      "@conte/models": ["libs/models/src/index.ts"],
       "@conte/ui": ["libs/ui/src/index.ts"]
     }
   },

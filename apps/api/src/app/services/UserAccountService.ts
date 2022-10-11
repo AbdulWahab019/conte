@@ -7,7 +7,7 @@ import { APIError } from '../utils/apiError';
 
 async function createUserAccount(email: string, password: string) {
   const doesUserExists = await UserAccount.findOne({ where: { email } });
-  if (doesUserExists) throw new APIError(400, 'User Already Exists');
+  if (doesUserExists) throw new APIError(400, 'User Already Exists.');
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -21,11 +21,11 @@ async function createUserAccount(email: string, password: string) {
 
 async function loginUser(email: string, password: string) {
   const user = await UserAccount.findOne({ where: { email } });
-  if (!user) throw new APIError(400, 'No user found against email');
+  if (!user) throw new APIError(400, 'No user found against email.');
 
   const pass_compare = await bcrypt.compare(password, user.password);
 
-  if (!pass_compare) throw new APIError(401, 'Invalid credentials');
+  if (!pass_compare) throw new APIError(401, 'Invalid credentials.');
 
   const token = jwt.sign({ user_ids: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
 

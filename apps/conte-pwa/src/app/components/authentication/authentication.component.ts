@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'conte-authentication',
@@ -17,11 +18,11 @@ export class AuthenticationComponent implements OnInit {
   loginState: boolean = true;
   registerState: boolean = false;
   stayLoggedInCheck: boolean = true;
-  termsAndConditionsCheck: boolean = false;
+  termsOfUseScreen: boolean = false;
   signinForm: FormGroup = {} as FormGroup;
   registrationForm: FormGroup = {} as FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, public toastService: ToastService) {}
 
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
@@ -72,9 +73,12 @@ export class AuthenticationComponent implements OnInit {
       .then((resp) => {
         console.log(resp);
         this.buttonState = 'static';
+        this.toastService.show("Logged in successfully.", { classname: 'bg-success text-light', icon: 'success' });
       })
       .catch((err) => {
         console.log(err);
+        this.buttonState = 'static';
+        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 
