@@ -4,10 +4,11 @@ import { param } from 'express-validator';
 
 import * as SubscriptionController from '../controllers/SubscriptionController';
 import { validate } from '../middlewares/validation';
+import { SUBSCRIPTION_REQUIRED } from '../utils/constants';
 
 router.get(
   '/:id',
-  param('id').notEmpty().withMessage('SUBSCRIPTION_ID is required.'),
+  param('id').notEmpty().withMessage(SUBSCRIPTION_REQUIRED),
   validate,
   SubscriptionController.isUserSubscribed
 );
