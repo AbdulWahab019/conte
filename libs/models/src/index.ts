@@ -1,2 +1,2 @@
-export * from './lib/questtionaires/questionnaire.interface';
-export * from './lib/questtionaires/questionnaires.model';
+export * from './lib/questionnaires/questionnaire.interface';
+export * from './lib/questionnaires/questionnaires.model';
