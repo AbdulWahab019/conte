@@ -15,9 +15,10 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 
 /* Environment */
 import { environment } from '../environments/environment';
+import { ToastComponent } from './components/shared/toast/toast/toast.component';
 
 @NgModule({
-  declarations: [AppComponent, SplashScreenComponent, AuthenticationComponent],
+  declarations: [AppComponent, SplashScreenComponent, AuthenticationComponent, ToastComponent],
   imports: [
     BrowserModule,
     FormsModule,
