@@ -7,7 +7,7 @@ import { validate } from '../middlewares/validation';
 const router = express.Router();
 
 router.post(
-  '/',
+  '/register',
   body('email').notEmpty().withMessage('Email is required.'),
   body('password')
     .notEmpty()
