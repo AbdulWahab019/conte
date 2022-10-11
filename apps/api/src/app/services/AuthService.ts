@@ -33,7 +33,7 @@ export async function userLogin(email: string, password: string) {
   const pass_compare = await bcrypt.compare(password, user.password);
   if (!pass_compare) throw new APIError(401, INVALID_CREDENTIALS);
 
-  const token = jwt.sign({ user_ids: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
+  const token = jwt.sign({ id: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
 
   return {
     user_id: user.id,

@@ -22,3 +22,4 @@ export const USER_NOT_FOUND = 'User not found';
 
 // Subscription
 export const SUBSCRIPTION_REQUIRED = 'Subscription_id is required.';
+export const INVALID_SUBSCRIPTION_ID_LENGTH = 'Subscription_id should be 28 digits.';
