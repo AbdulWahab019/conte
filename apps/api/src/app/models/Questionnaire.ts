@@ -18,6 +18,7 @@ export interface QuestionnaireDefinedAttributes {
 }
 
 export interface QuestionnaireModel extends Model<QuestionnaireModel, QuestionnaireDefinedAttributes> {
+  id: number;
   user_id: number;
   question_title: string;
   response: string;
@@ -26,12 +27,19 @@ export interface QuestionnaireModel extends Model<QuestionnaireModel, Questionna
   updatedAt: string;
 }
 
-export const Questionnaire = sequelize.define<QuestionnaireModel, QuestionnaireDefinedAttributes>('questionnaire', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  user_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: User, key: 'id' } },
-  question_title: { type: DataTypes.STRING, allowNull: false },
-  response: { type: DataTypes.STRING(1000), allowNull: false },
-  type: { type: DataTypes.STRING, allowNull: false },
-});
+export const Questionnaire = sequelize.define<QuestionnaireModel, QuestionnaireDefinedAttributes>(
+  'questionnaire',
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: User, key: 'id' } },
+    question_title: { type: DataTypes.STRING, allowNull: false },
+    response: { type: DataTypes.STRING(1000), allowNull: false },
+    type: { type: DataTypes.STRING, allowNull: false },
+  },
+  { underscored: true }
+);
 
-Questionnaire.sync({ alter: true });
+Questionnaire.sync();
+
+Questionnaire.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
+User.hasMany(Questionnaire, { foreignKey: 'user_id' });

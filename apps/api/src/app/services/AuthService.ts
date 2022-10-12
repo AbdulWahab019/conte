@@ -2,6 +2,7 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 import { environment } from '../../environments/environment';
+import { Questionnaire } from '../models/Questionnaire';
 import { User } from '../models/User';
 import { APIError } from '../utils/apiError';
 import { INVALID_CREDENTIALS, USER_EXISTS, USER_NOT_FOUND } from '../utils/constants';
@@ -24,11 +25,12 @@ export async function createUser(email: string, password: string) {
     token,
     is_terms_of_use_accepted: false,
     is_orientation_video_watched: false,
+    is_questionnaire_submitted: false,
   };
 }
 
 export async function userLogin(email: string, password: string) {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email }, include: [Questionnaire] });
   if (!user) throw new APIError(400, USER_NOT_FOUND);
 
   const pass_compare = await bcrypt.compare(password, user.password);
@@ -42,5 +44,6 @@ export async function userLogin(email: string, password: string) {
     token,
     is_terms_of_use_accepted: user.is_terms_of_use_accepted,
     is_orientation_video_watched: user.is_orientation_video_watched,
+    is_questionnaire_submitted: user.questionnaires.length > 0,
   };
 }

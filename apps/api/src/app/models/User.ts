@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
+import { QuestionnaireModel } from './Questionnaire';
 
 export interface UserDefinedAttributes {
   id: number;
@@ -15,16 +16,21 @@ export interface UserModel extends Model<UserModel, UserDefinedAttributes> {
   password: string;
   is_terms_of_use_accepted: boolean;
   is_orientation_video_watched: boolean;
+  questionnaires?: QuestionnaireModel[];
   createdAt: string;
   updatedAt: string;
 }
 
-export const User = sequelize.define<UserModel, UserDefinedAttributes>('user', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: DataTypes.STRING, allowNull: false },
-  password: { type: DataTypes.STRING, allowNull: false },
-  is_terms_of_use_accepted: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
-  is_orientation_video_watched: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
-});
+export const User = sequelize.define<UserModel, UserDefinedAttributes>(
+  'user',
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    email: { type: DataTypes.STRING, allowNull: false },
+    password: { type: DataTypes.STRING, allowNull: false },
+    is_terms_of_use_accepted: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+    is_orientation_video_watched: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+  },
+  { underscored: true }
+);
 
 User.sync();
