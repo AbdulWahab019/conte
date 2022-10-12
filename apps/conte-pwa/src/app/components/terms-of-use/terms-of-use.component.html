@@ -42,8 +42,8 @@
         (click)="acceptTerms()"
         [disabled]="!acceptTermsCheck || buttonState == 'loading'"
       >
-        <span *ngIf="buttonState == 'static'">Proceed</span>
-        <div *ngIf="buttonState == 'loading'">
+        <span *ngIf="buttonState === 'static'">Proceed</span>
+        <div *ngIf="buttonState === 'loading'">
           <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
           <span>Setting everything up...</span>
         </div>

@@ -12,9 +12,9 @@ import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
       (hidden)="toastService.remove(toast)"
     >
       <div class="d-flex">
-        <span *ngIf="toast.icon == 'success'"><i class="bi bi-check2-circle me-2 pb-1"></i></span>
-        <span *ngIf="toast.icon == 'error'"><i class="bi bi-x-lg me-2 pb-1"></i></span>
-        <span *ngIf="toast.icon == 'info'"><i class="bi bi-info-lg me-2 pb-1"></i></span>
+        <span *ngIf="toast.icon === 'success'"><i class="bi bi-check2-circle me-2 pb-1"></i></span>
+        <span *ngIf="toast.icon === 'error'"><i class="bi bi-x-lg me-2 pb-1"></i></span>
+        <span *ngIf="toast.icon === 'info'"><i class="bi bi-info-lg me-2 pb-1"></i></span>
 
         <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
           <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
