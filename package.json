@@ -7,8 +7,8 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "host-pwa": "ng build --prod && http-server -p 8080 -c-1 dist/apps/conte-pwa",
     "dev": "nx serve conte-pwa && api",
-    "start": "nx serve",
-    "build": "nx build",
+    "start": "nx run-many --target=serve --projects=conte-pwa,api --prod --parallel=true",
+    "build": "nx run-many --target=build --projects=conte-pwa,api --prod --parallel=true",
     "test": "nx test"
   },
   "private": true,
