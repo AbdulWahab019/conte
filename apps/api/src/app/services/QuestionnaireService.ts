@@ -11,6 +11,6 @@ export async function createQuestionnaire(data: CreateQuestionnaire[]) {
     return questionnaire;
   } catch (err) {
     await transaction.rollback();
-    throw new APIError(500, INTERNAL_SERVER_ERROR, err, { location: 'transaction' });
+    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
   }
 }

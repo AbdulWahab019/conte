@@ -2,7 +2,7 @@ import { getSubscriptionById } from '../utils/stripe';
 import { APIError } from '../utils/apiError';
 import { ACTIVE } from '../utils/constants';
 
-async function isSubscribed(sub_id: string) {
+export async function isSubscribed(sub_id: string) {
   try {
     let is_subscribed = false;
 
@@ -14,5 +14,3 @@ async function isSubscribed(sub_id: string) {
     throw new APIError(err.statusCode, err.type, err);
   }
 }
-
-export { isSubscribed };
