@@ -1,4 +1,4 @@
-import { environment as env } from '../environments/environment';
+const { environment: env } = process.env.NODE_ENV === 'development' && require('../environments/environment');
 
 export const environment = {
   production: process.env.production || env.production,
