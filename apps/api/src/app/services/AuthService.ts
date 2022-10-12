@@ -10,9 +10,10 @@ export async function createUser(email: string, password: string) {
   const doesUserExists = await User.findOne({ where: { email } });
   if (doesUserExists) throw new APIError(400, USER_EXISTS);
 
+  // TODO - Salt round should be dynamic
   const encryptedPassword = await bcrypt.hash(password, 10);
 
-  const user = (await User.create({ email, password: encryptedPassword })).toJSON();
+  const user = await User.create({ email, password: encryptedPassword });
 
   // Create token
   const token = jwt.sign({ id: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
