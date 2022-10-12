@@ -1,15 +1,11 @@
 import * as express from 'express';
-const router = express.Router();
-import { param } from 'express-validator';
 
 import * as SubscriptionController from '../controllers/SubscriptionController';
-import { validate } from '../middlewares/validation';
+import { authorize } from '../middlewares/auth';
+import { validateIsSubscribed } from '../validations/SubscriptionValidation';
 
-router.get(
-  '/:id',
-  param('id').notEmpty().withMessage('SUBSCRIPTION_ID is required.'),
-  validate,
-  SubscriptionController.isUserSubscribed
-);
+const router = express.Router();
+
+router.get('/:id', validateIsSubscribed, authorize, SubscriptionController.isUserSubscribed);
 
 export default router;

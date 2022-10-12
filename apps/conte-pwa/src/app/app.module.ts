@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 /* Components */
 import { AppComponent } from './app.component';
@@ -14,14 +15,16 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 
 /* Environment */
 import { environment } from '../environments/environment';
+import { ToastComponent } from './components/shared/toast/toast/toast.component';
 
 @NgModule({
-  declarations: [AppComponent, SplashScreenComponent, AuthenticationComponent],
+  declarations: [AppComponent, SplashScreenComponent, AuthenticationComponent, ToastComponent],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
