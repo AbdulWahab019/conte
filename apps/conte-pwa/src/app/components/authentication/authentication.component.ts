@@ -12,14 +12,14 @@ import { ToastService } from '../../services/toast.service';
   animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate(760)])])],
 })
 export class AuthenticationComponent implements OnInit {
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  buttonState: string = 'static';
-  loginState: boolean = true;
-  registerState: boolean = false;
-  stayLoggedInCheck: boolean = true;
-  termsOfUseScreen: boolean = false;
+  email = '';
+  password = '';
+  confirmPassword = '';
+  buttonState = 'static';
+  loginState = true;
+  registerState = false;
+  stayLoggedInCheck = true;
+  termsOfUseScreen = false;
   signinForm: FormGroup = {} as FormGroup;
   registrationForm: FormGroup = {} as FormGroup;
 
