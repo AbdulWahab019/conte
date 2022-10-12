@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { environment } from '../../environments/environment';
+import { environment } from '../../config/config';
 
 const stripe = new Stripe(environment.STRIPE_SECRET_KEY, {
   apiVersion: null,

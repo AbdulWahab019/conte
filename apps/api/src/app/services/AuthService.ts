@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../config/config';
 import { Questionnaire } from '../models/Questionnaire';
 import { User } from '../models/User';
 import { APIError } from '../utils/apiError';

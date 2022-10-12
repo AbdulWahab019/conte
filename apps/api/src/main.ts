@@ -1,7 +1,7 @@
 import 'express-async-errors';
 import * as express from 'express';
 
-import { environment } from '../src/environments/environment';
+import { environment } from './config/config';
 import { routes } from './app/routes';
 import { sequelize } from './config/db';
 import * as cors from 'cors';
