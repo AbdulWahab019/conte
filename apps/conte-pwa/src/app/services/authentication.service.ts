@@ -10,10 +10,10 @@ export class AuthenticationService {
   constructor(private router: Router, private http: HttpClient) {}
 
   async accountLogin(credentials: { email: string; password: string }): Promise<any> {
-    return await this.http.post<any>(`${environment.ACCOUNT}/login`, credentials).toPromise();
+    return await this.http.post<any>(`${environment.AUTH}/login`, credentials).toPromise();
   }
 
   async accountRegister(credentials: { email: string; password: string; confirm_password: string }): Promise<any> {
-    return await this.http.post<any>(`${environment.ACCOUNT}/register`, credentials).toPromise();
+    return await this.http.post<any>(`${environment.AUTH}/register`, credentials).toPromise();
   }
 }

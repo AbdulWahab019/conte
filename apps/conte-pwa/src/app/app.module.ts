@@ -16,9 +16,18 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 /* Environment */
 import { environment } from '../environments/environment';
 import { ToastComponent } from './components/shared/toast/toast/toast.component';
+import { TermsOfUseComponent } from './components/termsOfUse/terms-of-use/terms-of-use.component';
+import { OrientationVideoComponent } from './components/shared/orientation/orientation-video/orientation-video.component';
 
 @NgModule({
-  declarations: [AppComponent, SplashScreenComponent, AuthenticationComponent, ToastComponent],
+  declarations: [
+    AppComponent,
+    SplashScreenComponent,
+    AuthenticationComponent,
+    ToastComponent,
+    TermsOfUseComponent,
+    OrientationVideoComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

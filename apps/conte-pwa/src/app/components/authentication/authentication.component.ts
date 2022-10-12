@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ToastService } from '../../services/toast.service';
 
@@ -22,7 +23,12 @@ export class AuthenticationComponent implements OnInit {
   signinForm: FormGroup = {} as FormGroup;
   registrationForm: FormGroup = {} as FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, public toastService: ToastService) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
@@ -71,12 +77,21 @@ export class AuthenticationComponent implements OnInit {
     this.authService
       .accountLogin(credentials)
       .then((resp) => {
-        console.log(resp);
+        localStorage.setItem('token', JSON.stringify(resp.data.token));
+        localStorage.setItem('terms_of_use', JSON.stringify(resp.data.is_terms_of_use_accepted));
+        localStorage.setItem('orientation_watched', JSON.stringify(resp.data.is_orientation_video_watched));
         this.buttonState = 'static';
-        this.toastService.show("Logged in successfully.", { classname: 'bg-success text-light', icon: 'success' });
+
+        this.toastService.show('Logged in successfully.', { classname: 'bg-success text-light', icon: 'success' });
+
+        if (!resp.data.is_terms_of_use_accepted) {
+          this.router.navigate(['terms']);
+        } else if (!resp.data.is_orientation_video_watched) {
+          this.router.navigate(['orientation']);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         this.buttonState = 'static';
         this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
@@ -92,11 +107,23 @@ export class AuthenticationComponent implements OnInit {
     this.authService
       .accountRegister(credentials)
       .then((resp) => {
-        console.log(resp);
+        localStorage.setItem('token', JSON.stringify(resp.data.token));
+        localStorage.setItem('terms_of_use', JSON.stringify(resp.data.is_terms_of_use_accepted));
+        localStorage.setItem('orientation_watched', JSON.stringify(resp.data.is_orientation_video_watched));
         this.buttonState = 'static';
+
+        this.toastService.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
+
+        if (!resp.data.is_terms_of_use_accepted) {
+          this.router.navigate(['terms']);
+        } else if (!resp.data.is_orientation_video_watched) {
+          this.router.navigate(['orientation']);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        this.buttonState = 'static';
+        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 }
