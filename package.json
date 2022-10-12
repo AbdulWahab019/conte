@@ -9,7 +9,7 @@
     "dev": "nx serve conte-pwa && api",
     "start": "nx run-many --target=serve --projects=conte-pwa,api --prod --parallel=true",
     "build": "nx run-many --target=build --projects=conte-pwa,api --prod --parallel=true",
-    "test": "nx test"
+    "test": "echo 'TODO'"
   },
   "private": true,
   "dependencies": {
