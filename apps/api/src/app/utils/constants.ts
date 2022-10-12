@@ -13,6 +13,7 @@ export const AUTHENTICATED = 'Authenticated';
 export const AUTHENTICATION_FAILED = 'Authentication Failed';
 export const UNAUTHORIZED = 'Unauthorized';
 export const CONFIRM_PASSWORD_NOT_SAME = 'Password and confirm password should be same';
+export const INVALID_EMAIL = 'Invalid Email';
 export const EMAIL_REQUIRED = 'Email is required.';
 export const PASSWORD_REQUIRED = 'Password is required.';
 export const INVALID_PASSWORD_LENGTH = 'Password length must be 8 or more characters';

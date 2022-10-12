@@ -5,6 +5,7 @@ import { validate } from './validation';
 import {
   CONFIRM_PASSWORD_NOT_SAME,
   EMAIL_REQUIRED,
+  INVALID_EMAIL,
   INVALID_PASSWORD_LENGTH,
   PASSWORD_REQUIRED,
 } from '../utils/constants';
@@ -18,7 +19,7 @@ export async function validateRegisterAccount(req: Request, res: Response, next:
   const promises = [];
 
   // 1. Email Validation
-  promises.push(body('email').notEmpty().withMessage(EMAIL_REQUIRED).run(req));
+  promises.push(body('email').notEmpty().withMessage(EMAIL_REQUIRED).isEmail().withMessage(INVALID_EMAIL).run(req));
 
   // 2. Password Validation
   promises.push(
@@ -36,7 +37,7 @@ export async function validateLogin(req: Request, res: Response, next: NextFunct
   const promises = [];
 
   // 1. Email Validation
-  promises.push(body('email').notEmpty().withMessage(EMAIL_REQUIRED).run(req));
+  promises.push(body('email').notEmpty().withMessage(EMAIL_REQUIRED).isEmail().withMessage(INVALID_EMAIL).run(req));
 
   // 2. Password Validation
   promises.push(
