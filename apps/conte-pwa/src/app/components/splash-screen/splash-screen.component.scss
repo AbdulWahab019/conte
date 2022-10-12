@@ -4,18 +4,17 @@
 }
 
 .splash-screen {
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(
-    ellipse at right bottom,
-    rgb(50, 51, 62) 0%,
-    rgb(5, 107, 25) 100%,
-  );
+  background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62) 0%, rgb(5, 107, 25) 100%);
   border-radius: 8px;
+  color: white;
   flex-wrap: wrap;
-    
+
   .logo-container {
     width: 100%;
+    /* For Logo Image */
     .logo {
       height: 30vh;
       width: 35vh;
@@ -23,7 +22,6 @@
   }
 
   .spinner-border {
-    color: white;
     height: 7vh;
     width: 7vh;
   }

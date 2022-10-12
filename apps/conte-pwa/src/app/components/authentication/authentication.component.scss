@@ -97,6 +97,10 @@
       border-bottom: 2px solid rgb(4, 64, 4);
       color: rgb(91, 243, 131, 0.5);
     }
+
+    .display-6{
+      font-size: large;
+    }
   }
 
   input {
@@ -166,7 +170,7 @@
     font-weight: 600;
   }
 
-  .btn-login:hover {
+  .btn-authenticate:hover {
     background-color: rgba(10, 136, 43, 0.5);
   }
 }
