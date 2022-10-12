@@ -15,5 +15,5 @@ export async function accountLogin(req: Request, res: Response) {
   const { email, password } = req.body;
 
   const apiResp = await userLogin(email, password);
-  return sendResponse(res, 201, AUTHENTICATED, apiResp);
+  return sendResponse(res, 200, AUTHENTICATED, apiResp);
 }
