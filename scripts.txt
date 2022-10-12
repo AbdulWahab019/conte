@@ -1,3 +1,4 @@
 //ng add example (will setup to default project)
 - npx nx g @ng-bootstrap/ng-bootstrap:ng-add
 - nx g @angular/pwa:ng-add --project=conte-pwa
+- nx g module [module-name] --routing

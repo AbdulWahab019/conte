@@ -15,9 +15,10 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 
 /* Environment */
 import { environment } from '../environments/environment';
-import { ToastComponent } from './components/shared/toast/toast/toast.component';
-import { TermsOfUseComponent } from './components/termsOfUse/terms-of-use/terms-of-use.component';
-import { OrientationVideoComponent } from './components/shared/orientation/orientation-video/orientation-video.component';
+import { ToastComponent } from './components/shared/toast/toast.component';
+import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
+import { OrientationComponent } from './components/orientation/orientation.component';
+import { SurveyComponent } from './components/survey/survey.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { OrientationVideoComponent } from './components/shared/orientation/orien
     AuthenticationComponent,
     ToastComponent,
     TermsOfUseComponent,
-    OrientationVideoComponent,
+    OrientationComponent,
+    SurveyComponent,
   ],
   imports: [
     BrowserModule,

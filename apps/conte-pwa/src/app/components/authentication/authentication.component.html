@@ -7,39 +7,31 @@
         [disabled]="registerState || buttonState == 'loading'"
         (click)="switchForm()"
       >
-        SIGN UP
+        <span class="display-6">SIGN UP</span>
       </button>
       <button
         [ngClass]="loginState ? 'current-state' : ''"
         [disabled]="loginState || buttonState == 'loading'"
         (click)="switchForm()"
       >
-        LOG IN
+        <span class="display-6">LOG IN</span>
       </button>
     </div>
 
     <!-- Login Form//start -->
     <form [formGroup]="signinForm" *ngIf="loginState" [@fade]>
       <!-- Email Group//start -->
-        <div *ngIf="f.email.touched && f.email.dirty" class="error-text m-0">
-          <p *ngIf="f.email.errors?.email">
-            <i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.
-          </p>
-          <p *ngIf="f.email.errors?.required">
-            <i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.
-          </p>
-        </div>
-        <input
-          type="email"
-          placeholder="Email ID"
-          [ngClass]="
-            f.email.touched && f.email.dirty && f.email.errors
-              ? 'error-input mb-4'
-              : 'mb-4'
-          "
-          formControlName="email"
-          autocomplete="off"
-        />
+      <div *ngIf="f.email.touched && f.email.dirty" class="error-text m-0">
+        <p *ngIf="f.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
+        <p *ngIf="f.email.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.</p>
+      </div>
+      <input
+        type="email"
+        placeholder="Email ID"
+        [ngClass]="f.email.touched && f.email.dirty && f.email.errors ? 'error-input mb-4' : 'mb-4'"
+        formControlName="email"
+        autocomplete="off"
+      />
       <!-- Email Group//end -->
 
       <!-- Password Group//start -->
@@ -48,19 +40,14 @@
           <i class="bi bi-x-circle-fill me-1"></i>Password is required to login.
         </p>
         <p *ngIf="f.password.errors?.minlength">
-          <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8
-          characters long.
+          <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8 characters long.
         </p>
       </div>
       <input
         placeholder="Password"
         id="password"
         style="background-color: transparent !important"
-        [ngClass]="
-          f.password.touched && f.password.dirty && f.password.errors
-            ? 'error-input'
-            : ''
-        "
+        [ngClass]="f.password.touched && f.password.dirty && f.password.errors ? 'error-input' : ''"
         formControlName="password"
         autocomplete="off"
       />
@@ -71,12 +58,7 @@
       <!-- Password Group//end -->
 
       <div class="d-flex justify-content-center mt-2 mb-2">
-        <input
-          type="checkbox"
-          class="checkbox"
-          name="checkbox"
-          checked="true"
-        />
+        <input type="checkbox" class="checkbox" name="checkbox" checked="true" />
         <span class="text">Keep me signed in on this device</span>
       </div>
 
@@ -89,11 +71,7 @@
         >
           <span *ngIf="buttonState == 'static'">LOGIN</span>
           <div *ngIf="buttonState == 'loading'">
-            <span
-              class="spinner-border spinner-border-sm me-1"
-              role="status"
-              aria-hidden="true"
-            ></span>
+            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
             <span>Logging in...</span>
           </div>
         </button>
@@ -105,20 +83,12 @@
     <form [formGroup]="registrationForm" *ngIf="registerState" [@fade]>
       <!-- Email Group//start -->
       <div *ngIf="f2.email.touched && f2.email.dirty" class="error-text m-0">
-        <p *ngIf="f2.email.errors?.email">
-          <i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.
-        </p>
-        <p *ngIf="f2.email.errors?.required">
-          <i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.
-        </p>
+        <p *ngIf="f2.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
+        <p *ngIf="f2.email.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.</p>
       </div>
       <input
         type="email"
-        [ngClass]="
-          f2.email.touched && f2.email.dirty && f2.email.errors
-            ? 'error-input mb-4'
-            : 'mb-4'
-        "
+        [ngClass]="f2.email.touched && f2.email.dirty && f2.email.errors ? 'error-input mb-4' : 'mb-4'"
         placeholder="Email ID"
         formControlName="email"
         autocomplete="off"
@@ -132,17 +102,12 @@
           <i class="bi bi-x-circle-fill me-1"></i>Password is required to login.
         </p>
         <p *ngIf="f2.password.errors?.minlength">
-          <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8
-          characters long.
+          <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8 characters long.
         </p>
       </div>
       <!-- Password -->
       <input
-        [ngClass]="
-          f2.password.touched && f2.password.dirty && f2.password.errors
-            ? 'error-input mb-4'
-            : 'mb-4'
-        "
+        [ngClass]="f2.password.touched && f2.password.dirty && f2.password.errors ? 'error-input mb-4' : 'mb-4'"
         id="password"
         placeholder="Password"
         formControlName="password"
@@ -152,8 +117,7 @@
       <!-- Confirm Password -->
       <input
         [ngClass]="
-          (f2.confirm_password.touched || f2.confirm_password.dirty) &&
-          f2.confirm_password.errors
+          (f2.confirm_password.touched || f2.confirm_password.dirty) && f2.confirm_password.errors
             ? 'error-input mb-3'
             : 'mb-3'
         "
@@ -164,10 +128,7 @@
       />
 
       <div
-        *ngIf="
-          (f2.password.touched || f2.password.dirty) &&
-          (f2.confirm_password.touched || f2.confirm_password.dirty)
-        "
+        *ngIf="(f2.password.touched || f2.password.dirty) && (f2.confirm_password.touched || f2.confirm_password.dirty)"
         class="error-text"
       >
         <p *ngIf="registrationForm.errors?.['mismatch']">
@@ -179,16 +140,6 @@
       </div>
       <!-- Password Group//end -->
 
-      <div class="d-flex justify-content-center mt-2 mb-2">
-        <input
-          type="checkbox"
-          class="checkbox"
-          name="checkbox"
-          checked="true"
-        />
-        <span class="text">I accept the terms & conditions</span>
-      </div>
-
       <div class="d-flex justify-content-center mt-4 mb-3">
         <button
           class="btn btn-primary btn-authenticate"
@@ -198,11 +149,7 @@
         >
           <span *ngIf="buttonState == 'static'">REGISTER</span>
           <div *ngIf="buttonState == 'loading'">
-            <span
-              class="spinner-border spinner-border-sm me-1"
-              role="status"
-              aria-hidden="true"
-            ></span>
+            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
             <span>Signing you up...</span>
           </div>
         </button>
