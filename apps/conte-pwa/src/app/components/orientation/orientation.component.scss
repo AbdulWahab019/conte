@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+@media screen and (min-width: 1350px) {
+  .orientation-screen {
+    height: 100%;
+  }
+}
+
 .orientation-container {
   justify-content: center;
   padding: 6% 4% 6% 4%;
@@ -23,11 +29,6 @@
     border-radius: 6px;
   }
 
-  .terms-check {
-    justify-content: center;
-    width: 100%;
-  }
-
   .btn-confirm {
     padding: 10px;
     width: 210px;
@@ -40,14 +41,5 @@
 
   .btn-confirm:hover {
     background-color: rgba(10, 136, 43, 0.5);
-  }
-}
-
-@media screen and (min-width: 1350px) {
-  .orientation-screen {
-    height: 100%;
-    background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62) 0%, rgb(5, 107, 25) 100%);
-    padding: 5%;
-    align-items: center;
   }
 }

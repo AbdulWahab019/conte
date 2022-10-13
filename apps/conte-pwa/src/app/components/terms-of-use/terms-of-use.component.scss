@@ -4,6 +4,12 @@
   padding: 5%;
 }
 
+@media screen and (min-width: 1350px) and (min-height: 915px) {
+  .terms-screen {
+    height: 100vh;
+  }
+}
+
 .terms-container {
   justify-content: center;
   padding: 6% 4% 6% 4%;
@@ -15,11 +21,6 @@
   flex-wrap: wrap;
 
   h1 {
-    width: 100%;
-  }
-
-  .terms-check{
-    justify-content: center;
     width: 100%;
   }
 
@@ -36,5 +37,4 @@
   .btn-confirm:hover {
     background-color: rgba(10, 136, 43, 0.5);
   }
-
 }
