@@ -41,6 +41,8 @@ Thumbs.db
 
 .angular
 
+package-lock.json
+
 # Environments
 apps/api/src/environments/environment.ts
 apps/api/src/environments/environment.prod.ts
