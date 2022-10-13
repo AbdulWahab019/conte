@@ -1,5 +1,5 @@
 <div class="container-fluid terms-screen">
-  <div class="container-fluid d-flex terms-container">
+  <div class="container-fluid terms-container">
     <h1 class="display-3">Conte PWA</h1>
     <h1 class="display-5 mb-5">Terms & Conditions</h1>
     <!-- Terms -->
@@ -29,9 +29,9 @@
     </p>
 
     <!-- Checkbox -->
-    <div class="d-flex terms-check mt-3 mb-3">
+    <div class="d-flex justify-content-center mt-3 mb-3">
       <input type="checkbox" class="me-2" [(ngModel)]="acceptTermsCheck" />
-      <span class="text" (click)="acceptTermsCheck = !acceptTermsCheck">I accept the terms & conditions</span>
+      <span (click)="acceptTermsCheck = !acceptTermsCheck">I accept the terms & conditions</span>
     </div>
 
     <!-- Confirmation -->

@@ -1,1 +1,188 @@
-<p>survey works!</p>
+<!-- Survey Screen//start -->
+<div class="container-fluid d-flex survey-screen" *ngIf="surveyScreen" [@fade]>
+  <div class="container-fluid survey-container">
+    <h1 class="display-2">Conte PWA</h1>
+    <h1 class="display-4 mb-5"><u>Survey</u></h1>
+
+    <p class="display-5">Please select the type of injury you recieved:</p>
+
+    <!-- Option 1; Surgery -->
+    <div class="d-flex justify-content-center mt-4">
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        (click)="renderSurgeryForm()"
+        [disabled]="surgeryOptionState === 'loading' || nonSurgeryOptionState === 'loading'"
+      >
+        <span *ngIf="surgeryOptionState === 'static'" class="display-6">Surgery</span>
+        <div *ngIf="surgeryOptionState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <span class="display-6">Customizing your form...</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Option 2; Non-Surgery -->
+    <div class="d-flex justify-content-center mt-3 mb-3">
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        (click)="renderNonSurgeryForm()"
+        [disabled]="nonSurgeryOptionState === 'loading' || surgeryOptionState === 'loading'"
+      >
+        <span *ngIf="nonSurgeryOptionState === 'static'" class="display-6">Non-Surgery</span>
+        <div *ngIf="nonSurgeryOptionState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <span class="display-6">Customizing your form...</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Survey Screen//end -->
+
+<!-- Questionnaire//start -->
+<div class="container-fluid d-flex survey-sub-screen" *ngIf="surgeryQuestionnaire || nonSurgeryQuestionnaire">
+  <!-- Surgery Questionnaire//start -->
+  <div class="container-fluid d-flex survey-container" *ngIf="surgeryQuestionnaire" [@fade]>
+    <div class="d-flex title-bar">
+      <i class="bi bi-arrow-left" (click)="navBack()"></i>
+      <h1 class="display-2 me-3">Conte PWA</h1>
+    </div>
+    <h1 class="display-4 mb-4"><b>Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
+    <form class="questionnaire" [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
+      <!-- Surgery Details -->
+      <p class="display-5"><u>Surgery Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
+      <div class="input-group">
+        <input
+          placeholder="Surgery Date"
+          class="form-control date"
+          name="dp1"
+          ngbDatepicker
+          #d1="ngbDatepicker"
+          readonly
+          formControlName="surgery_date"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary date-button" (click)="d1.toggle()" type="button">
+            <i class="bi bi-calendar-date"></i>
+          </button>
+        </div>
+      </div>
+      <input
+        type="text"
+        class="form-control question"
+        placeholder="Primary Surgery"
+        formControlName="primary_surgery"
+      />
+      <input
+        type="text"
+        class="form-control question"
+        placeholder="Secondary Surgery"
+        formControlName="secondary_surgery"
+      />
+
+      <!-- Doctor Details -->
+      <p class="display-5 mt-5"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+      <input type="text" class="form-control question" placeholder="Doctor" formControlName="doctor" />
+      <input type="text" class="form-control question" placeholder="Position" formControlName="position" />
+      <input
+        type="text"
+        class="form-control question"
+        placeholder="Estimated Max Velocity"
+        formControlName="estimated_max_velocity"
+      />
+
+      <!-- Demographic/Contact Details -->
+      <p class="display-5 mt-5"><u>Demographic/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
+      <input type="text" class="form-control question" placeholder="Demographic" formControlName="demographic" />
+      <div class="d-flex justify-content-center mt-4 mb-3">
+        <button
+          class="btn btn-primary btn-confirm"
+          type="button"
+          (click)="confirmSurgeryForm()"
+          [disabled]="surgeryForm.invalid || surgeryOptionState == 'loading' || surgeryOptionState == 'loading'"
+        >
+          <span *ngIf="surgeryOptionState === 'static'" class="display-6">Submit</span>
+          <div *ngIf="surgeryOptionState === 'loading'">
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <span class="display-6">Submitting...</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- Surgery Questionnaire//end -->
+
+  <!-- Non Surgery Questionnaire//start -->
+  <div class="container-fluid d-flex survey-container" *ngIf="nonSurgeryQuestionnaire" [@fade]>
+    <div class="d-flex title-bar">
+      <i class="bi bi-arrow-left" (click)="navBack()"></i>
+      <h1 class="display-2 me-3">Conte PWA</h1>
+    </div>
+    <h1 class="display-4 mb-4"><b>Non-Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
+    <form class="questionnaire" [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
+      <!-- Injury Details -->
+      <p class="display-5"><u>Injury Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
+      <div class="input-group">
+        <input
+          placeholder="Injury Date"
+          class="form-control date"
+          name="dp1"
+          ngbDatepicker
+          #d1="ngbDatepicker"
+          (click)="d1.toggle()"
+          readonly
+          formControlName="injury_date"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary date-button" (click)="d1.toggle()" type="button">
+            <i class="bi bi-calendar-date"></i>
+          </button>
+        </div>
+      </div>
+      <input type="text" class="form-control question" placeholder="Injury" formControlName="injury" />
+
+      <!-- Doctor Details -->
+      <p class="display-5 mt-3"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+      <input type="text" class="form-control question" placeholder="Doctor" formControlName="doctor" />
+      <input
+        type="text"
+        class="form-control question"
+        placeholder="Doctor Dictation"
+        formControlName="doctor_dictation"
+      />
+      <input type="text" class="form-control question" placeholder="Position" formControlName="position" />
+      <input
+        type="text"
+        class="form-control question"
+        placeholder="Estimated Max Velocity"
+        formControlName="estimated_max_velocity"
+      />
+
+      <!-- Demographic/Contact Details -->
+      <p class="display-5 mt-3"><u>Demographic/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
+      <input type="text" class="form-control question" placeholder="Demographic" formControlName="demographic" />
+
+      <!-- Submit Button -->
+      <div class="d-flex justify-content-center mt-3 mb-3">
+        <button
+          class="btn btn-primary btn-confirm"
+          type="button"
+          (click)="confirmNonSurgeryForm()"
+          [disabled]="
+            nonSurgeryForm.invalid || nonSurgeryOptionState == 'loading' || nonSurgeryOptionState == 'loading'
+          "
+        >
+          <span *ngIf="nonSurgeryOptionState === 'static'" class="display-6">Submit</span>
+          <div *ngIf="nonSurgeryOptionState === 'loading'">
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <span class="display-6">Submitting...</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- Non Surgery Questionnaire//end -->
+</div>
+<!-- Questionnaire//end -->
