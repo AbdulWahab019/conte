@@ -50,56 +50,217 @@
       <h1 class="display-2 me-3">Conte PWA</h1>
     </div>
     <h1 class="display-4 mb-4"><b>Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
-    <form class="questionnaire" [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
+    <form [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
       <!-- Surgery Details -->
       <p class="display-5"><u>Surgery Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-      <div class="input-group">
+      <div class="icon-append">
         <input
-          placeholder="Surgery Date"
-          class="form-control date"
+          placeholder="Surgery Date*"
+          [ngClass]="
+            (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question'
+          "
           name="dp1"
           ngbDatepicker
           #d1="ngbDatepicker"
+          (click)="d1.toggle()"
           readonly
           formControlName="surgery_date"
         />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary date-button" (click)="d1.toggle()" type="button">
-            <i class="bi bi-calendar-date"></i>
-          </button>
-        </div>
+        <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
       </div>
-      <input
-        type="text"
-        class="form-control question"
-        placeholder="Primary Surgery"
+
+      <select
         formControlName="primary_surgery"
-      />
-      <input
-        type="text"
-        class="form-control question"
-        placeholder="Secondary Surgery"
+        [ngClass]="
+          (f.primary_surgery.touched || f.primary_surgery.dirty) && f.primary_surgery.errors
+            ? 'form-select question error-input '
+            : 'form-select question'
+        "
+      >
+        <option value="" disabled hidden>Choose Primary Surgery*</option>
+        <option value="Surgery 1">Surgery One</option>
+        <option value="Surgery 2">Surgery Two</option>
+        <option value="Surgery 3">Surgery Three</option>
+      </select>
+
+      <select
         formControlName="secondary_surgery"
-      />
+        [ngClass]="
+          (f.secondary_surgery.touched || f.secondary_surgery.dirty) && f.secondary_surgery.errors
+            ? 'form-select question error-input '
+            : 'form-select question'
+        "
+      >
+        <option value="" disabled hidden>Choose Secondary Surgery</option>
+        <option value="Surgery 1">Surgery One</option>
+        <option value="Surgery 2">Surgery Two</option>
+        <option value="Surgery 3">Surgery Three</option>
+      </select>
 
       <!-- Doctor Details -->
       <p class="display-5 mt-5"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-      <input type="text" class="form-control question" placeholder="Doctor" formControlName="doctor" />
-      <input type="text" class="form-control question" placeholder="Position" formControlName="position" />
+      <select
+        formControlName="doctor"
+        [ngClass]="
+          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
+            ? 'form-select question error-input '
+            : 'form-select question'
+        "
+      >
+        <option value="" disabled hidden>Choose your Doctor*</option>
+        <option value="Doctor 1">Doctor One</option>
+        <option value="Doctor 2">Doctor Two</option>
+        <option value="Doctor 3">Doctor Three</option>
+      </select>
+
       <input
         type="text"
-        class="form-control question"
-        placeholder="Estimated Max Velocity"
+        [ngClass]="
+          (f.position.touched || f.position.dirty) && f.position.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        placeholder="Position*"
+        formControlName="position"
+      />
+
+      <input
+        type="text"
+        [ngClass]="
+          (f.estimated_max_velocity.touched || f.estimated_max_velocity.dirty) && f.estimated_max_velocity.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        placeholder="Estimated Max Velocity*"
         formControlName="estimated_max_velocity"
       />
 
       <!-- Demographic/Contact Details -->
-      <p class="display-5 mt-5"><u>Demographic/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
-      <input type="text" class="form-control question" placeholder="Demographic" formControlName="demographic" />
+      <p class="display-5 mt-5"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
+      <div class="row">
+        <input
+          type="text"
+          [ngClass]="
+            (f.first_name.touched || f.first_name.dirty) && f.first_name.errors
+              ? 'form-control question col me-3 error-input '
+              : 'form-control question col me-3'
+          "
+          placeholder="First Name*"
+          formControlName="first_name"
+        />
+        <input
+          type="text"
+          [ngClass]="
+            (f.last_name.touched || f.last_name.dirty) && f.last_name.errors
+              ? 'form-control question col  error-input '
+              : 'form-control question col '
+          "
+          placeholder="Last Name*"
+          formControlName="last_name"
+        />
+      </div>
+
+      <!-- Cell Phone with Validation -->
+      <div *ngIf="f.cell_phone.touched && f.cell_phone.dirty" class="error-text">
+        <p *ngIf="f.cell_phone.errors?.pattern">
+          <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
+        </p>
+      </div>
+      <input
+        type="text"
+        class="form-control question"
+        [ngClass]="
+          (f.cell_phone.touched || f.cell_phone.dirty) && f.cell_phone.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Cell Phone*"
+        formControlName="cell_phone"
+      />
+
+      <div class="icon-append">
+        <input
+          placeholder="Birth Date*"
+          [ngClass]="
+            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
+          name="dp1"
+          ngbDatepicker
+          #d2="ngbDatepicker"
+          (click)="d2.toggle()"
+          readonly
+          formControlName="birth_date"
+        />
+        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
+      </div>
+
+      <input
+        type="text"
+        [ngClass]="
+          (f.address.touched || f.address.dirty) && f.address.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Address*"
+        formControlName="address"
+      />
+
+      <div class="row">
+        <input
+          type="text"
+          [ngClass]="
+            (f.city.touched || f.city.dirty) && f.city.errors
+              ? 'form-control question col me-3 error-input '
+              : 'form-control question col me-3 '
+          "
+          placeholder="City*"
+          formControlName="city"
+        />
+        <input
+          type="text"
+          [ngClass]="
+            (f.state.touched || f.state.dirty) && f.state.errors
+              ? 'form-control question col error-input '
+              : 'form-control question col '
+          "
+          placeholder="State*"
+          formControlName="state"
+        />
+      </div>
+
+      <!-- ZIP Code with validation -->
+      <div *ngIf="f.zip.touched && f.zip.dirty" class="error-text">
+        <p *ngIf="f.zip.errors?.minlength">
+          <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
+        </p>
+        <p *ngIf="f.zip.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.</p>
+      </div>
+      <input
+        type="text"
+        maxlength="5"
+        [ngClass]="
+          (f.zip.touched || f.zip.dirty) && f.zip.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="ZIP Code*"
+        formControlName="zip"
+      />
+
+      <!-- Form Info -->
+      <div *ngIf="surgeryForm.invalid" class="info-text" [@fade]>
+        <p><i class="bi bi-info-circle me-1"></i>Fields marked with * are required to submit.</p>
+      </div>
+
+      <!-- Submit Button -->
       <div class="d-flex justify-content-center mt-4 mb-3">
         <button
           class="btn btn-primary btn-confirm"
-          type="button"
+          type="submit"
           (click)="confirmSurgeryForm()"
           [disabled]="surgeryForm.invalid || surgeryOptionState == 'loading' || surgeryOptionState == 'loading'"
         >
@@ -121,13 +282,17 @@
       <h1 class="display-2 me-3">Conte PWA</h1>
     </div>
     <h1 class="display-4 mb-4"><b>Non-Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
-    <form class="questionnaire" [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
+    <form [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
       <!-- Injury Details -->
       <p class="display-5"><u>Injury Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-      <div class="input-group">
+      <div class="icon-append">
         <input
-          placeholder="Injury Date"
-          class="form-control date"
+          placeholder="Injury Date*"
+          [ngClass]="
+            (f2.injury_date.touched || f2.injury_date.dirty) && f2.injury_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
           name="dp1"
           ngbDatepicker
           #d1="ngbDatepicker"
@@ -135,40 +300,195 @@
           readonly
           formControlName="injury_date"
         />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary date-button" (click)="d1.toggle()" type="button">
-            <i class="bi bi-calendar-date"></i>
-          </button>
-        </div>
+        <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
       </div>
-      <input type="text" class="form-control question" placeholder="Injury" formControlName="injury" />
+
+      <select
+        [ngClass]="
+          (f2.injury.touched || f2.injury.dirty) && f2.injury.errors
+            ? 'form-select question error-input '
+            : 'form-select question '
+        "
+        formControlName="injury"
+      >
+        <option value="" disabled hidden>Choose Injury*</option>
+        <option value="Surgery 1">Surgery One</option>
+        <option value="Surgery 2">Surgery Two</option>
+        <option value="Surgery 3">Surgery Three</option>
+      </select>
 
       <!-- Doctor Details -->
       <p class="display-5 mt-3"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-      <input type="text" class="form-control question" placeholder="Doctor" formControlName="doctor" />
+      <select
+        [ngClass]="
+          (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
+            ? 'form-select question error-input '
+            : 'form-select question '
+        "
+        formControlName="doctor"
+      >
+        <option value="" disabled hidden>Choose your Doctor*</option>
+        <option value="Doctor 1">Doctor One</option>
+        <option value="Doctor 2">Doctor Two</option>
+        <option value="Doctor 3">Doctor Three</option>
+      </select>
+
       <input
         type="text"
-        class="form-control question"
-        placeholder="Doctor Dictation"
+        [ngClass]="
+          (f2.doctor_dictation.touched || f2.doctor_dictation.dirty) && f2.doctor_dictation.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Doctor Dictation*"
         formControlName="doctor_dictation"
       />
-      <input type="text" class="form-control question" placeholder="Position" formControlName="position" />
+
       <input
         type="text"
-        class="form-control question"
-        placeholder="Estimated Max Velocity"
+        [ngClass]="
+          (f2.position.touched || f2.position.dirty) && f2.position.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Position*"
+        formControlName="position"
+      />
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.estimated_max_velocity.touched || f2.estimated_max_velocity.dirty) && f2.estimated_max_velocity.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Estimated Max Velocity*"
         formControlName="estimated_max_velocity"
       />
 
       <!-- Demographic/Contact Details -->
-      <p class="display-5 mt-3"><u>Demographic/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
-      <input type="text" class="form-control question" placeholder="Demographic" formControlName="demographic" />
+      <p class="display-5 mt-3"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
+      <div class="row">
+        <input
+          type="text"
+          [ngClass]="
+            (f2.first_name.touched || f2.first_name.dirty) && f2.first_name.errors
+              ? 'form-control question col me-3 error-input '
+              : 'form-control question col me-3 '
+          "
+          placeholder="First Name*"
+          formControlName="first_name"
+        />
+        <input
+          type="text"
+          [ngClass]="
+            (f2.last_name.touched || f2.last_name.dirty) && f2.last_name.errors
+              ? 'form-control question col  error-input '
+              : 'form-control question col  '
+          "
+          placeholder="Last Name*"
+          formControlName="last_name"
+        />
+      </div>
+
+      <!-- Cell Phone with Validation -->
+      <div *ngIf="f2.cell_phone.touched && f2.cell_phone.dirty" class="error-text">
+        <p *ngIf="f2.cell_phone.errors?.pattern">
+          <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
+        </p>
+      </div>
+      <input
+        type="text"
+        [ngClass]="
+          (f2.cell_phone.touched || f2.cell_phone.dirty) && f2.cell_phone.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Cell Phone*"
+        formControlName="cell_phone"
+      />
+
+      <div class="icon-append">
+        <input
+          placeholder="Birth Date*"
+          [ngClass]="
+            (f2.birth_date.touched || f2.birth_date.dirty) && f2.birth_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
+          name="dp1"
+          ngbDatepicker
+          #d2="ngbDatepicker"
+          (click)="d2.toggle()"
+          readonly
+          formControlName="birth_date"
+        />
+        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
+      </div>
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.address.touched || f2.address.dirty) && f2.address.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Address*"
+        formControlName="address"
+      />
+
+      <div class="row">
+        <input
+          type="text"
+          [ngClass]="
+            (f2.city.touched || f2.city.dirty) && f2.city.errors
+              ? 'form-control question col me-3 error-input '
+              : 'form-control question col me-3 '
+          "
+          placeholder="City*"
+          formControlName="city"
+        />
+        <input
+          type="text"
+          [ngClass]="
+            (f2.state.touched || f2.state.dirty) && f2.state.errors
+              ? 'form-control question col error-input '
+              : 'form-control question col '
+          "
+          placeholder="State*"
+          formControlName="state"
+        />
+      </div>
+
+      <!-- ZIP Code with validation -->
+      <div *ngIf="f2.zip.touched && f2.zip.dirty" class="error-text">
+        <p *ngIf="f2.zip.errors?.minlength">
+          <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
+        </p>
+        <p *ngIf="f2.zip.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.</p>
+      </div>
+      <input
+        type="text"
+        maxlength="5"
+        [ngClass]="
+          (f2.zip.touched || f2.zip.dirty) && f2.zip.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="ZIP Code*"
+        formControlName="zip"
+      />
+
+      <!-- Form Info -->
+      <div *ngIf="nonSurgeryForm.invalid" class="info-text" [@fade]>
+        <p><i class="bi bi-info-circle me-1"></i>Fields marked with * are required to submit.</p>
+      </div>
 
       <!-- Submit Button -->
       <div class="d-flex justify-content-center mt-3 mb-3">
         <button
           class="btn btn-primary btn-confirm"
-          type="button"
+          type="submit"
           (click)="confirmNonSurgeryForm()"
           [disabled]="
             nonSurgeryForm.invalid || nonSurgeryOptionState == 'loading' || nonSurgeryOptionState == 'loading'

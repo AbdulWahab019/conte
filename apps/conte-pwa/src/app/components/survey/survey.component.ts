@@ -25,7 +25,7 @@ export class SurveyComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  navBack(){
+  navBack() {
     this.surgeryQuestionnaire = false;
     this.nonSurgeryQuestionnaire = false;
     this.surveyScreen = true;
@@ -42,7 +42,14 @@ export class SurveyComponent implements OnInit {
       doctor: new FormControl('', [Validators.required]),
       position: new FormControl('', [Validators.required]),
       estimated_max_velocity: new FormControl('', [Validators.required]),
-      demographic: new FormControl('', [Validators.required]),
+      first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
+      birth_date: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
+      state: new FormControl('', [Validators.required]),
+      zip: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 
     this.surveyScreen = false;
@@ -63,13 +70,26 @@ export class SurveyComponent implements OnInit {
       this.f.surgery_date.value.day
     );
 
+    const birth_date = new Date(
+      this.f.birth_date.value.year,
+      this.f.birth_date.value.month,
+      this.f.birth_date.value.day
+    );
+
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: surgery_date },
       { id: 2, response: this.f.primary_surgery.value },
       { id: 4, response: this.f.doctor.value },
       { id: 5, response: this.f.position.value },
       { id: 6, response: this.f.estimated_max_velocity.value },
-      { id: 7, response: this.f.demographic.value },
+      { id: 7, response: this.f.first_name.value },
+      { id: 8, response: this.f.last_name.value },
+      { id: 9, response: this.f.cell_phone.value },
+      { id: 10, response: birth_date },
+      { id: 11, response: this.f.address.value },
+      { id: 12, response: this.f.city.value },
+      { id: 13, response: this.f.state.value },
+      { id: 14, response: this.f.zip.value },
     ];
 
     if (this.f.secondary_surgery.value) data.push({ id: 3, response: this.f.secondary_surgery.value });
@@ -105,7 +125,14 @@ export class SurveyComponent implements OnInit {
       doctor_dictation: new FormControl('', []),
       position: new FormControl('', [Validators.required]),
       estimated_max_velocity: new FormControl('', [Validators.required]),
-      demographic: new FormControl('', [Validators.required]),
+      first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
+      birth_date: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
+      state: new FormControl('', [Validators.required]),
+      zip: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 
     this.surveyScreen = false;
@@ -126,6 +153,12 @@ export class SurveyComponent implements OnInit {
       this.f2.injury_date.value.day
     );
 
+    const birth_date = new Date(
+      this.f2.birth_date.value.year,
+      this.f2.birth_date.value.month,
+      this.f2.birth_date.value.day
+    );
+
     const data: SubmitQuestionnaire[] = [
       { id: 20, response: injury_date },
       { id: 21, response: this.f2.injury.value },
@@ -133,7 +166,14 @@ export class SurveyComponent implements OnInit {
       { id: 23, response: this.f2.doctor_dictation.value },
       { id: 24, response: this.f2.position.value },
       { id: 25, response: this.f2.estimated_max_velocity.value },
-      { id: 26, response: this.f2.demographic.value },
+      { id: 26, response: this.f.first_name.value },
+      { id: 27, response: this.f.last_name.value },
+      { id: 28, response: this.f.cell_phone.value },
+      { id: 29, response: birth_date },
+      { id: 30, response: this.f.address.value },
+      { id: 31, response: this.f.city.value },
+      { id: 32, response: this.f.state.value },
+      { id: 33, response: this.f.zip.value },
     ];
 
     const body: SubmitQuestionnaireAPIRequest = { data };

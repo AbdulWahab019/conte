@@ -11,17 +11,6 @@
   padding: 5%;
   align-items: center;
 }
-@media screen and (min-height: 830px) {
-  .survey-sub-screen {
-    height: 100vh;
-  }
-}
-
-@media screen and (min-width: 900px) {
-  .survey-sub-screen {
-    height: 100%;
-  }
-}
 
 .survey-container {
   justify-content: center;
@@ -52,6 +41,7 @@
     justify-content: space-between !important;
     i {
       font-size: x-large;
+      cursor: pointer;
     }
   }
 
@@ -60,31 +50,47 @@
     font-size: medium;
   }
 
-  .questionnaire {
+  form {
     width: 100%;
-  }
 
-  .date {
-    margin-bottom: 5%;
-  }
+    .row {
+      margin: 0;
+    }
 
-  .date:focus {
-    outline: none !important;
-    box-shadow: none !important;
-  }
+    .icon-append {
+      position: relative;
+      i {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0.4rem 1% 0 0;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
 
-  .question {
-    border: none;
-    margin-bottom: 5%;
-    border-bottom: 2px solid black;
-    background-color: transparent;
-    outline: none;
-  }
-  .question:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    border-bottom: 2px solid rgb(91, 243, 131);
-    font-size: 17px;
+    .date {
+      margin-bottom: 5%;
+    }
+
+    .date:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .question {
+      border: none;
+      margin-bottom: 5%;
+      border-bottom: 2px solid black;
+      background-color: transparent;
+      outline: none;
+    }
+    .question:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      border-bottom: 2px solid rgb(91, 243, 131);
+      font-size: 17px;
+    }
   }
 
   .btn-confirm {
@@ -101,8 +107,29 @@
     background-color: rgba(10, 136, 43, 0.5);
   }
 
+  .error-input {
+    border-bottom: 2px solid #d53737 !important;
+  }
+
+  .error-text {
+    color: #d53737;
+    text-align: left;
+    p {
+      margin: 0 !important;
+      font-size: small !important;
+      padding: 0 0 0 10px;
+    }
+  }
+
+  .info-text {
+    p {
+      margin: 0 !important;
+      font-size: small !important;
+    }
+  }
+
   @media screen and (min-width: 705px) {
-    .questionnaire {
+    form {
       width: 60%;
     }
   }
