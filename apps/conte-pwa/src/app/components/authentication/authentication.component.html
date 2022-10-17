@@ -19,7 +19,7 @@
     </div>
 
     <!-- Login Form//start -->
-    <form [formGroup]="signinForm" *ngIf="loginState" [@fade]>
+    <form [formGroup]="signinForm" *ngIf="loginState" (submit)="login()" [@fade]>
       <!-- Email Group//start -->
       <div *ngIf="f.email.touched && f.email.dirty" class="error-text m-0">
         <p *ngIf="f.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
@@ -65,7 +65,7 @@
       <div class="d-flex justify-content-center mt-4 mb-3">
         <button
           class="btn btn-primary btn-authenticate"
-          type="button"
+          type="submit"
           (click)="login()"
           [disabled]="signinForm.invalid || buttonState === 'loading'"
         >
@@ -80,7 +80,7 @@
     <!-- Login Form//end -->
 
     <!-- Signup Form//start -->
-    <form [formGroup]="registrationForm" *ngIf="registerState" [@fade]>
+    <form [formGroup]="registrationForm" *ngIf="registerState" (submit)="register()" [@fade]>
       <!-- Email Group//start -->
       <div *ngIf="f2.email.touched && f2.email.dirty" class="error-text m-0">
         <p *ngIf="f2.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
@@ -143,7 +143,7 @@
       <div class="d-flex justify-content-center mt-4 mb-3">
         <button
           class="btn btn-primary btn-authenticate"
-          type="button"
+          type="submit"
           (click)="register()"
           [disabled]="registrationForm.invalid || buttonState == 'loading'"
         >
