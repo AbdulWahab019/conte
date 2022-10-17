@@ -88,7 +88,7 @@ export class AuthenticationComponent implements OnInit {
           this.router.navigate(['terms']);
         } else if (!resp.data.is_orientation_video_watched) {
           this.router.navigate(['orientation']);
-        }
+        } else this.router.navigate(['survey']);
       })
       .catch((err) => {
         console.error(err);
@@ -114,11 +114,7 @@ export class AuthenticationComponent implements OnInit {
 
         this.toastService.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-        if (!resp.data.is_terms_of_use_accepted) {
-          this.router.navigate(['terms']);
-        } else if (!resp.data.is_orientation_video_watched) {
-          this.router.navigate(['orientation']);
-        }
+        this.router.navigate(['terms']);
       })
       .catch((err) => {
         console.error(err);
