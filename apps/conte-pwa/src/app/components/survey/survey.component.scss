@@ -13,14 +13,16 @@
 }
 
 .survey-container {
-  justify-content: center;
   padding: 6% 4% 6% 4%;
   width: 100%;
-  background-color: white;
+  border-radius: 8px;
+
+  justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 8px;
   flex-wrap: wrap;
+
+  background-color: white;
 
   h1 {
     width: 100%;
@@ -37,11 +39,15 @@
 
   .title-bar {
     width: 100%;
+
     align-items: center;
-    justify-content: space-between !important;
+    position: relative;
+
     i {
       font-size: x-large;
       cursor: pointer;
+      position: absolute;
+      left: 0;
     }
   }
 

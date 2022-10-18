@@ -1,3 +1,6 @@
+/* Environment */
+import { environment } from '../environments/environment';
+
 /* Modules */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,13 +15,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
-
-/* Environment */
-import { environment } from '../environments/environment';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { OrientationComponent } from './components/orientation/orientation.component';
 import { SurveyComponent } from './components/survey/survey.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { SurveyComponent } from './components/survey/survey.component';
     TermsOfUseComponent,
     OrientationComponent,
     SurveyComponent,
+    DashboardComponent,
+    TreatmentPlanComponent,
   ],
   imports: [
     BrowserModule,

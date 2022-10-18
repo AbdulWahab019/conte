@@ -1,0 +1,31 @@
+<div class="container-fluid dashboard-screen">
+  <div class="d-flex dashboard-container">
+    <p class="title display-4">Conte Sports Performance</p>
+    <hr />
+
+    <div class="calender-widget">Date Picker</div>
+
+    <!-- Treatment Plan Video -->
+    <video width="100%" class="mt-4 mb-4" controls>
+      <source src="../../../assets/orientation/video/orientation.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="d-flex info-tab mb-2">
+      <div class="speed-info me-2">
+        Today's<br />Max Speed<br />
+        <p class="display-5">45 MPH</p>
+      </div>
+
+      <div class="progress-info">
+        Overall<br />Progress<br />
+        <p class="display-5">19%</p>
+      </div>
+    </div>
+
+    <div class="treatment-plan" (click)="navToTreatmentPlan()">
+      Today's Treatment Plan
+      <p class="display-5">Click Here</p>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { delay } from '../../utils/constants';
 import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest } from '@conte/models';
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'conte-survey',
@@ -21,7 +22,12 @@ export class SurveyComponent implements OnInit {
   surgeryForm: FormGroup = {} as FormGroup;
   nonSurgeryForm: FormGroup = {} as FormGroup;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private toastService: ToastService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -106,6 +112,8 @@ export class SurveyComponent implements OnInit {
           classname: 'bg-success text-light',
           icon: 'success',
         });
+
+        this.router.navigate(['dashboard']);
       })
       .catch((err) => {
         console.error(err);
@@ -166,14 +174,14 @@ export class SurveyComponent implements OnInit {
       { id: 23, response: this.f2.doctor_dictation.value },
       { id: 24, response: this.f2.position.value },
       { id: 25, response: this.f2.estimated_max_velocity.value },
-      { id: 26, response: this.f.first_name.value },
-      { id: 27, response: this.f.last_name.value },
-      { id: 28, response: this.f.cell_phone.value },
+      { id: 26, response: this.f2.first_name.value },
+      { id: 27, response: this.f2.last_name.value },
+      { id: 28, response: this.f2.cell_phone.value },
       { id: 29, response: birth_date },
-      { id: 30, response: this.f.address.value },
-      { id: 31, response: this.f.city.value },
-      { id: 32, response: this.f.state.value },
-      { id: 33, response: this.f.zip.value },
+      { id: 30, response: this.f2.address.value },
+      { id: 31, response: this.f2.city.value },
+      { id: 32, response: this.f2.state.value },
+      { id: 33, response: this.f2.zip.value },
     ];
 
     const body: SubmitQuestionnaireAPIRequest = { data };
@@ -188,6 +196,8 @@ export class SurveyComponent implements OnInit {
           classname: 'bg-success text-light',
           icon: 'success',
         });
+
+        this.router.navigate(['dashboard']);
       })
       .catch((err) => {
         console.error(err);

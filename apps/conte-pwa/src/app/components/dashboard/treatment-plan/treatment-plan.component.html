@@ -1,0 +1,48 @@
+<div class="container-fluid treatment-plan-screen">
+  <div class="d-flex treatment-plan-container">
+    <div class="title-tab">
+      <i class="bi bi-arrow-left mt-1" (click)="navBack()"></i>
+      <span class="title display-4">Conte Sports Performance</span>
+    </div>
+    <hr />
+
+    <div class="d-flex info-tab mb-2">
+      <div class="speed-info me-2">
+        Today's<br />Max Speed<br />
+        <p class="display-5">45 MPH</p>
+      </div>
+
+      <div class="progress-info">
+        Overall<br />Progress<br />
+        <p class="display-5">19%</p>
+      </div>
+    </div>
+
+    <div class="treatment-plan">
+      <span>Today's Treatment Plan</span>
+      <form>
+        <input type="text" class="form-control question" placeholder="Max Velocity" />
+        <input type="text" class="form-control question" placeholder="Distance" />
+        <input type="text" class="form-control question" placeholder="Reps" />
+        <input type="text" class="form-control question" placeholder="Terrain" />
+        <input type="text" class="form-control question" placeholder="Red Flags" />
+        <input type="text" class="form-control question" placeholder="Comments" />
+      </form>
+    </div>
+
+    <div class="d-flex button-container mt-5 mb-5">
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        (click)="completeTherapy()"
+        [disabled]="buttonState === 'loading'"
+      >
+        <span *ngIf="buttonState === 'static'" class="display-6">Daily Therapy Complete</span>
+        <div *ngIf="buttonState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <span class="display-6">Confirming your session...</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
