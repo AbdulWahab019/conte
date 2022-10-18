@@ -5,6 +5,7 @@ import { delay } from '../../utils/constants';
 import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest } from '@conte/models';
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'conte-survey',
@@ -21,7 +22,12 @@ export class SurveyComponent implements OnInit {
   surgeryForm: FormGroup = {} as FormGroup;
   nonSurgeryForm: FormGroup = {} as FormGroup;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private toastService: ToastService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -106,6 +112,8 @@ export class SurveyComponent implements OnInit {
           classname: 'bg-success text-light',
           icon: 'success',
         });
+
+        this.router.navigate(['dashboard']);
       })
       .catch((err) => {
         console.error(err);
@@ -188,6 +196,8 @@ export class SurveyComponent implements OnInit {
           classname: 'bg-success text-light',
           icon: 'success',
         });
+
+        this.router.navigate(['dashboard']);
       })
       .catch((err) => {
         console.error(err);

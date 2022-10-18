@@ -5,6 +5,8 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { OrientationComponent } from './components/orientation/orientation.component';
 import { SurveyComponent } from './components/survey/survey.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: 'terms', component: TermsOfUseComponent },
   { path: 'orientation', component: OrientationComponent },
   { path: 'survey', component: SurveyComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/treatment-plan', component: TreatmentPlanComponent },
 ];
 
 @NgModule({

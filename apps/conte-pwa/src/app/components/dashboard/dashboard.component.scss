@@ -1,0 +1,119 @@
+.dashboard-screen {
+  height: 100%;
+  padding: 5% 2% 5% 2%;
+  background-color: rgb(227, 227, 227);
+}
+
+.dashboard-container {
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+    font-size: x-large;
+    font-weight: 400;
+  }
+
+  hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: #686867;
+    height: 1px;
+  }
+
+  .calender-widget {
+    height: 150px;
+    width: 100%;
+    border-radius: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(163, 163, 163);
+  }
+
+  video {
+    border-radius: 26px;
+    box-shadow: 0 5px 10px black;
+  }
+
+  .info-tab {
+    width: 100%;
+
+    .speed-info {
+      height: 180px;
+      width: 100%;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      font-size: 20px;
+      font-weight: bolder;
+      color: rgb(0, 52, 125);
+
+      border-radius: 20px;
+      background-color: rgb(208, 207, 207);
+
+      p {
+        width: 100%;
+        font-size: 40px;
+        font-weight: bold;
+      }
+    }
+
+    .progress-info {
+      height: 180px;
+      width: 100%;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      font-size: 20px;
+      font-weight: bolder;
+      color: rgb(0, 52, 125);
+
+      border-radius: 20px;
+      background-color: rgb(208, 207, 207);
+
+      p {
+        width: 100%;
+        font-size: 40px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .treatment-plan {
+    height: 200px;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    color: rgb(0, 52, 125);
+
+    border-radius: 20px;
+    background-color: rgb(208, 207, 207);
+
+    p {
+      width: 100%;
+      font-size: 55px;
+      font-weight: bold;
+    }
+  }
+}
