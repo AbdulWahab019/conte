@@ -14,3 +14,7 @@ export async function createQuestionnaire(data: CreateQuestionnaire[]) {
     throw new APIError(500, INTERNAL_SERVER_ERROR, err);
   }
 }
+
+export async function getUserQuestionnaireStatus(user_id: number) {
+  return !!(await Questionnaire.findOne({ where: { id: user_id } }));
+}
