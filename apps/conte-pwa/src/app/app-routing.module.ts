@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'survey', component: SurveyComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'dashboard/treatment-plan', component: TreatmentPlanComponent },
+  { path: '**', component: SplashScreenComponent },
 ];
 
 @NgModule({

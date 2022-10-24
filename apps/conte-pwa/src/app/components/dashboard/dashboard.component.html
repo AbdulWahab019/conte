@@ -3,12 +3,26 @@
     <p class="title display-4">Conte Sports Performance</p>
     <hr />
 
-    <div class="calender-widget">Date Picker</div>
+    <div class="calender-widget">
+      <div class="plan-date">
+        <input
+          placeholder="Birth Date*"
+          class="form-control date"
+          name="dp1"
+          ngbDatepicker
+          #d2="ngbDatepicker"
+          (click)="d2.toggle()"
+          readonly
+          [(ngModel)]="defaultDate"
+        />
+        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
+      </div>
+    </div>
 
     <!-- Treatment Plan Video -->
     <video width="100%" class="mt-4 mb-4" controls>
       <source src="../../../assets/orientation/video/orientation.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
+      Your browser does not support the video playback.
     </video>
 
     <div class="d-flex info-tab mb-2">

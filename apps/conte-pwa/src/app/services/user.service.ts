@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { QUESTIONNAIRE, USER } from '../utils/constants';
-import { SubmitQuestionnaireAPIRequest } from '@conte/models';
+import { HttpClient } from '@angular/common/http';
+import { USER } from '../utils/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +16,5 @@ export class UserService {
 
   async confirmOrientation(): Promise<any> {
     return await this.http.put<any>(`${USER}/watch-orientation-video`, null).toPromise();
-  }
-
-  async submitQuestionnaire(body: SubmitQuestionnaireAPIRequest): Promise<any> {
-    return await this.http.post<any>(`${QUESTIONNAIRE}/`, body).toPromise();
   }
 }

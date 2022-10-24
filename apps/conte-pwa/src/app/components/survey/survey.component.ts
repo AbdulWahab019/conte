@@ -29,7 +29,6 @@ export class SurveyComponent implements OnInit {
   nonSurgeryForm: FormGroup = {} as FormGroup;
 
   constructor(
-    private userService: UserService,
     private surveyService: SurveyService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -118,8 +117,10 @@ export class SurveyComponent implements OnInit {
     );
 
     const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f.doctor.value)].name;
-    const primary_surgery = this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].surgery_name;
-    const secondary_surgery = this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)].surgery_name;
+    const primary_surgery =
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].surgery_name;
+    const secondary_surgery =
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)].surgery_name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: surgery_date },
@@ -139,12 +140,12 @@ export class SurveyComponent implements OnInit {
 
     if (this.f.secondary_surgery.value) data.push({ id: 3, response: secondary_surgery });
 
-    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f.doctor.value, };
+    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f.doctor.value };
 
-    this.userService
+    this.surveyService
       .submitQuestionnaire(body)
       .then((resp) => {
-        localStorage.setItem('questionnaire_submitted', (true).toString());
+        localStorage.setItem('questionnaire_submitted', true.toString());
         this.surgeryOptionState = 'static';
 
         this.toastService.show('Questionnaire submitted successfully.', {
@@ -216,7 +217,7 @@ export class SurveyComponent implements OnInit {
     );
 
     const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f2.doctor.value)].name;
-    
+
     const data: SubmitQuestionnaire[] = [
       { id: 20, response: injury_date },
       { id: 21, response: this.f2.injury.value },
@@ -236,10 +237,10 @@ export class SurveyComponent implements OnInit {
 
     const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f2.doctor.value };
 
-    this.userService
+    this.surveyService
       .submitQuestionnaire(body)
       .then((resp) => {
-        localStorage.setItem('questionnaire_submitted', (true).toString());
+        localStorage.setItem('questionnaire_submitted', true.toString());
         this.nonSurgeryOptionState = 'static';
 
         this.toastService.show('Questionnaire submitted successfully.', {

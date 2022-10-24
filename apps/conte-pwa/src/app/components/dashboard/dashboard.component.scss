@@ -25,15 +25,46 @@
   }
 
   .calender-widget {
-    height: 150px;
+    height: 100px;
     width: 100%;
     border-radius: 26px;
+    padding: 5%;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: rgb(163, 163, 163);
+    background-color: rgb(218, 218, 218);
+
+    .plan-date {
+      width: 100%;
+      position: relative;
+
+      i {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0.4rem 1% 0 0;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      .date {
+        margin-bottom: 5%;
+        
+        border: none;
+        border-bottom: 2px solid black;
+        outline: none;
+        background-color: transparent;
+      }
+      .date:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border-bottom: 2px solid rgb(91, 243, 131);
+
+        font-size: 17px;
+      }
+    }
   }
 
   video {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SpinnerService } from '../../services/spinner.service';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'conte-dashboard',
@@ -8,7 +8,14 @@ import { SpinnerService } from '../../services/spinner.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private router: Router, private spinnerService: SpinnerService) {}
+  date = new Date();
+  defaultDate = new NgbDate(
+    this.date.getFullYear(),
+    this.date.getMonth() + 1,
+    this.date.getDate()
+ );
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
