@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DOCTOR, SURGERY } from '../utils/constants';
+import { HttpClient } from '@angular/common/http';
+import { DOCTOR, QUESTIONNAIRE, SURGERY } from '../utils/constants';
+import { SubmitQuestionnaireAPIRequest } from '@conte/models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +15,9 @@ export class SurveyService {
 
   async getSurgeriesForDoctor(doctor_id: string): Promise<any> {
     return await this.http.get<any>(`${SURGERY}/doctor/${doctor_id}`).toPromise();
+  }
+
+  async submitQuestionnaire(body: SubmitQuestionnaireAPIRequest): Promise<any> {
+    return await this.http.post<any>(`${QUESTIONNAIRE}/submit`, body).toPromise();
   }
 }

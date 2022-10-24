@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AUTH, USER } from '../utils/constants';
 
 @Injectable({
@@ -19,10 +19,6 @@ export class AuthenticationService {
   }
 
   async verifyToken(token: string): Promise<any> {
-    return await this.http
-      .get<any>(`${USER}/user-details`, {
-        headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
-      })
-      .toPromise();
+    return await this.http.get<any>(`${USER}/profile`).toPromise();
   }
 }
