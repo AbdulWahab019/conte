@@ -22,7 +22,7 @@ export class OrientationComponent implements OnInit {
     this.userService
       .confirmOrientation()
       .then((resp) => {
-        localStorage.setItem('orientation_watched', JSON.stringify(true));
+        localStorage.setItem('orientation_watched', (true).toString());
         this.buttonState = 'static';
 
         this.toastService.show('Orientation Confirmed.', { classname: 'bg-success text-light', icon: 'success' });

@@ -10,9 +10,11 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router, private toastService: ToastService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = JSON.parse(localStorage.getItem('token') || JSON.stringify('expired'));
-    if (token != 'expired') {
-      request = request.clone({
+    const token = localStorage.getItem('token');
+    let authRequest = request;
+
+    if (token) {
+      authRequest = request.clone({
         setHeaders: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -20,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).pipe(
+    return next.handle(authRequest).pipe(
       tap(
         () => {},
         (err: any) => {

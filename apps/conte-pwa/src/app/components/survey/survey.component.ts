@@ -144,7 +144,7 @@ export class SurveyComponent implements OnInit {
     this.userService
       .submitQuestionnaire(body)
       .then((resp) => {
-        localStorage.setItem('questionnaire_submitted', JSON.stringify(true));
+        localStorage.setItem('questionnaire_submitted', (true).toString());
         this.surgeryOptionState = 'static';
 
         this.toastService.show('Questionnaire submitted successfully.', {
@@ -239,7 +239,7 @@ export class SurveyComponent implements OnInit {
     this.userService
       .submitQuestionnaire(body)
       .then((resp) => {
-        localStorage.setItem('questionnaire_submitted', JSON.stringify(true));
+        localStorage.setItem('questionnaire_submitted', (true).toString());
         this.nonSurgeryOptionState = 'static';
 
         this.toastService.show('Questionnaire submitted successfully.', {

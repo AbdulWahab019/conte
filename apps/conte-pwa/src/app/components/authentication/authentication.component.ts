@@ -77,10 +77,10 @@ export class AuthenticationComponent implements OnInit {
     this.authService
       .accountLogin(credentials)
       .then((resp) => {
-        localStorage.setItem('token', JSON.stringify(resp.data.token));
-        localStorage.setItem('terms_of_use', JSON.stringify(resp.data.is_terms_of_use_accepted));
-        localStorage.setItem('orientation_watched', JSON.stringify(resp.data.is_orientation_video_watched));
-        localStorage.setItem('questtionnaire_submitted', JSON.stringify(resp.data.is_questionnaire_submitted));
+        localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
+        localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
+        localStorage.setItem('questtionnaire_submitted', resp.data.is_questionnaire_submitted);
         this.buttonState = 'static';
 
         this.toastService.show('Logged in successfully.', { classname: 'bg-success text-light', icon: 'success' });
@@ -110,9 +110,9 @@ export class AuthenticationComponent implements OnInit {
     this.authService
       .accountRegister(credentials)
       .then((resp) => {
-        localStorage.setItem('token', JSON.stringify(resp.data.token));
-        localStorage.setItem('terms_of_use', JSON.stringify(resp.data.is_terms_of_use_accepted));
-        localStorage.setItem('orientation_watched', JSON.stringify(resp.data.is_orientation_video_watched));
+        localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
+        localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
         this.buttonState = 'static';
 
         this.toastService.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });

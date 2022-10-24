@@ -12,18 +12,18 @@ export class SplashScreenComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
-    const token = JSON.parse(localStorage.getItem('token') || JSON.stringify('expired'));
+    const token = localStorage.getItem('token');
 
-    if (token === 'expired') {
+    if (!token) {
       await delay(1000);
       this.router.navigate(['authentication']);
     } else {
       this.authService
         .verifyToken(token)
         .then((resp) => {
-          localStorage.setItem('terms_of_use', JSON.stringify(resp.data.is_terms_of_use_accepted));
-          localStorage.setItem('orientation_watched', JSON.stringify(resp.data.is_orientation_video_watched));
-          localStorage.setItem('questtionnaire_submitted', JSON.stringify(resp.data.is_questionnaire_submitted));
+          localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
+          localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
+          localStorage.setItem('questtionnaire_submitted', resp.data.is_questionnaire_submitted);
 
           if (!resp.data.is_terms_of_use_accepted) {
             this.router.navigate(['terms']);
