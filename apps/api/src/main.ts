@@ -1,6 +1,7 @@
 import 'express-async-errors';
-import * as express from 'express';
-import * as cors from 'cors';
+import express = require('express');
+import cors = require('cors');
+
 import helmet from 'helmet';
 
 import { environment } from './config/config';

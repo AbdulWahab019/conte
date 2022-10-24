@@ -1,12 +1,12 @@
-import * as express from 'express';
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-import * as QuestionnaireController from '../controllers/QuestionnaireController';
+import { createQuestionnaire, submitQuestionnaire } from '../controllers/QuestionnaireController';
 import { authorize } from '../middlewares/auth';
 import { validateCreateQuestionnaire, validateSubmitQuestionnaire } from '../validations/QuestionnaireValidation';
 
-router.post('/', validateCreateQuestionnaire, authorize, QuestionnaireController.createQuestionnaire);
+router.post('/', validateCreateQuestionnaire, authorize, createQuestionnaire);
 
-router.post('/submit', validateSubmitQuestionnaire, authorize, QuestionnaireController.submitQuestionnaire);
+router.post('/submit', validateSubmitQuestionnaire, authorize, submitQuestionnaire);
 
 export default router;

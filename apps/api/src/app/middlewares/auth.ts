@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
+import { verify as verifyToken } from 'jsonwebtoken';
 import { environment } from '../../config/config';
 
 import { User } from '../models/User';
@@ -12,7 +12,7 @@ export async function authorize(req: Request, res: Response, next: NextFunction)
     if (!tokenHeader) return sendResponse(res, 401, UNAUTHORIZED);
 
     const token = tokenHeader.replace('Bearer ', '').replace('bearer ', '');
-    const decoded = jwt.verify(token, environment.JWT_TOKEN_SECRET);
+    const decoded = verifyToken(token, environment.JWT_TOKEN_SECRET);
 
     const user = await User.findOne({
       where: { id: decoded.id },
