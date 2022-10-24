@@ -93,7 +93,6 @@ export class SurveyComponent implements OnInit {
         else this.f2.position.setValue(this.doctors[index].position);
 
         this.surgeries = resp.data;
-        console.log(this.surgeries)
         this.spinnerService.hide();
       })
       .catch((err) => {
@@ -141,7 +140,7 @@ export class SurveyComponent implements OnInit {
 
     if (this.f.secondary_surgery.value) data.push({ id: 3, response: secondary_surgery });
 
-    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f.doctor.value };
+    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: Number(this.f.doctor.value) };
 
     this.surveyService
       .submitQuestionnaire(body)
