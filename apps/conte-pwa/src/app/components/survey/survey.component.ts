@@ -139,7 +139,7 @@ export class SurveyComponent implements OnInit {
 
     if (this.f.secondary_surgery.value) data.push({ id: 3, response: secondary_surgery });
 
-    const body: SubmitQuestionnaireAPIRequest = { data };
+    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f.doctor.value, };
 
     this.userService
       .submitQuestionnaire(body)
@@ -234,7 +234,7 @@ export class SurveyComponent implements OnInit {
       { id: 33, response: this.f2.zip.value },
     ];
 
-    const body: SubmitQuestionnaireAPIRequest = { data };
+    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f2.doctor.value };
 
     this.userService
       .submitQuestionnaire(body)
