@@ -38,7 +38,7 @@ export async function getTreatmentPlanDetails(params: FindOptions<Attributes<Tre
   return await TreatmentPlanDetail.findAll(params);
 }
 
-export async function parseTreatmentPlanFile(
+export function parseTreatmentPlanFile(
   file: Express.Multer.File,
   from = 2
 ): Promise<TreatmentPlanDetailsFileAttributes[]> {

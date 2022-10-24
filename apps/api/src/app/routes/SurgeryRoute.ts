@@ -1,5 +1,5 @@
-import * as express from 'express';
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
 import { getAllSurgeriesByDoctor } from '../controllers/SurgeryController';
 import { authorize } from '../middlewares/auth';
