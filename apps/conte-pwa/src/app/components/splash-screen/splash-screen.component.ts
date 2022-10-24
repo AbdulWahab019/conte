@@ -23,7 +23,7 @@ export class SplashScreenComponent implements OnInit {
         .then((resp) => {
           localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
           localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
-          localStorage.setItem('questtionnaire_submitted', resp.data.is_questionnaire_submitted);
+          localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
 
           if (!resp.data.is_terms_of_use_accepted) {
             this.router.navigate(['terms']);

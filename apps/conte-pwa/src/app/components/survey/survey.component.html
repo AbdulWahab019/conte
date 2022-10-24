@@ -123,7 +123,7 @@
         <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
         <ng-container *ngIf="surgeries">
           <option *ngFor="let surgery of surgeries" [value]="surgery.id">
-            {{ surgery.surgery_name }}
+            {{ surgery.name }}
           </option></ng-container
         >
       </select>
@@ -140,7 +140,7 @@
         <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
         <ng-container *ngIf="surgeries">
           <option *ngFor="let surgery of surgeries" [value]="surgery.id">
-            {{ surgery.surgery_name }}
+            {{ surgery.name }}
           </option></ng-container
         >
       </select>

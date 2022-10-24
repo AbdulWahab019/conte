@@ -93,6 +93,7 @@ export class SurveyComponent implements OnInit {
         else this.f2.position.setValue(this.doctors[index].position);
 
         this.surgeries = resp.data;
+        console.log(this.surgeries)
         this.spinnerService.hide();
       })
       .catch((err) => {
@@ -118,9 +119,9 @@ export class SurveyComponent implements OnInit {
 
     const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f.doctor.value)].name;
     const primary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].surgery_name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].name;
     const secondary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)].surgery_name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)].name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: surgery_date },
