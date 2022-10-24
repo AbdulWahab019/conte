@@ -9,7 +9,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+/* Interceptors */
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 /* Components */
 import { AppComponent } from './app.component';
@@ -21,6 +24,7 @@ import { OrientationComponent } from './components/orientation/orientation.compo
 import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
+import { SpinnerComponent } from './components/shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/tr
     SurveyComponent,
     DashboardComponent,
     TreatmentPlanComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,7 @@ import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/tr
     NgbModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

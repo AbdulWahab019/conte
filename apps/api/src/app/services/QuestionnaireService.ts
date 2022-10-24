@@ -1,16 +1,14 @@
-import { sequelize } from '../../config/db';
-import { CreateQuestionnaire, Questionnaire, QuestionnaireModel } from '../models/Questionnaire';
-import { APIError } from '../utils/apiError';
-import { INTERNAL_SERVER_ERROR } from '../utils/constants';
+import { Transaction } from 'sequelize';
 
-export async function createQuestionnaire(data: CreateQuestionnaire[]) {
-  const transaction = await sequelize.transaction();
-  try {
-    const questionnaire: QuestionnaireModel[] = await Questionnaire.bulkCreate(data, { transaction });
-    await transaction.commit();
-    return questionnaire;
-  } catch (err) {
-    await transaction.rollback();
-    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
-  }
+import { CreateQuestionnaire, Questionnaire, QuestionnaireModel } from '../models/Questionnaire';
+
+export async function createQuestionnaire(
+  data: CreateQuestionnaire[],
+  { transaction }: { transaction?: Transaction }
+): Promise<QuestionnaireModel[]> {
+  return await Questionnaire.bulkCreate(data, { transaction });
+}
+
+export async function isUserQuestionnaireSubmitted(user_id: number) {
+  return (await Questionnaire.count({ where: { user_id } })) > 0;
 }

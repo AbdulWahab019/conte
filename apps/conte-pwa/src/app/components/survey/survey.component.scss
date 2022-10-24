@@ -97,6 +97,19 @@
       border-bottom: 2px solid rgb(91, 243, 131);
       font-size: 17px;
     }
+
+    .select {
+      border: none;
+      margin-bottom: 5%;
+      border-bottom: 2px solid black;
+      background-color: transparent;
+      outline: none;
+    }
+    .select:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      border-bottom: 2px solid rgb(91, 243, 131);
+    }
   }
 
   .btn-confirm {

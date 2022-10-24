@@ -8,4 +8,5 @@ export const sequelize = new Sequelize(environment.SQL_DATABASE, environment.SQL
   logging: false,
   dialect: 'mssql',
   dialectModule: tedious,
+  define: { underscored: true },
 });

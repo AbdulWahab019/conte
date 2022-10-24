@@ -18,11 +18,11 @@ export class OrientationComponent implements OnInit {
 
   acceptOrientation() {
     this.buttonState = 'loading';
-    const token = JSON.parse(localStorage.getItem('token') as string);
+    
     this.userService
-      .confirmOrientation(token)
+      .confirmOrientation()
       .then((resp) => {
-        localStorage.setItem('orientation_watched', JSON.stringify(true));
+        localStorage.setItem('orientation_watched', (true).toString());
         this.buttonState = 'static';
 
         this.toastService.show('Orientation Confirmed.', { classname: 'bg-success text-light', icon: 'success' });

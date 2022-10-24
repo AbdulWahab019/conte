@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  navToTreatmentPlan(){
-    this.router.navigate(['dashboard/treatment-plan'])
+  navToTreatmentPlan() {
+    this.router.navigate(['dashboard/treatment-plan']);
   }
 }

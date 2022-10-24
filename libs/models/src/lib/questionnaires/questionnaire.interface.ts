@@ -10,6 +10,13 @@ export interface SubmitQuestionnaire {
   response: string;
 }
 
+export interface CreateQuestionnaireAPIRequest {
+  data: SubmitQuestionnaire[];
+}
+
 export interface SubmitQuestionnaireAPIRequest {
   data: SubmitQuestionnaire[];
+  doctor_id: number;
+  surgery_id?: number;
+  user_treatment_plan_name?: string;
 }

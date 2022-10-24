@@ -1,10 +1,11 @@
 import 'express-async-errors';
 import * as express from 'express';
+import * as cors from 'cors';
+import helmet from 'helmet';
 
 import { environment } from './config/config';
 import { routes } from './app/routes';
 import { sequelize } from './config/db';
-import * as cors from 'cors';
 
 const PORT = environment.PORT;
 const app = express();
@@ -17,6 +18,8 @@ sequelize
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
+app.use(helmet());
+
 routes(app);
 
 app.listen(PORT, () => {
