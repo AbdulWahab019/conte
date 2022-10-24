@@ -15,6 +15,6 @@ export async function createQuestionnaire(data: CreateQuestionnaire[]) {
   }
 }
 
-export async function getUserQuestionnaireStatus(user_id: number) {
-  return !!(await Questionnaire.findOne({ where: { user_id } }));
+export async function isUserQuestionnaireSubmitted(user_id: number) {
+  return (await Questionnaire.count({ where: { user_id } })) > 0;
 }

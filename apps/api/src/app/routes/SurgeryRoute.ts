@@ -1,10 +1,10 @@
 import * as express from 'express';
 const router = express.Router();
 
-import { getSurgeriesForDoctor } from '../controllers/SurgeryController';
+import { getAllSurgeriesByDoctor } from '../controllers/SurgeryController';
 import { authorize } from '../middlewares/auth';
-import { validateDoctor } from '../validations/SurgeryValidation';
+import { validateSurgeriesByDoctor } from '../validations/SurgeryValidation';
 
-router.get('/doctor/:doctor_id', authorize, validateDoctor, getSurgeriesForDoctor);
+router.get('/doctor/:doctor_id', validateSurgeriesByDoctor, authorize, getAllSurgeriesByDoctor);
 
 export default router;

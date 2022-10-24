@@ -1,11 +1,11 @@
 import * as express from 'express';
 
-import { acceptTermsOfUse, getUser, watchOrientationVideo } from '../controllers/UserController';
+import { acceptTermsOfUse, getUserProfile, watchOrientationVideo } from '../controllers/UserController';
 import { authorize } from '../middlewares/auth';
 
 const router = express.Router();
 
-router.get('/user-details', authorize, getUser);
+router.get('/profile', authorize, getUserProfile);
 
 router.put('/accept-terms-of-use', authorize, acceptTermsOfUse);
 
