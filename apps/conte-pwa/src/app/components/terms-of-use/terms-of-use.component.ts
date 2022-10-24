@@ -18,11 +18,11 @@ export class TermsOfUseComponent implements OnInit {
 
   acceptTerms() {
     this.buttonState = 'loading';
-    const token = JSON.parse(localStorage.getItem('token') as string);
+
     this.userService
-      .acceptTerms(token)
+      .acceptTerms()
       .then((resp) => {
-        localStorage.setItem('terms_of_use', JSON.stringify(true));
+        localStorage.setItem('terms_of_use', (true).toString());
         this.buttonState = 'static';
 
         this.toastService.show('Terms of use accepted.', { classname: 'bg-success text-light', icon: 'success' });

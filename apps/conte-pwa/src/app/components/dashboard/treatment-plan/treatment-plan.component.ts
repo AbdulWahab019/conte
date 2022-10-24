@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { delay } from '../../../utils/constants';
 
@@ -8,6 +8,7 @@ import { delay } from '../../../utils/constants';
   styleUrls: ['./treatment-plan.component.scss'],
 })
 export class TreatmentPlanComponent implements OnInit {
+  @Input() date = new Date().toLocaleDateString();
   buttonState = 'static';
 
   constructor(private router: Router) {}

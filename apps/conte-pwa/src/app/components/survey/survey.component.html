@@ -51,6 +51,46 @@
     </div>
     <h1 class="display-4 mb-4"><b>Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
     <form [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
+      <!-- Doctor Details -->
+      <p class="display-5 mt-5"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+      <select
+        formControlName="doctor"
+        (change)="getSurgeriesAndAssignPosition($any($event.target).value, 'surgery')"
+        [ngClass]="
+          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
+            ? 'form-select select error-input '
+            : 'form-select select'
+        "
+      >
+        <option value="" disabled hidden>Choose your Doctor*</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f.doctor.value">
+          {{ doctor.name }}
+        </option>
+      </select>
+
+      <input
+        type="text"
+        [ngClass]="
+          (f.position.touched || f.position.dirty) && f.position.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        readonly
+        placeholder="Position"
+        formControlName="position"
+      />
+
+      <input
+        type="text"
+        [ngClass]="
+          (f.estimated_max_velocity.touched || f.estimated_max_velocity.dirty) && f.estimated_max_velocity.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        placeholder="Estimated Max Velocity*"
+        formControlName="estimated_max_velocity"
+      />
+
       <!-- Surgery Details -->
       <p class="display-5"><u>Surgery Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
       <div class="icon-append">
@@ -79,10 +119,13 @@
             : 'form-select question'
         "
       >
-        <option value="" disabled hidden>Choose Primary Surgery*</option>
-        <option value="Surgery 1">Surgery One</option>
-        <option value="Surgery 2">Surgery Two</option>
-        <option value="Surgery 3">Surgery Three</option>
+        <option value="" hidden disabled selected>Choose Primary Surgery*</option>
+        <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
+        <ng-container *ngIf="surgeries">
+          <option *ngFor="let surgery of surgeries" [value]="surgery.id">
+            {{ surgery.surgery_name }}
+          </option></ng-container
+        >
       </select>
 
       <select
@@ -93,49 +136,14 @@
             : 'form-select question'
         "
       >
-        <option value="" disabled hidden>Choose Secondary Surgery</option>
-        <option value="Surgery 1">Surgery One</option>
-        <option value="Surgery 2">Surgery Two</option>
-        <option value="Surgery 3">Surgery Three</option>
+        <option value="" hidden disabled selected>Choose Secondary Surgery</option>
+        <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
+        <ng-container *ngIf="surgeries">
+          <option *ngFor="let surgery of surgeries" [value]="surgery.id">
+            {{ surgery.surgery_name }}
+          </option></ng-container
+        >
       </select>
-
-      <!-- Doctor Details -->
-      <p class="display-5 mt-5"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-      <select
-        formControlName="doctor"
-        [ngClass]="
-          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
-            ? 'form-select question error-input '
-            : 'form-select question'
-        "
-      >
-        <option value="" disabled hidden>Choose your Doctor*</option>
-        <option value="Doctor 1">Doctor One</option>
-        <option value="Doctor 2">Doctor Two</option>
-        <option value="Doctor 3">Doctor Three</option>
-      </select>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f.position.touched || f.position.dirty) && f.position.errors
-            ? 'form-control question error-input '
-            : 'form-control question'
-        "
-        placeholder="Position*"
-        formControlName="position"
-      />
-
-      <input
-        type="text"
-        [ngClass]="
-          (f.estimated_max_velocity.touched || f.estimated_max_velocity.dirty) && f.estimated_max_velocity.errors
-            ? 'form-control question error-input '
-            : 'form-control question'
-        "
-        placeholder="Estimated Max Velocity*"
-        formControlName="estimated_max_velocity"
-      />
 
       <!-- Demographic/Contact Details -->
       <p class="display-5 mt-5"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
@@ -283,6 +291,57 @@
     </div>
     <h1 class="display-4 mb-4"><b>Non-Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
     <form [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
+      <!-- Doctor Details -->
+      <p class="display-5 mt-3"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+      <select
+        formControlName="doctor"
+        (change)="getSurgeriesAndAssignPosition($any($event.target).value, 'non-surgery')"
+        [ngClass]="
+          (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
+            ? 'form-select question error-input '
+            : 'form-select question '
+        "
+      >
+        <option value="" disabled hidden>Choose your Doctor*</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f2.doctor.value">
+          {{ doctor.name }}
+        </option>
+      </select>
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.doctor_dictation.touched || f2.doctor_dictation.dirty) && f2.doctor_dictation.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Doctor Dictation*"
+        formControlName="doctor_dictation"
+      />
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.position.touched || f2.position.dirty) && f2.position.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        readonly
+        placeholder="Position"
+        formControlName="position"
+      />
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.estimated_max_velocity.touched || f2.estimated_max_velocity.dirty) && f2.estimated_max_velocity.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Estimated Max Velocity*"
+        formControlName="estimated_max_velocity"
+      />
+
       <!-- Injury Details -->
       <p class="display-5"><u>Injury Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
       <div class="icon-append">
@@ -316,55 +375,6 @@
         <option value="Surgery 2">Surgery Two</option>
         <option value="Surgery 3">Surgery Three</option>
       </select>
-
-      <!-- Doctor Details -->
-      <p class="display-5 mt-3"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-      <select
-        [ngClass]="
-          (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
-            ? 'form-select question error-input '
-            : 'form-select question '
-        "
-        formControlName="doctor"
-      >
-        <option value="" disabled hidden>Choose your Doctor*</option>
-        <option value="Doctor 1">Doctor One</option>
-        <option value="Doctor 2">Doctor Two</option>
-        <option value="Doctor 3">Doctor Three</option>
-      </select>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.doctor_dictation.touched || f2.doctor_dictation.dirty) && f2.doctor_dictation.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Doctor Dictation*"
-        formControlName="doctor_dictation"
-      />
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.position.touched || f2.position.dirty) && f2.position.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Position*"
-        formControlName="position"
-      />
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.estimated_max_velocity.touched || f2.estimated_max_velocity.dirty) && f2.estimated_max_velocity.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Estimated Max Velocity*"
-        formControlName="estimated_max_velocity"
-      />
 
       <!-- Demographic/Contact Details -->
       <p class="display-5 mt-3"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
