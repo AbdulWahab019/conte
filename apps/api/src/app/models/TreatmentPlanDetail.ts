@@ -48,8 +48,26 @@ export interface TreatmentPlanDetailDefinedAttributes {
 export interface TreatmentPlanDetailModel
   extends Model<TreatmentPlanDetailModel, TreatmentPlanDetailDefinedAttributes> {
   id: number;
-  createdAt: string;
-  updatedAt: string;
+  tp_id: number;
+  tp_day: number;
+  tp_weekday: string;
+  week_from_sx: number;
+  month_from_sx: number;
+  plyo_throw: number;
+  max_distance: number;
+  max_velocity_percent: number;
+  max_velocity_absolute: number;
+  num_throws_at_max_distance: number;
+  post_max_distance_flat_ground: number;
+  post_max_distance_flat_ground_velocity: number;
+  post_max_flat_ground_pitches: string;
+  bullpen: number;
+  bullpen_max_velocity: number;
+  bullpen_pitches: string;
+  live_simulated_game: number;
+  innings: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export const TreatmentPlanDetail = sequelize.define<TreatmentPlanDetailModel, TreatmentPlanDetailDefinedAttributes>(

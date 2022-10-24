@@ -1,31 +1,41 @@
 import { parse } from 'csv-parse';
-import { sequelize } from '../models';
+import { Attributes, FindOptions, Transaction } from 'sequelize';
+
 import { TreatmentPlan } from '../models/TreatmentPlan';
-import { TreatmentPlanDetail, TreatmentPlanDetailsFileAttributes } from '../models/TreatmentPlanDetail';
-import { APIError } from '../utils/apiError';
-import { INTERNAL_SERVER_ERROR } from '../utils/constants';
+import {
+  TreatmentPlanDetail,
+  TreatmentPlanDetailModel,
+  TreatmentPlanDetailsFileAttributes,
+} from '../models/TreatmentPlanDetail';
+
 import { transformToTreatmentPlanDetails } from '../utils/dataMapping';
 
 export async function createTreatmentPlan(
   name: string,
   doctor_id: number,
   surgery_id: number,
-  treatmentPlanDetails: TreatmentPlanDetailsFileAttributes[]
+  treatmentPlanFileDetails: TreatmentPlanDetailsFileAttributes[],
+  { transaction }: { transaction?: Transaction }
 ) {
-  const transaction = await sequelize.transaction();
-  try {
-    const treatmentPlan = await TreatmentPlan.create({ name, doctor_id, surgery_id }, { transaction });
+  const treatmentPlan = await TreatmentPlan.create({ name, doctor_id, surgery_id }, { transaction });
 
-    treatmentPlanDetails = treatmentPlanDetails.map((detail) => ({ ...detail, tp_id: treatmentPlan.id }));
+  const treatmentPlanDetails = treatmentPlanFileDetails.map((detail) => ({ ...detail, tp_id: treatmentPlan.id }));
+  await TreatmentPlanDetail.bulkCreate(treatmentPlanDetails, { transaction });
 
-    await TreatmentPlanDetail.bulkCreate(treatmentPlanDetails, { transaction });
+  return treatmentPlan;
+}
 
-    await transaction.commit();
-    return treatmentPlan;
-  } catch (err) {
-    await transaction.rollback();
-    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
-  }
+export async function getTreatmentPlanByDoctorAndSurgery(doctor_id: number, surgery_id?: number) {
+  const where = Object.assign({}, { doctor_id }, surgery_id ? { surgery_id } : {});
+  return await TreatmentPlan.findOne({
+    where,
+    attributes: { exclude: ['created_at', 'updated_at'] },
+    include: TreatmentPlanDetail,
+  });
+}
+
+export async function getTreatmentPlanDetails(params: FindOptions<Attributes<TreatmentPlanDetailModel>>) {
+  return await TreatmentPlanDetail.findAll(params);
 }
 
 export async function parseTreatmentPlanFile(
