@@ -1,11 +1,11 @@
-import * as express from 'express';
+import { Router } from 'express';
 
-import * as SubscriptionController from '../controllers/SubscriptionController';
+import { isUserSubscribed } from '../controllers/SubscriptionController';
 import { authorize } from '../middlewares/auth';
 import { validateIsSubscribed } from '../validations/SubscriptionValidation';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/:id', validateIsSubscribed, authorize, SubscriptionController.isUserSubscribed);
+router.get('/:id', validateIsSubscribed, authorize, isUserSubscribed);
 
 export default router;

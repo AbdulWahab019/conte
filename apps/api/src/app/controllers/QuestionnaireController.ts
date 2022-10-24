@@ -9,11 +9,12 @@ import {
   TREATMENT_PLAN_ALREADY_ASSIGNED,
 } from '../utils/constants';
 import { CreateQuestionnaire } from '../models/Questionnaire';
-import * as QuestionnaireService from '../services/QuestionnaireService';
-import * as TreatmentPlanService from '../services/TreatmentPlanService';
-import * as UserTreatmentPlanService from '../services/UserTreatmentPlanService';
+import { addQuestionnaire } from '../services/QuestionnaireService';
+
 import { sequelize } from '../models';
 import { APIError } from '../utils/apiError';
+import { getTreatmentPlanByDoctorAndSurgery } from '../services/TreatmentPlanService';
+import { createUserTreatmentPlan } from '../services/UserTreatmentPlanService';
 
 export async function createQuestionnaire(req: Request, res: Response) {
   const { id: user_id } = req['user'];
@@ -26,7 +27,7 @@ export async function createQuestionnaire(req: Request, res: Response) {
 
   const transaction = await sequelize.transaction();
   try {
-    const questionnaire = await QuestionnaireService.createQuestionnaire(questionnaireObj, { transaction });
+    const questionnaire = await addQuestionnaire(questionnaireObj, { transaction });
 
     await transaction.commit();
     return sendResponse(res, 200, SUCCESS, questionnaire);
@@ -52,18 +53,15 @@ export async function submitQuestionnaire(req: Request, res: Response) {
 
   const transaction = await sequelize.transaction();
   try {
-    const questionnaire = await QuestionnaireService.createQuestionnaire(questionnaireObj, { transaction });
+    const questionnaire = await addQuestionnaire(questionnaireObj, { transaction });
     // TODO - Add Demographics data in users table
 
-    const treatmentPlan = await TreatmentPlanService.getTreatmentPlanByDoctorAndSurgery(doctor_id, surgery_id);
+    const treatmentPlan = await getTreatmentPlanByDoctorAndSurgery(doctor_id, surgery_id);
     // TODO - If treatment plan is not found?
 
-    const userTreatmentPlan = await UserTreatmentPlanService.createUserTreatmentPlan(
-      user_id,
-      treatmentPlan.toJSON(),
-      user_treatment_plan_name,
-      { transaction }
-    );
+    const userTreatmentPlan = await createUserTreatmentPlan(user_id, treatmentPlan.toJSON(), user_treatment_plan_name, {
+      transaction,
+    });
 
     await transaction.commit();
     return sendResponse(res, 200, SUCCESS, { questionnaire, userTreatmentPlan });

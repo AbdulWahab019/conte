@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import { hash as hashPassword, compare as comparePassword } from 'bcrypt';
+import { sign as signToken } from 'jsonwebtoken';
 
 import { environment } from '../../config/config';
 import { Questionnaire } from '../models/Questionnaire';
@@ -12,12 +12,12 @@ export async function createUser(email: string, password: string) {
   if (doesUserExists) throw new APIError(400, USER_EXISTS);
 
   // TODO - Salt round should be dynamic
-  const encryptedPassword = await bcrypt.hash(password, 10);
+  const encryptedPassword = await hashPassword(password, 10);
 
   const user = await User.create({ email, password: encryptedPassword });
 
   // Create token
-  const token = jwt.sign({ id: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
+  const token = signToken({ id: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
 
   return {
     user_id: user.id,
@@ -33,10 +33,10 @@ export async function userLogin(email: string, password: string) {
   const user = await User.findOne({ where: { email }, include: [Questionnaire] });
   if (!user) throw new APIError(400, USER_NOT_FOUND);
 
-  const pass_compare = await bcrypt.compare(password, user.password);
+  const pass_compare = await comparePassword(password, user.password);
   if (!pass_compare) throw new APIError(401, INVALID_CREDENTIALS);
 
-  const token = jwt.sign({ id: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
+  const token = signToken({ id: user.id }, environment.JWT_TOKEN_SECRET, { expiresIn: '2d' });
 
   return {
     user_id: user.id,

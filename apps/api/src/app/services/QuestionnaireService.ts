@@ -2,7 +2,7 @@ import { Transaction } from 'sequelize';
 
 import { CreateQuestionnaire, Questionnaire, QuestionnaireModel } from '../models/Questionnaire';
 
-export async function createQuestionnaire(
+export async function addQuestionnaire(
   data: CreateQuestionnaire[],
   { transaction }: { transaction?: Transaction }
 ): Promise<QuestionnaireModel[]> {

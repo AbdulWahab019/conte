@@ -1,9 +1,9 @@
-import * as express from 'express';
+import { Router } from 'express';
 
 import { accountLogin, createAccount } from '../controllers/AuthController';
 import { validateLogin, validateRegisterAccount } from '../validations/AuthValidation';
 
-const router = express.Router();
+const router = Router();
 
 router.post('/register', validateRegisterAccount, createAccount);
 
