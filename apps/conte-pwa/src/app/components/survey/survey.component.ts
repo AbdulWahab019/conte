@@ -6,6 +6,10 @@ import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest } from '@conte/model
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
+import { SurveyService } from '../../services/survey.service';
+import { doctor } from '../models/doctor';
+import { surgery } from '../models/surgery';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'conte-survey',
@@ -19,13 +23,17 @@ export class SurveyComponent implements OnInit {
   surveyScreen = true;
   surgeryQuestionnaire = false;
   nonSurgeryQuestionnaire = false;
+  doctors: doctor[] = [];
+  surgeries: surgery[] = [];
   surgeryForm: FormGroup = {} as FormGroup;
   nonSurgeryForm: FormGroup = {} as FormGroup;
 
   constructor(
     private userService: UserService,
+    private surveyService: SurveyService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private spinnerService: SpinnerService,
     private toastService: ToastService
   ) {}
 
@@ -39,6 +47,15 @@ export class SurveyComponent implements OnInit {
 
   renderSurgeryForm = async () => {
     this.surgeryOptionState = 'loading';
+
+    this.surveyService
+      .getAllDoctors()
+      .then((resp) => {
+        this.doctors = resp.data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     await delay(1500);
 
     this.surgeryForm = this.formBuilder.group({
@@ -67,9 +84,27 @@ export class SurveyComponent implements OnInit {
     return this.surgeryForm.controls;
   }
 
+  getSurgeriesAndAssignPosition(doctor_id: string, form: string) {
+    this.spinnerService.show();
+    this.surveyService
+      .getSurgeriesForDoctor(doctor_id)
+      .then((resp) => {
+        const index = this.doctors.findIndex((doctor) => doctor.id == doctor_id);
+        if (form === 'surgery') this.f.position.setValue(this.doctors[index].position);
+        else this.f2.position.setValue(this.doctors[index].position);
+
+        this.surgeries = resp.data;
+        this.spinnerService.hide();
+      })
+      .catch((err) => {
+        this.spinnerService.hide();
+        console.error(err);
+      });
+  }
+
   confirmSurgeryForm() {
     this.surgeryOptionState = 'loading';
-    const token = JSON.parse(localStorage.getItem('token') as string);
+
     const surgery_date = new Date(
       this.f.surgery_date.value.year,
       this.f.surgery_date.value.month,
@@ -82,10 +117,14 @@ export class SurveyComponent implements OnInit {
       this.f.birth_date.value.day
     );
 
+    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f.doctor.value)].name;
+    const primary_surgery = this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].surgery_name;
+    const secondary_surgery = this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)].surgery_name;
+
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: surgery_date },
-      { id: 2, response: this.f.primary_surgery.value },
-      { id: 4, response: this.f.doctor.value },
+      { id: 2, response: primary_surgery },
+      { id: 4, response: doctor },
       { id: 5, response: this.f.position.value },
       { id: 6, response: this.f.estimated_max_velocity.value },
       { id: 7, response: this.f.first_name.value },
@@ -98,12 +137,12 @@ export class SurveyComponent implements OnInit {
       { id: 14, response: this.f.zip.value },
     ];
 
-    if (this.f.secondary_surgery.value) data.push({ id: 3, response: this.f.secondary_surgery.value });
+    if (this.f.secondary_surgery.value) data.push({ id: 3, response: secondary_surgery });
 
     const body: SubmitQuestionnaireAPIRequest = { data };
 
     this.userService
-      .submitQuestionnaire(token, body)
+      .submitQuestionnaire(body)
       .then((resp) => {
         localStorage.setItem('questionnaire_submitted', JSON.stringify(true));
         this.surgeryOptionState = 'static';
@@ -124,6 +163,15 @@ export class SurveyComponent implements OnInit {
 
   renderNonSurgeryForm = async () => {
     this.nonSurgeryOptionState = 'loading';
+
+    this.surveyService
+      .getAllDoctors()
+      .then((resp) => {
+        this.doctors = resp.data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     await delay(1500);
 
     this.nonSurgeryForm = this.formBuilder.group({
@@ -154,7 +202,7 @@ export class SurveyComponent implements OnInit {
 
   confirmNonSurgeryForm() {
     this.nonSurgeryOptionState = 'loading';
-    const token = JSON.parse(localStorage.getItem('token') as string);
+
     const injury_date = new Date(
       this.f2.injury_date.value.year,
       this.f2.injury_date.value.month,
@@ -167,10 +215,12 @@ export class SurveyComponent implements OnInit {
       this.f2.birth_date.value.day
     );
 
+    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f2.doctor.value)].name;
+    
     const data: SubmitQuestionnaire[] = [
       { id: 20, response: injury_date },
       { id: 21, response: this.f2.injury.value },
-      { id: 22, response: this.f2.doctor.value },
+      { id: 22, response: doctor },
       { id: 23, response: this.f2.doctor_dictation.value },
       { id: 24, response: this.f2.position.value },
       { id: 25, response: this.f2.estimated_max_velocity.value },
@@ -187,7 +237,7 @@ export class SurveyComponent implements OnInit {
     const body: SubmitQuestionnaireAPIRequest = { data };
 
     this.userService
-      .submitQuestionnaire(token, body)
+      .submitQuestionnaire(body)
       .then((resp) => {
         localStorage.setItem('questionnaire_submitted', JSON.stringify(true));
         this.nonSurgeryOptionState = 'static';

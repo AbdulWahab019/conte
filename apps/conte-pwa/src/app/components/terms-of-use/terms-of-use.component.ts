@@ -18,9 +18,9 @@ export class TermsOfUseComponent implements OnInit {
 
   acceptTerms() {
     this.buttonState = 'loading';
-    const token = JSON.parse(localStorage.getItem('token') as string);
+
     this.userService
-      .acceptTerms(token)
+      .acceptTerms()
       .then((resp) => {
         localStorage.setItem('terms_of_use', JSON.stringify(true));
         this.buttonState = 'static';

@@ -18,9 +18,9 @@ export class OrientationComponent implements OnInit {
 
   acceptOrientation() {
     this.buttonState = 'loading';
-    const token = JSON.parse(localStorage.getItem('token') as string);
+    
     this.userService
-      .confirmOrientation(token)
+      .confirmOrientation()
       .then((resp) => {
         localStorage.setItem('orientation_watched', JSON.stringify(true));
         this.buttonState = 'static';
