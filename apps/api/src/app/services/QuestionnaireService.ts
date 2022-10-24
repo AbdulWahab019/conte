@@ -16,5 +16,5 @@ export async function createQuestionnaire(data: CreateQuestionnaire[]) {
 }
 
 export async function getUserQuestionnaireStatus(user_id: number) {
-  return !!(await Questionnaire.findOne({ where: { id: user_id } }));
+  return !!(await Questionnaire.findOne({ where: { user_id } }));
 }
