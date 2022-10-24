@@ -14,7 +14,10 @@ export async function authorize(req: Request, res: Response, next: NextFunction)
     const token = tokenHeader.replace('Bearer ', '').replace('bearer ', '');
     const decoded = jwt.verify(token, environment.JWT_TOKEN_SECRET);
 
-    const user = await User.findOne({ where: { id: decoded.id } });
+    const user = await User.findOne({
+      where: { id: decoded.id },
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
+    });
     if (!user) return sendResponse(res, 401, UNAUTHORIZED);
 
     req['token'] = token;
@@ -22,6 +25,6 @@ export async function authorize(req: Request, res: Response, next: NextFunction)
 
     next();
   } catch (error) {
-    sendResponse(res, 403, AUTHENTICATION_FAILED, undefined, error);
+    sendResponse(res, 401, AUTHENTICATION_FAILED, undefined, error);
   }
 }

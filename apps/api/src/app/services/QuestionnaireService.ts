@@ -14,3 +14,7 @@ export async function createQuestionnaire(data: CreateQuestionnaire[]) {
     throw new APIError(500, INTERNAL_SERVER_ERROR, err);
   }
 }
+
+export async function isUserQuestionnaireSubmitted(user_id: number) {
+  return (await Questionnaire.count({ where: { user_id } })) > 0;
+}

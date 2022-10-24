@@ -6,6 +6,8 @@ import UserRoutes from './routes/UserRoute';
 import SubscriptionRoutes from './routes/SubscriptionRoute';
 import QuestionnaireRoute from './routes/QuestionnaireRoute';
 import TreatmentPlanRoute from './routes/TreatmentPlanRoute';
+import SurgeryRoute from './routes/SurgeryRoute';
+import DoctorRoute from './routes/DoctorRoute';
 
 export function routes(app: Application) {
   app.use('/auth', AuthRoutes);
@@ -13,6 +15,8 @@ export function routes(app: Application) {
   app.use('/subscription', SubscriptionRoutes);
   app.use('/questionnaire', QuestionnaireRoute);
   app.use('/treatment-plan', TreatmentPlanRoute);
+  app.use('/doctor', DoctorRoute);
+  app.use('/surgery', SurgeryRoute);
 
   app.use(error);
 }
