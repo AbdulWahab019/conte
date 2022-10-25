@@ -31,6 +31,11 @@ export class AuthenticationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.router.navigate(['']);
+    }
+    
     this.signinForm = this.formBuilder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
