@@ -9,7 +9,7 @@ import { delay } from './utils/constants';
 })
 export class AppComponent implements OnInit {
   title = 'conte-pwa';
-  targetElement: any;
+  targetElement!: Element | null;
 
   constructor(private router: Router){}
 
