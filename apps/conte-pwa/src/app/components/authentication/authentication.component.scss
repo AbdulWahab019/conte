@@ -35,43 +35,43 @@
 
 @keyframes slideshow {
   0% {
-    background-image: url('../../../assets/images/bg-slides/1.jpg');
-  }
-  20% {
     background-image: url('../../../assets/images/bg-slides/2.jpg');
   }
-  40% {
+  20% {
     background-image: url('../../../assets/images/bg-slides/3.jpg');
   }
-  60% {
+  40% {
     background-image: url('../../../assets/images/bg-slides/4.jpg');
   }
-  80% {
+  60% {
     background-image: url('../../../assets/images/bg-slides/5.jpg');
   }
-  100% {
+  80% {
     background-image: url('../../../assets/images/bg-slides/6.jpg');
+  }
+  100% {
+    background-image: url('../../../assets/images/bg-slides/1.jpg');
   }
 }
 
 @keyframes slideshow-mobile {
   0% {
-    background-image: url('../../../assets/images/bg-slides/mobile_1.jpg');
-  }
-  20% {
     background-image: url('../../../assets/images/bg-slides/mobile_2.jpg');
   }
-  40% {
+  20% {
     background-image: url('../../../assets/images/bg-slides/mobile_3.jpg');
   }
-  60% {
+  40% {
     background-image: url('../../../assets/images/bg-slides/mobile_4.jpg');
   }
-  80% {
+  60% {
     background-image: url('../../../assets/images/bg-slides/mobile_5.jpg');
   }
-  100% {
+  80% {
     background-image: url('../../../assets/images/bg-slides/mobile_6.jpg');
+  }
+  100% {
+    background-image: url('../../../assets/images/bg-slides/mobile_1.jpg');
   }
 }
 
