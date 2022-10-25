@@ -1,3 +1,12 @@
-<router-outlet></router-outlet>
+<ngx-pull-to-refresh
+  spinnerColor="#ff0000"
+  [spinnerSize]="50"
+  [distanceForRefresh]="40"
+  [isEnable]="true"
+  [targetElement]="targetElement"
+  (refresh)="refreshPage()"
+>
+  <router-outlet></router-outlet>
+</ngx-pull-to-refresh>
 <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
 <conte-spinner></conte-spinner>

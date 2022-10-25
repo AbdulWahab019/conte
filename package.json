@@ -38,6 +38,7 @@
     "jsonwebtoken": "^8.5.1",
     "mssql": "^9.0.1",
     "multer": "^1.4.5-lts.1",
+    "ngx-pull-to-refresh": "^14.0.0",
     "rxjs": "~7.5.0",
     "sequelize": "^6.24.0",
     "stripe": "^10.12.0",
