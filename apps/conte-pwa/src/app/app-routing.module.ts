@@ -9,18 +9,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/',
-  },
   { path: '', component: SplashScreenComponent },
   { path: 'authentication', component: AuthenticationComponent },
-  { path: 'terms', component: TermsOfUseComponent },
-  { path: 'orientation', component: OrientationComponent },
-  { path: 'survey', component: SurveyComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/treatment-plan', component: TreatmentPlanComponent },
+  { path: 'terms', title: 'Terms of Use', component: TermsOfUseComponent },
+  { path: 'orientation', title: 'Orientation', component: OrientationComponent },
+  { path: 'survey', title: 'Survey', component: SurveyComponent },
+  { path: 'dashboard', title: 'Dashboard', component: DashboardComponent },
+  { path: 'dashboard/treatment-plan', title: 'Treatment Plan', component: TreatmentPlanComponent },
   { path: '**', component: SplashScreenComponent },
 ];
 
