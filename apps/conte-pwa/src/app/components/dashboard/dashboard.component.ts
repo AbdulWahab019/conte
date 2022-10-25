@@ -18,10 +18,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  logout() {
+  async logout() {
     localStorage.clear();
     this.spinnerService.show();
-    delay(1000);
+    await delay(1000);
     this.spinnerService.hide();
     this.toastService.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
     this.router.navigate(['authentication']);
