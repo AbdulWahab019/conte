@@ -25,6 +25,7 @@ import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 import { SpinnerComponent } from './components/shared/spinner/spinner.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,10 @@ import { SpinnerComponent } from './components/shared/spinner/spinner.component'
     NgbModule,
     AppRoutingModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
