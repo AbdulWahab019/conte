@@ -14,6 +14,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   animation: slideshow-mobile 60s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  .logo {
+    position: absolute;
+    top:0;
+    height: 30vh;
+    width: 35vh;
+  }
 }
 
 @media screen and (min-width: 480px) {
@@ -35,43 +41,43 @@
 
 @keyframes slideshow {
   0% {
-    background-image: url('../../../assets/images/bg-slides/2.jpg');
+    background-image: url('../../../assets/images/bg-slides/1.jpg');
   }
   20% {
-    background-image: url('../../../assets/images/bg-slides/3.jpg');
+    background-image: url('../../../assets/images/bg-slides/2.jpg');
   }
   40% {
-    background-image: url('../../../assets/images/bg-slides/4.jpg');
+    background-image: url('../../../assets/images/bg-slides/3.jpg');
   }
   60% {
-    background-image: url('../../../assets/images/bg-slides/5.jpg');
+    background-image: url('../../../assets/images/bg-slides/4.jpg');
   }
   80% {
-    background-image: url('../../../assets/images/bg-slides/6.jpg');
+    background-image: url('../../../assets/images/bg-slides/5.jpg');
   }
   100% {
-    background-image: url('../../../assets/images/bg-slides/1.jpg');
+    background-image: url('../../../assets/images/bg-slides/6.jpg');
   }
 }
 
 @keyframes slideshow-mobile {
   0% {
-    background-image: url('../../../assets/images/bg-slides/mobile_2.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_1.jpg');
   }
   20% {
-    background-image: url('../../../assets/images/bg-slides/mobile_3.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_2.jpg');
   }
   40% {
-    background-image: url('../../../assets/images/bg-slides/mobile_4.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_3.jpg');
   }
   60% {
-    background-image: url('../../../assets/images/bg-slides/mobile_5.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_4.jpg');
   }
   80% {
-    background-image: url('../../../assets/images/bg-slides/mobile_6.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_5.jpg');
   }
   100% {
-    background-image: url('../../../assets/images/bg-slides/mobile_1.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_6.jpg');
   }
 }
 

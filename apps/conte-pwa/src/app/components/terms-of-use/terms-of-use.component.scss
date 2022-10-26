@@ -23,6 +23,11 @@
   h1 {
     width: 100%;
   }
+  
+  .logo {
+    height: 30vh;
+    width: 35vh;
+  }
 
   .btn-confirm {
     padding: 10px;
@@ -32,7 +37,7 @@
     border-style: none;
     color: white;
     font-weight: 600;
-  }
+  }  
 
   .btn-confirm:hover {
     background-color: rgba(10, 136, 43, 0.5);
