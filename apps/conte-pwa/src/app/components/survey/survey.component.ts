@@ -124,7 +124,7 @@ export class SurveyComponent implements OnInit {
 
     if (this.f.secondary_surgery.value) data.push({ id: 3, response: secondary_surgery });
 
-    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: Number(this.f.doctor.value) };
+    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: Number(this.f.doctor.value), surgery_id: Number(this.f.primary_surgery.value) };
 
     this.surveyService
       .submitQuestionnaire(body)
