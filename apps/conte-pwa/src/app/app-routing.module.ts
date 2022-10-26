@@ -7,6 +7,7 @@ import { OrientationComponent } from './components/orientation/orientation.compo
 import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
 
 const routes: Routes = [
   { path: '', component: SplashScreenComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'terms', title: 'Terms of Use', component: TermsOfUseComponent },
   { path: 'orientation', title: 'Orientation', component: OrientationComponent },
   { path: 'survey', title: 'Survey', component: SurveyComponent },
+  { path: 'subscription', title: 'Subscription', component: SubscriptionComponent },
   { path: 'dashboard', title: 'Dashboard', component: DashboardComponent },
   { path: 'dashboard/treatment-plan', title: 'Treatment Plan', component: TreatmentPlanComponent },
   { path: '**', component: SplashScreenComponent },

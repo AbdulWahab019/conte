@@ -1,0 +1,42 @@
+<div class="container-fluid d-flex subscription-screen">
+  <div class="container-fluid subscription-container">
+    <div *ngIf="!subscriptionFormRendered">
+      <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+
+      <div *ngIf="!isSubscribed" [@fade]>
+        <div class="spinner-border spinner-large mt-5" role="status"></div>
+        <h1 class="display-6 mt-1" *ngIf="!renderingSubscriptionForm" [@fade]>Checking your Subscription Status...</h1>
+        <h1 class="display-6 mt-1" *ngIf="renderingSubscriptionForm" [@fade]>
+          Getting your Subscription form ready...
+        </h1>
+      </div>
+
+      <div *ngIf="isSubscribed" [@fade]>
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+        </svg>
+        <h1 class="display-6 mt-1">Subscription Confirmed</h1>
+      </div>
+    </div>
+
+    <div *ngIf="subscriptionFormRendered">
+      <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+
+      <div class="description">
+        <h3 class="display 5">Starter Plan</h3>
+        <h5 class="display 6">$20.00 / month</h5>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4 mb-3">
+        <button class="btn btn-primary btn-confirm" type="button" (click)="confirmCheckout()" [disabled]="checkoutState === 'loading'">
+          <span *ngIf="checkoutState === 'static'" class="display-6">Checkout</span>
+          <div *ngIf="checkoutState === 'loading'">
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <span class="display-6">Submitting...</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

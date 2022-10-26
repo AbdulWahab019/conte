@@ -26,6 +26,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 import { SpinnerComponent } from './components/shared/spinner/spinner.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     DashboardComponent,
     TreatmentPlanComponent,
     SpinnerComponent,
+    SubscriptionComponent,
   ],
   imports: [
     BrowserModule,

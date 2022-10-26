@@ -1,9 +1,8 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { delay } from '../../utils/constants';
 import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest } from '@conte/models';
-import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';

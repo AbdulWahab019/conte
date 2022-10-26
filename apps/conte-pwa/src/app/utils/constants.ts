@@ -6,6 +6,7 @@ export const USER = `${environment.BASE_URL}/user`;
 export const DOCTOR = `${environment.BASE_URL}/doctor`;
 export const SURGERY = `${environment.BASE_URL}/surgery`;
 export const QUESTIONNAIRE = `${environment.BASE_URL}/questionnaire`;
+export const SUBSCRIPTION = `${environment.BASE_URL}/subscription`;
 
 // Functions
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
