@@ -66,7 +66,7 @@ export class SurveyComponent implements OnInit {
       estimated_max_velocity: new FormControl('', [Validators.required]),
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
-      cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
+      cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,15}')]),
       birth_date: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -120,7 +120,7 @@ export class SurveyComponent implements OnInit {
     const primary_surgery =
       this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].name;
     const secondary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)].name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)]?.name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: surgery_date },
@@ -179,7 +179,7 @@ export class SurveyComponent implements OnInit {
       injury_date: new FormControl('', [Validators.required]),
       injury: new FormControl('', [Validators.required]),
       doctor: new FormControl('', [Validators.required]),
-      doctor_dictation: new FormControl('', []),
+      doctor_dictation: new FormControl('', [Validators.required]),
       position: new FormControl('', [Validators.required]),
       estimated_max_velocity: new FormControl('', [Validators.required]),
       first_name: new FormControl('', [Validators.required]),
