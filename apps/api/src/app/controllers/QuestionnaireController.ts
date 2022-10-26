@@ -2,21 +2,13 @@ import { Request, Response } from 'express';
 
 import { CreateQuestionnaireAPIRequest, questionnaires, SubmitQuestionnaireAPIRequest } from '@conte/models';
 import { sendResponse } from '../utils/appUtils';
-import {
-  INTERNAL_SERVER_ERROR,
-  SEQUELIZE_UNIQUE_CONSTRAINT_ERROR,
-  SUCCESS,
-  TREATMENT_PLAN_ALREADY_ASSIGNED,
-} from '../utils/constants';
+import { SUCCESS } from '../utils/constants';
 import { CreateQuestionnaire } from '../models/Questionnaire';
-import { addQuestionnaire } from '../services/QuestionnaireService';
+import { addQuestionnaire, submitQuestionnaire } from '../services/QuestionnaireService';
 
-import { sequelize } from '../models';
-import { APIError } from '../utils/apiError';
-import { getTreatmentPlanByDoctorAndSurgery } from '../services/TreatmentPlanService';
-import { createUserTreatmentPlan } from '../services/UserTreatmentPlanService';
+import { UserModel } from '../models/User';
 
-export async function createQuestionnaire(req: Request, res: Response) {
+export async function createQuestionnaireHttpReq(req: Request, res: Response) {
   const { id: user_id } = req['user'];
   const { data }: CreateQuestionnaireAPIRequest = req.body;
 
@@ -25,50 +17,32 @@ export async function createQuestionnaire(req: Request, res: Response) {
     return { user_id, question_title: title, response: question.response, type };
   });
 
-  const transaction = await sequelize.transaction();
-  try {
-    const questionnaire = await addQuestionnaire(questionnaireObj, { transaction });
-
-    await transaction.commit();
-    return sendResponse(res, 200, SUCCESS, questionnaire);
-  } catch (err) {
-    await transaction.rollback();
-    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
-  }
+  const questionnaire = await addQuestionnaire(questionnaireObj);
+  return sendResponse(res, 200, SUCCESS, questionnaire);
 }
 
-export async function submitQuestionnaire(req: Request, res: Response) {
-  const { id: user_id } = req['user'];
+export async function submitQuestionnaireHttpReq(req: Request, res: Response) {
+  const user: UserModel = req['user'];
   const {
     data,
     doctor_id,
     surgery_id,
+    user_demographics,
     user_treatment_plan_name = 'User Treatment Plan',
   }: SubmitQuestionnaireAPIRequest = req.body;
 
   const questionnaireObj: CreateQuestionnaire[] = data.map((question) => {
     const { title, type } = questionnaires[question.id];
-    return { user_id, question_title: title, response: question.response, type };
+    return { user_id: user.id, question_title: title, response: question.response, type };
   });
 
-  const transaction = await sequelize.transaction();
-  try {
-    const questionnaire = await addQuestionnaire(questionnaireObj, { transaction });
-    // TODO - Add Demographics data in users table
-
-    const treatmentPlan = await getTreatmentPlanByDoctorAndSurgery(doctor_id, surgery_id);
-    // TODO - If treatment plan is not found?
-
-    const userTreatmentPlan = await createUserTreatmentPlan(user_id, treatmentPlan.toJSON(), user_treatment_plan_name, {
-      transaction,
-    });
-
-    await transaction.commit();
-    return sendResponse(res, 200, SUCCESS, { questionnaire, userTreatmentPlan });
-  } catch (err) {
-    await transaction.rollback();
-    if (err.name === SEQUELIZE_UNIQUE_CONSTRAINT_ERROR) throw new APIError(400, TREATMENT_PLAN_ALREADY_ASSIGNED);
-
-    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
-  }
+  const apiResp = await submitQuestionnaire({
+    questionnaireObj,
+    user,
+    doctor_id,
+    surgery_id,
+    user_demographics,
+    user_treatment_plan_name,
+  });
+  return sendResponse(res, 200, SUCCESS, apiResp);
 }

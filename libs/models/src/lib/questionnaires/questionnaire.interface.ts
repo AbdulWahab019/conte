@@ -1,3 +1,5 @@
+import { UserDemographics } from '../users/user.interface';
+
 export interface QuestionnaireInterface {
   [key: number]: {
     title: string;
@@ -19,4 +21,5 @@ export interface SubmitQuestionnaireAPIRequest {
   doctor_id: number;
   surgery_id?: number;
   user_treatment_plan_name?: string;
+  user_demographics: UserDemographics;
 }

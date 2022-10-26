@@ -40,10 +40,11 @@ export async function getTreatmentPlanDetails(params: FindOptions<Attributes<Tre
 
 export function parseTreatmentPlanFile(
   file: Express.Multer.File,
-  from = 2
+  from = 2,
+  to: number
 ): Promise<TreatmentPlanDetailsFileAttributes[]> {
   return new Promise((resolve, reject) => {
-    parse(file.buffer, { from, relaxQuotes: true, onRecord: transformToTreatmentPlanDetails }, (err, records) => {
+    parse(file.buffer, { from, to, relaxQuotes: true, onRecord: transformToTreatmentPlanDetails }, (err, records) => {
       if (err) reject(err);
 
       resolve(records);

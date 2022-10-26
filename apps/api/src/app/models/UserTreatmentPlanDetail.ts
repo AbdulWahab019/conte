@@ -16,10 +16,12 @@ export interface UserTreatmentPlanDetailDefinedAttributes {
   max_velocity_absolute: number;
   num_throws_at_max_distance: number;
   post_max_distance_flat_ground: number;
-  post_max_distance_flat_ground_velocity: number;
+  post_max_distance_flat_ground_velocity_percent: number;
+  post_max_distance_flat_ground_velocity_absolute: number;
   post_max_flat_ground_pitches: string;
   bullpen: number;
-  bullpen_max_velocity: number;
+  bullpen_max_velocity_percent: number;
+  bullpen_max_velocity_absolute: number;
   bullpen_pitches: string;
   live_simulated_game: number;
   innings: number;
@@ -45,19 +47,21 @@ export const UserTreatmentPlanDetail = sequelize.define<
   plyo_throw: DataTypes.INTEGER,
   max_distance: DataTypes.INTEGER,
   max_velocity_percent: DataTypes.FLOAT,
-  max_velocity_absolute: DataTypes.FLOAT,
+  max_velocity_absolute: DataTypes.DECIMAL(10, 2),
   num_throws_at_max_distance: DataTypes.INTEGER,
   post_max_distance_flat_ground: DataTypes.INTEGER,
-  post_max_distance_flat_ground_velocity: DataTypes.FLOAT,
+  post_max_distance_flat_ground_velocity_percent: DataTypes.FLOAT,
+  post_max_distance_flat_ground_velocity_absolute: DataTypes.DECIMAL(10, 2),
   post_max_flat_ground_pitches: DataTypes.STRING,
   bullpen: DataTypes.INTEGER,
-  bullpen_max_velocity: DataTypes.FLOAT,
+  bullpen_max_velocity_percent: DataTypes.FLOAT,
+  bullpen_max_velocity_absolute: DataTypes.DECIMAL(10, 2),
   bullpen_pitches: DataTypes.STRING,
   live_simulated_game: DataTypes.INTEGER,
   innings: DataTypes.INTEGER,
 });
 
-UserTreatmentPlanDetail.sync();
+UserTreatmentPlanDetail.sync({ alter: true, force: true });
 
 // Associations
 UserTreatmentPlanDetail.afterSync(() => {

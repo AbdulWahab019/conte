@@ -64,6 +64,34 @@ export async function validateSubmitQuestionnaire(req: Request, res: Response, n
       .run(req)
   );
 
+  // 7. User Demographics Validation
+  validationPromises.push(
+    body('user_demographics').isObject().withMessage('User Demographics is invalid.').run(req),
+    body('user_demographics.first_name')
+      .isString()
+      .withMessage('First Name is required')
+      .isLength({ min: 2, max: 20 })
+      .withMessage('First Name should be between 2 and 20 letters.')
+      .run(req),
+    body('user_demographics.last_name')
+      .isString()
+      .withMessage('Last Name is required')
+      .isLength({ min: 2, max: 20 })
+      .withMessage('Last Name should be between 2 and 20 letters.')
+      .run(req),
+    body('user_demographics.cell_phone').isMobilePhone('en-US').withMessage('Invalid Phone Number').run(req),
+    body('user_demographics.birth_date').isDate({ format: 'YYYY-MM-DD' }).withMessage('Invalid Date of Birth').run(req),
+    body('user_demographics.address').isString().withMessage('Address can be max 120 letters.').run(req),
+    body('user_demographics.city').isString().withMessage('City can be max 20 letters.').run(req),
+    body('user_demographics.state').isString().withMessage('State can be max 15 letters.').run(req),
+    body('user_demographics.zip_code').isPostalCode('US').withMessage('Invalid Zip Code').run(req),
+    body('user_demographics.estimated_max_velocity').isInt().withMessage('Invalid Estimated Max Velocity').run(req),
+    body('user_demographics')
+      .custom((value) => Object.keys(value).length === 9)
+      .withMessage('Invalid User Demographics')
+      .run(req)
+  );
+
   await Promise.all(validationPromises);
   return await validate(req, res, next);
 }
