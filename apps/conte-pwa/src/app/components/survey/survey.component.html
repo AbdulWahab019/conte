@@ -92,23 +92,17 @@
 
       <!-- Surgery Details -->
       <p class="display-5"><u>Surgery Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-      <div class="icon-append">
-        <input
-          placeholder="Surgery Date*"
-          [ngClass]="
-            (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question'
-          "
-          name="dp1"
-          ngbDatepicker
-          #d1="ngbDatepicker"
-          (click)="d1.toggle()"
-          readonly
-          formControlName="surgery_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
-      </div>
+      <input
+        placeholder="Surgery Date*"
+        [ngClass]="
+          (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        type="date"
+        max="9999-12-31"
+        formControlName="surgery_date"
+      />
 
       <select
         formControlName="primary_surgery"
@@ -187,21 +181,18 @@
         formControlName="cell_phone"
       />
 
-      <div class="icon-append">
-        <input
-          placeholder="Birth Date*"
-          [ngClass]="
-            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          name="dp1"
-          ngbDatepicker
-          #d2="ngbDatepicker"
-          formControlName="birth_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
-      </div>
+      <input
+        placeholder="Birth Date*"
+        [ngClass]="
+          (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        type="date"
+        min="2000-01-01"
+        max="9999-12-31"
+        formControlName="birth_date"
+      />
 
       <input
         type="text"
@@ -342,23 +333,17 @@
 
       <!-- Injury Details -->
       <p class="display-5"><u>Injury Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-      <div class="icon-append">
-        <input
-          placeholder="Injury Date*"
-          [ngClass]="
-            (f2.injury_date.touched || f2.injury_date.dirty) && f2.injury_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          name="dp1"
-          ngbDatepicker
-          #d1="ngbDatepicker"
-          (click)="d1.toggle()"
-          readonly
-          formControlName="injury_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
-      </div>
+      <input
+        placeholder="Injury Date*"
+        [ngClass]="
+          (f2.injury_date.touched || f2.injury_date.dirty) && f2.injury_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        type="date"
+        max="9999-12-31"
+        formControlName="injury_date"
+      />
 
       <select
         [ngClass]="
@@ -416,21 +401,18 @@
         formControlName="cell_phone"
       />
 
-      <div class="icon-append">
-        <input
-          placeholder="Birth Date*"
-          [ngClass]="
-            (f2.birth_date.touched || f2.birth_date.dirty) && f2.birth_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          name="dp1"
-          ngbDatepicker
-          #d2="ngbDatepicker"
-          formControlName="birth_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
-      </div>
+      <input
+        placeholder="Birth Date*"
+        [ngClass]="
+          (f2.birth_date.touched || f2.birth_date.dirty) && f2.birth_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        type="date"
+        max="9999-12-31"
+        min="2000-01-01"
+        formControlName="birth_date"
+      />
 
       <input
         type="text"

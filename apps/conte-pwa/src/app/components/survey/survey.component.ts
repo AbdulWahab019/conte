@@ -100,18 +100,6 @@ export class SurveyComponent implements OnInit {
   confirmSurgeryForm() {
     this.surgeryOptionState = 'loading';
 
-    const surgery_date = new Date(
-      this.f.surgery_date.value.year,
-      this.f.surgery_date.value.month,
-      this.f.surgery_date.value.day
-    );
-
-    const birth_date = new Date(
-      this.f.birth_date.value.year,
-      this.f.birth_date.value.month,
-      this.f.birth_date.value.day
-    );
-
     const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f.doctor.value)].name;
     const primary_surgery =
       this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].name;
@@ -119,7 +107,7 @@ export class SurveyComponent implements OnInit {
       this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)]?.name;
 
     const data: SubmitQuestionnaire[] = [
-      { id: 1, response: surgery_date },
+      { id: 1, response: this.f.surgery_date.value },
       { id: 2, response: primary_surgery },
       { id: 4, response: doctor },
       { id: 5, response: this.f.position.value },
@@ -127,7 +115,7 @@ export class SurveyComponent implements OnInit {
       { id: 7, response: this.f.first_name.value },
       { id: 8, response: this.f.last_name.value },
       { id: 9, response: this.f.cell_phone.value },
-      { id: 10, response: birth_date },
+      { id: 10, response: this.f.birth_date.value },
       { id: 11, response: this.f.address.value },
       { id: 12, response: this.f.city.value },
       { id: 13, response: this.f.state.value },
@@ -200,22 +188,10 @@ export class SurveyComponent implements OnInit {
   confirmNonSurgeryForm() {
     this.nonSurgeryOptionState = 'loading';
 
-    const injury_date = new Date(
-      this.f2.injury_date.value.year,
-      this.f2.injury_date.value.month,
-      this.f2.injury_date.value.day
-    );
-
-    const birth_date = new Date(
-      this.f2.birth_date.value.year,
-      this.f2.birth_date.value.month,
-      this.f2.birth_date.value.day
-    );
-
     const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f2.doctor.value)].name;
 
     const data: SubmitQuestionnaire[] = [
-      { id: 20, response: injury_date },
+      { id: 20, response: this.f2.injury_date.value },
       { id: 21, response: this.f2.injury.value },
       { id: 22, response: doctor },
       { id: 23, response: this.f2.doctor_dictation.value },
@@ -224,7 +200,7 @@ export class SurveyComponent implements OnInit {
       { id: 26, response: this.f2.first_name.value },
       { id: 27, response: this.f2.last_name.value },
       { id: 28, response: this.f2.cell_phone.value },
-      { id: 29, response: birth_date },
+      { id: 29, response: this.f2.birth_date.value },
       { id: 30, response: this.f2.address.value },
       { id: 31, response: this.f2.city.value },
       { id: 32, response: this.f2.state.value },
