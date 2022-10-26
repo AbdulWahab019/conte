@@ -83,15 +83,11 @@ export class SurveyComponent implements OnInit {
     return this.surgeryForm.controls;
   }
 
-  getSurgeriesAndAssignPosition(doctor_id: string, form: string) {
+  getSurgeries(doctor_id: string) {
     this.spinnerService.show();
     this.surveyService
       .getSurgeriesForDoctor(doctor_id)
       .then((resp) => {
-        const index = this.doctors.findIndex((doctor) => doctor.id == doctor_id);
-        if (form === 'surgery') this.f.position.setValue(this.doctors[index].position);
-        else this.f2.position.setValue(this.doctors[index].position);
-
         this.surgeries = resp.data;
         this.spinnerService.hide();
       })

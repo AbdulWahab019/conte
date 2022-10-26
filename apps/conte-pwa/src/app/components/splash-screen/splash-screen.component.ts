@@ -15,7 +15,7 @@ export class SplashScreenComponent implements OnInit {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      await delay(1000);
+      await delay(1200);
       localStorage.clear();
       this.router.navigate(['authentication']);
     } else {
