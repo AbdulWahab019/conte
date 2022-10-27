@@ -52,8 +52,8 @@
     <h1 class="display-4 mb-4"><b>Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
     <form [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
       <!-- Doctor Details -->
-      <p class="display-5 mt-5"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-      <select
+      <p class="display-5 mt-5"><u>Position Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+      <!--       <select
         formControlName="doctor"
         (change)="getSurgeries($any($event.target).value)"
         [ngClass]="
@@ -66,18 +66,33 @@
         <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f.doctor.value">
           {{ doctor.name }}
         </option>
-      </select>
+      </select> -->
 
       <input
         type="text"
         [ngClass]="
-          (f.position.touched || f.position.dirty) && f.position.errors
+          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
             ? 'form-control question error-input '
             : 'form-control question'
         "
-        placeholder="Position*"
-        formControlName="position"
+        placeholder="Doctor*"
+        formControlName="doctor"
       />
+
+      <select
+        formControlName="position"
+        [ngClass]="
+          (f.position.touched || f.position.dirty) && f.position.errors
+            ? 'form-select question error-input '
+            : 'form-select question '
+        "
+      >
+        <option value="" disabled hidden>Choose your Position*</option>
+        <option value="pitcher">Pitcher</option>
+        <option value="infielder">Infielder</option>
+        <option value="outfielder">Outfielder</option>
+        <option value="catcher">Catcher</option>
+      </select>
 
       <input
         type="text"
@@ -104,7 +119,7 @@
         formControlName="surgery_date"
       />
 
-      <select
+      <!-- <select
         formControlName="primary_surgery"
         [ngClass]="
           (f.primary_surgery.touched || f.primary_surgery.dirty) && f.primary_surgery.errors
@@ -119,9 +134,20 @@
             {{ surgery.name }}
           </option></ng-container
         >
-      </select>
+      </select> -->
 
-      <select
+      <input
+        type="text"
+        [ngClass]="
+          (f.primary_surgery.touched || f.primary_surgery.dirty) && f.primary_surgery.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        placeholder="Primary Surgery*"
+        formControlName="primary_surgery"
+      />
+
+      <!-- <select
         formControlName="secondary_surgery"
         [ngClass]="
           (f.secondary_surgery.touched || f.secondary_surgery.dirty) && f.secondary_surgery.errors
@@ -136,7 +162,18 @@
             {{ surgery.name }}
           </option></ng-container
         >
-      </select>
+      </select> -->
+
+      <input
+        type="text"
+        [ngClass]="
+          (f.secondary_surgery.touched || f.secondary_surgery.dirty) && f.secondary_surgery.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        placeholder="Secondary Surgery*"
+        formControlName="secondary_surgery"
+      />
 
       <!-- Demographic/Contact Details -->
       <p class="display-5 mt-5"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
@@ -282,8 +319,8 @@
     <h1 class="display-4 mb-4"><b>Non-Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
     <form [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
       <!-- Doctor Details -->
-      <p class="display-5 mt-3"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-      <select
+      <p class="display-5 mt-3"><u>Position Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+      <!--   <select
         formControlName="doctor"
         (change)="getSurgeries($any($event.target).value)"
         [ngClass]="
@@ -296,7 +333,18 @@
         <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f2.doctor.value">
           {{ doctor.name }}
         </option>
-      </select>
+      </select> -->
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Doctor*"
+        formControlName="doctor"
+      />
 
       <input
         type="text"
@@ -309,16 +357,20 @@
         formControlName="doctor_dictation"
       />
 
-      <input
-        type="text"
+      <select
+        formControlName="position"
         [ngClass]="
           (f2.position.touched || f2.position.dirty) && f2.position.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
+            ? 'form-select question error-input '
+            : 'form-select question '
         "
-        placeholder="Position*"
-        formControlName="position"
-      />
+      >
+        <option value="" disabled hidden>Choose your Position*</option>
+        <option value="pitcher">Pitcher</option>
+        <option value="infielder">Infielder</option>
+        <option value="outfielder">Outfielder</option>
+        <option value="catcher">Catcher</option>
+      </select>
 
       <input
         type="text"
@@ -345,7 +397,7 @@
         formControlName="injury_date"
       />
 
-      <select
+      <!-- <select
         [ngClass]="
           (f2.injury.touched || f2.injury.dirty) && f2.injury.errors
             ? 'form-select question error-input '
@@ -357,7 +409,18 @@
         <option value="Surgery 1">Surgery One</option>
         <option value="Surgery 2">Surgery Two</option>
         <option value="Surgery 3">Surgery Three</option>
-      </select>
+      </select> -->
+
+      <input
+        type="text"
+        [ngClass]="
+          (f2.injury.touched || f2.injury.dirty) && f2.injury.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        placeholder="Injury Occured*"
+        formControlName="injury"
+      />
 
       <!-- Demographic/Contact Details -->
       <p class="display-5 mt-3"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
