@@ -1,6 +1,7 @@
+import moment = require('moment');
 import { Transaction } from 'sequelize';
-import { TreatmentPlanModel } from '../models/TreatmentPlan';
 
+import { TreatmentPlanModel } from '../models/TreatmentPlan';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
@@ -47,4 +48,18 @@ export async function createUserTreatmentPlan(
   ]);
 
   return userTreatmentPlan;
+}
+
+export async function getUserTasksByDate(user_id: number, date: string) {
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
+
+  const formattedDate = moment(date).format('YYYY-MM-DD');
+  const formattedTpDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
+
+  const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
+  return await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day } });
+}
+
+export async function completeUserTask(task_id: number, user_id: number) {
+  return await UserTreatmentPlanTasks.update({ is_completed: true }, { where: { id: task_id, user_id } });
 }

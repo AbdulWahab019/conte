@@ -37,7 +37,7 @@ export const UserTreatmentPlanTasks = sequelize.define<
   is_completed: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
-UserTreatmentPlanTasks.sync({ alter: true });
+UserTreatmentPlanTasks.sync();
 
 // Associations
 UserTreatmentPlanTasks.afterSync(() => {
