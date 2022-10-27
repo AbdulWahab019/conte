@@ -1,4 +1,5 @@
 import { TreatmentPlanDetailsFileAttributes } from '../models/TreatmentPlanDetail';
+import { UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 
 export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlanDetailsFileAttributes {
   return {
@@ -22,4 +23,18 @@ export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlan
     live_simulated_game: Number(record[17]) || 0,
     innings: Number(record[18]) || 0,
   };
+}
+
+export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttributes) {
+  const tasks = [];
+
+  if (detail.plyo_throw) {
+    tasks.push('plyo_throw'); // Update String
+  }
+  if (detail.max_distance && detail.max_velocity_absolute && detail.num_throws_at_max_distance) {
+    tasks.push('Max Distance'); // Update String
+  }
+  // TODO - Add 4 remaining tasks cases
+
+  return tasks;
 }

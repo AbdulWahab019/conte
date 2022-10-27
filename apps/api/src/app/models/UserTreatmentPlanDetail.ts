@@ -30,6 +30,26 @@ export interface UserTreatmentPlanDetailDefinedAttributes {
 export interface UserTreatmentPlanDetailModel
   extends Model<UserTreatmentPlanDetailModel, UserTreatmentPlanDetailDefinedAttributes> {
   id: number;
+  user_tp_id: number;
+  tp_day: number;
+  tp_weekday: string;
+  week_from_sx: number;
+  month_from_sx: number;
+  plyo_throw: number;
+  max_distance: number;
+  max_velocity_percent: number;
+  max_velocity_absolute: number;
+  num_throws_at_max_distance: number;
+  post_max_distance_flat_ground: number;
+  post_max_distance_flat_ground_velocity_percent: number;
+  post_max_distance_flat_ground_velocity_absolute: number;
+  post_max_flat_ground_pitches: string;
+  bullpen: number;
+  bullpen_max_velocity_percent: number;
+  bullpen_max_velocity_absolute: number;
+  bullpen_pitches: string;
+  live_simulated_game: number;
+  innings: number;
   created_at: string;
   updated_at: string;
 }
