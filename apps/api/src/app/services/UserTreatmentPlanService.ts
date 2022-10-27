@@ -3,6 +3,7 @@ import { TreatmentPlanModel } from '../models/TreatmentPlan';
 
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
+import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { getTasksFromTPDay } from '../utils/dataMapping';
 
 export async function createUserTreatmentPlan(
@@ -30,6 +31,7 @@ export async function createUserTreatmentPlan(
   const tasks = userTreatmentPlanDetailsData.flatMap((user_tp_detail: UserTreatmentPlanDetailDefinedAttributes) => {
     const tasks = getTasksFromTPDay(user_tp_detail);
 
+    // console.log(tasks);
     return tasks.map((task) => ({
       user_id,
       user_tp_id: userTreatmentPlan.id,
@@ -39,10 +41,10 @@ export async function createUserTreatmentPlan(
   });
 
   // Create User Treatment Plan Details
-  // await Promise.all([
-  await UserTreatmentPlanDetail.bulkCreate(userTreatmentPlanDetailsData, { transaction });
-  // UserTreatmentPlanTask.bulkCreate(tasks, { transaction }),
-  // ]);
+  await Promise.all([
+    await UserTreatmentPlanDetail.bulkCreate(userTreatmentPlanDetailsData, { transaction }),
+    await UserTreatmentPlanTasks.bulkCreate(tasks, { transaction }),
+  ]);
 
   return userTreatmentPlan;
 }
