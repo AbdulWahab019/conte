@@ -29,16 +29,12 @@ export class SubscriptionComponent implements OnInit {
     this.route.queryParams.subscribe(async (params) => {
       if (params['state'] === 'success') {
         await delay(2000);
-        this.checkSubscription();
       } else if (params['state'] === 'fail') {
         this.subscriptionState = 'fail';
         await delay(2000);
         this.subscriptionState = '';
-        await delay(2000);
-        this.renderingSubscriptionForm = true;
-        await delay(2000);
-        this.subscriptionFormRendered = true;
-      } else this.checkSubscription();
+      }
+      this.checkSubscription();
     });
   }
 

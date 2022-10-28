@@ -1,5 +1,5 @@
 .dashboard-screen {
-  height: 100vh;
+  height: 100%;
   padding: 5% 2% 5% 2%;
 
   background-color: rgb(227, 227, 227);
@@ -94,7 +94,7 @@
     }
   }
 
-  video {
+  iframe {
     border-radius: 26px;
     box-shadow: 0 5px 10px black;
   }
