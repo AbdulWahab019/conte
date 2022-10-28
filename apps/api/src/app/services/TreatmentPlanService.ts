@@ -8,7 +8,7 @@ import {
   TreatmentPlanDetailsFileAttributes,
 } from '../models/TreatmentPlanDetail';
 
-import { transformToTreatmentPlanDetails } from '../utils/dataMapping';
+import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
 
 export async function createTreatmentPlan(
   name: string,

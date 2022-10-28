@@ -5,7 +5,7 @@ import { TreatmentPlanModel } from '../models/TreatmentPlan';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
-import { getTasksFromTPDay } from '../utils/dataMapping';
+import { getTasksFromTPDay } from '../helpers/TreatmentPlanHelper';
 
 export async function createUserTreatmentPlan(
   user_id: number,
