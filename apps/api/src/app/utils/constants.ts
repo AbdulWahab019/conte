@@ -24,10 +24,24 @@ export const INVALID_PASSWORD_LENGTH = 'Password length must be 8 or more charac
 // User
 export const USER_EXISTS = 'User already exists';
 export const USER_NOT_FOUND = 'User not found';
+export const USER_DEMOGRAPHICS_INVALID = 'User Demographics is invalid.';
+export const FIRST_NAME_REQUIRED = 'First Name is required';
+export const FIRST_NAME_LENGTH_INVALID = 'First Name should be between 2 and 20 letters.';
+export const LAST_NAME_REQUIRED = 'Last Name is required';
+export const LAST_NAME_LENGTH_INVALID = 'Last Name should be between 2 and 20 letters.';
+export const USER_PHONE_INVALID = 'Invalid Phone Number';
+export const USER_BIRTH_DATE_INVALID = 'Invalid Date of Birth';
+export const USER_ADDRESS_INVALID = 'Invalid Address';
+export const USER_CITY_INVALID = 'Invalid City';
+export const USER_STATE_INVALID = 'Invalid State';
+export const USER_ZIP_CODE_INVALID = 'Invalid US Zip Code';
+export const USER_ESTIMATED_MAX_VELOCITY_INVALID = 'Invalid Estimated Max Velocity';
 
 // Subscription
 export const SUBSCRIPTION_REQUIRED = 'Subscription_id is required.';
 export const INVALID_SUBSCRIPTION_ID_LENGTH = 'Subscription_id should be 28 digits.';
+export const SUCCESS_URL_REQUIRED = 'Success Url is required';
+export const CANCEL_URL_REQUIRED = 'Cancel Url is required';
 
 // Questionnaire
 export const DATA_NOT_ARRAY = 'Data must be an array';
@@ -54,3 +68,4 @@ export const TREATMENT_PLAN_NAME_INVALID = 'Treatment plan name should be a vali
 export const TREATMENT_PLAN_NAME_INVALID_LENGTH =
   'Treatment plan name should be greater than 5 characters and less than 30 characters';
 export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'A Treatment Plan is already assigned to user';
+export const TREATMENT_PLAN_NOT_ASSIEDED = 'No Treatment Plan assigned to user';

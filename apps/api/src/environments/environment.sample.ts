@@ -10,6 +10,8 @@ export const environment = {
 
   STRIPE_PUBLISHABLE_KEY: '',
   STRIPE_SECRET_KEY: '',
+  STRIPE_WEBHOOK_SECRET: '',
+
   JWT_TOKEN_SECRET: '',
 
   ENV: '',

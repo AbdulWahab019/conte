@@ -17,7 +17,7 @@ sequelize
   .catch((error) => console.log('Unable to connect to database: ', error));
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: '5mb', verify: (req: express.Request, res, buf) => (req['rawBody'] = buf.toString()) }));
 app.use(cors({ origin: true, credentials: true }));
 app.use(helmet());
 
