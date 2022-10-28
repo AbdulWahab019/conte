@@ -6,5 +6,5 @@ import { validate } from './validation';
 export async function validateSurgeriesByDoctor(req: Request, res: Response, next: NextFunction) {
   await param('doctor_id').isInt().run(req);
 
-  return await validate(req, res, next);
+  return validate(req, res, next);
 }
