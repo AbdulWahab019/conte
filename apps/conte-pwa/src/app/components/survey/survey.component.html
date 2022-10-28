@@ -144,10 +144,19 @@
         >
       </select>
 
-      <!-- Demographic/Contact Details -->
+      <!-- SURGERY || Demographic/Contact Details -->
       <p class="display-5 mt-5"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
 
-      <!-- First & Last Name Validation -->
+      <!-- SURGERY || First & Last Name//start -->
+      <div
+        *ngIf="f.first_name.touched || f.first_name.dirty || f.last_name.touched || f.last_name.dirty"
+        class="error-text"
+      >
+        <p *ngIf="f.first_name.errors?.required || f.last_name.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Name is required.
+        </p>
+      </div>
+
       <div *ngIf="f.first_name.touched && f.first_name.dirty" class="error-text">
         <p *ngIf="f.first_name.errors?.minlength">
           <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
@@ -189,13 +198,18 @@
           formControlName="last_name"
         />
       </div>
+      <!-- SURGERY || First & Last Name//end -->
 
-      <!-- Cell Phone with Validation -->
+      <!-- SURGERY || Cell Phone//start -->
       <div *ngIf="f.cell_phone.touched && f.cell_phone.dirty" class="error-text">
         <p *ngIf="f.cell_phone.errors?.pattern">
           <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
         </p>
       </div>
+      <div *ngIf="f.cell_phone.touched || f.cell_phone.dirty" class="error-text">
+        <p *ngIf="f.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
+      </div>
+
       <input
         type="text"
         class="form-control question"
@@ -207,7 +221,12 @@
         placeholder="Cell Phone*"
         formControlName="cell_phone"
       />
+      <!-- SURGERY || Cell Phone//end -->
 
+      <!-- SURGERY || Birth Date//start -->
+      <div *ngIf="f.birth_date.touched || f.birth_date.dirty" class="error-text">
+        <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
+      </div>
       <input
         placeholder="Birth Date*"
         [ngClass]="
@@ -219,7 +238,12 @@
         max="2000-01-01"
         formControlName="birth_date"
       />
+      <!-- SURGERY || Birth Date//end -->
 
+      <!-- SURGERY || Address//start -->
+      <div *ngIf="f.address.touched || f.address.dirty" class="error-text">
+        <p *ngIf="f.address.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Address is required.</p>
+      </div>
       <input
         type="text"
         [ngClass]="
@@ -230,14 +254,25 @@
         placeholder="Address*"
         formControlName="address"
       />
+      <!-- SURGERY || Address//end -->
 
-      <!-- City & State Validation -->
+      <!-- SURGERY || City & State//start -->
+      <div *ngIf="f.city.touched || f.city.dirty" class="error-text">
+        <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
+      </div>
+
       <div *ngIf="f.city.touched && f.city.dirty" class="error-text">
         <p *ngIf="f.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
+        <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
+      </div>
+
+      <div *ngIf="f.state.touched || f.state.dirty" class="error-text">
+        <p *ngIf="f.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
       </div>
 
       <div *ngIf="f.state.touched && f.state.dirty" class="error-text">
         <p *ngIf="f.state.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid State.</p>
+        <p *ngIf="f.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
       </div>
 
       <div class="row">
@@ -262,8 +297,13 @@
           formControlName="state"
         />
       </div>
+      <!-- SURGERY || City & State//end -->
 
-      <!-- ZIP Code with validation -->
+      <!-- SURGERY || ZIP Code//start -->
+      <div *ngIf="f.zip_code.touched || f.zip_code.dirty" class="error-text">
+        <p *ngIf="f.zip_code.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>ZIP Code is required.</p>
+      </div>
+
       <div *ngIf="f.zip_code.touched && f.zip_code.dirty" class="error-text">
         <p *ngIf="f.zip_code.errors?.minlength">
           <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
@@ -272,6 +312,7 @@
           <i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.
         </p>
       </div>
+
       <input
         type="text"
         maxlength="5"
@@ -283,6 +324,7 @@
         placeholder="ZIP Code*"
         formControlName="zip_code"
       />
+      <!-- SURGERY || ZIP Code//end -->
 
       <!-- Form Info -->
       <div *ngIf="surgeryForm.invalid" class="info-text" [@fade]>
