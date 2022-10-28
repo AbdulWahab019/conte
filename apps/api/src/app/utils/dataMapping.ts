@@ -28,11 +28,12 @@ export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlan
 export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttributes) {
   const tasks = [];
 
+  // Update Strings
   if (detail.plyo_throw) {
-    tasks.push('plyo_throw'); // Update String
+    tasks.push('plyo_throw');
   }
   if (detail.max_distance && detail.max_velocity_absolute && detail.num_throws_at_max_distance) {
-    tasks.push('Throws At Max Distance'); // Update String
+    tasks.push('Throws At Max Distance');
   }
   if (
     detail.post_max_flat_ground_pitches &&
@@ -44,13 +45,9 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
   if (detail.bullpen && detail.bullpen_max_velocity_absolute && detail.bullpen_pitches) {
     tasks.push('Bull Pen');
   }
-  if (detail.live_simulated_game) {
-    tasks.push('Line Simulated Game');
+  if (detail.live_simulated_game && detail.innings) {
+    tasks.push('Line Simulated Game & Innings');
   }
-  if (detail.innings) {
-    tasks.push('Innings');
-  }
-  // TODO - Add 4 remaining tasks cases
 
   return tasks;
 }
