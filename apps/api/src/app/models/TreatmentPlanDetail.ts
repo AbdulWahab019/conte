@@ -103,7 +103,7 @@ export const TreatmentPlanDetail = sequelize.define<TreatmentPlanDetailModel, Tr
   }
 );
 
-TreatmentPlanDetail.sync({ alter: true, force: true });
+TreatmentPlanDetail.sync();
 
 // Associations
 TreatmentPlanDetail.afterSync(() => {

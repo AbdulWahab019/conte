@@ -81,7 +81,7 @@ export const UserTreatmentPlanDetail = sequelize.define<
   innings: DataTypes.INTEGER,
 });
 
-UserTreatmentPlanDetail.sync({ alter: true, force: true });
+UserTreatmentPlanDetail.sync();
 
 // Associations
 UserTreatmentPlanDetail.afterSync(() => {
