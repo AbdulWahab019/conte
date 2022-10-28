@@ -1,6 +1,7 @@
+import { UserDemographics } from '@conte/models';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
-import { User } from './User';
+import { User, UserModel } from './User';
 
 export interface CreateQuestionnaire {
   user_id: number;
@@ -41,3 +42,12 @@ Questionnaire.sync();
 Questionnaire.afterSync(() => {
   Questionnaire.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
 });
+
+export interface SubmitQuestionnaireData {
+  questionnaireObj: CreateQuestionnaire[];
+  user: UserModel;
+  doctor_id: number;
+  surgery_id: number;
+  user_demographics: UserDemographics;
+  user_treatment_plan_name: string;
+}

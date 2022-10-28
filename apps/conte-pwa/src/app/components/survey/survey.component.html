@@ -94,6 +94,12 @@
         <option value="catcher">Catcher</option>
       </select>
 
+      <!-- Estimated Max Velocity with Validation -->
+      <div *ngIf="f.estimated_max_velocity.touched && f.estimated_max_velocity.dirty" class="error-text">
+        <p *ngIf="f.estimated_max_velocity.errors?.pattern">
+          <i class="bi bi-x-circle-fill me-1"></i>EMV can only contain numbers.
+        </p>
+      </div>
       <input
         type="text"
         [ngClass]="
@@ -101,7 +107,7 @@
             ? 'form-control question error-input '
             : 'form-control question'
         "
-        placeholder="Estimated Max Velocity*"
+        placeholder="Estimated Max Velocity(MH)*"
         formControlName="estimated_max_velocity"
       />
 
@@ -175,8 +181,37 @@
         formControlName="secondary_surgery"
       />
 
-      <!-- Demographic/Contact Details -->
+      <!-- SURGERY || Demographic/Contact Details -->
       <p class="display-5 mt-5"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
+
+      <!-- SURGERY || First & Last Name//start -->
+      <div
+        *ngIf="f.first_name.touched || f.first_name.dirty || f.last_name.touched || f.last_name.dirty"
+        class="error-text"
+      >
+        <p *ngIf="f.first_name.errors?.required || f.last_name.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Name is required.
+        </p>
+      </div>
+
+      <div *ngIf="f.first_name.touched && f.first_name.dirty" class="error-text">
+        <p *ngIf="f.first_name.errors?.minlength">
+          <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
+        </p>
+        <p *ngIf="f.first_name.errors?.maxlength">
+          <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
+        </p>
+      </div>
+
+      <div *ngIf="f.last_name.touched && f.last_name.dirty" class="error-text">
+        <p *ngIf="f.last_name.errors?.minlength">
+          <i class="bi bi-x-circle-fill me-1"></i>Last name should be between 2 and 20 characters.
+        </p>
+        <p *ngIf="f.last_name.errors?.maxlength">
+          <i class="bi bi-x-circle-fill me-1"></i>Last name should be between 2 and 20 characters.
+        </p>
+      </div>
+
       <div class="row">
         <input
           type="text"
@@ -188,6 +223,7 @@
           placeholder="First Name*"
           formControlName="first_name"
         />
+
         <input
           type="text"
           [ngClass]="
@@ -199,13 +235,18 @@
           formControlName="last_name"
         />
       </div>
+      <!-- SURGERY || First & Last Name//end -->
 
-      <!-- Cell Phone with Validation -->
+      <!-- SURGERY || Cell Phone//start -->
       <div *ngIf="f.cell_phone.touched && f.cell_phone.dirty" class="error-text">
         <p *ngIf="f.cell_phone.errors?.pattern">
           <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
         </p>
       </div>
+      <div *ngIf="f.cell_phone.touched || f.cell_phone.dirty" class="error-text">
+        <p *ngIf="f.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
+      </div>
+
       <input
         type="text"
         class="form-control question"
@@ -217,7 +258,12 @@
         placeholder="Cell Phone*"
         formControlName="cell_phone"
       />
+      <!-- SURGERY || Cell Phone//end -->
 
+      <!-- SURGERY || Birth Date//start -->
+      <div *ngIf="f.birth_date.touched || f.birth_date.dirty" class="error-text">
+        <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
+      </div>
       <input
         placeholder="Birth Date*"
         [ngClass]="
@@ -226,11 +272,15 @@
             : 'form-control question '
         "
         type="date"
-        min="2000-01-01"
-        max="9999-12-31"
+        max="2000-01-01"
         formControlName="birth_date"
       />
+      <!-- SURGERY || Birth Date//end -->
 
+      <!-- SURGERY || Address//start -->
+      <div *ngIf="f.address.touched || f.address.dirty" class="error-text">
+        <p *ngIf="f.address.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Address is required.</p>
+      </div>
       <input
         type="text"
         [ngClass]="
@@ -241,6 +291,26 @@
         placeholder="Address*"
         formControlName="address"
       />
+      <!-- SURGERY || Address//end -->
+
+      <!-- SURGERY || City & State//start -->
+      <div *ngIf="f.city.touched || f.city.dirty" class="error-text">
+        <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
+      </div>
+
+      <div *ngIf="f.city.touched && f.city.dirty" class="error-text">
+        <p *ngIf="f.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
+        <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
+      </div>
+
+      <div *ngIf="f.state.touched || f.state.dirty" class="error-text">
+        <p *ngIf="f.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
+      </div>
+
+      <div *ngIf="f.state.touched && f.state.dirty" class="error-text">
+        <p *ngIf="f.state.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid State.</p>
+        <p *ngIf="f.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
+      </div>
 
       <div class="row">
         <input
@@ -264,25 +334,34 @@
           formControlName="state"
         />
       </div>
+      <!-- SURGERY || City & State//end -->
 
-      <!-- ZIP Code with validation -->
-      <div *ngIf="f.zip.touched && f.zip.dirty" class="error-text">
-        <p *ngIf="f.zip.errors?.minlength">
+      <!-- SURGERY || ZIP Code//start -->
+      <div *ngIf="f.zip_code.touched || f.zip_code.dirty" class="error-text">
+        <p *ngIf="f.zip_code.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>ZIP Code is required.</p>
+      </div>
+
+      <div *ngIf="f.zip_code.touched && f.zip_code.dirty" class="error-text">
+        <p *ngIf="f.zip_code.errors?.minlength">
           <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
         </p>
-        <p *ngIf="f.zip.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.</p>
+        <p *ngIf="f.zip_code.errors?.pattern">
+          <i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.
+        </p>
       </div>
+
       <input
         type="text"
         maxlength="5"
         [ngClass]="
-          (f.zip.touched || f.zip.dirty) && f.zip.errors
+          (f.zip_code.touched || f.zip_code.dirty) && f.zip_code.errors
             ? 'form-control question error-input '
             : 'form-control question '
         "
         placeholder="ZIP Code*"
-        formControlName="zip"
+        formControlName="zip_code"
       />
+      <!-- SURGERY || ZIP Code//end -->
 
       <!-- Form Info -->
       <div *ngIf="surgeryForm.invalid" class="info-text" [@fade]>
@@ -372,6 +451,11 @@
         <option value="catcher">Catcher</option>
       </select>
 
+      <div *ngIf="f2.estimated_max_velocity.touched && f2.estimated_max_velocity.dirty" class="error-text">
+        <p *ngIf="f2.estimated_max_velocity.errors?.pattern">
+          <i class="bi bi-x-circle-fill me-1"></i>EMV can only contain numbers.
+        </p>
+      </div>
       <input
         type="text"
         [ngClass]="
@@ -424,6 +508,26 @@
 
       <!-- Demographic/Contact Details -->
       <p class="display-5 mt-3"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
+
+      <!-- First & Last Name Validation -->
+      <div *ngIf="f2.first_name.touched && f2.first_name.dirty" class="error-text">
+        <p *ngIf="f2.first_name.errors?.minlength">
+          <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
+        </p>
+        <p *ngIf="f2.first_name.errors?.maxlength">
+          <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
+        </p>
+      </div>
+
+      <div *ngIf="f2.last_name.touched && f2.last_name.dirty" class="error-text">
+        <p *ngIf="f2.last_name.errors?.minlength">
+          <i class="bi bi-x-circle-fill me-1"></i>Last name should be between 2 and 20 characters.
+        </p>
+        <p *ngIf="f2.last_name.errors?.maxlength">
+          <i class="bi bi-x-circle-fill me-1"></i>Last name should be between 2 and 20 characters.
+        </p>
+      </div>
+
       <div class="row">
         <input
           type="text"
@@ -472,8 +576,7 @@
             : 'form-control question '
         "
         type="date"
-        max="9999-12-31"
-        min="2000-01-01"
+        max="2000-01-01"
         formControlName="birth_date"
       />
 
@@ -487,6 +590,15 @@
         placeholder="Address*"
         formControlName="address"
       />
+
+      <!-- City & State Validation -->
+      <div *ngIf="f2.city.touched && f2.city.dirty" class="error-text">
+        <p *ngIf="f2.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
+      </div>
+
+      <div *ngIf="f2.state.touched && f2.state.dirty" class="error-text">
+        <p *ngIf="f2.state.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid State.</p>
+      </div>
 
       <div class="row">
         <input
@@ -512,22 +624,24 @@
       </div>
 
       <!-- ZIP Code with validation -->
-      <div *ngIf="f2.zip.touched && f2.zip.dirty" class="error-text">
-        <p *ngIf="f2.zip.errors?.minlength">
+      <div *ngIf="f2.zip_code.touched && f2.zip_code.dirty" class="error-text">
+        <p *ngIf="f2.zip_code.errors?.minlength">
           <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
         </p>
-        <p *ngIf="f2.zip.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.</p>
+        <p *ngIf="f2.zip_code.errors?.pattern">
+          <i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.
+        </p>
       </div>
       <input
         type="text"
         maxlength="5"
         [ngClass]="
-          (f2.zip.touched || f2.zip.dirty) && f2.zip.errors
+          (f2.zip_code.touched || f2.zip_code.dirty) && f2.zip_code.errors
             ? 'form-control question error-input '
             : 'form-control question '
         "
         placeholder="ZIP Code*"
-        formControlName="zip"
+        formControlName="zip_code"
       />
 
       <!-- Form Info -->

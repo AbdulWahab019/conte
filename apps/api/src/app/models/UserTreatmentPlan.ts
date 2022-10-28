@@ -51,6 +51,5 @@ UserTreatmentPlan.afterSync(() => {
   UserTreatmentPlan.hasMany(UserTreatmentPlanDetail, {
     foreignKey: 'user_tp_id',
     sourceKey: 'id',
-    onDelete: 'CASCADE',
   });
 });

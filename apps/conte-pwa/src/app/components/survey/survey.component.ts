@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { delay } from '../../utils/constants';
-import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest } from '@conte/models';
+import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } from '@conte/models';
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
@@ -63,15 +63,15 @@ export class SurveyComponent implements OnInit {
       secondary_surgery: new FormControl('', []),
       doctor: new FormControl('', [Validators.required]),
       position: new FormControl('', [Validators.required]),
-      estimated_max_velocity: new FormControl('', [Validators.required]),
-      first_name: new FormControl('', [Validators.required]),
-      last_name: new FormControl('', [Validators.required]),
+      estimated_max_velocity: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      first_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+      last_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,15}')]),
       birth_date: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
-      zip: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
+      city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+      state: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+      zip_code: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 
     this.surveyScreen = false;
@@ -111,20 +111,28 @@ export class SurveyComponent implements OnInit {
       { id: 2, response: primary_surgery },
       { id: 4, response: doctor },
       { id: 5, response: this.f.position.value },
-      { id: 6, response: this.f.estimated_max_velocity.value },
-      { id: 7, response: this.f.first_name.value },
-      { id: 8, response: this.f.last_name.value },
-      { id: 9, response: this.f.cell_phone.value },
-      { id: 10, response: this.f.birth_date.value },
-      { id: 11, response: this.f.address.value },
-      { id: 12, response: this.f.city.value },
-      { id: 13, response: this.f.state.value },
-      { id: 14, response: this.f.zip.value },
     ];
 
     if (this.f.secondary_surgery.value) data.push({ id: 3, response: secondary_surgery });
 
-    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: Number(this.f.doctor.value), surgery_id: Number(this.f.primary_surgery.value) };
+    const user_demographics: UserDemographics = {
+      first_name: this.f.first_name.value,
+      last_name: this.f.last_name.value,
+      cell_phone: this.f.cell_phone.value,
+      birth_date: this.f.birth_date.value,
+      address: this.f.address.value,
+      city: this.f.city.value,
+      state: this.f.state.value,
+      zip_code: this.f.zip_code.value,
+      estimated_max_velocity: this.f.estimated_max_velocity.value,
+    };
+
+    const body: SubmitQuestionnaireAPIRequest = {
+      data,
+      doctor_id: Number(this.f.doctor.value),
+      surgery_id: Number(this.f.primary_surgery.value),
+      user_demographics,
+    };
 
     this.surveyService
       .submitQuestionnaire(body)
@@ -165,15 +173,15 @@ export class SurveyComponent implements OnInit {
       doctor: new FormControl('', [Validators.required]),
       doctor_dictation: new FormControl('', [Validators.required]),
       position: new FormControl('', [Validators.required]),
-      estimated_max_velocity: new FormControl('', [Validators.required]),
-      first_name: new FormControl('', [Validators.required]),
-      last_name: new FormControl('', [Validators.required]),
+      estimated_max_velocity: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      first_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+      last_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
       birth_date: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
-      zip: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
+      city: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
+      state: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
+      zip_code: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 
     this.surveyScreen = false;
@@ -196,18 +204,21 @@ export class SurveyComponent implements OnInit {
       { id: 22, response: doctor },
       { id: 23, response: this.f2.doctor_dictation.value },
       { id: 24, response: this.f2.position.value },
-      { id: 25, response: this.f2.estimated_max_velocity.value },
-      { id: 26, response: this.f2.first_name.value },
-      { id: 27, response: this.f2.last_name.value },
-      { id: 28, response: this.f2.cell_phone.value },
-      { id: 29, response: this.f2.birth_date.value },
-      { id: 30, response: this.f2.address.value },
-      { id: 31, response: this.f2.city.value },
-      { id: 32, response: this.f2.state.value },
-      { id: 33, response: this.f2.zip.value },
     ];
 
-    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f2.doctor.value };
+    const user_demographics: UserDemographics = {
+      first_name: this.f.first_name.value,
+      last_name: this.f.last_name.value,
+      cell_phone: this.f.cell_phone.value,
+      birth_date: this.f.birth_date.value,
+      address: this.f.address.value,
+      city: this.f.city.value,
+      state: this.f.state.value,
+      zip_code: this.f.zip_code.value,
+      estimated_max_velocity: this.f.estimated_max_velocity.value,
+    };
+
+    const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f2.doctor.value, user_demographics };
 
     this.surveyService
       .submitQuestionnaire(body)
