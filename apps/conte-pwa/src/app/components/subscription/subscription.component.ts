@@ -49,9 +49,9 @@ export class SubscriptionComponent implements OnInit {
           const orientation_watched = localStorage.getItem('orientation_watched');
           const questionnaire_submitted = localStorage.getItem('questionnaire_submitted');
 
-          if (!orientation_watched) {
+          if (orientation_watched === 'false') {
             this.router.navigate(['orientation']);
-          } else if (!questionnaire_submitted) {
+          } else if (questionnaire_submitted === 'false') {
             this.router.navigate(['survey']);
           } else this.router.navigate(['dashboard']);
         } else if (!resp.data.is_subscribed) {

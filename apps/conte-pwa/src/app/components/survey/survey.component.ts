@@ -206,15 +206,15 @@ export class SurveyComponent implements OnInit {
     ];
 
     const user_demographics: UserDemographics = {
-      first_name: this.f.first_name.value,
-      last_name: this.f.last_name.value,
-      cell_phone: this.f.cell_phone.value,
-      birth_date: this.f.birth_date.value,
-      address: this.f.address.value,
-      city: this.f.city.value,
-      state: this.f.state.value,
-      zip_code: this.f.zip_code.value,
-      estimated_max_velocity: this.f.estimated_max_velocity.value,
+      first_name: this.f2.first_name.value,
+      last_name: this.f2.last_name.value,
+      cell_phone: this.f2.cell_phone.value,
+      birth_date: this.f2.birth_date.value,
+      address: this.f2.address.value,
+      city: this.f2.city.value,
+      state: this.f2.state.value,
+      zip_code: this.f2.zip_code.value,
+      estimated_max_velocity: this.f2.estimated_max_velocity.value,
     };
 
     const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f2.doctor.value, user_demographics };
