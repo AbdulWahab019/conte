@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { delay, STRIPE_FAIL, STRIPE_SUCCESS } from '../../utils/constants';
 import { SubscriptionService } from '../../services/subscription.service';
-import { SpinnerService } from '../../services/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 
@@ -18,35 +17,59 @@ export class SubscriptionComponent implements OnInit {
   subscriptionFormRendered = false;
   buttonState = 'static';
   subscriptionState = '';
-  message = '';
-  sucess = '';
-  session_id = '';
 
   constructor(
     private subscriptionService: SubscriptionService,
     private router: Router,
     private toast: ToastService,
-    private spinner: SpinnerService,
     private route: ActivatedRoute
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe(async (params) => {
       if (params['state'] === 'success') {
-        this.subscriptionState = 'success';
         await delay(2000);
-        this.router.navigate(['orientation']);
+        this.checkSubscription();
       } else if (params['state'] === 'fail') {
         this.subscriptionState = 'fail';
         await delay(2000);
-        this.subscriptionState = ''
-      }
+        this.subscriptionState = '';
+        await delay(2000);
+        this.renderingSubscriptionForm = true;
+        await delay(2000);
+        this.subscriptionFormRendered = true;
+      } else this.checkSubscription();
     });
+  }
 
-    await delay(2000);
-    this.renderingSubscriptionForm = true;
-    await delay(2000);
-    this.subscriptionFormRendered = true;
+  async checkSubscription() {
+    this.subscriptionService
+      .checkSubscription()
+      .then(async (resp) => {
+        if (resp.data.is_subscribed) {
+          this.subscriptionState = 'success';
+          await delay(2000);
+
+          const orientation_watched = localStorage.getItem('orientation_watched');
+          const questionnaire_submitted = localStorage.getItem('questionnaire_submitted');
+
+          if (!orientation_watched) {
+            this.router.navigate(['orientation']);
+          } else if (!questionnaire_submitted) {
+            this.router.navigate(['survey']);
+          } else this.router.navigate(['dashboard']);
+        } else if (!resp.data.is_subscribed) {
+          await delay(2000);
+          this.renderingSubscriptionForm = true;
+          await delay(2000);
+          this.subscriptionFormRendered = true;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        this.buttonState = 'static';
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   }
 
   confirmSubscription() {

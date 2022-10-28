@@ -84,7 +84,6 @@ export class AuthenticationComponent implements OnInit {
       .then((resp) => {
         localStorage.setItem('token', resp.data.token);
         localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
-        localStorage.setItem('is_subscribed', resp.data.is_subscribed);
         localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
         localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
         this.buttonState = 'static';
@@ -93,13 +92,7 @@ export class AuthenticationComponent implements OnInit {
 
         if (!resp.data.is_terms_of_use_accepted) {
           this.router.navigate(['terms']);
-        } else if (!resp.data.is_subscribed) {
-          this.router.navigate(['subscription']);
-        } else if (!resp.data.is_orientation_video_watched) {
-          this.router.navigate(['orientation']);
-        } else if (!resp.data.is_questionnaire_submitted) {
-          this.router.navigate(['survey']);
-        } else this.router.navigate(['dashboard']);
+        } else this.router.navigate(['subscription']);
       })
       .catch((err) => {
         console.error(err);
@@ -121,6 +114,7 @@ export class AuthenticationComponent implements OnInit {
         localStorage.setItem('token', resp.data.token);
         localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
         localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
+        localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
         this.buttonState = 'static';
 
         this.toastService.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
