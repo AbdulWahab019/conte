@@ -1,6 +1,6 @@
 .terms-screen {
   height: 100%;
-  background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62) 0%, rgb(5, 107, 25) 100%);
+  background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.8) 0%, rgb(19, 37, 118) 100%);
   padding: 5%;
 }
 
@@ -24,17 +24,22 @@
     width: 100%;
   }
 
+  .logo {
+    height: 30vh;
+    width: 35vh;
+  }
+
   .btn-confirm {
     padding: 10px;
     width: 210px;
     border-radius: 20px;
-    background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62) 0%, rgb(5, 107, 25) 100%);
+    background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62) 0%, rgb(31, 92, 234) 100%);
     border-style: none;
     color: white;
     font-weight: 600;
   }
 
   .btn-confirm:hover {
-    background-color: rgba(10, 136, 43, 0.5);
+    background-color: rgba(53, 72, 181, 0.5);
   }
 }

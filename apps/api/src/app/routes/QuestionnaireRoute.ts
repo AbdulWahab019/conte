@@ -1,12 +1,12 @@
 import { Router } from 'express';
 const router = Router();
 
-import { createQuestionnaire, submitQuestionnaire } from '../controllers/QuestionnaireController';
+import { createQuestionnaireHttpReq, submitQuestionnaireHttpReq } from '../controllers/QuestionnaireController';
 import { authorize } from '../middlewares/auth';
 import { validateCreateQuestionnaire, validateSubmitQuestionnaire } from '../validations/QuestionnaireValidation';
 
-router.post('/', validateCreateQuestionnaire, authorize, createQuestionnaire);
+router.post('/', validateCreateQuestionnaire, authorize, createQuestionnaireHttpReq);
 
-router.post('/submit', validateSubmitQuestionnaire, authorize, submitQuestionnaire);
+router.post('/submit', validateSubmitQuestionnaire, authorize, submitQuestionnaireHttpReq);
 
 export default router;
