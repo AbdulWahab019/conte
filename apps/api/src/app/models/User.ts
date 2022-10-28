@@ -28,6 +28,8 @@ export interface UserDefinedAttributes {
   email: string;
   password: string;
   estimated_max_velocity: number;
+  stripe_customer_id: string;
+  stripe_subscription_id: string;
   is_terms_of_use_accepted: boolean;
   is_orientation_video_watched: boolean;
 }
@@ -45,6 +47,8 @@ export interface UserModel extends Model<UserModel, UserDefinedAttributes> {
   email: string;
   password: string;
   estimated_max_velocity: number;
+  stripe_customer_id: string;
+  stripe_subscription_id: string;
   is_terms_of_use_accepted: boolean;
   is_orientation_video_watched: boolean;
   questionnaires?: QuestionnaireModel[];
@@ -65,6 +69,8 @@ export const User = sequelize.define<UserModel, UserDefinedAttributes>('user', {
   email: { type: DataTypes.STRING, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
   estimated_max_velocity: { type: DataTypes.INTEGER },
+  stripe_customer_id: { type: DataTypes.STRING },
+  stripe_subscription_id: { type: DataTypes.STRING },
   is_terms_of_use_accepted: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   is_orientation_video_watched: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 });
