@@ -9,7 +9,7 @@ const router = Router();
 
 router.post('/upload', authorize, upload.single('file'), uploadTreatmentPlan);
 
-router.get('/tasks/:date', authorize, getTasksByDate);
+router.get('/tasks/date/:date', authorize, getTasksByDate);
 
 router.post('/task/:task_id/complete', authorize, completeTask);
 
