@@ -10,6 +10,8 @@ import { UserModel } from '../models/User';
 export async function isUserSubscribed(req: Request, res: Response) {
   const { stripe_subscription_id }: UserModel = req['user'];
 
+  if (!stripe_subscription_id) return sendResponse(res, 200, SUCCESS, { is_subscribed: false });
+
   const apiResp = await isSubscribed(stripe_subscription_id);
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
