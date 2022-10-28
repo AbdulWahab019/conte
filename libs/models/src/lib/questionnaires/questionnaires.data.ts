@@ -1,4 +1,4 @@
-import { QuestionnaireInterface } from './questionnaire.interface';
+import { QuestionnaireInterface } from './questionnaire.model';
 
 export const questionnaire_surgery: QuestionnaireInterface = {
   1: { title: 'Surgery Date', type: 'surgery' },

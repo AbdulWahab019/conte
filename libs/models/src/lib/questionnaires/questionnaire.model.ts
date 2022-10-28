@@ -1,4 +1,4 @@
-import { UserDemographics } from '../users/user.interface';
+import { UserDemographics } from '../users/user.model';
 
 export interface QuestionnaireInterface {
   [key: number]: {
