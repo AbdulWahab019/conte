@@ -68,4 +68,4 @@ export const TREATMENT_PLAN_NAME_INVALID = 'Treatment plan name should be a vali
 export const TREATMENT_PLAN_NAME_INVALID_LENGTH =
   'Treatment plan name should be greater than 5 characters and less than 30 characters';
 export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'A Treatment Plan is already assigned to user';
-export const TREATMENT_PLAN_NOT_ASSIEDED = 'No Treatment Plan assigned to user';
+export const TREATMENT_PLAN_NOT_ASSIGNED = 'No Treatment Plan assigned to user';
