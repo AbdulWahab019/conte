@@ -81,10 +81,10 @@ export async function validateSubmitQuestionnaire(req: Request, res: Response, n
       .run(req),
     body('user_demographics.cell_phone').isMobilePhone('en-US').withMessage('Invalid Phone Number').run(req),
     body('user_demographics.birth_date').isDate({ format: 'YYYY-MM-DD' }).withMessage('Invalid Date of Birth').run(req),
-    body('user_demographics.address').isString().withMessage('Address can be max 120 letters.').run(req),
-    body('user_demographics.city').isString().withMessage('City can be max 20 letters.').run(req),
-    body('user_demographics.state').isString().withMessage('State can be max 15 letters.').run(req),
-    body('user_demographics.zip_code').isPostalCode('US').withMessage('Invalid Zip Code').run(req),
+    body('user_demographics.address').isString().withMessage('Invalid Address.').run(req),
+    body('user_demographics.city').isString().withMessage('Invalid City.').run(req),
+    body('user_demographics.state').isString().withMessage('Invalid State.').run(req),
+    body('user_demographics.zip_code').isPostalCode('US').withMessage('Invalid US Zip Code').run(req),
     body('user_demographics.estimated_max_velocity').isInt().withMessage('Invalid Estimated Max Velocity').run(req),
     body('user_demographics')
       .custom((value) => Object.keys(value).length === 9)
