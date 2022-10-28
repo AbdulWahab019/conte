@@ -1,7 +1,7 @@
 <!-- Survey Screen//start -->
 <div class="container-fluid d-flex survey-screen" *ngIf="surveyScreen" [@fade]>
   <div class="container-fluid survey-container">
-    <h1 class="display-2">Conte PWA</h1>
+    <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
     <h1 class="display-4 mb-5"><u>Survey</u></h1>
 
     <p class="display-5">Please select the type of injury you recieved:</p>
@@ -55,7 +55,7 @@
       <p class="display-5 mt-5"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
       <select
         formControlName="doctor"
-        (change)="getSurgeriesAndAssignPosition($any($event.target).value, 'surgery')"
+        (change)="getSurgeries($any($event.target).value)"
         [ngClass]="
           (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
             ? 'form-select select error-input '
@@ -75,8 +75,7 @@
             ? 'form-control question error-input '
             : 'form-control question'
         "
-        readonly
-        placeholder="Position"
+        placeholder="Position*"
         formControlName="position"
       />
 
@@ -93,23 +92,17 @@
 
       <!-- Surgery Details -->
       <p class="display-5"><u>Surgery Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-      <div class="icon-append">
-        <input
-          placeholder="Surgery Date*"
-          [ngClass]="
-            (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question'
-          "
-          name="dp1"
-          ngbDatepicker
-          #d1="ngbDatepicker"
-          (click)="d1.toggle()"
-          readonly
-          formControlName="surgery_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
-      </div>
+      <input
+        placeholder="Surgery Date*"
+        [ngClass]="
+          (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question'
+        "
+        type="date"
+        max="9999-12-31"
+        formControlName="surgery_date"
+      />
 
       <select
         formControlName="primary_surgery"
@@ -188,23 +181,18 @@
         formControlName="cell_phone"
       />
 
-      <div class="icon-append">
-        <input
-          placeholder="Birth Date*"
-          [ngClass]="
-            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          name="dp1"
-          ngbDatepicker
-          #d2="ngbDatepicker"
-          (click)="d2.toggle()"
-          readonly
-          formControlName="birth_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
-      </div>
+      <input
+        placeholder="Birth Date*"
+        [ngClass]="
+          (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        type="date"
+        min="2000-01-01"
+        max="9999-12-31"
+        formControlName="birth_date"
+      />
 
       <input
         type="text"
@@ -283,6 +271,8 @@
   </div>
   <!-- Surgery Questionnaire//end -->
 
+  <!-- -------------------------- -->
+
   <!-- Non Surgery Questionnaire//start -->
   <div class="container-fluid d-flex survey-container" *ngIf="nonSurgeryQuestionnaire" [@fade]>
     <div class="d-flex title-bar">
@@ -295,7 +285,7 @@
       <p class="display-5 mt-3"><u>Doctor Details</u><i class="bi bi-journal-medical ms-1"></i></p>
       <select
         formControlName="doctor"
-        (change)="getSurgeriesAndAssignPosition($any($event.target).value, 'non-surgery')"
+        (change)="getSurgeries($any($event.target).value)"
         [ngClass]="
           (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
             ? 'form-select question error-input '
@@ -326,8 +316,7 @@
             ? 'form-control question error-input '
             : 'form-control question '
         "
-        readonly
-        placeholder="Position"
+        placeholder="Position*"
         formControlName="position"
       />
 
@@ -344,23 +333,17 @@
 
       <!-- Injury Details -->
       <p class="display-5"><u>Injury Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-      <div class="icon-append">
-        <input
-          placeholder="Injury Date*"
-          [ngClass]="
-            (f2.injury_date.touched || f2.injury_date.dirty) && f2.injury_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          name="dp1"
-          ngbDatepicker
-          #d1="ngbDatepicker"
-          (click)="d1.toggle()"
-          readonly
-          formControlName="injury_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
-      </div>
+      <input
+        placeholder="Injury Date*"
+        [ngClass]="
+          (f2.injury_date.touched || f2.injury_date.dirty) && f2.injury_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        type="date"
+        max="9999-12-31"
+        formControlName="injury_date"
+      />
 
       <select
         [ngClass]="
@@ -418,23 +401,18 @@
         formControlName="cell_phone"
       />
 
-      <div class="icon-append">
-        <input
-          placeholder="Birth Date*"
-          [ngClass]="
-            (f2.birth_date.touched || f2.birth_date.dirty) && f2.birth_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          name="dp1"
-          ngbDatepicker
-          #d2="ngbDatepicker"
-          (click)="d2.toggle()"
-          readonly
-          formControlName="birth_date"
-        />
-        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
-      </div>
+      <input
+        placeholder="Birth Date*"
+        [ngClass]="
+          (f2.birth_date.touched || f2.birth_date.dirty) && f2.birth_date.errors
+            ? 'form-control question error-input '
+            : 'form-control question '
+        "
+        type="date"
+        max="9999-12-31"
+        min="2000-01-01"
+        formControlName="birth_date"
+      />
 
       <input
         type="text"
