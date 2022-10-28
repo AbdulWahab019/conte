@@ -34,7 +34,7 @@ export class SubscriptionComponent implements OnInit {
         await delay(2000);
         this.subscriptionState = '';
       }
-      this.checkSubscription();
+      await this.checkSubscription();
     });
   }
 
