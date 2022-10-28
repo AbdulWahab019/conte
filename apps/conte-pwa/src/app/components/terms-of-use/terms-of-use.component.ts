@@ -26,7 +26,7 @@ export class TermsOfUseComponent implements OnInit {
         this.buttonState = 'static';
 
         this.toastService.show('Terms of use accepted.', { classname: 'bg-success text-light', icon: 'success' });
-        this.router.navigate(['orientation']);
+        this.router.navigate(['subscription']);
       })
       .catch((err) => {
         console.error(err);
