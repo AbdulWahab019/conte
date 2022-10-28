@@ -178,8 +178,8 @@ export class SurveyComponent implements OnInit {
       cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
       birth_date: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
-      state: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
+      city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+      state: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       zip_code: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 

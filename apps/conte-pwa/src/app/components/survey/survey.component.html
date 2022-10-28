@@ -51,8 +51,16 @@
     </div>
     <h1 class="display-4 mb-4"><b>Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
     <form [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
-      <!--  SURGERY || Position Details -->
+      <!--------------------------------->
+      <!-- SURGERY || POSITION DETAILS -->
+      <!--------------------------------->
       <p class="display-5 mt-5"><u>Position Details</u><i class="bi bi-journal-medical ms-1"></i></p>
+
+      <!--  SURGERY || Doctor//start -->
+      <div *ngIf="f.doctor.touched || f.doctor.dirty" class="error-text">
+        <p *ngIf="f.doctor.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Doctor selection is required.</p>
+      </div>
+
       <select
         formControlName="doctor"
         (change)="getSurgeries($any($event.target).value)"
@@ -67,6 +75,7 @@
           {{ doctor.name }}
         </option>
       </select>
+      <!--  SURGERY || Doctor//end -->
 
       <!-- <input
         type="text"
@@ -78,6 +87,13 @@
         placeholder="Doctor*"
         formControlName="doctor"
       /> -->
+
+      <!--  SURGERY || Position//start -->
+      <div *ngIf="f.position.touched || f.position.dirty" class="error-text">
+        <p *ngIf="f.position.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Position selection is required.
+        </p>
+      </div>
 
       <select
         formControlName="position"
@@ -93,8 +109,15 @@
         <option value="outfielder">Outfielder</option>
         <option value="catcher">Catcher</option>
       </select>
+      <!--  SURGERY || Position//end -->
 
-      <!--  SURGERY || Estimated Max Velocity with Validation -->
+      <!--  SURGERY || EMV//start -->
+      <div *ngIf="f.estimated_max_velocity.touched || f.estimated_max_velocity.dirty" class="error-text">
+        <p *ngIf="f.estimated_max_velocity.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Estimated Max Velocity is required.
+        </p>
+      </div>
+
       <div *ngIf="f.estimated_max_velocity.touched && f.estimated_max_velocity.dirty" class="error-text">
         <p *ngIf="f.estimated_max_velocity.errors?.pattern">
           <i class="bi bi-x-circle-fill me-1"></i>EMV can only contain numbers.
@@ -110,9 +133,18 @@
         placeholder="Estimated Max Velocity(MH)*"
         formControlName="estimated_max_velocity"
       />
+      <!--  SURGERY || EMV//end -->
 
-      <!--  SURGERY || Surgery Details -->
+      <!-------------------------------->
+      <!-- SURGERY || SURGERY DETAILS -->
+      <!-------------------------------->
       <p class="display-5"><u>Surgery Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
+
+      <!-- SURGERY || Surgery Date//start -->
+      <div *ngIf="f.surgery_date.touched || f.surgery_date.dirty" class="error-text">
+        <p *ngIf="f.surgery_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Surgery Date is required.</p>
+      </div>
+
       <input
         placeholder="Surgery Date*"
         [ngClass]="
@@ -124,6 +156,14 @@
         max="9999-12-31"
         formControlName="surgery_date"
       />
+      <!-- SURGERY || Surgery Date//end -->
+
+      <!-- SURGERY || Primary Surgery//start -->
+      <div *ngIf="f.primary_surgery.touched || f.primary_surgery.dirty" class="error-text">
+        <p *ngIf="f.primary_surgery.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Primary Surgery is required.
+        </p>
+      </div>
 
       <select
         formControlName="primary_surgery"
@@ -141,6 +181,7 @@
           </option></ng-container
         >
       </select>
+      <!-- SURGERY || Primary Surgery//end -->
 
       <!-- <input
         type="text"
@@ -153,6 +194,7 @@
         formControlName="primary_surgery"
       /> -->
 
+      <!-- SURGERY || Secondary Surgery//start -->
       <select
         formControlName="secondary_surgery"
         [ngClass]="
@@ -169,6 +211,7 @@
           </option></ng-container
         >
       </select>
+      <!-- SURGERY || Secondary Surgery//end -->
 
       <!-- <input
         type="text"
@@ -181,7 +224,9 @@
         formControlName="secondary_surgery"
       /> -->
 
-      <!-- SURGERY || Demographic/Contact Details -->
+      <!-------------------------------------------->
+      <!-- SURGERY || DEMOGRAPHIC/CONTACT DETAILS -->
+      <!-------------------------------------------->
       <p class="display-5 mt-5"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
 
       <!-- SURGERY || First & Last Name//start -->
@@ -238,13 +283,13 @@
       <!-- SURGERY || First & Last Name//end -->
 
       <!-- SURGERY || Cell Phone//start -->
+      <div *ngIf="f.cell_phone.touched || f.cell_phone.dirty" class="error-text">
+        <p *ngIf="f.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
+      </div>
       <div *ngIf="f.cell_phone.touched && f.cell_phone.dirty" class="error-text">
         <p *ngIf="f.cell_phone.errors?.pattern">
           <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
         </p>
-      </div>
-      <div *ngIf="f.cell_phone.touched || f.cell_phone.dirty" class="error-text">
-        <p *ngIf="f.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
       </div>
 
       <input
@@ -264,6 +309,7 @@
       <div *ngIf="f.birth_date.touched || f.birth_date.dirty" class="error-text">
         <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
       </div>
+
       <input
         placeholder="Birth Date*"
         [ngClass]="
@@ -281,6 +327,7 @@
       <div *ngIf="f.address.touched || f.address.dirty" class="error-text">
         <p *ngIf="f.address.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Address is required.</p>
       </div>
+
       <input
         type="text"
         [ngClass]="
@@ -298,18 +345,16 @@
         <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
       </div>
 
-      <div *ngIf="f.city.touched && f.city.dirty" class="error-text">
-        <p *ngIf="f.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
-        <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
-      </div>
-
       <div *ngIf="f.state.touched || f.state.dirty" class="error-text">
         <p *ngIf="f.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
       </div>
 
+      <div *ngIf="f.city.touched && f.city.dirty" class="error-text">
+        <p *ngIf="f.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
+      </div>
+
       <div *ngIf="f.state.touched && f.state.dirty" class="error-text">
         <p *ngIf="f.state.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid State.</p>
-        <p *ngIf="f.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
       </div>
 
       <div class="row">
@@ -397,9 +442,17 @@
     </div>
     <h1 class="display-4 mb-4"><b>Non-Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
     <form [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
-      <!--  NON-SURGERY || Position Details -->
+      <!------------------------------------->
+      <!-- NON-SURGERY || POSITION DETAILS -->
+      <!------------------------------------->
       <p class="display-5 mt-3"><u>Position Details</u><i class="bi bi-journal-medical ms-1"></i></p>
-        <select
+
+      <!-- NON-SURGERY || Doctor//start -->
+      <div *ngIf="f2.doctor.touched || f2.doctor.dirty" class="error-text">
+        <p *ngIf="f2.doctor.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Doctor Selection is required.</p>
+      </div>
+
+      <select
         formControlName="doctor"
         (change)="getSurgeries($any($event.target).value)"
         [ngClass]="
@@ -413,8 +466,9 @@
           {{ doctor.name }}
         </option>
       </select>
+      <!-- NON-SURGERY || Doctor//end -->
 
-      <input
+      <!-- <input
         type="text"
         [ngClass]="
           (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
@@ -423,7 +477,14 @@
         "
         placeholder="Doctor*"
         formControlName="doctor"
-      />
+      /> -->
+
+      <!-- NON-SURGERY || Doctor Dictation//start -->
+      <div *ngIf="f2.doctor_dictation.touched || f2.doctor_dictation.dirty" class="error-text">
+        <p *ngIf="f2.doctor_dictation.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Doctor Dictation is required.
+        </p>
+      </div>
 
       <input
         type="text"
@@ -435,6 +496,14 @@
         placeholder="Doctor Dictation*"
         formControlName="doctor_dictation"
       />
+      <!-- NON-SURGERY || Doctor Dictaion//end -->
+
+      <!-- NON-SURGERY || Position//start -->
+      <div *ngIf="f2.position.touched || f2.position.dirty" class="error-text">
+        <p *ngIf="f2.position.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Position selection is required.
+        </p>
+      </div>
 
       <select
         formControlName="position"
@@ -450,12 +519,20 @@
         <option value="outfielder">Outfielder</option>
         <option value="catcher">Catcher</option>
       </select>
+      <!-- NON-SURGERY || Position//end -->
 
+      <!-- NON-SURGERY || EMV//start -->
+      <div *ngIf="f2.estimated_max_velocity.touched || f2.estimated_max_velocity.dirty" class="error-text">
+        <p *ngIf="f2.estimated_max_velocity.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Estimated Max Velocity is required.
+        </p>
+      </div>
       <div *ngIf="f2.estimated_max_velocity.touched && f2.estimated_max_velocity.dirty" class="error-text">
         <p *ngIf="f2.estimated_max_velocity.errors?.pattern">
           <i class="bi bi-x-circle-fill me-1"></i>EMV can only contain numbers.
         </p>
       </div>
+
       <input
         type="text"
         [ngClass]="
@@ -466,9 +543,18 @@
         placeholder="Estimated Max Velocity*"
         formControlName="estimated_max_velocity"
       />
+      <!-- NON-SURGERY || EMV//end -->
 
-      <!-- NON-SURGERY || Injury Details -->
+      <!----------------------------------->
+      <!-- NON-SURGERY || INJURY DETAILS -->
+      <!----------------------------------->
       <p class="display-5"><u>Injury Details</u><i class="bi bi-clipboard2-pulse ms-1"></i></p>
+
+      <!-- NON-SURGERY || Injury//start -->
+      <div *ngIf="f2.injury_date.touched || f2.injury_date.dirty" class="error-text">
+        <p *ngIf="f2.injury_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
+      </div>
+
       <input
         placeholder="Injury Date*"
         [ngClass]="
@@ -480,6 +566,7 @@
         max="9999-12-31"
         formControlName="injury_date"
       />
+      <!-- NON-SURGERY || Injury//end -->
 
       <!-- <select
         [ngClass]="
@@ -495,6 +582,11 @@
         <option value="Surgery 3">Surgery Three</option>
       </select> -->
 
+      <!-- NON-SURGERY || Injury//start -->
+      <div *ngIf="f2.injury.touched || f2.injury.dirty" class="error-text">
+        <p *ngIf="f2.injury.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury name is required.</p>
+      </div>
+
       <input
         type="text"
         [ngClass]="
@@ -505,11 +597,23 @@
         placeholder="Injury Occured*"
         formControlName="injury"
       />
+      <!-- NON-SURGERY || Injury//end -->
 
-      <!-- NON-SURGERY || Demographic/Contact Details -->
+      <!------------------------------------------------->
+      <!-- NON-SURGERY || DEMOGRAPHIC/CCONTACT DETAILS -->
+      <!------------------------------------------------->
       <p class="display-5 mt-3"><u>Demographics/Contact Details</u><i class="bi bi-person-badge-fill ms-1"></i></p>
 
-      <!-- NON-SURGERY || First & Last Name Validation -->
+      <!-- NON-SURGERY || First & Last Name//start -->
+      <div
+        *ngIf="f2.first_name.touched || f2.first_name.dirty || f2.last_name.touched || f2.last_name.dirty"
+        class="error-text"
+      >
+        <p *ngIf="f2.first_name.errors?.required || f2.last_name.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>Name is required.
+        </p>
+      </div>
+
       <div *ngIf="f2.first_name.touched && f2.first_name.dirty" class="error-text">
         <p *ngIf="f2.first_name.errors?.minlength">
           <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
@@ -550,13 +654,18 @@
           formControlName="last_name"
         />
       </div>
+      <!-- NON-SURGERY || First & Last Name//end -->
 
-      <!-- NON-SURGERY || Cell Phone with Validation -->
+      <!-- NON-SURGERY || Cell Phone//start -->
+      <div *ngIf="f2.cell_phone.touched || f2.cell_phone.dirty" class="error-text">
+        <p *ngIf="f2.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
+      </div>
       <div *ngIf="f2.cell_phone.touched && f2.cell_phone.dirty" class="error-text">
         <p *ngIf="f2.cell_phone.errors?.pattern">
           <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
         </p>
       </div>
+
       <input
         type="text"
         [ngClass]="
@@ -567,6 +676,12 @@
         placeholder="Cell Phone*"
         formControlName="cell_phone"
       />
+      <!-- NON-SURGERY || Cell Phone//end -->
+
+      <!-- NON-SURGERY || Birth Date//start -->
+      <div *ngIf="f2.birth_date.touched || f2.birth_date.dirty" class="error-text">
+        <p *ngIf="f2.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
+      </div>
 
       <input
         placeholder="Birth Date*"
@@ -579,6 +694,12 @@
         max="2000-01-01"
         formControlName="birth_date"
       />
+      <!-- NON-SURGERY || Birth Date//end -->
+
+      <!-- NON-SURGERY || Address//start -->
+      <div *ngIf="f2.address.touched || f2.address.dirty" class="error-text">
+        <p *ngIf="f2.address.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Address is required.</p>
+      </div>
 
       <input
         type="text"
@@ -590,8 +711,17 @@
         placeholder="Address*"
         formControlName="address"
       />
+      <!-- NON-SURGERY || Address//end -->
 
-      <!-- NON-SURGERY || City & State Validation -->
+      <!-- NON-SURGERY || City & State//start -->
+      <div *ngIf="f2.city.touched || f2.city.dirty" class="error-text">
+        <p *ngIf="f2.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
+      </div>
+
+      <div *ngIf="f2.state.touched || f2.state.dirty" class="error-text">
+        <p *ngIf="f2.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
+      </div>
+
       <div *ngIf="f2.city.touched && f2.city.dirty" class="error-text">
         <p *ngIf="f2.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
       </div>
@@ -622,8 +752,13 @@
           formControlName="state"
         />
       </div>
+      <!-- NON-SURGERY || City & State//end -->
 
-      <!-- NON-SURGERY || ZIP Code with validation -->
+      <!-- NON-SURGERY || ZIP Code//start -->
+      <div *ngIf="f2.zip_code.touched || f2.zip_code.dirty" class="error-text">
+        <p *ngIf="f2.zip_code.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>ZIP Code is required.</p>
+      </div>
+
       <div *ngIf="f2.zip_code.touched && f2.zip_code.dirty" class="error-text">
         <p *ngIf="f2.zip_code.errors?.minlength">
           <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
@@ -643,6 +778,7 @@
         placeholder="ZIP Code*"
         formControlName="zip_code"
       />
+      <!-- NON-SURGERY || ZIP Code//end -->
 
       <!-- NON-SURGERY || Form Info -->
       <div *ngIf="nonSurgeryForm.invalid" class="info-text" [@fade]>
