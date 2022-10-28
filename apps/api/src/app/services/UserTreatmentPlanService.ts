@@ -7,7 +7,7 @@ import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } fro
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { getTasksFromTPDay } from '../helpers/TreatmentPlanHelper';
 import { APIError } from '../utils/apiError';
-import { TREATMENT_PLAN_NOT_ASSIEDED } from '../utils/constants';
+import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 
 export async function createUserTreatmentPlan(
   user_id: number,
@@ -54,7 +54,7 @@ export async function createUserTreatmentPlan(
 
 export async function getUserTasksByDate(user_id: number, date: string) {
   const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
-  if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIEDED);
+  if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
   const formattedDate = moment(date).format('YYYY-MM-DD');
   const formattedTpDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
