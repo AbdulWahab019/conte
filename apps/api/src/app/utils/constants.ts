@@ -53,4 +53,4 @@ export const TREATMENT_PLAN_EXISTS = 'Treatment Plan already exists';
 export const TREATMENT_PLAN_NAME_INVALID = 'Treatment plan name should be a valid string';
 export const TREATMENT_PLAN_NAME_INVALID_LENGTH =
   'Treatment plan name should be greater than 5 characters and less than 30 characters';
-export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'This Treatment Plan is already assigned to user';
+export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'A Treatment Plan is already assigned to user';
