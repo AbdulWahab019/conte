@@ -1,9 +1,8 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { delay } from '../../utils/constants';
 import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } from '@conte/models';
-import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
@@ -179,8 +178,8 @@ export class SurveyComponent implements OnInit {
       cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
       birth_date: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
-      state: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
+      city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+      state: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       zip_code: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 

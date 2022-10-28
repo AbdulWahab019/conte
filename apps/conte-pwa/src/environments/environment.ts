@@ -4,5 +4,6 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'http://localhost:3333',
+  API_BASE_URL: 'http://localhost:3333',
+  PWA_BASE_URL: 'http://localhost:4200/#',
 };
