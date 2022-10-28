@@ -33,8 +33,6 @@ export async function submitQuestionnaire({
     await updateUser(user, user_demographics, { transaction });
 
     const treatmentPlan = await getTreatmentPlanByDoctorAndSurgery(doctor_id, surgery_id);
-
-    // TODO - If treatment plan is not found?
     if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_FOUND);
 
     const userTreatmentPlan = await createUserTreatmentPlan(
