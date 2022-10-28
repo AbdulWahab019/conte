@@ -29,4 +29,6 @@ export async function handleStripeListenerEvent(
     default:
       console.log('Unhandled event type: ', eventType);
   }
+
+  return true;
 }

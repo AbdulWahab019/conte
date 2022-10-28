@@ -11,6 +11,6 @@ export async function isSubscribed(sub_id: string) {
 
     return { is_subscribed };
   } catch (err) {
-    throw new APIError(err.statusCode, err.type, err);
+    throw new APIError(err.statusCode || 500, err.type || err);
   }
 }
