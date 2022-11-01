@@ -22,14 +22,25 @@
 
     <div class="treatment-plan">
       <span>Today's Treatment Plan</span>
-      <form>
-        <input type="text" class="form-control question" placeholder="Max Velocity" />
-        <input type="text" class="form-control question" placeholder="Distance" />
-        <input type="text" class="form-control question" placeholder="Reps" />
-        <input type="text" class="form-control question" placeholder="Terrain" />
-        <input type="text" class="form-control question" placeholder="Red Flags" />
-        <input type="text" class="form-control question" placeholder="Comments" />
-      </form>
+      <div *ngFor="let task of dailyTasks; index as i" class="daily-tasks mt-1">
+        <div class="daily-task">
+          <input
+            type="checkbox"
+            [name]="task.title"
+            [value]="task.id"
+            [checked]="task.is_completed"
+            [disabled]="task.is_completed === 'loading'"
+            (change)="updateTask(i)"
+          />
+          <label [for]="task.title" (click)="taskDetails()" class="ms-3 display-6">{{ task.title }}</label>
+          <span
+            *ngIf="task.is_completed === 'loading'"
+            class="spinner-border spinner-border-sm ms-2"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </div>
+      </div>
     </div>
 
     <div class="d-flex button-container mt-4 mb-2">
@@ -47,4 +58,5 @@
       </button>
     </div>
   </div>
+  <div *ngIf="renderTaskDetails"><conte-task-details></conte-task-details></div>
 </div>

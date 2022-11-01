@@ -4,7 +4,7 @@ import { createTreatmentPlan, parseTreatmentPlanFile } from '../services/Treatme
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
 import { INTERNAL_SERVER_ERROR, SUCCESS } from '../utils/constants';
-import { completeUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
+import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIReq } from '@conte/models';
 
 export async function uploadTreatmentPlan(req: Request, res: Response) {
@@ -35,10 +35,10 @@ export async function getTasksByDate(req: Request, res: Response) {
   return sendResponse(res, 200, SUCCESS, tasks);
 }
 
-export async function completeTask(req: Request, res: Response) {
+export async function updateTask(req: Request, res: Response) {
   const { id: user_id } = req['user'];
-  const { task_id } = req.params;
+  const { task_id, status } = req.params;
 
-  await completeUserTask(Number(task_id), user_id);
+  await updateUserTask(Number(task_id), JSON.parse(status), user_id);
   return sendResponse(res, 200, SUCCESS);
 }
