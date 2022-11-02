@@ -63,6 +63,6 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   return await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day } });
 }
 
-export async function completeUserTask(task_id: number, user_id: number) {
-  return await UserTreatmentPlanTasks.update({ is_completed: true }, { where: { id: task_id, user_id } });
+export async function updateUserTask(task_id: number, status: boolean, user_id: number) {
+  return await UserTreatmentPlanTasks.update({ is_completed: status }, { where: { id: task_id, user_id } });
 }

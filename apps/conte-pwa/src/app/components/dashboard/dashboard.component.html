@@ -10,14 +10,14 @@
     <div class="calender-widget">
       <div class="plan-date">
         <input
-          placeholder="Birth Date*"
+          placeholder="Treatment Plan Date"
           class="form-control date"
           name="dp1"
           ngbDatepicker
           #d2="ngbDatepicker"
-          (click)="d2.toggle()"
-          readonly
           [(ngModel)]="defaultDate"
+          (change)="saveDate()"
+          (dateSelect)="saveDate()"
         />
         <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
       </div>
