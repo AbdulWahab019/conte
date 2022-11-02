@@ -33,7 +33,9 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
     tasks.push(`Throw Plyo ball ${detail.plyo_throw} times.`);
   }
   if (detail.max_distance && detail.max_velocity_absolute && detail.num_throws_at_max_distance) {
-    tasks.push(`Do ${detail.num_throws_at_max_distance} throws at maximum ${detail.max_distance} feet distance.`);
+    tasks.push(
+      `Do ${detail.num_throws_at_max_distance} throws at ${detail.max_distance} feet with ${detail.max_velocity_absolute} velocity.`
+    );
   }
   if (
     detail.post_max_distance_flat_ground &&
@@ -41,19 +43,35 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
     detail.post_max_flat_ground_pitches
   ) {
     if (detail.post_max_flat_ground_pitches === 'FB')
-      tasks.push(`Do Forkball pitches at maximum ${detail.post_max_distance_flat_ground} feet distance.`);
+      tasks.push(
+        `Throw Forkball at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`
+      );
     else if (detail.post_max_flat_ground_pitches === 'CH')
-      tasks.push(`Do Changeup pitches at maximum ${detail.post_max_distance_flat_ground} feet distance.`);
-    else tasks.push(`Do all types of pitches at ${detail.post_max_distance_flat_ground} feet distance maximum`);
+      tasks.push(
+        `Throw Changeup at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`
+      );
+    else
+      tasks.push(
+        `Throw any type of pitches at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`
+      );
   }
   if (detail.bullpen && detail.bullpen_max_velocity_absolute && detail.bullpen_pitches) {
-    if (detail.bullpen_pitches === 'FB') tasks.push(`Do Forkball bull pen pitches ${detail.bullpen} times.`);
-    else if (detail.bullpen_pitches === 'CH') tasks.push(`Do Changeup bull pen pitches ${detail.bullpen} times.`);
-    else tasks.push(`Do all types of bull pen pitches ${detail.bullpen} times.`);
+    if (detail.bullpen_pitches === 'FB')
+      tasks.push(
+        `Throw Forkball bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`
+      );
+    else if (detail.bullpen_pitches === 'CH')
+      tasks.push(
+        `Throw Changeup bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`
+      );
+    else
+      tasks.push(
+        `Throw any type of bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`
+      );
   }
   if (detail.live_simulated_game && detail.innings) {
     tasks.push(
-      `Do ${detail.live_simulated_game} pitches per innings in live/simulated game. Play ${detail.innings} innings.  `
+      `Play ${detail.live_simulated_game} pitches per innings in live/simulated game. Play ${detail.innings} innings.`
     );
   }
 
