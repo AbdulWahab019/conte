@@ -50,7 +50,6 @@ export class TreatmentPlanComponent implements OnInit {
         if (this.dailyTasks.length) {
           this.checkForCompletion();
         } else {
-          this.buttonState = 'none';
           this.noTasks = true;
         }
         this.spinner.hide();
