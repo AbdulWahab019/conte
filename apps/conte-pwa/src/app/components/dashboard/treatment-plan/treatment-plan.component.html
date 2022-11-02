@@ -53,9 +53,7 @@
         <span *ngIf="buttonState === 'static'" class="display-6"
           >Daily Therapy Completed <i class="bi bi-check2-all"></i
         ></span>
-        <span *ngIf="buttonState === 'none'" class="display-6">No Daily Tasks found</span>
         <div *ngIf="buttonState === 'loading'">
-          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
           <span class="display-6">Daily Tasks are in progress...</span>
         </div>
       </button>
