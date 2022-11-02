@@ -30,23 +30,31 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
 
   // Update Strings
   if (detail.plyo_throw) {
-    tasks.push('plyo_throw');
+    tasks.push(`Throw Plyo ball ${detail.plyo_throw} times.`);
   }
   if (detail.max_distance && detail.max_velocity_absolute && detail.num_throws_at_max_distance) {
-    tasks.push('Throws At Max Distance');
+    tasks.push(`Do ${detail.num_throws_at_max_distance} throws at maximum ${detail.max_distance} feet distance.`);
   }
   if (
-    detail.post_max_flat_ground_pitches &&
+    detail.post_max_distance_flat_ground &&
     detail.post_max_distance_flat_ground_velocity_absolute &&
     detail.post_max_flat_ground_pitches
   ) {
-    tasks.push('Flat Ground Pitches');
+    if (detail.post_max_flat_ground_pitches === 'FB')
+      tasks.push(`Do Forkball pitches at maximum ${detail.post_max_distance_flat_ground} feet distance.`);
+    else if (detail.post_max_flat_ground_pitches === 'CH')
+      tasks.push(`Do Changeup pitches at maximum ${detail.post_max_distance_flat_ground} feet distance.`);
+    else tasks.push(`Do all types of pitches at ${detail.post_max_distance_flat_ground} feet distance maximum`);
   }
   if (detail.bullpen && detail.bullpen_max_velocity_absolute && detail.bullpen_pitches) {
-    tasks.push('Bull Pen');
+    if (detail.bullpen_pitches === 'FB') tasks.push(`Do Forkball bull pen pitches ${detail.bullpen} times.`);
+    else if (detail.bullpen_pitches === 'CH') tasks.push(`Do Changeup bull pen pitches ${detail.bullpen} times.`);
+    else tasks.push(`Do all types of bull pen pitches ${detail.bullpen} times.`);
   }
   if (detail.live_simulated_game && detail.innings) {
-    tasks.push('Line Simulated Game & Innings');
+    tasks.push(
+      `Do ${detail.live_simulated_game} pitches per innings in live/simulated game. Play ${detail.innings} innings.  `
+    );
   }
 
   return tasks;
