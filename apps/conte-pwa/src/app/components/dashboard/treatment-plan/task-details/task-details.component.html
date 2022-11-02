@@ -1,0 +1,28 @@
+<div class="modal-content">
+  <div class="modal-body">
+    <h4 class="modal-title display-6">Conte; Daily Task</h4>
+    <span class="display-5">{{ task.title }}</span>
+    <p class="display-6 mt-2">Due Date: {{ dueDate }}</p>
+  </div>
+  <div class="modal-footer">
+    <input type="text mt-2" placeholder="Add a comment" />
+
+    <div class="d-flex button-container mt-4 mb-2">
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        (click)="completeDailyTask()"
+        [disabled]="buttonState === 'loading'"
+      >
+        <span *ngIf="buttonState === 'static'" class="display-6">{{
+          task.is_completed ? 'Mark as Incomplete' : 'Mark as Completed'
+        }}</span>
+        <div *ngIf="buttonState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <span class="display-6">Updating your task...</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- <div class="test">hi</div> -->

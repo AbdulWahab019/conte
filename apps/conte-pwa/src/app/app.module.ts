@@ -6,10 +6,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /* Interceptors */
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -26,6 +26,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 import { SpinnerComponent } from './components/shared/spinner/spinner.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
+import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     DashboardComponent,
     TreatmentPlanComponent,
     SpinnerComponent,
+    SubscriptionComponent,
+    TaskDetailsComponent,
   ],
   imports: [
     BrowserModule,

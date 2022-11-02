@@ -28,11 +28,9 @@ export class SplashScreenComponent implements OnInit {
 
           if (!resp.data.is_terms_of_use_accepted) {
             this.router.navigate(['terms']);
-          } else if (!resp.data.is_orientation_video_watched) {
-            this.router.navigate(['orientation']);
-          } else if (!resp.data.is_questionnaire_submitted) {
-            this.router.navigate(['survey']);
-          } else this.router.navigate(['dashboard']);
+          } else {
+            this.router.navigate(['subscription']);
+          }
         })
         .catch((err) => {
           console.error(err);

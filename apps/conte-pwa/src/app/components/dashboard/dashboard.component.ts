@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerService } from '../../services/spinner.service';
 import { ToastService } from '../../services/toast.service';
+import { TreatmentPlanService } from '../../services/treatment-plan.service';
 import { delay } from '../../utils/constants';
 
 @Component({
@@ -11,12 +12,23 @@ import { delay } from '../../utils/constants';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  date = new Date();
-  defaultDate = new NgbDate(this.date.getFullYear(), this.date.getMonth() + 1, this.date.getDate());
+  defaultDate!: NgbDate;
 
-  constructor(private router: Router, private spinnerService: SpinnerService, private toastService: ToastService) {}
+  constructor(
+    private treatmentPlanService: TreatmentPlanService,
+    private router: Router,
+    private spinnerService: SpinnerService,
+    private toastService: ToastService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.defaultDate = this.treatmentPlanService.getTreatmentPlanDate();
+  }
+
+  saveDate() {
+    this.treatmentPlanService.setTreatmentPlanDate(this.defaultDate);
+    delay(2000);
+  }
 
   async logout() {
     localStorage.clear();

@@ -8,6 +8,7 @@ import QuestionnaireRoute from './routes/QuestionnaireRoute';
 import TreatmentPlanRoute from './routes/TreatmentPlanRoute';
 import SurgeryRoute from './routes/SurgeryRoute';
 import DoctorRoute from './routes/DoctorRoute';
+import WebhookRoute from './routes/WebhookRoute';
 
 export function routes(app: Application) {
   app.use('/auth', AuthRoutes);
@@ -17,6 +18,7 @@ export function routes(app: Application) {
   app.use('/treatment-plan', TreatmentPlanRoute);
   app.use('/doctor', DoctorRoute);
   app.use('/surgery', SurgeryRoute);
+  app.use('/webhook', WebhookRoute);
 
   app.use(error);
 }

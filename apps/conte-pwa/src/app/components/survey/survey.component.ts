@@ -1,9 +1,8 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { delay } from '../../utils/constants';
 import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } from '@conte/models';
-import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
@@ -179,8 +178,8 @@ export class SurveyComponent implements OnInit {
       cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
       birth_date: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
-      state: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z\s]*$/')]),
+      city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+      state: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       zip_code: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(5)]),
     });
 
@@ -207,15 +206,15 @@ export class SurveyComponent implements OnInit {
     ];
 
     const user_demographics: UserDemographics = {
-      first_name: this.f.first_name.value,
-      last_name: this.f.last_name.value,
-      cell_phone: this.f.cell_phone.value,
-      birth_date: this.f.birth_date.value,
-      address: this.f.address.value,
-      city: this.f.city.value,
-      state: this.f.state.value,
-      zip_code: this.f.zip_code.value,
-      estimated_max_velocity: this.f.estimated_max_velocity.value,
+      first_name: this.f2.first_name.value,
+      last_name: this.f2.last_name.value,
+      cell_phone: this.f2.cell_phone.value,
+      birth_date: this.f2.birth_date.value,
+      address: this.f2.address.value,
+      city: this.f2.city.value,
+      state: this.f2.state.value,
+      zip_code: this.f2.zip_code.value,
+      estimated_max_velocity: this.f2.estimated_max_velocity.value,
     };
 
     const body: SubmitQuestionnaireAPIRequest = { data, doctor_id: this.f2.doctor.value, user_demographics };
