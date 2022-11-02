@@ -45,7 +45,7 @@ export async function createUserTreatmentPlan(
 
   // Create User Treatment Plan Details
   await Promise.all([
-    await UserTreatmentPlanDetail.bulkCreate(userTreatmentPlanDetailsData, { transaction }),
+    // await UserTreatmentPlanDetail.bulkCreate(userTreatmentPlanDetailsData, { transaction }),
     await UserTreatmentPlanTasks.bulkCreate(tasks, { transaction }),
   ]);
 
