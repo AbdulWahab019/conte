@@ -22,19 +22,22 @@ export async function createUserTreatmentPlan(
     { transaction }
   );
 
-  const userTreatmentPlanDetailsData = treatment_plan.TreatmentPlanDetails.map((detail) => ({
-    user_tp_id: userTreatmentPlan.id,
-    ...detail,
-    max_velocity_absolute: user_estimated_max_velocity * (detail.max_velocity_percent / 100),
-    post_max_distance_flat_ground_velocity_absolute:
-      user_estimated_max_velocity * (detail.post_max_distance_flat_ground_velocity_percent / 100),
-    bullpen_max_velocity_absolute: user_estimated_max_velocity * (detail.bullpen_max_velocity_percent / 100),
-  }));
+  const userTreatmentPlanDetailsData = treatment_plan.TreatmentPlanDetails.map((detail) => {
+    delete detail.id;
+
+    return {
+      user_tp_id: userTreatmentPlan.id,
+      ...detail,
+      max_velocity_absolute: user_estimated_max_velocity * (detail.max_velocity_percent / 100),
+      post_max_distance_flat_ground_velocity_absolute:
+        user_estimated_max_velocity * (detail.post_max_distance_flat_ground_velocity_percent / 100),
+      bullpen_max_velocity_absolute: user_estimated_max_velocity * (detail.bullpen_max_velocity_percent / 100),
+    };
+  });
 
   const tasks = userTreatmentPlanDetailsData.flatMap((user_tp_detail: UserTreatmentPlanDetailDefinedAttributes) => {
     const tasks = getTasksFromTPDay(user_tp_detail);
 
-    // console.log(tasks);
     return tasks.map((task) => ({
       user_id,
       user_tp_id: userTreatmentPlan.id,
@@ -45,7 +48,7 @@ export async function createUserTreatmentPlan(
 
   // Create User Treatment Plan Details
   await Promise.all([
-    // await UserTreatmentPlanDetail.bulkCreate(userTreatmentPlanDetailsData, { transaction }),
+    await UserTreatmentPlanDetail.bulkCreate(userTreatmentPlanDetailsData, { transaction }),
     await UserTreatmentPlanTasks.bulkCreate(tasks, { transaction }),
   ]);
 
