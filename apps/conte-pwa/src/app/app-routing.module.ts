@@ -8,16 +8,25 @@ import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  { path: '', component: SplashScreenComponent },
+  {
+    path: '',
+    component: SplashScreenComponent,
+  },
+  { path: 'terms', title: 'Terms of Use', canActivate: [AuthGuard], component: TermsOfUseComponent },
+  { path: 'orientation', title: 'Orientation', canActivate: [AuthGuard], component: OrientationComponent },
+  { path: 'survey', title: 'Survey', canActivate: [AuthGuard], component: SurveyComponent },
+  { path: 'subscription', title: 'Subscription', canActivate: [AuthGuard], component: SubscriptionComponent },
+  { path: 'dashboard', title: 'Dashboard', canActivate: [AuthGuard], component: DashboardComponent },
+  {
+    path: 'dashboard/treatment-plan',
+    title: 'Treatment Plan',
+    canActivate: [AuthGuard],
+    component: TreatmentPlanComponent,
+  },
   { path: 'authentication', component: AuthenticationComponent },
-  { path: 'terms', title: 'Terms of Use', component: TermsOfUseComponent },
-  { path: 'orientation', title: 'Orientation', component: OrientationComponent },
-  { path: 'survey', title: 'Survey', component: SurveyComponent },
-  { path: 'subscription', title: 'Subscription', component: SubscriptionComponent },
-  { path: 'dashboard', title: 'Dashboard', component: DashboardComponent },
-  { path: 'dashboard/treatment-plan', title: 'Treatment Plan', component: TreatmentPlanComponent },
   { path: '**', component: SplashScreenComponent },
 ];
 
