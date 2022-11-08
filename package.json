@@ -24,7 +24,7 @@
     "@angular/router": "~14.2.0",
     "@angular/service-worker": "~14.2.0",
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
-    "@nrwl/angular": "14.8.2",
+    "@nrwl/angular": "15.0.11",
     "@popperjs/core": "^2.10.2",
     "bcrypt": "^5.0.1",
     "bootstrap": "^5.2.0",
