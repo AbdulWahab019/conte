@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { SpinnerService } from '../../services/spinner.service';
-import { ToastService } from '../../services/toast.service';
-import { TreatmentPlanService } from '../../services/treatment-plan.service';
-import { delay } from '../../utils/constants';
 
 @Component({
   selector: 'conte-dashboard',
@@ -12,34 +8,21 @@ import { delay } from '../../utils/constants';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  defaultDate!: NgbDate;
+  url = '';
 
-  constructor(
-    private treatmentPlanService: TreatmentPlanService,
-    private router: Router,
-    private spinnerService: SpinnerService,
-    private toastService: ToastService
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.defaultDate = this.treatmentPlanService.getTreatmentPlanDate();
+    this.url = this.router.url;
   }
 
-  saveDate() {
-    this.treatmentPlanService.setTreatmentPlanDate(this.defaultDate);
-    delay(2000);
+  navToHome() {
+    this.url = '/dashboard';
+    this.router.navigate(['dashboard']);
   }
 
-  async logout() {
-    localStorage.clear();
-    this.spinnerService.show();
-    await delay(1000);
-    this.spinnerService.hide();
-    this.toastService.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
-    this.router.navigate(['authentication']);
-  }
-
-  navToTreatmentPlan() {
-    this.router.navigate(['dashboard/treatment-plan']);
+  navToContact() {
+    this.url = '/dashboard/contact';
+    this.router.navigate(['dashboard/contact']);
   }
 }

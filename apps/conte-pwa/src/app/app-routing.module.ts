@@ -6,7 +6,6 @@ import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.comp
 import { OrientationComponent } from './components/orientation/orientation.component';
 import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { AuthGuard } from './auth.guard';
 
@@ -19,12 +18,12 @@ const routes: Routes = [
   { path: 'orientation', title: 'Orientation', canActivate: [AuthGuard], component: OrientationComponent },
   { path: 'survey', title: 'Survey', canActivate: [AuthGuard], component: SurveyComponent },
   { path: 'subscription', title: 'Subscription', canActivate: [AuthGuard], component: SubscriptionComponent },
-  { path: 'dashboard', title: 'Dashboard', canActivate: [AuthGuard], component: DashboardComponent },
   {
-    path: 'dashboard/treatment-plan',
-    title: 'Treatment Plan',
+    path: 'dashboard',
+    title: 'Dashboard',
     canActivate: [AuthGuard],
-    component: TreatmentPlanComponent,
+    component: DashboardComponent,
+    loadChildren: () => import('./components/dashboard/dashboard.module').then((child) => child.DashboardModule),
   },
   { path: 'authentication', component: AuthenticationComponent },
   { path: '**', component: SplashScreenComponent },
