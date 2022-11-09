@@ -35,11 +35,14 @@
               (change)="updateTask(i)"
             />
           </div>
-
-          <div class="task-title" [ngClass]="task.is_completed ? 'task-title linethrough mb-3' : 'task-title mb-3'" (click)="taskDetails(task)">
+          <div
+            class="task-title"
+            [ngClass]="task.is_completed ? 'task-title linethrough mb-3' : 'task-title mb-3'"
+            (click)="taskDetails(task)"
+          >
             {{ task.title }}
           </div>
-
+          <span *ngIf="task.is_completed !== 'loading'" (click)="taskDetails(task)" class="bi bi-info-circle info-link ms-2 mb-3"></span>
           <span
             *ngIf="task.is_completed === 'loading'"
             class="spinner-border spinner-border-sm ms-2 mb-3"

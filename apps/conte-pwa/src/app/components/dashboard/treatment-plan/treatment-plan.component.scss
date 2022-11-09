@@ -177,16 +177,23 @@ $green: #06842c;
 
       .task-title {
         width: 100%;
-
+        
         display: flex;
         justify-content: center;
+
+        cursor: pointer;
       }
 
       .linethrough {
         text-decoration: line-through;
         text-decoration-thickness: 1px;
       }
-
+      .info-link {
+        color: #00347D;
+        cursor: pointer;
+        width: 2vh;
+        height: 2vh;
+      }
       .spinner-border {
         width: 2vh;
         height: 2vh;
