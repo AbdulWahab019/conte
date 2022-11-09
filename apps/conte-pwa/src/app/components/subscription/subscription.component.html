@@ -3,6 +3,7 @@
     <div *ngIf="!subscriptionFormRendered">
       <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
 
+      <!-- SUBSCRIPTION CHECK -->
       <div *ngIf="!isSubscribed && subscriptionState === ''" [@fade]>
         <div class="spinner-border spinner-large mt-5" role="status"></div>
         <h1 class="display-6 mt-1" *ngIf="!renderingSubscriptionForm" [@fade]>Checking your Subscription Status...</h1>
@@ -28,19 +29,33 @@
 
     <!-- SUBSCRIPTION FORM -->
     <div *ngIf="subscriptionFormRendered">
-      <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+      <div class="subscriptions">
+        <div (click)="monthlySubscription()" [ngClass]="sub === 'monthly' ? 'selected-product mb-2' : 'product mb-2 '">
+          <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
 
-      <div class="description">
-        <h3 class="display 5">Monthly Subscription</h3>
-        <h5 class="display 6">$10.00 / month</h5>
+          <div class="description">
+            <h3 class="display 5">Monthly Subscription</h3>
+            <h5 class="display 6">$10.00 / month</h5>
+          </div>
+        </div>
+
+        <div (click)="freeTrial()" [ngClass]="sub === 'trial' ? 'selected-product' : 'product'">
+          <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+
+          <div class="description">
+            <h3 class="display 5">Free Trial</h3>
+            <h5 class="display 6">3 Days</h5>
+          </div>
+        </div>
       </div>
 
+      <!-- CONFIRM BUTTON -->
       <div class="d-flex justify-content-center mt-4 mb-3">
         <button
           class="btn btn-primary btn-confirm"
           type="button"
           (click)="confirmSubscription()"
-          [disabled]="buttonState === 'loading'"
+          [disabled]="!this.product_id || buttonState === 'loading'"
         >
           <span *ngIf="buttonState === 'static'" class="display-6">Subscribe</span>
           <div *ngIf="buttonState === 'loading'">

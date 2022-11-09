@@ -151,7 +151,7 @@
             class="btn btn-primary btn-authenticate"
             type="submit"
             (click)="register()"
-            [disabled]="registrationForm.invalid || buttonState == 'loading'"
+            [disabled]="registrationForm.invalid || buttonState === 'loading'"
           >
             <span *ngIf="buttonState === 'static'">REGISTER</span>
             <div *ngIf="buttonState === 'loading'">

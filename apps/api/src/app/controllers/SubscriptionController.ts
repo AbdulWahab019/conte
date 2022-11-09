@@ -18,13 +18,14 @@ export async function isUserSubscribed(req: Request, res: Response) {
 
 export async function createSubscriptionSession(req: Request, res: Response) {
   const { id: user_id, email, stripe_customer_id } = req['user'];
-  const { success_url, cancel_url }: CreateCheckoutSessionAPIReq = req.body;
+  const { success_url, cancel_url, product_id }: CreateCheckoutSessionAPIReq = req.body;
 
   const session = await createSubscriptionCheckoutSession(
     { user_id, email },
     stripe_customer_id,
+    product_id,
     success_url,
-    cancel_url
+    cancel_url,
   );
   return sendResponse(res, 200, SUCCESS, session);
 }

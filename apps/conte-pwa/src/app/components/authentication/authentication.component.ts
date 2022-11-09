@@ -83,6 +83,7 @@ export class AuthenticationComponent implements OnInit {
       .accountLogin(credentials)
       .then((resp) => {
         localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('user_email', resp.data.email);
         localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
         localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
         localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
@@ -92,6 +93,8 @@ export class AuthenticationComponent implements OnInit {
 
         if (!resp.data.is_terms_of_use_accepted) {
           this.router.navigate(['terms']);
+        } else if (!resp.data.is_orientation_video_watched) {
+          this.router.navigate(['orientation']);
         } else this.router.navigate(['subscription']);
       })
       .catch((err) => {
@@ -112,6 +115,7 @@ export class AuthenticationComponent implements OnInit {
       .accountRegister(credentials)
       .then((resp) => {
         localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('user_email', resp.data.email);
         localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
         localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);
         localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
