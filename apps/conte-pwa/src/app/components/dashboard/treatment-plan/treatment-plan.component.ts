@@ -44,8 +44,8 @@ export class TreatmentPlanComponent implements OnInit {
     this.spinner.show();
 
     this.treatmentPlanService
-      .getDailyTasks(`${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-5`)
-      .then((resp) => {
+    .getDailyTasks(`${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`)
+    .then((resp) => {
         this.dailyTasks = resp.data;
         if (this.dailyTasks.length) {
           this.checkForCompletion();
