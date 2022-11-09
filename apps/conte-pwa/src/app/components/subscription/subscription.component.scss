@@ -17,6 +17,29 @@
   background-color: white;
   border-radius: 8px;
 
+  .subscriptions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .selected-product {
+    background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.8) 0%, rgb(19, 37, 118, 0.8) 100%);
+
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px black;
+
+    padding: 10px;
+    color: white;
+
+    cursor: pointer;
+  }
+
+  .product {
+    cursor: pointer;
+  }
+
   .logo {
     height: 30vh;
     width: 35vh;

@@ -4,7 +4,7 @@ import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerService } from '../../../services/spinner.service';
 import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
-import { delay } from '../../../utils/constants';
+import Swal from 'sweetalert2';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 
 @Component({
@@ -46,7 +46,25 @@ export class TreatmentPlanComponent implements OnInit {
     this.treatmentPlanService
       .getDailyTasks(`${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`)
       .then((resp) => {
-        this.dailyTasks = resp.data;
+        this.dailyTasks = resp.data.todays_tasks;
+        if (resp.data.pending_task_dates) {
+          let html = `<span>You have pending tasks for the following dates:</span> `;
+
+          for (const task of resp.data.pending_task_dates) {
+            html += `<li>${task}</li>`;
+          }
+
+          Swal.fire({
+            title: 'Pending Tasks',
+            html,
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#073786',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Acknowledge',
+          });
+        }
+
         if (this.dailyTasks.length) {
           this.checkForCompletion();
         } else {

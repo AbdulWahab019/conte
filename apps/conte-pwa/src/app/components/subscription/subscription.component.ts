@@ -17,6 +17,8 @@ export class SubscriptionComponent implements OnInit {
   subscriptionFormRendered = false;
   buttonState = 'static';
   subscriptionState = '';
+  product_id = '';
+  sub = '';
 
   constructor(
     private subscriptionService: SubscriptionService,
@@ -46,12 +48,9 @@ export class SubscriptionComponent implements OnInit {
           this.subscriptionState = 'success';
           await delay(2000);
 
-          const orientation_watched = localStorage.getItem('orientation_watched');
           const questionnaire_submitted = localStorage.getItem('questionnaire_submitted');
 
-          if (orientation_watched === 'false') {
-            this.router.navigate(['orientation']);
-          } else if (questionnaire_submitted === 'false') {
+          if (questionnaire_submitted === 'false') {
             this.router.navigate(['survey']);
           } else this.router.navigate(['dashboard']);
         } else if (!resp.data.is_subscribed) {
@@ -68,10 +67,21 @@ export class SubscriptionComponent implements OnInit {
       });
   }
 
+  freeTrial() {
+    this.product_id = 'price_1M1ug4DYXkLuaaiouGCyxv7L';
+    this.sub = 'trial';
+  }
+
+  monthlySubscription() {
+    this.product_id = 'price_1Lnkt2DYXkLuaaio98IVVgWl';
+    this.sub = 'monthly';
+  }
+
   confirmSubscription() {
     this.buttonState = 'loading';
 
     const url_data = {
+      product_id: this.product_id,
       success_url: STRIPE_SUCCESS,
       cancel_url: STRIPE_FAIL,
     };

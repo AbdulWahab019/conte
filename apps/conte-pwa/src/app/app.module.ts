@@ -10,6 +10,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DashboardModule } from './components/dashboard/dashboard.module';
 
 /* Interceptors */
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -27,7 +29,6 @@ import { SpinnerComponent } from './components/shared/spinner/spinner.component'
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task-details/task-details.component';
-import { DashboardModule } from './components/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DashboardModule } from './components/dashboard/dashboard.module';
   imports: [
     BrowserModule,
     FormsModule,
+    SweetAlert2Module.forRoot(),
     ReactiveFormsModule,
     DashboardModule,
     BrowserAnimationsModule,

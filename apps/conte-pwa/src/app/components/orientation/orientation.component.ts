@@ -18,15 +18,15 @@ export class OrientationComponent implements OnInit {
 
   acceptOrientation() {
     this.buttonState = 'loading';
-    
+
     this.userService
       .confirmOrientation()
       .then((resp) => {
-        localStorage.setItem('orientation_watched', (true).toString());
+        localStorage.setItem('orientation_watched', true.toString());
         this.buttonState = 'static';
 
         this.toastService.show('Orientation Confirmed.', { classname: 'bg-success text-light', icon: 'success' });
-        this.router.navigate(['survey']);
+        this.router.navigate(['subscription']);
       })
       .catch((err) => {
         console.error(err);

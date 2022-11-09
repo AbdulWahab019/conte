@@ -1,5 +1,5 @@
 import moment = require('moment');
-import { Transaction } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 
 import { TreatmentPlanModel } from '../models/TreatmentPlan';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
@@ -63,7 +63,30 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   const formattedTpDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
 
   const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
-  return await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day } });
+
+  const todays_tasks = await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day } });
+  
+  const pending_tasks = await UserTreatmentPlanTasks.findAll({
+    where: {
+      user_id,
+      is_completed: 0,
+      tp_day: {
+        [Op.lt]: tp_day,
+      },
+    },
+    attributes: ['tp_day'],
+  });
+
+  let pending_task_dates = [];
+  for (const task of pending_tasks) {
+    pending_task_dates.push(
+      moment(formattedTpDate)
+        .add(task.tp_day - 1, 'days')
+        .format('MM-DD-YYYY')
+    );
+  }
+  const user_tasks = { todays_tasks, pending_task_dates };
+  return user_tasks;
 }
 
 export async function updateUserTask(task_id: number, status: boolean, user_id: number) {

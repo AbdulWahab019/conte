@@ -22,11 +22,11 @@ export class TermsOfUseComponent implements OnInit {
     this.userService
       .acceptTerms()
       .then((resp) => {
-        localStorage.setItem('terms_of_use', (true).toString());
+        localStorage.setItem('terms_of_use', true.toString());
         this.buttonState = 'static';
 
         this.toastService.show('Terms of use accepted.', { classname: 'bg-success text-light', icon: 'success' });
-        this.router.navigate(['subscription']);
+        this.router.navigate(['orientation']);
       })
       .catch((err) => {
         console.error(err);
