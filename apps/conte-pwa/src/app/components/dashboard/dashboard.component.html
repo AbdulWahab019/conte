@@ -1,55 +1,23 @@
-<div class="container-fluid dashboard-screen">
-  <div class="d-flex dashboard-container">
-    <div class="title-tab">
-      <i class="bi bi-box-arrow-left mt-1" (click)="logout()"></i>
-      <span class="title display-4">Conte Sports Performance</span>
-    </div>
-
-    <hr />
-
-    <div class="calender-widget">
-      <div class="plan-date">
-        <input
-          placeholder="Treatment Plan Date"
-          class="form-control date"
-          name="dp1"
-          ngbDatepicker
-          #d2="ngbDatepicker"
-          [(ngModel)]="defaultDate"
-          (change)="saveDate()"
-          (dateSelect)="saveDate()"
-        />
-        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
-      </div>
-    </div>
-
-    <!-- Treatment Plan Video -->
-    <!-- <video width="100%" class="mt-4 mb-4" controls playsinline>
-      <source src="../../../assets/orientation/video/orientation.mp4" type="video/mp4" />
-      Your browser does not support the video playback.
-    </video> -->
-    <iframe
-      width="100%"
-      height="300px"
-      class="mt-4 mb-4"
-      src="https://www.youtube.com/embed/MC2qa5mfRJ8?autoplay=1&mute=1"
-    ></iframe>
-
-    <div class="d-flex info-tab mb-2">
-      <div class="speed-info me-2">
-        Today's<br />Max Speed<br />
-        <p class="display-5">45 MPH</p>
-      </div>
-
-      <div class="progress-info">
-        Overall<br />Progress<br />
-        <p class="display-5">19%</p>
-      </div>
-    </div>
-
-    <div class="treatment-plan mb-1" (click)="navToTreatmentPlan()">
-      Today's Treatment Plan
-      <p class="display-5">Click Here</p>
-    </div>
+<router-outlet></router-outlet>
+<div class="container-fluid nav-bar">
+  <div class="nav-link">
+    <i class="bi bi-file-earmark-person-fill"></i>
+    <p>About</p>
+  </div>
+  <div class="nav-link">
+    <i class="bi bi-camera-reels"></i>
+    <p>Video</p>
+  </div>
+  <div [ngClass]="url == '/dashboard' ? 'nav-link active-link' : 'nav-link'" (click)="navToHome()">
+    <i class="bi bi-house-door"></i>
+    <p>Home</p>
+  </div>
+  <div [ngClass]="url == '/dashboard/contact' ? 'nav-link active-link' : 'nav-link'" (click)="navToContact()">
+    <i class="bi bi-telephone-outbound"></i>
+    <p>Contact</p>
+  </div>
+  <div class="nav-link">
+    <i class="bi bi-question-lg"></i>
+    <p>Support</p>
   </div>
 </div>

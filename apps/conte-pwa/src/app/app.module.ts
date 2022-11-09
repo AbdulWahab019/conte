@@ -23,11 +23,11 @@ import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.comp
 import { OrientationComponent } from './components/orientation/orientation.component';
 import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { TreatmentPlanComponent } from './components/dashboard/treatment-plan/treatment-plan.component';
 import { SpinnerComponent } from './components/shared/spinner/spinner.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task-details/task-details.component';
+import { DashboardModule } from './components/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,6 @@ import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task
     OrientationComponent,
     SurveyComponent,
     DashboardComponent,
-    TreatmentPlanComponent,
     SpinnerComponent,
     SubscriptionComponent,
     TaskDetailsComponent,
@@ -48,6 +47,7 @@ import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    DashboardModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
