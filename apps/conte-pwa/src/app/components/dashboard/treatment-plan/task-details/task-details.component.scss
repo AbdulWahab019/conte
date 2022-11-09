@@ -34,25 +34,65 @@
   border-bottom: 6px solid black;
 }
 
+.comments-container {
+  height: 25vh;
+  overflow-y: scroll;
+  width: 100%;
+
+  background-color: rgb(141, 138, 138);
+  border-radius: 10px;
+
+  .comment {
+    width: fit-content;
+    height: fit-content;
+
+    background-color: rgb(237, 235, 235);
+    border-radius: 10px;
+    padding: 5px;
+  }
+}
+
 .modal-footer {
   display: flex;
   justify-content: center;
 
   background-color: rgb(227, 227, 227);
-
-  input {
-    padding: 5px;
-    outline: none;
-    border: none;
+  .comment-input {
     width: 100%;
-    text-align: center;
-    color: black;
+    height: 50px;
+    padding: 5px;
+
+    display: flex;
+    align-items: center;
+    position: relative;
+
     background-color: #adadad;
     border-radius: 77px;
     border-bottom: 3px solid #686868;
-  }
-  ::placeholder {
-    color: white;
+
+    select {
+      outline: none;
+      border: none;
+      width: 90%;
+      text-align: center;
+      color: black;
+      background-color: transparent;
+      height: inherit;
+    }
+    ::placeholder {
+      color: white;
+    }
+
+    .send-btn {
+      font-size: x-large;
+      margin: auto;
+
+      color: white;
+      cursor: pointer;
+      .btn-color{
+        color: #686868;
+      }
+    }
   }
 
   .button-container {
