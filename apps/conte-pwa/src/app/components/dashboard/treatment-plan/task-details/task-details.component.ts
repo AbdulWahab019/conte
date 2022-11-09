@@ -9,7 +9,7 @@ import { TreatmentPlanService } from 'apps/conte-pwa/src/app/services/treatment-
   styleUrls: ['./task-details.component.scss'],
 })
 export class TaskDetailsComponent implements OnInit {
-  @ViewChild('commentContainer') private commentContainer: ElementRef;
+  @ViewChild('commentContainer') private commentContainer: ElementRef = {} as ElementRef;
   @Input() task: any = {};
   @Input() dueDate = '';
   buttonState = 'static';

@@ -9,16 +9,13 @@
     <div class="d-flex justify-content-center display-5 mb-2">{{ date }}</div>
 
     <div class="d-flex info-tab mb-2">
-
       <!--Max Speed-->
-
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
         <p class="display-5">45 MPH</p>
       </div>
 
       <!--Progress-->
-
       <div class="progress-info">
         Overall<br />Progress<br />
         <p class="display-5">19%</p>
@@ -26,7 +23,6 @@
     </div>
 
     <!--Treatment Plan-->
-
     <div class="treatment-plan">
       <span *ngIf="!noTasks">Today's Treatment Plan</span>
       <div *ngFor="let task of dailyTasks; index as i" class="daily-tasks mt-2">
@@ -49,7 +45,11 @@
           >
             {{ task.title }}
           </div>
-          <span *ngIf="task.is_completed !== 'loading'" (click)="taskDetails(task)" class="bi bi-info-circle info-link ms-2 mb-4"></span>
+          <span
+            *ngIf="task.is_completed !== 'loading'"
+            (click)="taskDetails(task)"
+            class="bi bi-info-circle info-link ms-2 mb-4"
+          ></span>
           <span
             *ngIf="task.is_completed === 'loading'"
             class="spinner-border spinner-border-sm ms-2 mb-3"
@@ -59,14 +59,14 @@
         </div>
       </div>
 
+      <!-- Case: No Assigned Tasks -->
       <div class="empty-tasks mt-5 mb-5" *ngIf="noTasks">
         <img src="../../../../assets/images/noTasksFound.png" height="150" width="150" />
         <p class="display-6">No Tasks Assigned for today</p>
       </div>
     </div>
 
-    <!--Daily Therapy Button-->
-
+    <!--Daily Therapy Confirmation-->
     <div class="d-flex button-container mt-4 mb-2" *ngIf="!noTasks">
       <button class="btn btn-primary btn-confirm" type="button" [disabled]="buttonState === 'loading'">
         <span *ngIf="buttonState === 'static'" class="display-6"

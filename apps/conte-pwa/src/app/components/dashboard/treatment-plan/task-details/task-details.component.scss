@@ -73,7 +73,7 @@
     select {
       outline: none;
       border: none;
-      width: 87%;
+      width: 90%;
       text-align: center;
       color: black;
       background-color: transparent;
@@ -85,6 +85,8 @@
 
     .send-btn {
       font-size: x-large;
+      margin: auto;
+
       color: white;
       cursor: pointer;
       .btn-color{
