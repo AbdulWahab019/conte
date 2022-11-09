@@ -77,7 +77,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
     attributes: ['tp_day'],
   });
 
-  let pending_task_dates = [];
+  const pending_task_dates = [];
   for (const task of pending_tasks) {
     pending_task_dates.push(
       moment(formattedTpDate)
