@@ -34,7 +34,7 @@ export class ContactUsComponent implements OnInit {
 
   async sendEmail() {
     this.buttonState = 'loading';
-    window.location.href = `mailto:${this.clientEmail}?subject=Conte&body=${this.emailBody}%20goes%20here`;
+    window.location.href = `mailto:${this.clientEmail}?subject=${this.subject}&body=${this.emailBody}%20goes%20here`;
     await delay(1500);
     this.buttonState = 'static';
   }
