@@ -6,8 +6,8 @@ import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } 
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
-import { doctor } from '../models/doctor';
-import { surgery } from '../models/surgery';
+import { doctor } from '../../models/doctor';
+import { surgery } from '../../models/surgery';
 import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
@@ -99,11 +99,11 @@ export class SurveyComponent implements OnInit {
   confirmSurgeryForm() {
     this.surgeryOptionState = 'loading';
 
-    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f.doctor.value)].name;
+    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id === this.f.doctor.value)].name;
     const primary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id === this.f.primary_surgery.value)].name;
     const secondary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)]?.name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id === this.f.secondary_surgery.value)]?.name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: this.f.surgery_date.value },
@@ -195,7 +195,7 @@ export class SurveyComponent implements OnInit {
   confirmNonSurgeryForm() {
     this.nonSurgeryOptionState = 'loading';
 
-    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f2.doctor.value)].name;
+    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id === this.f2.doctor.value)].name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 20, response: this.f2.injury_date.value },

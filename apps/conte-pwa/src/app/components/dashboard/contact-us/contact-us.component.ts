@@ -9,7 +9,6 @@ import { delay } from '../../../utils/constants';
 })
 export class ContactUsComponent implements OnInit {
   buttonState = 'static';
-  userEmail: string | null = '';
   clientEmail = 'info@conte.com';
   subject = '';
   emailBody = '';
@@ -18,11 +17,8 @@ export class ContactUsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.userEmail = localStorage.getItem('user_email');
-
     this.emailForm = this.formBuilder.group({
       to: new FormControl('', [Validators.required, Validators.email]),
-      from: new FormControl('', [Validators.required, Validators.email]),
       email_body: new FormControl('', [Validators.required]),
       subject: new FormControl('', [Validators.required]),
     });
