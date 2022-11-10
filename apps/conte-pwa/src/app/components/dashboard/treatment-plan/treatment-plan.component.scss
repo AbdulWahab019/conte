@@ -148,12 +148,11 @@ $green: #06842c;
       width: 100%;
 
       .checkbox {
-        margin-right: 2%;
         input {
           float: left;
-          margin-right: 5%;
           width: 1.3em;
           height: 1.3em;
+          margin: 0;
           vertical-align: middle;
 
           background-color: #ffffff;
@@ -177,7 +176,7 @@ $green: #06842c;
 
       .task-title {
         width: 100%;
-        
+
         display: flex;
         justify-content: center;
 
@@ -189,10 +188,11 @@ $green: #06842c;
         text-decoration-thickness: 1px;
       }
       .info-link {
-        color: #00347D;
+        color: #00347d;
         cursor: pointer;
-        width: 2vh;
-        height: 2vh;
+        font-size: medium;
+        width: 1.3em;
+        height: 1.3em;
       }
       .spinner-border {
         width: 2vh;

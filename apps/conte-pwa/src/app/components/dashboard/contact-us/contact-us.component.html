@@ -5,7 +5,7 @@
     <i class="bi bi-envelope"></i>
 
     <!-- Email Section -->
-    <form [formGroup]="surgeryForm" (submit)="sendEmail()">
+    <form [formGroup]="emailForm" (submit)="sendEmail()">
       <div class="form-floating mb-3">
         <input
           type="email"
@@ -28,6 +28,18 @@
           formControlName="to"
         />
         <label>To</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          [ngClass]="(f.subject.touched || f.subject.dirty) && f.subject.errors ? 'form-control error-input' : 'form-control'"
+          placeholder="Enter the subject of your email"
+          readonly
+          [(ngModel)]="subject"
+          formControlName="subject"
+        />
+        <label>Subject</label>
       </div>
 
       <div class="form-group">
