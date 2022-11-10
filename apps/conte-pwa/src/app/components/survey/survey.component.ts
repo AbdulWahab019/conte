@@ -6,8 +6,8 @@ import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } 
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
-import { doctor } from '../models/doctor';
-import { surgery } from '../models/surgery';
+import { doctor } from '../../models/doctor';
+import { surgery } from '../../models/surgery';
 import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
