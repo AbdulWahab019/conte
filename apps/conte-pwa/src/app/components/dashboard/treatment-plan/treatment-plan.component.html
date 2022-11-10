@@ -26,8 +26,8 @@
     <div class="treatment-plan">
       <span *ngIf="!noTasks">Today's Treatment Plan</span>
       <div *ngFor="let task of dailyTasks; index as i" class="daily-tasks mt-2">
-        <div class="daily-task">
-          <div class="checkbox mb-3">
+        <div class="daily-task mb-3">
+          <div class="checkbox">
             <input
               class="form-check-input checkbox-round"
               type="checkbox"
@@ -40,7 +40,7 @@
           </div>
           <div
             class="task-title"
-            [ngClass]="task.is_completed ? 'task-title linethrough mb-3' : 'task-title mb-3'"
+            [ngClass]="task.is_completed ? 'task-title linethrough' : 'task-title'"
             (click)="taskDetails(task)"
           >
             {{ task.title }}
@@ -48,11 +48,11 @@
           <span
             *ngIf="task.is_completed !== 'loading'"
             (click)="taskDetails(task)"
-            class="bi bi-info-circle info-link ms-2 mb-4"
+            class="bi bi-info-circle info-link"
           ></span>
           <span
             *ngIf="task.is_completed === 'loading'"
-            class="spinner-border spinner-border-sm ms-2 mb-3"
+            class="spinner-border spinner-border-sm"
             role="status"
             aria-hidden="true"
           ></span>
