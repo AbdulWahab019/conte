@@ -35,7 +35,6 @@
           type="text"
           [ngClass]="(f.subject.touched || f.subject.dirty) && f.subject.errors ? 'form-control error-input' : 'form-control'"
           placeholder="Enter the subject of your email"
-          readonly
           [(ngModel)]="subject"
           formControlName="subject"
         />
