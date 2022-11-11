@@ -10,6 +10,10 @@ export interface UserTreatmentPlanTasksDefinedAttributes {
   user_tp_id: number;
   tp_day: number;
   title: string;
+  comment1: boolean;
+  comment2: boolean;
+  comment3: boolean;
+  comment4: boolean;
   is_completed: boolean;
 }
 
@@ -20,6 +24,10 @@ export interface UserTreatmentPlanTasksModel
   user_tp_id: number;
   tp_day: number;
   title: string;
+  comment1: boolean;
+  comment2: boolean;
+  comment3: boolean;
+  comment4: boolean;
   is_completed: boolean;
   created_at: string;
   updated_at: string;
@@ -34,6 +42,10 @@ export const UserTreatmentPlanTasks = sequelize.define<
   user_tp_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'user_treatment_plans', key: 'id' } },
   tp_day: { type: DataTypes.INTEGER, allowNull: false },
   title: { type: DataTypes.STRING },
+  comment1: { type: DataTypes.BOOLEAN },
+  comment2: { type: DataTypes.BOOLEAN },
+  comment3: { type: DataTypes.BOOLEAN },
+  comment4: { type: DataTypes.BOOLEAN },
   is_completed: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 

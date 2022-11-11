@@ -43,6 +43,7 @@ export async function createUserTreatmentPlan(
       user_tp_id: userTreatmentPlan.id,
       tp_day: user_tp_detail.tp_day,
       title: task,
+      type: task.detail,
     }));
   });
 
@@ -65,7 +66,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day } });
-  
+
   const pending_tasks = await UserTreatmentPlanTasks.findAll({
     where: {
       user_id,

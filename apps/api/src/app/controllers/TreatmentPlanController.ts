@@ -6,6 +6,7 @@ import { sendResponse } from '../utils/appUtils';
 import { INTERNAL_SERVER_ERROR, SUCCESS } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIReq } from '@conte/models';
+import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 
 export async function uploadTreatmentPlan(req: Request, res: Response) {
   const file: Express.Multer.File = req.file;
@@ -41,4 +42,17 @@ export async function updateTask(req: Request, res: Response) {
 
   await updateUserTask(Number(task_id), JSON.parse(status), user_id);
   return sendResponse(res, 200, SUCCESS);
+}
+
+export async function postComment(req: Request, res: Response) {
+  // const { id: user_id } = req['user'];
+  const { user_task_id } = req.params;
+  const { data } = req.body;
+
+  const result = UserTreatmentPlanTasks.update(
+    { comment1: data.comment1, comment2: data.comment2, comment3: data.comment3, comment4: data.comment4 },
+    { where: { user_id: 24, id: user_task_id } }
+  );
+
+  return sendResponse(res, 200, SUCCESS, result);
 }

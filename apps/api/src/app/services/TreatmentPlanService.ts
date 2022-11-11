@@ -9,6 +9,7 @@ import {
 } from '../models/TreatmentPlanDetail';
 
 import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
+import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 
 export async function createTreatmentPlan(
   name: string,
@@ -51,3 +52,9 @@ export function parseTreatmentPlanFile(
     });
   });
 }
+
+// export function userTPTaskComment(comment: any, user_id: number, user_task_id: any) {
+//   const result = UserTreatmentPlanTasks.update({ comment }, { where: { user_id, id: user_task_id } });
+
+//   return result;
+// }
