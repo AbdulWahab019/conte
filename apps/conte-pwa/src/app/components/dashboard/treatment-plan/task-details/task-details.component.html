@@ -7,7 +7,6 @@
   </div>
 
   <div class="modal-footer">
-
     <!-- Comment Section -->
 
     <div class="comments-container mt-3" #commentContainer>
@@ -26,9 +25,16 @@
         <option value="33333333333333">3</option>
         <option value="444444444444444444444">4</option>
       </select>
-      <div class="send-btn"><i  [ngClass]="comment === '' ? 'btn-color' : null"  (click)="comment ? addComment() : ''" class="bi bi-send ms-2 mb-3"></i></div>
+      <div class="send-btn">
+        <i
+          [ngClass]="comment === '' ? 'btn-color' : null"
+          (click)="comment ? addComment() : ''"
+          class="bi bi-send ms-2 mb-3"
+        ></i>
+      </div>
     </div>
-    <!-- Button Confirmation -->
+
+    <!-- Confirmation Button -->
     <div class="d-flex button-container mt-4 mb-2">
       <button
         class="btn btn-primary btn-confirm"
@@ -47,4 +53,3 @@
     </div>
   </div>
 </div>
-

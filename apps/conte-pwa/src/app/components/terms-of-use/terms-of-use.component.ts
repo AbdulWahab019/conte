@@ -12,7 +12,7 @@ export class TermsOfUseComponent implements OnInit {
   acceptTermsCheck = false;
   buttonState = 'static';
 
-  constructor(private userService: UserService, private router: Router, private toastService: ToastService) {}
+  constructor(private userService: UserService, private router: Router, private toast: ToastService) {}
 
   ngOnInit(): void {}
 
@@ -25,13 +25,13 @@ export class TermsOfUseComponent implements OnInit {
         localStorage.setItem('terms_of_use', true.toString());
         this.buttonState = 'static';
 
-        this.toastService.show('Terms of use accepted.', { classname: 'bg-success text-light', icon: 'success' });
+        this.toast.show('Terms of use accepted.', { classname: 'bg-success text-light', icon: 'success' });
         this.router.navigate(['orientation']);
       })
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 }

@@ -10,8 +10,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DashboardModule } from './components/dashboard/dashboard.module';
+import { SharedModule } from './components/shared/shared.module';
 
 /* Interceptors */
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -20,29 +22,22 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppComponent } from './app.component';
 import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
-import { ToastComponent } from './components/shared/toast/toast.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { OrientationComponent } from './components/orientation/orientation.component';
 import { SurveyComponent } from './components/survey/survey.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SpinnerComponent } from './components/shared/spinner/spinner.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { SubscriptionComponent } from './components/subscription/subscription.component';
-import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task-details/task-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SplashScreenComponent,
     AuthenticationComponent,
-    ToastComponent,
     TermsOfUseComponent,
     OrientationComponent,
     SurveyComponent,
     DashboardComponent,
-    SpinnerComponent,
     SubscriptionComponent,
-    TaskDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +45,7 @@ import { TaskDetailsComponent } from './components/dashboard/treatment-plan/task
     SweetAlert2Module.forRoot(),
     ReactiveFormsModule,
     DashboardModule,
+    SharedModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

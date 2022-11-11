@@ -113,10 +113,10 @@
     border-style: none;
     color: white;
     font-weight: 600;
-  }
 
-  .btn-confirm:hover {
-    background-color: rgba(53, 72, 181, 0.5);
+    &:hover {
+      background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62, 0.8) 0%, rgb(31, 92, 234, 0.8) 100%);
+    }
   }
 
   .error-input {

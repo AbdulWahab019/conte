@@ -1,0 +1,36 @@
+<!-- Header -->
+<div class="modal-content">
+  <div class="modal-body">
+    <h4 *ngIf="heading" class="modal-title display-5">{{ heading }}</h4>
+    <div *ngIf="logo" class="d-flex justify-content-center">{{ logo }}</div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="d-flex justify-content-center mb-3">{{ body }}</div>
+
+    <div *ngIf="list">
+      <div *ngFor="let item of list" class="list mt-1">
+        <li>{{ item }}</li>
+        <button *ngIf="listAction" (click)="listAction(item)" class="list-btn">
+          {{ listActionText }}<i *ngIf="listActionLogo === 'navigate'" class="bi bi-arrow-bar-right ms-1"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Confirmation Button -->
+    <div class="d-flex button-container mt-4 mb-2" *ngIf="buttonText">
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        [disabled]="buttonState === 'loading'"
+        (click)="buttonFunction()"
+      >
+        <span *ngIf="buttonState === 'static'" class="display-6">{{ buttonText }}</span>
+        <div *ngIf="buttonState === 'loading' && buttonLoadingText">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <span class="display-6">{{ buttonLoadingText }}</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

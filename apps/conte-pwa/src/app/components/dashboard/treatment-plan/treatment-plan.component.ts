@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerService } from '../../../services/spinner.service';
 import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
-import Swal from 'sweetalert2';
 import { TaskDetailsComponent } from './task-details/task-details.component';
+import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -24,6 +24,7 @@ export class TreatmentPlanComponent implements OnInit {
   buttonState = 'loading';
   dailyTasks!: any;
   noTasks = false;
+  pendingTasksModal: any;
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -40,32 +41,25 @@ export class TreatmentPlanComponent implements OnInit {
     this.getTasks();
   }
 
-  getTasks() {
+  getTasks(date = `${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`) {
     this.spinner.show();
 
     this.treatmentPlanService
-      .getDailyTasks(`${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`)
+      .getDailyTasks(date)
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
-        if (resp.data.pending_task_dates) {
-          let html = `<span>You have pending tasks for the following dates:</span> `;
-
-          for (const task of resp.data.pending_task_dates) {
-            html += `<li>${task}</li>`;
-          }
-
-          Swal.fire({
-            title: 'Pending Tasks',
-            html,
-            icon: 'info',
-            showCancelButton: false,
-            confirmButtonColor: '#073786',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Acknowledge',
-          });
+        if (resp.data.pending_task_dates.length) {
+          this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
+          this.pendingTasksModal.componentInstance.heading = 'Pending Tasks';
+          this.pendingTasksModal.componentInstance.body = 'You have incompleted tasks on the following dates:';
+          this.pendingTasksModal.componentInstance.list = resp.data.pending_task_dates;
+          this.pendingTasksModal.componentInstance.listActionText = 'Navigate';
+          this.pendingTasksModal.componentInstance.listActionLogo = `navigate`;
+          this.pendingTasksModal.componentInstance.listAction = this.navToSpecificTask;
+          this.pendingTasksModal.componentInstance.buttonText = 'Acknowledge';
         }
 
-        if (this.dailyTasks.length) {
+        if (this.dailyTasks?.length) {
           this.checkForCompletion();
         } else {
           this.noTasks = true;
@@ -78,6 +72,12 @@ export class TreatmentPlanComponent implements OnInit {
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
+
+  navToSpecificTask = (date: string): void => {
+    this.date = date;
+    this.modalService.dismissAll(this.pendingTasksModal);
+    this.getTasks(date);
+  };
 
   updateTask(index: number) {
     const status = !this.dailyTasks[index].is_completed;

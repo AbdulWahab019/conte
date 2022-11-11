@@ -31,8 +31,8 @@ export class SurveyComponent implements OnInit {
     private surveyService: SurveyService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private spinnerService: SpinnerService,
-    private toastService: ToastService
+    private spinner: SpinnerService,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {}
@@ -83,15 +83,15 @@ export class SurveyComponent implements OnInit {
   }
 
   getSurgeries(doctor_id: string) {
-    this.spinnerService.show();
+    this.spinner.show();
     this.surveyService
       .getSurgeriesForDoctor(doctor_id)
       .then((resp) => {
         this.surgeries = resp.data;
-        this.spinnerService.hide();
+        this.spinner.hide();
       })
       .catch((err) => {
-        this.spinnerService.hide();
+        this.spinner.hide();
         console.error(err);
       });
   }
@@ -139,7 +139,7 @@ export class SurveyComponent implements OnInit {
         localStorage.setItem('questionnaire_submitted', true.toString());
         this.surgeryOptionState = 'static';
 
-        this.toastService.show('Questionnaire submitted successfully.', {
+        this.toast.show('Questionnaire submitted successfully.', {
           classname: 'bg-success text-light',
           icon: 'success',
         });
@@ -149,7 +149,7 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.surgeryOptionState = 'static';
-        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 
@@ -225,7 +225,7 @@ export class SurveyComponent implements OnInit {
         localStorage.setItem('questionnaire_submitted', true.toString());
         this.nonSurgeryOptionState = 'static';
 
-        this.toastService.show('Questionnaire submitted successfully.', {
+        this.toast.show('Questionnaire submitted successfully.', {
           classname: 'bg-success text-light',
           icon: 'success',
         });
@@ -235,7 +235,7 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.nonSurgeryOptionState = 'static';
-        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 }
