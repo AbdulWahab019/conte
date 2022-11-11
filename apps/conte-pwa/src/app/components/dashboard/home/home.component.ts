@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private treatmentPlanService: TreatmentPlanService,
     private router: Router,
-    private spinnerService: SpinnerService,
-    private toastService: ToastService
+    private spinner: SpinnerService,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -32,10 +32,10 @@ export class HomeComponent implements OnInit {
 
   async logout() {
     localStorage.clear();
-    this.spinnerService.show();
+    this.spinner.show();
     await delay(1000);
-    this.spinnerService.hide();
-    this.toastService.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
+    this.spinner.hide();
+    this.toast.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
     this.router.navigate(['authentication']);
   }
 

@@ -7,7 +7,7 @@ import { ToastService } from '../services/toast.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private toastService: ToastService) {}
+  constructor(private router: Router, private toast: ToastService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
               return;
             }
             localStorage.clear();
-            this.toastService.show('Session Expired, please login again.', {
+            this.toast.show('Session Expired, please login again.', {
               classname: 'bg-danger text-light',
               icon: 'error',
             });
