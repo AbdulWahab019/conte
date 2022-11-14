@@ -49,11 +49,11 @@ export class TreatmentPlanComponent implements OnInit {
       .getDailyTasks(date)
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
-        if (resp.data.pending_task_dates.length) {
+        if (resp.data.pending_tasks_dates.length) {
           this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
           this.pendingTasksModal.componentInstance.heading = 'Pending Tasks';
           this.pendingTasksModal.componentInstance.body = 'You have incompleted tasks on the following dates:';
-          this.pendingTasksModal.componentInstance.list = resp.data.pending_task_dates;
+          this.pendingTasksModal.componentInstance.list = resp.data.pending_tasks_dates;
           this.pendingTasksModal.componentInstance.listActionText = 'Navigate';
           this.pendingTasksModal.componentInstance.listActionLogo = `navigate`;
           this.pendingTasksModal.componentInstance.listAction = this.navToSpecificTask;
