@@ -82,13 +82,13 @@ export async function getUserTasksByDate(user_id: number, date: string) {
     group: 'tp_day',
   });
 
-  const pending_tasks_date = pending_tasks.map((task) =>
+  const pending_tasks_dates = pending_tasks.map((task) =>
     moment(formattedTpDate)
       .add(task.tp_day - 1, 'days')
       .format('YYYY-MM-DD')
   );
 
-  return { todays_tasks, pending_tasks_date };
+  return { todays_tasks, pending_tasks_dates };
 }
 
 export async function updateUserTask(task_id: number, status: boolean, user_id: number) {
