@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import { sequelize } from '../models';
-import { createTreatmentPlan, parseTreatmentPlanFile } from '../services/TreatmentPlanService';
+import {
+  createTreatmentPlan,
+  getUserTaskFeedback,
+  parseTreatmentPlanFile,
+  createUserTaskFeedBack,
+} from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
 import { INTERNAL_SERVER_ERROR, SUCCESS } from '../utils/constants';
@@ -41,4 +46,21 @@ export async function updateTask(req: Request, res: Response) {
 
   await updateUserTask(Number(task_id), JSON.parse(status), user_id);
   return sendResponse(res, 200, SUCCESS);
+}
+
+export async function postFeedback(req: Request, res: Response) {
+  const { task_id } = req.params;
+  const { feedback, type } = req.body;
+
+  const result = await createUserTaskFeedBack(Number(task_id), feedback, type);
+
+  return sendResponse(res, 200, SUCCESS, result);
+}
+
+export async function getFeedback(req: Request, res: Response) {
+  const { task_id } = req.params;
+
+  const result = await getUserTaskFeedback(Number(task_id));
+
+  return sendResponse(res, 200, SUCCESS, result);
 }

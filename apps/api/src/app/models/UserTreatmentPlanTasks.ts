@@ -3,6 +3,7 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 import { UserTreatmentPlan } from './UserTreatmentPlan';
 import { User } from './User';
+import { UserTreatmentPlanTaskFeedback } from './UserTreatmentPlanTaskFeedback';
 
 export interface UserTreatmentPlanTasksDefinedAttributes {
   id?: number;
@@ -43,4 +44,6 @@ UserTreatmentPlanTasks.sync();
 UserTreatmentPlanTasks.afterSync(() => {
   UserTreatmentPlanTasks.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
   UserTreatmentPlanTasks.belongsTo(UserTreatmentPlan, { foreignKey: 'user_tp_id', targetKey: 'id' });
+
+  UserTreatmentPlanTasks.hasMany(UserTreatmentPlanTaskFeedback, { foreignKey: 'task_id', as: 'feedback' });
 });
