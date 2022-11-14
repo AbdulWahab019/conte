@@ -5,11 +5,11 @@ import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
   selector: 'app-toasts',
   template: `
     <ngb-toast
-      *ngFor="let toast of toast.toasts"
+      *ngFor="let toast of toastService.toasts"
       [class]="toast.classname"
       [autohide]="true"
       [delay]="toast.delay || 5000"
-      (hidden)="toast.remove(toast)"
+      (hidden)="toastService.remove(toast)"
     >
       <div class="d-flex">
         <span *ngIf="toast.icon === 'success'"><i class="bi bi-check2-circle me-2 pb-1"></i></span>
@@ -29,7 +29,7 @@ import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
   host: { class: 'toast-container position-fixed top-0 end-0 p-3', style: 'z-index: 1200' },
 })
 export class ToastComponent {
-  constructor(public toast: ToastService) {}
+  constructor(public toastService: ToastService) {}
 
   isTemplate(toast: any) {
     return toast.textOrTpl instanceof TemplateRef;
