@@ -23,6 +23,7 @@ export interface TreatmentPlanDetailsFileAttributes {
   bullpen_pitches: string;
   live_simulated_game: number;
   innings: number;
+  video_url: string;
 }
 
 export interface TreatmentPlanDetailDefinedAttributes {
@@ -47,6 +48,7 @@ export interface TreatmentPlanDetailDefinedAttributes {
   bullpen_pitches: string;
   live_simulated_game: number;
   innings: number;
+  video_url: string;
 }
 
 export interface TreatmentPlanDetailModel
@@ -72,6 +74,7 @@ export interface TreatmentPlanDetailModel
   bullpen_pitches: string;
   live_simulated_game: number;
   innings: number;
+  video_url: string;
   created_at: string;
   updated_at: string;
 }
@@ -100,6 +103,7 @@ export const TreatmentPlanDetail = sequelize.define<TreatmentPlanDetailModel, Tr
     bullpen_pitches: DataTypes.STRING,
     live_simulated_game: DataTypes.INTEGER,
     innings: DataTypes.INTEGER,
+    video_url: DataTypes.STRING,
   }
 );
 

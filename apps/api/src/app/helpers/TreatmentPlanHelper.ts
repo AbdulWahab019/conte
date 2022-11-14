@@ -22,6 +22,7 @@ export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlan
     bullpen_pitches: record[16],
     live_simulated_game: Number(record[17]) || 0,
     innings: Number(record[18]) || 0,
+    video_url: record[19],
   };
 }
 
