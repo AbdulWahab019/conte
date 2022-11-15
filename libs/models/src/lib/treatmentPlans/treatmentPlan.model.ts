@@ -1,4 +1,4 @@
-import { genericResponse } from '../apiResponse.model';
+import { GenericResponse } from '../apiResponse.model';
 
 export interface UploadTreatmentPlanAPIReq {
   file: File;
@@ -16,11 +16,11 @@ export interface CreateFeedbackApiRequest {
   type: number;
 }
 
-export interface createFeedbackApiResponse extends genericResponse {
-  data: feedbackResponse[];
+export interface CreateFeedbackApiResponse extends GenericResponse {
+  data: FeedbackResponse[];
 }
 
-export interface feedbackResponse {
+export interface FeedbackResponse {
   id: number;
   task_id: number;
   question: string;

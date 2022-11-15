@@ -11,8 +11,8 @@ export interface UserTreatmentPlanTaskFeedbackDefinedAttributes {
   type: number;
 }
 
-export interface UserTreatmentPlanTaskFeedbacksModel
-  extends Model<UserTreatmentPlanTaskFeedbacksModel, UserTreatmentPlanTaskFeedbackDefinedAttributes> {
+export interface UserTreatmentPlanTaskFeedbackModel
+  extends Model<UserTreatmentPlanTaskFeedbackModel, UserTreatmentPlanTaskFeedbackDefinedAttributes> {
   id?: number;
   task_id: number;
   question: string;
@@ -22,8 +22,8 @@ export interface UserTreatmentPlanTaskFeedbacksModel
   updated_at: string;
 }
 
-export const UserTreatmentPlanTaskFeedbacks = sequelize.define<
-  UserTreatmentPlanTaskFeedbacksModel,
+export const UserTreatmentPlanTaskFeedback = sequelize.define<
+  UserTreatmentPlanTaskFeedbackModel,
   UserTreatmentPlanTaskFeedbackDefinedAttributes
 >('UserTreatmentPlanTaskFeedback', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -33,9 +33,9 @@ export const UserTreatmentPlanTaskFeedbacks = sequelize.define<
   type: { type: DataTypes.INTEGER },
 });
 
-UserTreatmentPlanTaskFeedbacks.sync({ alter: true });
+UserTreatmentPlanTaskFeedback.sync({ alter: true });
 
 // Associations
-UserTreatmentPlanTaskFeedbacks.afterSync(() => {
-  UserTreatmentPlanTaskFeedbacks.belongsTo(UserTreatmentPlanTasks, { foreignKey: 'task_id', targetKey: 'id' });
+UserTreatmentPlanTaskFeedback.afterSync(() => {
+  UserTreatmentPlanTaskFeedback.belongsTo(UserTreatmentPlanTasks, { foreignKey: 'task_id', targetKey: 'id' });
 });

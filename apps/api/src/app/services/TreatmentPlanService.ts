@@ -9,9 +9,7 @@ import {
 } from '../models/TreatmentPlanDetail';
 
 import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
-import { UserTreatmentPlanTaskFeedbacks } from '../models/UserTreatmentPlanTaskFeedbacks';
-import { APIError } from '../utils/apiError';
-import { BAD_REQUEST, SOMETHING_WENT_WRONG } from '../utils/constants';
+import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { CreateFeedbackApiRequest } from '@conte/models';
 
 export async function createTreatmentPlan(
@@ -57,9 +55,9 @@ export function parseTreatmentPlanFile(
 }
 
 export async function createUserTaskFeedBack(data: CreateFeedbackApiRequest[]) {
-  return await UserTreatmentPlanTaskFeedbacks.bulkCreate(data);
+  return await UserTreatmentPlanTaskFeedback.bulkCreate(data);
 }
 
 export async function getUserTaskFeedback(task_id: number) {
-  return await UserTreatmentPlanTaskFeedbacks.findAll({ attributes: ['id', 'feedback', 'type'], where: { task_id } });
+  return await UserTreatmentPlanTaskFeedback.findAll({ attributes: ['id', 'feedback', 'type'], where: { task_id } });
 }

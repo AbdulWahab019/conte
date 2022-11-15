@@ -8,7 +8,7 @@ import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { getTasksFromTPDay } from '../helpers/TreatmentPlanHelper';
 import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
-import { UserTreatmentPlanTaskFeedbacks } from '../models/UserTreatmentPlanTaskFeedbacks';
+import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 
 export async function createUserTreatmentPlan(
   user_id: number,
@@ -67,7 +67,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({
     where: { user_id, tp_day },
-    include: [{ model: UserTreatmentPlanTaskFeedbacks, as: 'feedback' }],
+    include: [{ model: UserTreatmentPlanTaskFeedback, as: 'feedback' }],
   });
 
   const pending_tasks = await UserTreatmentPlanTasks.findAll({
