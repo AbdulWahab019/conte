@@ -69,3 +69,9 @@ export const TREATMENT_PLAN_NAME_INVALID_LENGTH =
   'Treatment plan name should be greater than 5 characters and less than 30 characters';
 export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'A Treatment Plan is already assigned to user';
 export const TREATMENT_PLAN_NOT_ASSIGNED = 'No Treatment Plan assigned to user';
+
+// Task Feedback
+export const TASK_ID_MISSING = 'Task id is missing';
+export const SELECT_QUESTION = 'Please select a question';
+export const FEEDBACK_MISSING = 'Feedback missing';
+export const TYPE_MISSING = 'Task type is missing';
