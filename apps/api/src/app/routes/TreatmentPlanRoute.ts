@@ -9,6 +9,7 @@ import {
   getTaskeedback,
 } from '../controllers/TreatmentPlanController';
 import { authorize } from '../middlewares/auth';
+import { validateCreateFeedback } from '../validations/FeedbackValidation';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -20,7 +21,7 @@ router.get('/tasks/date/:date', authorize, getTasksByDate);
 
 router.put('/task/:task_id/status/:status', authorize, updateTask);
 
-router.post('/task/:task_id/feedback', authorize, postTaskFeedback);
+router.post('/task/:task_id/feedback', authorize, validateCreateFeedback, postTaskFeedback);
 
 router.get('/task/:task_id/feedback', authorize, getTaskeedback);
 
