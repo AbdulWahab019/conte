@@ -11,6 +11,12 @@ $green: #06842c;
   background-color: rgb(227, 227, 227);
 }
 
+@media screen and (min-width: 1024px) {
+  .treatment-plan-screen {
+    height: 100%;
+  }
+}
+
 .treatment-plan-container {
   justify-content: center;
   text-align: center;

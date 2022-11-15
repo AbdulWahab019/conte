@@ -31,7 +31,9 @@ export class TaskDetailsComponent implements OnInit {
 
   scrollToBottom(): void {
     try {
-      this.commentContainer.nativeElement.scrollTop = this.commentContainer.nativeElement.scrollHeight;
+      if (this.comments.length) {
+        this.commentContainer.nativeElement.scrollTop = this.commentContainer.nativeElement.scrollHeight;
+      }
     } catch (err) {
       console.error(err);
     }

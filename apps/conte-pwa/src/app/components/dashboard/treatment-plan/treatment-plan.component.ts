@@ -6,6 +6,7 @@ import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
+import { taskFeedback } from 'apps/conte-pwa/src/app/models/treatmentplan';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -48,11 +49,11 @@ export class TreatmentPlanComponent implements OnInit {
       .getDailyTasks(date)
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
-        if (resp.data.pending_task_dates.length) {
+        if (resp.data.pending_tasks_dates.length) {
           this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
           this.pendingTasksModal.componentInstance.heading = 'Pending Tasks';
           this.pendingTasksModal.componentInstance.body = 'You have incompleted tasks on the following dates:';
-          this.pendingTasksModal.componentInstance.list = resp.data.pending_task_dates;
+          this.pendingTasksModal.componentInstance.list = resp.data.pending_tasks_dates;
           this.pendingTasksModal.componentInstance.listActionText = 'Navigate';
           this.pendingTasksModal.componentInstance.listActionLogo = `navigate`;
           this.pendingTasksModal.componentInstance.listAction = this.navToSpecificTask;
@@ -60,6 +61,7 @@ export class TreatmentPlanComponent implements OnInit {
         }
 
         if (this.dailyTasks?.length) {
+          this.noTasks = false;
           this.checkForCompletion();
         } else {
           this.noTasks = true;
@@ -89,6 +91,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         this.dailyTasks[index].is_completed = status;
         this.checkForCompletion();
+        if (status) this.bullpenFeedback();
       })
       .catch((err) => {
         console.error(err);
@@ -107,6 +110,9 @@ export class TreatmentPlanComponent implements OnInit {
           const index = this.dailyTasks.findIndex((task: any) => task.id === result.task_id);
           this.dailyTasks[index].is_completed = result.status;
           this.checkForCompletion();
+          if (result.status) {
+            this.bullpenFeedback();
+          }
         }
       })
       .catch((err) => {
@@ -118,6 +124,23 @@ export class TreatmentPlanComponent implements OnInit {
     const searchIndex = this.dailyTasks.findIndex((task: any) => task.is_completed === false);
     if (searchIndex > -1) this.buttonState = 'loading';
     else this.buttonState = 'static';
+  }
+
+  bullpenFeedback() {
+    this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.pendingTasksModal.componentInstance.heading = 'Conte; Task Feedback';
+    this.pendingTasksModal.componentInstance.subHeading = 'Bullpen Throws';
+    this.pendingTasksModal.componentInstance.body = 'Please share your feedback regarding this task';
+    this.pendingTasksModal.componentInstance.buttonText = 'Submit';
+    this.pendingTasksModal.componentInstance.questionAnswers = [{ question: '', answer: '' }];
+    this.pendingTasksModal.componentInstance.QAbuttonText = 'Add question';
+    this.pendingTasksModal.componentInstance.QAbuttonLogo = 'add';
+    this.pendingTasksModal.componentInstance.buttonLoadingText = 'Submitting your feedback';
+    this.pendingTasksModal.componentInstance.buttonAction = this.submitFeedback;
+  }
+
+  submitFeedback(taskFeedback: any) {
+    console.log(taskFeedback)
   }
 
   navBack() {
