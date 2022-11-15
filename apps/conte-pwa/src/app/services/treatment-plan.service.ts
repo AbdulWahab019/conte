@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TREATMENTPLAN } from '../utils/constants';
+import { DASHBOARD, TREATMENTPLAN } from '../utils/constants';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
@@ -24,6 +24,10 @@ export class TreatmentPlanService {
 
   getTreatmentPlanDate(): NgbDate {
     return this.treatmentPlanDate;
+  }
+
+  async getTreatmentPlanDetails(date: string): Promise<any> {
+    return await this.http.get<any>(`${DASHBOARD}`, { params: { date } }).toPromise();
   }
 
   async getDailyTasks(date: string): Promise<any> {

@@ -13,6 +13,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() task: any = {};
   @Input() dueDate = '';
   buttonState = 'static';
+  sendButtonState = 'static';
   comment: string = '';
   comments: any = [];
 
@@ -21,6 +22,7 @@ export class TaskDetailsComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private toast: ToastService
   ) {}
+
   ngOnInit(): void {
     this.scrollToBottom();
   }
@@ -31,7 +33,7 @@ export class TaskDetailsComponent implements OnInit {
 
   scrollToBottom(): void {
     try {
-      if (this.comments.length) {
+      if (this.comments?.length) {
         this.commentContainer.nativeElement.scrollTop = this.commentContainer.nativeElement.scrollHeight;
       }
     } catch (err) {
@@ -40,7 +42,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   addComment() {
-    this.comments.push(this.comment);
+    this.sendButtonState = 'loading';
+    // this.comments.push(this.comment);
   }
 
   completeDailyTask() {

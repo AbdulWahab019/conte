@@ -92,9 +92,17 @@
     }
   }
 
-  iframe {
+  video {
+    width: 100%;
+    
     border-radius: 26px;
     box-shadow: 0 5px 10px black;
+  }
+
+  @media screen and (min-width: 800px) {
+    video {
+      height: 70vh;
+    }
   }
 
   .info-tab {

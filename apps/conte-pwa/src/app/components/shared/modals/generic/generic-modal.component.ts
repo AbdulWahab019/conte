@@ -44,7 +44,7 @@ export class GenericModalComponent implements OnInit {
       this.buttonState = 'loading';
       await delay(1500);
     }
-    if (this.questionAnswers.length) {
+    if (this.questionAnswers?.length) {
       for (const question of this.questionAnswers) {
         if (!question.answer) {
           this.toast.show('Please answer every question first.', { classname: 'bg-danger text-light', icon: 'error' });
