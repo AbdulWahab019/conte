@@ -1,3 +1,4 @@
+import moment = require('moment');
 import { TreatmentPlanDetailsFileAttributes } from '../models/TreatmentPlanDetail';
 import { UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 
@@ -77,4 +78,12 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
   }
 
   return tasks;
+}
+
+export function getUserTreatmentPlanDayByDate(date: string | Date, treatmentPlanDate: string) {
+  const formattedDate = moment(date).format('YYYY-MM-DD');
+  const formattedTpDate = moment(treatmentPlanDate).format('YYYY-MM-DD');
+
+  const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
+  return { tp_day, formattedDate, formattedTpDate };
 }

@@ -5,7 +5,7 @@ import { TreatmentPlanModel } from '../models/TreatmentPlan';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
-import { getTasksFromTPDay } from '../helpers/TreatmentPlanHelper';
+import { getTasksFromTPDay, getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
 import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
@@ -60,10 +60,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
   if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const formattedDate = moment(date).format('YYYY-MM-DD');
-  const formattedTpDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
-
-  const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
+  const { tp_day, formattedTpDate } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({
     where: { user_id, tp_day },
@@ -74,9 +71,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
     where: {
       user_id,
       is_completed: 0,
-      tp_day: {
-        [Op.lt]: tp_day,
-      },
+      tp_day: { [Op.lt]: tp_day },
     },
     attributes: ['tp_day'],
     group: 'tp_day',
@@ -93,4 +88,16 @@ export async function getUserTasksByDate(user_id: number, date: string) {
 
 export async function updateUserTask(task_id: number, status: boolean, user_id: number) {
   return await UserTreatmentPlanTasks.update({ is_completed: status }, { where: { id: task_id, user_id } });
+}
+
+export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, date: string) {
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['id', 'createdAt'] });
+  if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+
+  return await UserTreatmentPlanDetail.findOne({
+    where: { user_tp_id: treatmentPlan.id, tp_day },
+    attributes: ['video_url'],
+  });
 }

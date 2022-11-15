@@ -3,7 +3,7 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 import { User } from './User';
 import { TreatmentPlan } from './TreatmentPlan';
-import { UserTreatmentPlanDetail } from './UserTreatmentPlanDetail';
+import { UserTreatmentPlanDetail, UserTreatmentPlanDetailModel } from './UserTreatmentPlanDetail';
 
 export interface UserTreatmentPlanDefinedAttributes {
   id: number;
@@ -19,6 +19,7 @@ export interface UserTreatmentPlanModel extends Model<UserTreatmentPlanModel, Us
   tp_id: number;
   createdAt: string;
   updatedAt: string;
+  details: UserTreatmentPlanDetailModel[];
 }
 
 export const UserTreatmentPlan = sequelize.define<UserTreatmentPlanModel, UserTreatmentPlanDefinedAttributes>(
@@ -48,8 +49,5 @@ UserTreatmentPlan.afterSync(() => {
   UserTreatmentPlan.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
   UserTreatmentPlan.belongsTo(TreatmentPlan, { foreignKey: 'tp_id', targetKey: 'id' });
 
-  UserTreatmentPlan.hasMany(UserTreatmentPlanDetail, {
-    foreignKey: 'user_tp_id',
-    sourceKey: 'id',
-  });
+  UserTreatmentPlan.hasMany(UserTreatmentPlanDetail, { foreignKey: 'user_tp_id', sourceKey: 'id', as: 'details' });
 });
