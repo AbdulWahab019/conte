@@ -13,6 +13,8 @@ import { delay } from '../../../utils/constants';
 })
 export class HomeComponent implements OnInit {
   defaultDate!: NgbDate;
+  date = '';
+  videoURL = '';
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -23,11 +25,30 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultDate = this.treatmentPlanService.getTreatmentPlanDate();
+    this.date = `${this.defaultDate.year}-${this.defaultDate.month}-${this.defaultDate.day}`;
+    this.getTreatmentPlanDetail();
   }
 
   saveDate() {
     this.treatmentPlanService.setTreatmentPlanDate(this.defaultDate);
-    delay(2000);
+    this.date = `${this.defaultDate.year}-${this.defaultDate.month}-${this.defaultDate.day}`;
+    this.getTreatmentPlanDetail();
+  }
+
+  getTreatmentPlanDetail() {
+    this.spinner.show();
+
+    this.treatmentPlanService
+      .getTreatmentPlanDetails(this.date)
+      .then((resp) => {
+        this.videoURL = resp.data?.video_url;
+        this.spinner.hide();
+      })
+      .catch((err) => {
+        this.spinner.hide();
+        console.error(err);
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   }
 
   async logout() {
