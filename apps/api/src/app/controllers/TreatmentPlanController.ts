@@ -49,10 +49,9 @@ export async function updateTask(req: Request, res: Response) {
 }
 
 export async function postTaskFeedback(req: Request, res: Response) {
-  const { task_id } = req.params;
-  const { feedback, type } = req.body;
+  const { data } = req.body;
 
-  const apiResp = await createUserTaskFeedBack(Number(task_id), feedback, type);
+  const apiResp = await createUserTaskFeedBack(data);
 
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
