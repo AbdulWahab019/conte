@@ -9,7 +9,7 @@ export async function validateCreateFeedback(req: Request, res: Response, next: 
 
   // TODO - Refactor this after creating table & APIs for feedback and comments.
 
-  if (req.body.data.length >= 1 && req.body.data.type === 2) {
+  if (req.body.data.length >= 1 && req.body.data[0].type === 2) {
     validationPromises.push(body('data.*.question').notEmpty().withMessage(QUESTION_REQUIRED).run(req));
     validationPromises.push(body('data.*.task_id').notEmpty().withMessage(TASK_ID_REQUIRED).run(req));
     validationPromises.push(body('data.*.feedback').notEmpty().withMessage(FEEDBACK_REQUIRED).run(req));
