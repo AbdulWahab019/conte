@@ -72,6 +72,6 @@ export const TREATMENT_PLAN_NOT_ASSIGNED = 'No Treatment Plan assigned to user';
 
 // Task Feedback
 export const TASK_ID_REQUIRED = 'Task id is required';
-export const SELECT_QUESTION = 'Please select a question';
-export const FEEDBACK_MISSING = 'Feedback missing';
-export const TYPE_MISSING = 'Task type is missing';
+export const QUESTION_REQUIRED = 'Question is required';
+export const FEEDBACK_REQUIRED = 'Feedback is required';
+export const TYPE_REQUIRED = 'Task type is required';
