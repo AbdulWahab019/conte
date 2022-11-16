@@ -1,4 +1,4 @@
-import { GenericResponse } from '../apiResponse.model';
+import { GenericResponse } from '../api/api.model';
 
 export interface UploadTreatmentPlanAPIReq {
   file: File;
