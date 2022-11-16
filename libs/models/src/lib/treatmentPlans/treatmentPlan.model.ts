@@ -10,8 +10,12 @@ export interface UploadTreatmentPlanAPIReq {
 }
 
 export interface CreateFeedbackApiRequest {
+  data: FeedbackRequest[];
+}
+
+export interface FeedbackRequest {
   task_id: number;
-  question: string;
+  question?: string;
   feedback: string;
   type: number;
 }

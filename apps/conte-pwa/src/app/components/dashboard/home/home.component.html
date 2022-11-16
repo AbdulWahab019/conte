@@ -24,9 +24,14 @@
     </div>
 
     <!-- Treatment Plan Video -->
-    <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL">
+    <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL">
       Your browser does not support the video playback.
     </video>
+    <!-- CASE// No Video -->
+    <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
+      <img src="assets/images/no_tasks_found.png" height="150" width="150" />
+      <p class="display-6">No Video Tutorial Available Today</p>
+    </div>
 
     <!-- <iframe
       width="100%"

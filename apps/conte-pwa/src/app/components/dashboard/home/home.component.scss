@@ -94,7 +94,7 @@
 
   video {
     width: 100%;
-    
+
     border-radius: 26px;
     box-shadow: 0 5px 10px black;
   }
@@ -103,6 +103,18 @@
     video {
       height: 70vh;
     }
+  }
+
+  .empty-tasks {
+    width: 100%;
+    padding: 5% 0 5% 0;
+
+    p {
+      font-size: large;
+    }
+
+    border-radius: 26px;
+    box-shadow: 0 5px 10px black;
   }
 
   .info-tab {

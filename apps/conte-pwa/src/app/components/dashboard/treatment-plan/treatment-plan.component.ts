@@ -140,7 +140,7 @@ export class TreatmentPlanComponent implements OnInit {
   }
 
   submitFeedback(taskFeedback: any) {
-    console.log(taskFeedback)
+    console.log(taskFeedback);
   }
 
   navBack() {

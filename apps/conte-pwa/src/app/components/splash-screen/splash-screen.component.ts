@@ -20,7 +20,7 @@ export class SplashScreenComponent implements OnInit {
       this.router.navigate(['authentication']);
     } else {
       this.authService
-        .verifyToken(token)
+        .getUserDetails()
         .then((resp) => {
           localStorage.setItem('terms_of_use', resp.data.is_terms_of_use_accepted);
           localStorage.setItem('orientation_watched', resp.data.is_orientation_video_watched);

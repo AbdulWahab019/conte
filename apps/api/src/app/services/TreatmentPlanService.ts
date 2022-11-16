@@ -10,7 +10,7 @@ import {
 
 import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
-import { CreateFeedbackApiRequest } from '@conte/models';
+import { FeedbackRequest } from '@conte/models';
 
 export async function createTreatmentPlan(
   name: string,
@@ -54,7 +54,7 @@ export function parseTreatmentPlanFile(
   });
 }
 
-export async function createUserTaskFeedBack(data: CreateFeedbackApiRequest[]) {
+export async function createUserTaskFeedBack(data: FeedbackRequest[]) {
   return await UserTreatmentPlanTaskFeedback.bulkCreate(data);
 }
 

@@ -25,4 +25,9 @@ export class DashboardComponent implements OnInit {
     this.url = '/dashboard/contact';
     this.router.navigate(['dashboard/contact']);
   }
+
+  navToProfile() {
+    this.url = '/dashboard/profile';
+    this.router.navigate(['dashboard/profile']);
+  }
 }

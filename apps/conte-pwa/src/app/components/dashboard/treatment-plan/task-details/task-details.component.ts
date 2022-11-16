@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SpinnerService } from 'apps/conte-pwa/src/app/services/spinner.service';
 import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
 import { TreatmentPlanService } from 'apps/conte-pwa/src/app/services/treatment-plan.service';
 
@@ -20,10 +21,29 @@ export class TaskDetailsComponent implements OnInit {
   constructor(
     private treatmentPlanService: TreatmentPlanService,
     public activeModal: NgbActiveModal,
-    private toast: ToastService
+    private toast: ToastService,
+    private spinner: SpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show();
+
+    this.treatmentPlanService
+      .getTaskFeedback(this.task.id)
+      .then((resp) => {
+        for (const feedback of resp.data) {
+          if (feedback.type === 1) {
+            this.comments.push(feedback.feedback);
+          }
+        }
+        this.spinner.hide();
+      })
+      .catch((err) => {
+        console.error(err);
+        this.spinner.hide();
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
+
     this.scrollToBottom();
   }
 
@@ -43,7 +63,26 @@ export class TaskDetailsComponent implements OnInit {
 
   addComment() {
     this.sendButtonState = 'loading';
-    // this.comments.push(this.comment);
+    const data = [
+      {
+        task_id: this.task.id,
+        feedback: this.comment,
+        type: 1,
+      },
+    ];
+    const request = { data };
+
+    this.treatmentPlanService
+      .postTaskFeedback(request)
+      .then((resp) => {
+        this.comments.push(this.comment);
+        this.sendButtonState = 'static';
+      })
+      .catch((err) => {
+        console.error(err);
+        this.buttonState = 'static';
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   }
 
   completeDailyTask() {

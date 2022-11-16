@@ -6,7 +6,7 @@ import {
   getTasksByDate,
   updateTask,
   postTaskFeedback,
-  getTaskeedback,
+  getTaskFeedback,
 } from '../controllers/TreatmentPlanController';
 import { authorize } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
@@ -23,6 +23,6 @@ router.put('/task/:task_id/status/:status', authorize, updateTask);
 
 router.post('/task/:task_id/feedback', authorize, validateCreateFeedback, postTaskFeedback);
 
-router.get('/task/:task_id/feedback', authorize, getTaskeedback);
+router.get('/task/:task_id/feedback', authorize, getTaskFeedback);
 
 export default router;

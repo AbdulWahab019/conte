@@ -1,19 +1,19 @@
 <router-outlet></router-outlet>
 <div class="container-fluid nav-bar">
-  <div class="nav-link">
+  <div [ngClass]="url == '/dashboard/profile' ? 'nav-link active-link' : 'nav-link'" (click)="navToProfile()">
     <i class="bi bi-file-earmark-person-fill"></i>
     <p>Profile</p>
   </div>
   <div class="nav-link">
-    <i class="bi bi-camera-reels"></i>
+    <i class="bi bi-camera-reels-fill"></i>
     <p>Video</p>
   </div>
   <div [ngClass]="url == '/dashboard' ? 'nav-link active-link' : 'nav-link'" (click)="navToHome()">
-    <i class="bi bi-house-door"></i>
+    <i class="bi bi-house-door-fill"></i>
     <p>Home</p>
   </div>
   <div [ngClass]="url == '/dashboard/contact' ? 'nav-link active-link' : 'nav-link'" (click)="navToContact()">
-    <i class="bi bi-telephone-outbound"></i>
+    <i class="bi bi-telephone-outbound-fill"></i>
     <p>Contact</p>
   </div>
   <div class="nav-link">

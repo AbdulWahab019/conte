@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
 import { TaskDetailsComponent } from './treatment-plan/task-details/task-details.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -21,13 +22,14 @@ const routes: Routes = [
     children: [
       { path: '', title: 'Home', component: HomeComponent },
       { path: 'contact', title: 'Contact Us', component: ContactUsComponent },
+      { path: 'profile', title: 'User Profile', component: ProfileComponent },
       { path: 'treatment-plan', title: 'Treatment Plan', component: TreatmentPlanComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [ContactUsComponent, TaskDetailsComponent, TreatmentPlanComponent, HomeComponent],
+  declarations: [ContactUsComponent, TaskDetailsComponent, TreatmentPlanComponent, HomeComponent, ProfileComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
