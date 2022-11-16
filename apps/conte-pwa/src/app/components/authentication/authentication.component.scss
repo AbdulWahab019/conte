@@ -4,10 +4,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('assets/images/bg-slides/mobile_1.jpg'),
-    url('assets/images/bg-slides/mobile_2.jpg'), url('assets/images/bg-slides/mobile_3.jpg'),
-    url('assets/images/bg-slides/mobile_4.jpg'), url('assets/images/bg-slides/mobile_5.jpg'),
-    url('assets/images/bg-slides/mobile_6.jpg');
+  background-image: url('../../../assets/images/bg-slides/mobile_1.jpg'),
+    url('../../../assets/images/bg-slides/mobile_2.jpg'), url('../../../assets/images/bg-slides/mobile_3.jpg'),
+    url('../../../assets/images/bg-slides/mobile_4.jpg'), url('../../../assets/images/bg-slides/mobile_5.jpg'),
+    url('../../../assets/images/bg-slides/mobile_6.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -18,9 +18,9 @@
   .authentication-screen {
     width: 100%;
     height: 100vh;
-    background-image: url('assets/images/bg-slides/1.jpg'), url('assets/images/bg-slides/2.jpg'),
-      url('assets/images/bg-slides/3.jpg'), url('assets/images/bg-slides/4.jpg'),
-      url('assets/images/bg-slides/5.jpg'), url('assets/images/bg-slides/6.jpg');
+    background-image: url('../../../assets/images/bg-slides/1.jpg'), url('../../../assets/images/bg-slides/2.jpg'),
+      url('../../../assets/images/bg-slides/3.jpg'), url('../../../assets/images/bg-slides/4.jpg'),
+      url('../../../assets/images/bg-slides/5.jpg'), url('../../../assets/images/bg-slides/6.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -30,43 +30,43 @@
 
 @keyframes slideshow {
   0% {
-    background-image: url('assets/images/bg-slides/1.jpg');
+    background-image: url('../../../assets/images/bg-slides/1.jpg');
   }
   20% {
-    background-image: url('assets/images/bg-slides/2.jpg');
+    background-image: url('../../../assets/images/bg-slides/2.jpg');
   }
   40% {
-    background-image: url('assets/images/bg-slides/3.jpg');
+    background-image: url('../../../assets/images/bg-slides/3.jpg');
   }
   60% {
-    background-image: url('assets/images/bg-slides/4.jpg');
+    background-image: url('../../../assets/images/bg-slides/4.jpg');
   }
   80% {
-    background-image: url('assets/images/bg-slides/5.jpg');
+    background-image: url('../../../assets/images/bg-slides/5.jpg');
   }
   100% {
-    background-image: url('assets/images/bg-slides/6.jpg');
+    background-image: url('../../../assets/images/bg-slides/6.jpg');
   }
 }
 
 @keyframes slideshow-mobile {
   0% {
-    background-image: url('assets/images/bg-slides/mobile_1.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_1.jpg');
   }
   20% {
-    background-image: url('assets/images/bg-slides/mobile_2.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_2.jpg');
   }
   40% {
-    background-image: url('assets/images/bg-slides/mobile_3.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_3.jpg');
   }
   60% {
-    background-image: url('assets/images/bg-slides/mobile_4.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_4.jpg');
   }
   80% {
-    background-image: url('assets/images/bg-slides/mobile_5.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_5.jpg');
   }
   100% {
-    background-image: url('assets/images/bg-slides/mobile_6.jpg');
+    background-image: url('../../../assets/images/bg-slides/mobile_6.jpg');
   }
 }
 
