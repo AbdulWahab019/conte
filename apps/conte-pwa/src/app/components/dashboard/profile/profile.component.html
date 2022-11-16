@@ -1,0 +1,99 @@
+<div class="container-fluid profile-screen">
+  <div class="container-fluid profile-container">
+    <!-- Heading  -->
+    <h1 class="display-5">User Profile <i class="bi bi-person-bounding-box"></i></h1>
+
+    <!-- Profile Section//start -->
+    <!-- Profile Picture -->
+    <div class="avatar-container">
+      <img class="avatar mt-4 mb-2" [src]="userProfile.image ? userProfile.image : 'assets/images/default_user.png'" />
+      <i class="bi bi-pencil"></i>
+    </div>
+
+    <!-- Personal Details -->
+    <div class="row mt-3 mb-3">
+      <div class="col me-3">
+        <label>First Name</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          placeholder="Enter your First Name"
+          [(ngModel)]="userProfile.first_name"
+        />
+      </div>
+
+      <div class="col">
+        <label>Last Name</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          placeholder="Enter your Last Name"
+          [(ngModel)]="userProfile.last_name"
+        />
+      </div>
+    </div>
+
+    <label class="mt-2">Email Address</label>
+    <input type="text" class="form-control form-field" placeholder="Enter your Email" [(ngModel)]="userProfile.email" />
+
+    <label class="mt-2">Address</label>
+    <input
+      type="text"
+      class="form-control form-field"
+      placeholder="Enter your Address"
+      [(ngModel)]="userProfile.address"
+    />
+
+    <div class="row mt-2">
+      <div class="col me-3">
+        <label>State</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          placeholder="Enter your state"
+          [(ngModel)]="userProfile.state"
+        />
+      </div>
+
+      <div class="col">
+        <label>City</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          placeholder="Enter your city"
+          [(ngModel)]="userProfile.city"
+        />
+      </div>
+    </div>
+    <!-- Profile Section//end -->
+
+    <!-- Confirmation -->
+    <div class="d-flex justify-content-center mt-4 mb-2">
+      <button class="btn btn-primary btn-update me-2" type="button" [disabled]="buttonState === 'loading'">
+        <span *ngIf="buttonState === 'static'">Change Password</span>
+        <div *ngIf="buttonState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          <span>Updating your profile</span>
+        </div>
+      </button>
+      <button class="btn btn-primary btn-update" type="button" [disabled]="buttonState === 'loading'">
+        <span *ngIf="buttonState === 'static'">Update Profile</span>
+        <div *ngIf="buttonState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          <span>Updating your profile</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Membership Details -->
+    <div class="d-flex justify-content-center mt-4 mb-3">
+      <button class="btn btn-primary btn-confirm" type="button" [disabled]="buttonState === 'loading'">
+        <span *ngIf="buttonState === 'static'">Check Membership Details</span>
+        <div *ngIf="buttonState === 'loading'">
+          <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          <span>Updating your profile</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

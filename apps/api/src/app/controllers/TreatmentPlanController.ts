@@ -56,7 +56,7 @@ export async function postTaskFeedback(req: Request, res: Response) {
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
 
-export async function getTaskeedback(req: Request, res: Response) {
+export async function getTaskFeedback(req: Request, res: Response) {
   const { task_id } = req.params;
 
   const apiResp = await getUserTaskFeedback(Number(task_id));

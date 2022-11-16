@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DASHBOARD, TREATMENTPLAN } from '../utils/constants';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { CreateFeedbackApiRequest, CreateFeedbackApiResponse } from '@conte/models';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,13 @@ export class TreatmentPlanService {
 
   async updateTask(task_id: string, status: boolean): Promise<any> {
     return await this.http.put<any>(`${TREATMENTPLAN}/task/${task_id}/status/${status}`, null).toPromise();
+  }
+
+  async postTaskFeedback(request: CreateFeedbackApiRequest): Promise<any> {
+    return await this.http.post<any>(`${TREATMENTPLAN}/task/${request.data[0].task_id}/feedback`, request).toPromise();
+  }
+
+  async getTaskFeedback(task_id: string): Promise<any> {
+    return await this.http.get<any>(`${TREATMENTPLAN}/task/${task_id}/feedback`).toPromise();
   }
 }
