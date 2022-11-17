@@ -43,7 +43,8 @@ export async function createUserTreatmentPlan(
       user_id,
       user_tp_id: userTreatmentPlan.id,
       tp_day: user_tp_detail.tp_day,
-      title: task,
+      title: task.title,
+      type: task.task_type,
     }));
   });
 
