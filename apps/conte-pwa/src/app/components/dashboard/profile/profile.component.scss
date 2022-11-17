@@ -1,18 +1,12 @@
 .profile-screen {
-  height: 100vh;
-  padding: 5vh 5% 16vh 5%;
+  height: 100%;
+  padding: 3vh 5% 16vh 5%;
 
   display: flex;
 
   align-items: center;
 
   background-color: rgb(227, 227, 227);
-}
-
-@media screen and (min-width: 1024px) {
-  .profile-screen {
-    height: 100%;
-  }
 }
 
 .profile-container {

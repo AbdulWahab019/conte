@@ -1,12 +1,12 @@
 <!-- Header -->
-<div class="modal-content">
-  <div class="modal-body">
+<div class="g-modal-content">
+  <div class="g-modal-header">
     <h4 *ngIf="heading" class="modal-title display-5">{{ heading }}</h4>
     <h4 *ngIf="subHeading" class="modal-title display-6">{{ subHeading }}</h4>
     <div *ngIf="logo" class="d-flex justify-content-center">{{ logo }}</div>
   </div>
 
-  <div class="modal-footer">
+  <div class="g-modal-body">
     <div class="d-flex justify-content-center mb-3">{{ body }}</div>
 
     <!-- List -->
@@ -23,7 +23,7 @@
     <div *ngIf="questionAnswers">
       <div *ngFor="let item of questionAnswers; index as i" class="mt-1 mb-3" [@fade]>
         <div class="d-flex align-items-center">
-          <select [(ngModel)]="this.questionAnswers[i].question" class="feedback-field">
+          <select [(ngModel)]="this.questionAnswers[i].question" class="feedback-field" autofocus="false">
             <option hidden selected value="">Select a question</option>
             <option value="question1">Question 1</option>
             <option value="question2">Question 2</option>
@@ -50,8 +50,17 @@
       </div>
     </div>
 
-    <!-- Confirmation Button -->
-    <div class="d-flex button-container mt-4 mb-2" *ngIf="buttonText">
+    <!-- Main Buttons -->
+    <div class="d-flex button-container mt-4 mb-2" *ngIf="buttonText || closeButtonText">
+      <button
+        class="btn btn-primary btn-confirm me-2"
+        *ngIf="closeButtonText"
+        type="button"
+        (click)="activeModal.close()"
+      >
+        <span class="display-6">{{ closeButtonText }}</span>
+      </button>
+
       <button
         class="btn btn-primary btn-confirm"
         type="button"
