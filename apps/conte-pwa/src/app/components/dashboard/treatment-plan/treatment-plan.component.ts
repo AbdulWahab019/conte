@@ -104,7 +104,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         this.dailyTasks[index].is_completed = status;
         this.checkForCompletion();
-        if (status) this.bullpenFeedback();
+        if (status && this.dailyTasks[index].task_type === 4) this.bullpenFeedback(task_id);
       })
       .catch((err) => {
         console.error(err);
@@ -123,8 +123,8 @@ export class TreatmentPlanComponent implements OnInit {
           const index = this.dailyTasks.findIndex((task: any) => task.id === result.task_id);
           this.dailyTasks[index].is_completed = result.status;
           this.checkForCompletion();
-          if (result.status) {
-            this.bullpenFeedback();
+          if (result.status && this.dailyTasks[index].task_type === 4) {
+            this.bullpenFeedback(this.dailyTasks[index].id);
           }
         }
       })
@@ -139,7 +139,7 @@ export class TreatmentPlanComponent implements OnInit {
     else this.areTasksCompleted = true;
   }
 
-  bullpenFeedback() {
+  bullpenFeedback(task_id: string) {
     this.taskFeedbackModal = this.modalService.open(GenericModalComponent, { centered: true });
     this.taskFeedbackModal.componentInstance.heading = 'Conte; Task Feedback';
     this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
@@ -151,10 +151,29 @@ export class TreatmentPlanComponent implements OnInit {
     this.taskFeedbackModal.componentInstance.buttonLoadingText = 'Submitting your feedback';
     this.taskFeedbackModal.componentInstance.buttonAction = this.submitFeedback;
     this.taskFeedbackModal.componentInstance.closeButtonText = 'Skip';
+    this.taskFeedbackModal.componentInstance.miscData = task_id;
   }
 
-  submitFeedback(taskFeedback: any) {
-    console.log(taskFeedback);
+  submitFeedback(feedbackData: any) {
+    const data = [
+      {
+        task_id: feedbackData.task_id,
+        feedback: feedbackData.QA[0].answer,
+        question: feedbackData.QA[0].question,
+        type: 2,
+      },
+    ];
+    const request = { data };
+
+    // this.treatmentPlanService
+    //   .postTaskFeedback(request)
+    //   .then((resp) => {
+    //     this.toast.show('Feedback submitted successfully', { classname: 'bg-success text-light', icon: 'success' });
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     // this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+    //   });
   }
 
   navBack() {

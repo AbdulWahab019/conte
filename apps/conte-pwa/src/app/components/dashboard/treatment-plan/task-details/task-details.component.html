@@ -12,14 +12,16 @@
       class="mt-4 mb-4"
       controls
       playsinline
-      src="https://conteassets.blob.core.windows.net/tasktutorial/1_Plyo_Throw_Tutorial.mp4"
+      *ngIf="videoURL"
+      [src]="videoURL"
+      [@fade]
     >
       Your browser does not support the video playback.
     </video>
     <!-- CASE// No Video -->
-    <!-- <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
+    <div class="no-video mt-4 mb-4" *ngIf="!videoURL" [@fade]>
       <img src="assets/logos/Throwing Progression Pro-02.png" />
-    </div> -->
+    </div>
 
     <!-- Comment Section -->
     <div class="comment-input">

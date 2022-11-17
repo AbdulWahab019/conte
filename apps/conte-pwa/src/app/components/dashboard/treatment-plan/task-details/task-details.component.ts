@@ -2,11 +2,13 @@ import { Component, Input, OnInit, AfterViewChecked, ElementRef, ViewChild } fro
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
 import { TreatmentPlanService } from 'apps/conte-pwa/src/app/services/treatment-plan.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'conte-task-details',
   templateUrl: './task-details.component.html',
   styleUrls: ['./task-details.component.scss'],
+  animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate(760)])])],
 })
 export class TaskDetailsComponent implements OnInit {
   @Input() task: any = {};

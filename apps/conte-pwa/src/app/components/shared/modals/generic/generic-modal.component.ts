@@ -33,6 +33,7 @@ export class GenericModalComponent implements OnInit {
   @Input() buttonLoadingText = '';
   @Input() buttonAction!: (args: any) => void;
   @Input() closeButtonText = '';
+  @Input() miscData: any;
 
   buttonState = 'static';
   secButtonState = 'static';
@@ -54,7 +55,8 @@ export class GenericModalComponent implements OnInit {
           return;
         }
       }
-      this.buttonAction(this.questionAnswers);
+      const data = { QA: this.questionAnswers, task_id: this.miscData };
+      this.buttonAction(data);
     }
     this.activeModal.close();
   }
