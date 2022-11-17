@@ -7,17 +7,23 @@
   </div>
 
   <div class="modal-footer">
-    <!-- Comment Section -->
-    <div class="comments-container mt-3" #commentContainer>
-      <ng-container *ngFor="let comment of comments">
-        <div class="comment m-1">
-          {{ comment }}
-        </div>
-      </ng-container>
-    </div>
+    <!-- Treatment Plan Task Video -->
+    <video
+      class="mt-4 mb-4"
+      controls
+      playsinline
+      src="https://conteassets.blob.core.windows.net/tasktutorial/1_Plyo_Throw_Tutorial.mp4"
+    >
+      Your browser does not support the video playback.
+    </video>
+    <!-- CASE// No Video -->
+    <!-- <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
+      <img src="assets/logos/Throwing Progression Pro-02.png" />
+    </div> -->
 
+    <!-- Comment Section -->
     <div class="comment-input">
-      <select [(ngModel)]="this.comment">
+      <select [(ngModel)]="this.comment" autofocus="false">
         <option hidden selected value="">Select a comment</option>
         <option value="Could not understand the given task">Couldn't Understand the given task</option>
         <option value="Assistance required">Assistance required</option>
@@ -25,7 +31,7 @@
         <option value="Unable to complete">Unable to complete</option>
       </select>
 
-      <div class="send-btn">
+      <!-- <div class="send-btn">
         <i
           *ngIf="sendButtonState === 'static'"
           [ngClass]="comment === '' ? 'btn-color' : null"
@@ -38,7 +44,7 @@
           role="status"
           aria-hidden="true"
         ></span>
-      </div>
+      </div> -->
     </div>
 
     <!-- Confirmation Button -->

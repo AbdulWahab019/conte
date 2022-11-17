@@ -6,12 +6,13 @@ import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
-import { taskFeedback } from 'apps/conte-pwa/src/app/models/treatmentplan';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'conte-treatment-plan',
   templateUrl: './treatment-plan.component.html',
   styleUrls: ['./treatment-plan.component.scss'],
+  animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate(760)])])],
 })
 export class TreatmentPlanComponent implements OnInit {
   todaysDate = new Date();
@@ -25,7 +26,9 @@ export class TreatmentPlanComponent implements OnInit {
   buttonState = 'loading';
   dailyTasks!: any;
   noTasks = false;
+  areTasksCompleted = false;
   pendingTasksModal: any;
+  taskFeedbackModal: any;
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -77,6 +80,16 @@ export class TreatmentPlanComponent implements OnInit {
 
   navToSpecificTask = (date: string): void => {
     this.date = date;
+    const formattedDate = new Date(date);
+
+    this.treatmentPlanDate = new NgbDate(
+      formattedDate.getFullYear(),
+      formattedDate.getMonth() + 1,
+      formattedDate.getDate()
+    );
+
+    this.treatmentPlanService.setTreatmentPlanDate(this.treatmentPlanDate);
+
     this.modalService.dismissAll(this.pendingTasksModal);
     this.getTasks(date);
   };
@@ -122,21 +135,22 @@ export class TreatmentPlanComponent implements OnInit {
 
   checkForCompletion() {
     const searchIndex = this.dailyTasks.findIndex((task: any) => task.is_completed === false);
-    if (searchIndex > -1) this.buttonState = 'loading';
-    else this.buttonState = 'static';
+    if (searchIndex > -1) this.areTasksCompleted = false;
+    else this.areTasksCompleted = true;
   }
 
   bullpenFeedback() {
-    this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
-    this.pendingTasksModal.componentInstance.heading = 'Conte; Task Feedback';
-    this.pendingTasksModal.componentInstance.subHeading = 'Bullpen Throws';
-    this.pendingTasksModal.componentInstance.body = 'Please share your feedback regarding this task';
-    this.pendingTasksModal.componentInstance.buttonText = 'Submit';
-    this.pendingTasksModal.componentInstance.questionAnswers = [{ question: '', answer: '' }];
-    this.pendingTasksModal.componentInstance.QAbuttonText = 'Add question';
-    this.pendingTasksModal.componentInstance.QAbuttonLogo = 'add';
-    this.pendingTasksModal.componentInstance.buttonLoadingText = 'Submitting your feedback';
-    this.pendingTasksModal.componentInstance.buttonAction = this.submitFeedback;
+    this.taskFeedbackModal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.taskFeedbackModal.componentInstance.heading = 'Conte; Task Feedback';
+    this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
+    this.taskFeedbackModal.componentInstance.body = 'Please share your feedback regarding this task';
+    this.taskFeedbackModal.componentInstance.buttonText = 'Submit';
+    this.taskFeedbackModal.componentInstance.questionAnswers = [{ question: '', answer: '' }];
+    this.taskFeedbackModal.componentInstance.QAbuttonText = 'Add question';
+    this.taskFeedbackModal.componentInstance.QAbuttonLogo = 'add';
+    this.taskFeedbackModal.componentInstance.buttonLoadingText = 'Submitting your feedback';
+    this.taskFeedbackModal.componentInstance.buttonAction = this.submitFeedback;
+    this.taskFeedbackModal.componentInstance.closeButtonText = 'Skip';
   }
 
   submitFeedback(taskFeedback: any) {

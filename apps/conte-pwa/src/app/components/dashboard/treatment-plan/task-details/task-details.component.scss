@@ -57,6 +57,14 @@
   justify-content: center;
 
   background-color: rgb(227, 227, 227);
+
+  video {
+    width: 100%;
+
+    border-radius: 3px;
+    box-shadow: 0 5px 10px black;
+  }
+
   .comment-input {
     width: 100%;
     height: 50px;
@@ -73,7 +81,7 @@
     select {
       outline: none;
       border: none;
-      width: 85%;
+      width: 100%;
       text-align: center;
       color: black;
       background-color: transparent;

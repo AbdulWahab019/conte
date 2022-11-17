@@ -32,10 +32,12 @@ export class GenericModalComponent implements OnInit {
   @Input() buttonText = '';
   @Input() buttonLoadingText = '';
   @Input() buttonAction!: (args: any) => void;
+  @Input() closeButtonText = '';
+
   buttonState = 'static';
   secButtonState = 'static';
 
-  constructor(private activeModal: NgbActiveModal, private toast: ToastService) {}
+  constructor(public activeModal: NgbActiveModal, private toast: ToastService) {}
 
   ngOnInit(): void {}
 

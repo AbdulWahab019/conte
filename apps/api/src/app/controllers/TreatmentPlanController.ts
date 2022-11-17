@@ -43,8 +43,9 @@ export async function getTasksByDate(req: Request, res: Response) {
 export async function updateTask(req: Request, res: Response) {
   const { id: user_id } = req['user'];
   const { task_id, status } = req.params;
+  const { comment = '' } = req.body;
 
-  await updateUserTask(Number(task_id), JSON.parse(status), user_id);
+  await updateUserTask(Number(task_id), JSON.parse(status), user_id, comment);
   return sendResponse(res, 200, SUCCESS);
 }
 
