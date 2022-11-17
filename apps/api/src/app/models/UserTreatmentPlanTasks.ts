@@ -9,6 +9,7 @@ export interface UserTreatmentPlanTasksDefinedAttributes {
   user_id: number;
   user_tp_id: number;
   tp_day: number;
+  task_type: number;
   title: string;
   comment1: boolean;
   comment2: boolean;
@@ -23,6 +24,7 @@ export interface UserTreatmentPlanTasksModel
   user_id: number;
   user_tp_id: number;
   tp_day: number;
+  task_type: number;
   title: string;
   comment1: boolean;
   comment2: boolean;
@@ -41,6 +43,7 @@ export const UserTreatmentPlanTasks = sequelize.define<
   user_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'users', key: 'id' } },
   user_tp_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'user_treatment_plans', key: 'id' } },
   tp_day: { type: DataTypes.INTEGER, allowNull: false },
+  task_type: { type: DataTypes.INTEGER },
   title: { type: DataTypes.STRING },
   comment1: { type: DataTypes.BOOLEAN },
   comment2: { type: DataTypes.BOOLEAN },
