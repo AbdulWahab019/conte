@@ -11,6 +11,7 @@ export interface UserTreatmentPlanTasksDefinedAttributes {
   user_id: number;
   user_tp_id: number;
   tp_day: number;
+  task_type: number;
   title: string;
   is_completed: boolean;
 }
@@ -21,6 +22,7 @@ export interface UserTreatmentPlanTasksModel
   user_id: number;
   user_tp_id: number;
   tp_day: number;
+  task_type: number;
   title: string;
   is_completed: boolean;
   created_at: string;
@@ -35,6 +37,7 @@ export const UserTreatmentPlanTasks = sequelize.define<
   user_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'users', key: 'id' } },
   user_tp_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'user_treatment_plans', key: 'id' } },
   tp_day: { type: DataTypes.INTEGER, allowNull: false },
+  task_type: { type: DataTypes.INTEGER },
   title: { type: DataTypes.STRING },
   is_completed: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
