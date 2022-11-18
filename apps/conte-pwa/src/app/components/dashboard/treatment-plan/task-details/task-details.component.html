@@ -8,14 +8,7 @@
 
   <div class="modal-footer">
     <!-- Treatment Plan Task Video -->
-    <video
-      class="mt-4 mb-4"
-      controls
-      playsinline
-      *ngIf="videoURL"
-      [src]="videoURL"
-      [@fade]
-    >
+    <video class="mt-4 mb-4" controls playsinline *ngIf="videoURL" [src]="videoURL" [@fade]>
       Your browser does not support the video playback.
     </video>
     <!-- CASE// No Video -->
@@ -56,6 +49,7 @@
         type="button"
         (click)="completeDailyTask()"
         [disabled]="buttonState === 'loading'"
+        ngbAutofocus
       >
         <span *ngIf="buttonState === 'static'" class="display-6">{{
           task.is_completed ? 'Mark as Incomplete' : 'Mark as Completed'

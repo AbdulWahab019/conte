@@ -66,6 +66,7 @@
         type="button"
         [disabled]="buttonState === 'loading'"
         (click)="buttonFunction()"
+        ngbAutofocus
       >
         <span *ngIf="buttonState === 'static'" class="display-6">{{ buttonText }}</span>
         <div *ngIf="buttonState === 'loading' && buttonLoadingText">
