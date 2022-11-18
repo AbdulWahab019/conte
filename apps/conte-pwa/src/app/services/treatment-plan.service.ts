@@ -35,8 +35,8 @@ export class TreatmentPlanService {
     return await this.http.get<any>(`${TREATMENTPLAN}/tasks/date/${date}`).toPromise();
   }
 
-  async updateTask(task_id: string, status: boolean): Promise<any> {
-    return await this.http.put<any>(`${TREATMENTPLAN}/task/${task_id}/status/${status}`, null).toPromise();
+  async updateTask(task_id: string, status: boolean, data?: { comment: string }): Promise<any> {
+    return await this.http.put<any>(`${TREATMENTPLAN}/task/${task_id}/status/${status}`, data).toPromise();
   }
 
   async postTaskFeedback(request: CreateFeedbackApiRequest): Promise<any> {

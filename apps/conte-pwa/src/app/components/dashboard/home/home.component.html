@@ -29,8 +29,7 @@
     </video>
     <!-- CASE// No Video -->
     <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
-      <img src="assets/images/no_tasks_found.png" height="150" width="150" />
-      <p class="display-6">No Video Tutorial Available Today</p>
+      <img src="assets/logos/Throwing Progression Pro-02.png" />
     </div>
 
     <!-- <iframe
@@ -40,7 +39,7 @@
       src="https://www.youtube.com/embed/MC2qa5mfRJ8?autoplay=1&mute=1"
     ></iframe> -->
 
-    <div class="d-flex info-tab mb-2">
+    <!-- <div class="d-flex info-tab mb-2">
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
         <p class="display-5">45 MPH</p>
@@ -50,11 +49,18 @@
         Overall<br />Progress<br />
         <p class="display-5">19%</p>
       </div>
-    </div>
+    </div> -->
 
-    <div class="treatment-plan" (click)="navToTreatmentPlan()">
+    <div
+      [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
+      (click)="!areTasksCompleted && navToTreatmentPlan()"
+    >
       Today's Treatment Plan
-      <p class="display-5">Click Here</p>
+      <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Click Here</p>
+      <div *ngIf="areTasksCompleted" [@fade]>
+        <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
+        <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
+      </div>
     </div>
   </div>
 </div>

@@ -21,6 +21,8 @@
     width: 100%;
 
     .title {
+      padding: 0 30px 0 30px;
+
       font-size: x-large;
       font-weight: 400;
     }
@@ -113,6 +115,10 @@
       font-size: large;
     }
 
+    img {
+      height: 25vh;
+    }
+
     border-radius: 26px;
     box-shadow: 0 5px 10px black;
   }
@@ -170,8 +176,10 @@
   }
 
   .treatment-plan {
-    height: 200px;
+    height: 210px;
     width: 100%;
+
+    margin-bottom: 25px; /* Temp till screen is filled */
 
     display: flex;
     flex-wrap: wrap;
@@ -195,6 +203,46 @@
 
     &:hover {
       color: rgb(0, 52, 125, 0.7);
+    }
+  }
+
+  .tasks-completed {
+    padding: 0 10px 0 10px;
+
+    color: rgb(208, 207, 207);
+    background-color: rgb(0, 52, 125);
+
+    cursor: default;
+
+    div {
+      width: 100%;
+    }
+
+    p {
+      margin: 0;
+      font-size: xx-large;
+    }
+
+    .display-6 {
+      font-size: large;
+      text-decoration: none;
+      font-weight: 400;
+      padding: 2px;
+      color: rgb(208, 207, 207);
+
+      border-radius: 3px;
+      border-top: 2px goldenrod solid;
+      border-bottom: 2px goldenrod solid;
+
+      cursor: pointer;
+
+      &:hover {
+        color: goldenrod;
+      }
+    }
+
+    &:hover {
+      color: rgb(208, 207, 207);
     }
   }
 }

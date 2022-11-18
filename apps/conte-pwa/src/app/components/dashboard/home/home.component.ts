@@ -5,16 +5,19 @@ import { SpinnerService } from '../../../services/spinner.service';
 import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { delay } from '../../../utils/constants';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'conte-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate(760)])])],
 })
 export class HomeComponent implements OnInit {
   defaultDate!: NgbDate;
   date = '';
   videoURL = '';
+  areTasksCompleted = false;
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -42,6 +45,7 @@ export class HomeComponent implements OnInit {
       .getTreatmentPlanDetails(this.date)
       .then((resp) => {
         this.videoURL = resp.data?.video_url;
+        this.areTasksCompleted = resp.data?.are_tasks_completed;
         this.spinner.hide();
       })
       .catch((err) => {

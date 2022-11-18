@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SharedModule } from './components/shared/shared.module';
 
@@ -42,7 +41,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   imports: [
     BrowserModule,
     FormsModule,
-    SweetAlert2Module.forRoot(),
     ReactiveFormsModule,
     DashboardModule,
     SharedModule,

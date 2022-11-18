@@ -32,10 +32,13 @@ export class GenericModalComponent implements OnInit {
   @Input() buttonText = '';
   @Input() buttonLoadingText = '';
   @Input() buttonAction!: (args: any) => void;
+  @Input() closeButtonText = '';
+  @Input() miscData: any;
+
   buttonState = 'static';
   secButtonState = 'static';
 
-  constructor(private activeModal: NgbActiveModal, private toast: ToastService) {}
+  constructor(public activeModal: NgbActiveModal, private toast: ToastService) {}
 
   ngOnInit(): void {}
 
@@ -52,7 +55,8 @@ export class GenericModalComponent implements OnInit {
           return;
         }
       }
-      this.buttonAction(this.questionAnswers);
+      const data = { QA: this.questionAnswers, task_id: this.miscData };
+      this.buttonAction(data);
     }
     this.activeModal.close();
   }
