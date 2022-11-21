@@ -9,20 +9,7 @@
       <div class="form-floating mb-3">
         <input
           type="email"
-          class="form-control"
-          [ngClass]="(f.from.touched || f.from.dirty) && f.from.errors ? 'form-control error-input' : 'form-control'"
-          placeholder="name@example.com"
-          [(ngModel)]="userEmail"
-          formControlName="from"
-        />
-        <label>From </label>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input
-          type="email"
           [ngClass]="(f.to.touched || f.to.dirty) && f.to.errors ? 'form-control error-input' : 'form-control'"
-          placeholder="name@example.com"
           readonly
           [(ngModel)]="clientEmail"
           formControlName="to"
@@ -33,7 +20,9 @@
       <div class="form-floating mb-3">
         <input
           type="text"
-          [ngClass]="(f.subject.touched || f.subject.dirty) && f.subject.errors ? 'form-control error-input' : 'form-control'"
+          [ngClass]="
+            (f.subject.touched || f.subject.dirty) && f.subject.errors ? 'form-control error-input' : 'form-control'
+          "
           placeholder="Enter the subject of your email"
           [(ngModel)]="subject"
           formControlName="subject"
@@ -62,12 +51,12 @@
         class="btn btn-primary btn-confirm"
         type="button"
         (click)="sendEmail()"
-        [disabled]="!userEmail || !emailBody || buttonState === 'loading'"
+        [disabled]="emailForm.invalid || buttonState === 'loading'"
       >
         <span *ngIf="buttonState === 'static'">Contact Us</span>
         <div *ngIf="buttonState === 'loading'">
           <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-          <span>Sending your email...</span>
+          <span>Redirecting...</span>
         </div>
       </button>
     </div>

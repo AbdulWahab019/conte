@@ -3,6 +3,8 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 import { UserTreatmentPlan } from './UserTreatmentPlan';
 import { User } from './User';
+import { UserTreatmentPlanTaskFeedback } from './UserTreatmentPlanTaskFeedback';
+import { UserTreatmentPlanDetail } from './UserTreatmentPlanDetail';
 
 export interface UserTreatmentPlanTasksDefinedAttributes {
   id?: number;
@@ -16,6 +18,7 @@ export interface UserTreatmentPlanTasksDefinedAttributes {
   comment3: boolean;
   comment4: boolean;
   is_completed: boolean;
+  is_skipped: boolean;
 }
 
 export interface UserTreatmentPlanTasksModel
@@ -31,6 +34,7 @@ export interface UserTreatmentPlanTasksModel
   comment3: boolean;
   comment4: boolean;
   is_completed: boolean;
+  is_skipped: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -50,6 +54,7 @@ export const UserTreatmentPlanTasks = sequelize.define<
   comment3: { type: DataTypes.BOOLEAN },
   comment4: { type: DataTypes.BOOLEAN },
   is_completed: { type: DataTypes.BOOLEAN, defaultValue: false },
+  is_skipped: { type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false },
 });
 
 UserTreatmentPlanTasks.sync();
@@ -58,4 +63,8 @@ UserTreatmentPlanTasks.sync();
 UserTreatmentPlanTasks.afterSync(() => {
   UserTreatmentPlanTasks.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
   UserTreatmentPlanTasks.belongsTo(UserTreatmentPlan, { foreignKey: 'user_tp_id', targetKey: 'id' });
+
+  UserTreatmentPlanTasks.belongsTo(UserTreatmentPlanDetail, { foreignKey: 'tp_day', targetKey: 'tp_day' });
+
+  UserTreatmentPlanTasks.hasMany(UserTreatmentPlanTaskFeedback, { foreignKey: 'task_id', as: 'feedback' });
 });

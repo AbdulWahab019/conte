@@ -1,3 +1,5 @@
+import { GenericResponse } from '../api/api.model';
+
 export interface UploadTreatmentPlanAPIReq {
   file: File;
   doctor_id: number;
@@ -5,4 +7,29 @@ export interface UploadTreatmentPlanAPIReq {
   name: string;
   read_from_line?: number;
   read_to_line?: number;
+}
+
+export interface CreateFeedbackApiRequest {
+  data: FeedbackRequest[];
+}
+
+export interface FeedbackRequest {
+  task_id: number;
+  question?: string;
+  feedback: string;
+  type: number;
+}
+
+export interface CreateFeedbackApiResponse extends GenericResponse {
+  data: FeedbackResponse[];
+}
+
+export interface FeedbackResponse {
+  id: number;
+  task_id: number;
+  question: string;
+  feedback: string;
+  type: number;
+  createdAt: string;
+  updatedAt: string;
 }

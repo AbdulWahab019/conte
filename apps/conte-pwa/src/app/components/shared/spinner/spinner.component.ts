@@ -16,7 +16,7 @@ import { SpinnerService } from '../../../services/spinner.service';
         top: 0;
         bottom: 0;
         background-color: rgba(255, 255, 255, 0.7);
-        z-index: 10;
+        z-index: 100000;
       }
 
       .loader {
@@ -66,13 +66,13 @@ import { SpinnerService } from '../../../services/spinner.service';
       }
     </style>
 
-    <div *ngIf="this.spinnerService.getSpinnerState()" class="spinner-container h-100">
+    <div *ngIf="this.spinner.getSpinnerState()" class="spinner-container h-100">
       <div class="loader" role="status"></div>
     </div>
   `,
 })
 export class SpinnerComponent implements OnInit {
-  constructor(public spinnerService: SpinnerService) {}
+  constructor(public spinner: SpinnerService) {}
 
   ngOnInit(): void {}
 }

@@ -1,0 +1,82 @@
+<!-- Header -->
+<div class="g-modal-content">
+  <div class="g-modal-header">
+    <h4 *ngIf="heading" class="modal-title display-5">{{ heading }}</h4>
+    <h4 *ngIf="subHeading" class="modal-title display-6">{{ subHeading }}</h4>
+    <div *ngIf="logo" class="d-flex justify-content-center">{{ logo }}</div>
+  </div>
+
+  <div class="g-modal-body">
+    <div class="d-flex justify-content-center mb-3">{{ body }}</div>
+
+    <!-- List -->
+    <div *ngIf="list">
+      <div *ngFor="let item of list" class="list mt-1">
+        <li>{{ item }}</li>
+        <button *ngIf="listSecAction" (click)="listSecAction(item, list)" class="list-btn">
+          {{ listSecActionText }}<i *ngIf="listSecActionLogo === 'skip'" class="bi bi-skip-forward ms-1"></i>
+        </button>
+        <button *ngIf="listAction" (click)="listAction(item)" class="list-btn">
+          {{ listActionText }}<i *ngIf="listActionLogo === 'navigate'" class="bi bi-arrow-bar-right ms-1"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Question/Answers -->
+    <div *ngIf="questionAnswers">
+      <div *ngFor="let item of questionAnswers; index as i" class="mt-1 mb-3" [@fade]>
+        <div class="d-flex align-items-center">
+          <select [(ngModel)]="this.questionAnswers[i].question" class="feedback-field" autofocus="false">
+            <option hidden selected value="">Select a question</option>
+            <option value="question1">Question 1</option>
+            <option value="question2">Question 2</option>
+            <option value="question3">Question 3</option>
+            <option value="question4">Question 4</option>
+          </select>
+          <i *ngIf="i != 0" class="bi bi-x-lg ms-1" (click)="removeQuestion(i)"></i>
+        </div>
+
+        <input
+          class="feedback-field mt-1"
+          type="text"
+          [disabled]="!this.questionAnswers[i].question"
+          [(ngModel)]="this.questionAnswers[i].answer"
+          placeholder="Enter the answer to the question"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="QA-btn-container">
+        <button *ngIf="QAbuttonText" (click)="addQuestion()">
+          {{ QAbuttonText }}<i *ngIf="QAbuttonLogo === 'add'" class="bi bi-plus-circle-dotted ms-2"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Buttons -->
+    <div class="d-flex button-container mt-4 mb-2" *ngIf="buttonText || closeButtonText">
+      <button
+        class="btn btn-primary btn-confirm me-2"
+        *ngIf="closeButtonText"
+        type="button"
+        (click)="activeModal.close()"
+      >
+        <span class="display-6">{{ closeButtonText }}</span>
+      </button>
+
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        [disabled]="buttonState === 'loading'"
+        (click)="buttonFunction()"
+        ngbAutofocus
+      >
+        <span *ngIf="buttonState === 'static'" class="display-6">{{ buttonText }}</span>
+        <div *ngIf="buttonState === 'loading' && buttonLoadingText">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <span class="display-6">{{ buttonLoadingText }}</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

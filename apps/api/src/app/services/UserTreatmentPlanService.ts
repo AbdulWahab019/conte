@@ -5,9 +5,10 @@ import { TreatmentPlanModel } from '../models/TreatmentPlan';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
-import { getTasksFromTPDay } from '../helpers/TreatmentPlanHelper';
+import { getTasksFromTPDay, getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
 import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
+import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 
 export async function createUserTreatmentPlan(
   user_id: number,
@@ -60,36 +61,60 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
   if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const formattedDate = moment(date).format('YYYY-MM-DD');
-  const formattedTpDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
+  const { tp_day, formattedTpDate } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
 
-  const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
-
-  const todays_tasks = await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day } });
+  const todays_tasks = await UserTreatmentPlanTasks.findAll({
+    where: { user_id, tp_day, is_skipped: 0 },
+    include: [{ model: UserTreatmentPlanTaskFeedback, as: 'feedback' }],
+  });
 
   const pending_tasks = await UserTreatmentPlanTasks.findAll({
     where: {
       user_id,
       is_completed: 0,
-      tp_day: {
-        [Op.lt]: tp_day,
-      },
+      is_skipped: 0,
+      tp_day: { [Op.lt]: tp_day },
     },
     attributes: ['tp_day'],
+    group: 'tp_day',
   });
 
-  const pending_task_dates = [];
-  for (const task of pending_tasks) {
-    pending_task_dates.push(
-      moment(formattedTpDate)
-        .add(task.tp_day - 1, 'days')
-        .format('MM-DD-YYYY')
-    );
-  }
-  const user_tasks = { todays_tasks, pending_task_dates };
-  return user_tasks;
+  const pending_tasks_dates = pending_tasks.map((task) =>
+    moment(formattedTpDate)
+      .add(task.tp_day - 1, 'days')
+      .format('YYYY-MM-DD')
+  );
+
+  return { todays_tasks, pending_tasks_dates };
 }
 
-export async function updateUserTask(task_id: number, status: boolean, user_id: number) {
+export async function updateUserTask(task_id: number, status: boolean, user_id: number, comment: string) {
+  if (comment) {
+    const data = {
+      task_id,
+      feedback: comment,
+      type: 1,
+    };
+    await UserTreatmentPlanTaskFeedback.create(data);
+  }
   return await UserTreatmentPlanTasks.update({ is_completed: status }, { where: { id: task_id, user_id } });
+}
+
+export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, date: string) {
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['id', 'createdAt'] });
+  if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+
+  const tpStartDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
+
+  const tp_detail = await UserTreatmentPlanDetail.findOne({
+    where: { user_tp_id: treatmentPlan.id, tp_day },
+    attributes: ['video_url'],
+  });
+
+  const are_tasks_completed =
+    (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
+
+  return { video_url: tp_detail?.video_url, are_tasks_completed, tpStartDate };
 }

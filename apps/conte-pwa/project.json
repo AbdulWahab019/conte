@@ -7,9 +7,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/conte-pwa",
         "index": "apps/conte-pwa/src/index.html",
@@ -23,10 +21,7 @@
           "apps/conte-pwa/src/manifest.webmanifest",
           "apps/conte-pwa/src/manifest.webmanifest"
         ],
-        "styles": [
-          "apps/conte-pwa/src/styles.scss",
-          "node_modules/bootstrap/dist/css/bootstrap.min.css"
-        ],
+        "styles": ["apps/conte-pwa/src/styles.scss", "node_modules/bootstrap/dist/css/bootstrap.min.css"],
         "scripts": [],
         "serviceWorker": true,
         "ngswConfigPath": "apps/conte-pwa/ngsw-config.json"
@@ -41,7 +36,7 @@
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
+              "maximumWarning": "5kb",
               "maximumError": "10kb"
             }
           ],
@@ -88,17 +83,12 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/conte-pwa/**/*.ts",
-          "apps/conte-pwa/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/conte-pwa/**/*.ts", "apps/conte-pwa/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/conte-pwa"
-      ],
+      "outputs": ["coverage/apps/conte-pwa"],
       "options": {
         "jestConfig": "apps/conte-pwa/jest.config.ts",
         "passWithNoTests": true

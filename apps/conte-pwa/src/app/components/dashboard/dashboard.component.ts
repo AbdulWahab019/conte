@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { SpinnerService } from '../../services/spinner.service';
+import { ToastService } from '../../services/toast.service';
+import { delay } from '../../utils/constants';
 
 @Component({
   selector: 'conte-dashboard',
@@ -10,7 +13,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 export class DashboardComponent implements OnInit {
   url = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private spinner: SpinnerService, private toast: ToastService) {}
 
   ngOnInit(): void {
     this.url = this.router.url;
@@ -24,5 +27,19 @@ export class DashboardComponent implements OnInit {
   navToContact() {
     this.url = '/dashboard/contact';
     this.router.navigate(['dashboard/contact']);
+  }
+
+  navToProfile() {
+    this.url = '/dashboard/profile';
+    this.router.navigate(['dashboard/profile']);
+  }
+
+  async logout() {
+    localStorage.clear();
+    this.spinner.show();
+    await delay(1000);
+    this.spinner.hide();
+    this.toast.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
+    this.router.navigate(['authentication']);
   }
 }

@@ -1,12 +1,19 @@
 import { Request, Response } from 'express';
 import { sequelize } from '../models';
-import { createTreatmentPlan, parseTreatmentPlanFile } from '../services/TreatmentPlanService';
+import {
+  createTreatmentPlan,
+  getUserTaskFeedback,
+  parseTreatmentPlanFile,
+  createUserTaskFeedBack,
+  skipTPDayTasks,
+} from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
-import { INTERNAL_SERVER_ERROR, SUCCESS } from '../utils/constants';
+import { INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIReq } from '@conte/models';
-import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
+import { getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
+import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 
 export async function uploadTreatmentPlan(req: Request, res: Response) {
   const file: Express.Multer.File = req.file;
@@ -39,20 +46,39 @@ export async function getTasksByDate(req: Request, res: Response) {
 export async function updateTask(req: Request, res: Response) {
   const { id: user_id } = req['user'];
   const { task_id, status } = req.params;
+  const { comment = '' } = req.body;
 
-  await updateUserTask(Number(task_id), JSON.parse(status), user_id);
+  await updateUserTask(Number(task_id), JSON.parse(status), user_id, comment);
   return sendResponse(res, 200, SUCCESS);
 }
 
-export async function postComment(req: Request, res: Response) {
-  // const { id: user_id } = req['user'];
-  const { user_task_id } = req.params;
+export async function postTaskFeedback(req: Request, res: Response) {
   const { data } = req.body;
 
-  const result = UserTreatmentPlanTasks.update(
-    { comment1: data.comment1, comment2: data.comment2, comment3: data.comment3, comment4: data.comment4 },
-    { where: { user_id: 24, id: user_task_id } }
-  );
+  const apiResp = await createUserTaskFeedBack(data);
 
-  return sendResponse(res, 200, SUCCESS, result);
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function getTaskFeedback(req: Request, res: Response) {
+  const { task_id } = req.params;
+
+  const apiResp = await getUserTaskFeedback(Number(task_id));
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function skipUserTasks(req: Request, res: Response) {
+  const { id: user_id } = req['user'];
+
+  const { date } = req.params;
+
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
+  if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+
+  await skipTPDayTasks(user_id, tp_day);
+
+  return sendResponse(res, 200, SUCCESS);
 }

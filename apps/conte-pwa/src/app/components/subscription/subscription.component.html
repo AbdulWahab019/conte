@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex subscription-screen">
   <div class="container-fluid subscription-container">
     <div *ngIf="!subscriptionFormRendered">
-      <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+      <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" />
 
       <!-- SUBSCRIPTION CHECK -->
       <div *ngIf="!isSubscribed && subscriptionState === ''" [@fade]>
@@ -31,7 +31,7 @@
     <div *ngIf="subscriptionFormRendered">
       <div class="subscriptions">
         <div (click)="monthlySubscription()" [ngClass]="sub === 'monthly' ? 'selected-product mb-2' : 'product mb-2 '">
-          <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+          <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" />
 
           <div class="description">
             <h3 class="display 5">Monthly Subscription</h3>
@@ -40,7 +40,7 @@
         </div>
 
         <div (click)="freeTrial()" [ngClass]="sub === 'trial' ? 'selected-product' : 'product'">
-          <img class="logo" src="../../assets/logos/Throwing Progression Pro-02.png" />
+          <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" />
 
           <div class="description">
             <h3 class="display 5">Free Trial</h3>

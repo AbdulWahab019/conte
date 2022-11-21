@@ -1,3 +1,4 @@
+import moment = require('moment');
 import { TreatmentPlanDetailsFileAttributes } from '../models/TreatmentPlanDetail';
 import { UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 
@@ -22,6 +23,7 @@ export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlan
     bullpen_pitches: record[16],
     live_simulated_game: Number(record[17]) || 0,
     innings: Number(record[18]) || 0,
+    video_url: record[19],
   };
 }
 
@@ -84,4 +86,12 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
   }
 
   return tasks;
+}
+
+export function getUserTreatmentPlanDayByDate(date: string | Date, treatmentPlanDate: string) {
+  const formattedDate = moment(date).format('YYYY-MM-DD');
+  const formattedTpDate = moment(treatmentPlanDate).format('YYYY-MM-DD');
+
+  const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
+  return { tp_day, formattedDate, formattedTpDate };
 }

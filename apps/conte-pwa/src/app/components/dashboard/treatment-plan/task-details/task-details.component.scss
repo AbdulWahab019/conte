@@ -57,6 +57,34 @@
   justify-content: center;
 
   background-color: rgb(227, 227, 227);
+
+  video {
+    width: 100%;
+
+    border-radius: 3px;
+    box-shadow: 0 5px 10px black;
+  }
+
+  .no-video {
+    width: 100%;
+    padding: 5% 0 5% 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      font-size: large;
+    }
+
+    img {
+      height: 25vh;
+    }
+
+    border-radius: 3px;
+    box-shadow: 0 5px 10px black;
+  }
+
   .comment-input {
     width: 100%;
     height: 50px;
@@ -73,7 +101,7 @@
     select {
       outline: none;
       border: none;
-      width: 85%;
+      width: 100%;
       text-align: center;
       color: black;
       background-color: transparent;
@@ -84,12 +112,16 @@
     }
 
     .send-btn {
-      font-size: x-large;
       margin: auto;
 
       color: white;
-      cursor: pointer;
-      .btn-color{
+
+      i {
+        font-size: x-large;
+        cursor: pointer;
+      }
+
+      .btn-color {
         color: #686868;
       }
     }

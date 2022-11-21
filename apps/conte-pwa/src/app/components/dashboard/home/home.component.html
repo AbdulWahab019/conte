@@ -1,7 +1,6 @@
 <div class="container-fluid home-screen">
   <div class="d-flex home-container">
     <div class="title-tab">
-      <i class="bi bi-box-arrow-left mt-1" (click)="logout()"></i>
       <span class="title display-4">Conte Sports Performance</span>
     </div>
 
@@ -15,6 +14,8 @@
           name="dp1"
           ngbDatepicker
           #d2="ngbDatepicker"
+          [minDate]="tpStartDate"
+          [maxDate]="todaysDate"
           [(ngModel)]="defaultDate"
           (change)="saveDate()"
           (dateSelect)="saveDate()"
@@ -24,18 +25,22 @@
     </div>
 
     <!-- Treatment Plan Video -->
-    <!-- <video width="100%" class="mt-4 mb-4" controls playsinline>
-        <source src="../../../assets/orientation/video/orientation.mp4" type="video/mp4" />
-        Your browser does not support the video playback.
-      </video> -->
-    <iframe
+    <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL">
+      Your browser does not support the video playback.
+    </video>
+    <!-- CASE// No Video -->
+    <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
+      <img src="assets/logos/Throwing Progression Pro-02.png" />
+    </div>
+
+    <!-- <iframe
       width="100%"
       height="300px"
       class="mt-4 mb-4"
       src="https://www.youtube.com/embed/MC2qa5mfRJ8?autoplay=1&mute=1"
-    ></iframe>
+    ></iframe> -->
 
-    <div class="d-flex info-tab mb-2">
+    <!-- <div class="d-flex info-tab mb-2">
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
         <p class="display-5">45 MPH</p>
@@ -45,11 +50,18 @@
         Overall<br />Progress<br />
         <p class="display-5">19%</p>
       </div>
-    </div>
+    </div> -->
 
-    <div class="treatment-plan" (click)="navToTreatmentPlan()">
+    <div
+      [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
+      (click)="!areTasksCompleted && navToTreatmentPlan()"
+    >
       Today's Treatment Plan
-      <p class="display-5">Click Here</p>
+      <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Click Here</p>
+      <div *ngIf="areTasksCompleted" [@fade]>
+        <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
+        <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
+      </div>
     </div>
   </div>
 </div>

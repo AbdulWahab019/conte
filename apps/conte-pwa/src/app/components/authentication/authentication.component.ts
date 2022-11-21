@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,7 +27,7 @@ export class AuthenticationComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastService: ToastService
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -89,8 +89,6 @@ export class AuthenticationComponent implements OnInit {
         localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
         this.buttonState = 'static';
 
-        this.toastService.show('Logged in successfully.', { classname: 'bg-success text-light', icon: 'success' });
-
         if (!resp.data.is_terms_of_use_accepted) {
           this.router.navigate(['terms']);
         } else if (!resp.data.is_orientation_video_watched) {
@@ -100,7 +98,7 @@ export class AuthenticationComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toastService.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 
@@ -121,14 +119,14 @@ export class AuthenticationComponent implements OnInit {
         localStorage.setItem('questionnaire_submitted', resp.data.is_questionnaire_submitted);
         this.buttonState = 'static';
 
-        this.toastService.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
+        this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
         this.router.navigate(['terms']);
       })
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 }

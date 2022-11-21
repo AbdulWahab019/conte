@@ -18,7 +18,7 @@ export class AuthenticationService {
     return await this.http.post<any>(`${AUTH}/login`, credentials).toPromise();
   }
 
-  async verifyToken(token: string): Promise<any> {
+  async getUserDetails(): Promise<any> {
     return await this.http.get<any>(`${USER}/profile`).toPromise();
   }
 }

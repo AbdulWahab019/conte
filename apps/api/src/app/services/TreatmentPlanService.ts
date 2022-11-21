@@ -9,6 +9,8 @@ import {
 } from '../models/TreatmentPlanDetail';
 
 import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
+import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
+import { FeedbackRequest } from '@conte/models';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 
 export async function createTreatmentPlan(
@@ -53,8 +55,14 @@ export function parseTreatmentPlanFile(
   });
 }
 
-// export function userTPTaskComment(comment: any, user_id: number, user_task_id: any) {
-//   const result = UserTreatmentPlanTasks.update({ comment }, { where: { user_id, id: user_task_id } });
+export async function createUserTaskFeedBack(data: FeedbackRequest[]) {
+  return await UserTreatmentPlanTaskFeedback.bulkCreate(data);
+}
 
-//   return result;
-// }
+export async function getUserTaskFeedback(task_id: number) {
+  return await UserTreatmentPlanTaskFeedback.findAll({ attributes: ['id', 'feedback', 'type'], where: { task_id } });
+}
+
+export async function skipTPDayTasks(user_id: number, tp_day: number) {
+  return await UserTreatmentPlanTasks.update({ is_skipped: true }, { where: { user_id, tp_day } });
+}

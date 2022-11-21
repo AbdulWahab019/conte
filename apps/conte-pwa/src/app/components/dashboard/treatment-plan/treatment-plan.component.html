@@ -8,24 +8,37 @@
 
     <div class="d-flex justify-content-center display-5 mb-2">{{ date }}</div>
 
-    <div class="d-flex info-tab mb-2">
-      <!--Max Speed-->
+    <!-- <div class="d-flex info-tab mb-2">
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
         <p class="display-5">45 MPH</p>
       </div>
 
-      <!--Progress-->
       <div class="progress-info">
         Overall<br />Progress<br />
         <p class="display-5">19%</p>
       </div>
-    </div>
+    </div> -->
 
     <!--Treatment Plan-->
     <div class="treatment-plan">
       <span *ngIf="!noTasks">Today's Treatment Plan</span>
-      <div *ngFor="let task of dailyTasks; index as i" class="daily-tasks mt-2">
+
+      <!-- Placeholders -->
+      <span *ngIf="!dailyTasks" class="placeholder-glow">
+        <span class="placeholder col-12 mt-4"></span>
+      </span>
+      <span *ngIf="!dailyTasks" class="placeholder-glow">
+        <span class="placeholder col-12 mt-4"></span>
+      </span>
+      <span *ngIf="!dailyTasks" class="placeholder-glow">
+        <span class="placeholder col-12 mt-4"></span>
+      </span>
+
+      <div
+        *ngFor="let task of dailyTasks; index as i; let last = last"
+        [ngClass]="!last ? 'daily-tasks mt-4' : 'daily-tasks last-task mt-4'"
+      >
         <div class="daily-task mb-3">
           <div class="checkbox">
             <input
@@ -60,22 +73,38 @@
       </div>
 
       <!-- Case: No Assigned Tasks -->
-      <div class="empty-tasks mt-5 mb-5" *ngIf="noTasks">
-        <img src="../../../../assets/images/noTasksFound.png" height="150" width="150" />
-        <p class="display-6">No Tasks Assigned for today</p>
+      <div class="mt-5 mb-5" *ngIf="noTasks">
+        <img src="assets/images/no_tasks_found.png" height="150" width="150" />
+        <p class="display-6">No Tasks Assigned for Today</p>
       </div>
     </div>
 
-    <!--Daily Therapy Confirmation-->
-    <div class="d-flex button-container mt-4 mb-2" *ngIf="!noTasks">
-      <button class="btn btn-primary btn-confirm" type="button" [disabled]="buttonState === 'loading'">
+    <!-- <div class="d-flex button-container mt-4 mb-2" *ngIf="!noTasks">
+      <button
+        class="btn btn-primary btn-confirm"
+        type="button"
+        [disabled]="buttonState === 'loading'"
+        (click)="navBack()"
+      >
         <span *ngIf="buttonState === 'static'" class="display-6"
-          >Daily Therapy Completed <i class="bi bi-check2-all"></i
+          >Complete Daily Treatment Plan <i class="bi bi-check2-all"></i
         ></span>
-        <div *ngIf="buttonState === 'loading'">
-          <span class="display-6">Daily Tasks are in progress...</span>
-        </div>
+        <span *ngIf="buttonState === 'loading'" class="display-6">Daily Tasks are in progress...</span>
       </button>
+    </div> -->
+
+    <!-- Daily Therapy::Status -->
+    <div *ngIf="!noTasks" [ngClass]="!areTasksCompleted ? 'tasks-info mt-4' : 'tasks-info tasks-completed mt-4'" [@fade]>
+      <!-- Placeholder -->
+      <span *ngIf="!dailyTasks" class="placeholder-glow">
+        <span class="placeholder col-12 mt-4"></span>
+      </span>
+      
+      <p class="display-5" *ngIf="!areTasksCompleted && dailyTasks" [@fade]>Daily Tasks are in Progress...</p>
+      <div *ngIf="areTasksCompleted && dailyTasks" [@fade]>
+        <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
+        <a class="display-6" (click)="navBack()">Return Home</a>
+      </div>
     </div>
   </div>
 </div>

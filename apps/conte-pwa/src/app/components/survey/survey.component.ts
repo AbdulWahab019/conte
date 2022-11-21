@@ -6,8 +6,8 @@ import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } 
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
-import { doctor } from '../models/doctor';
-import { surgery } from '../models/surgery';
+import { doctor } from '../../models/doctor';
+import { surgery } from '../../models/surgery';
 import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
@@ -31,8 +31,8 @@ export class SurveyComponent implements OnInit {
     private surveyService: SurveyService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private spinnerService: SpinnerService,
-    private toastService: ToastService
+    private spinner: SpinnerService,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {}
@@ -83,15 +83,15 @@ export class SurveyComponent implements OnInit {
   }
 
   getSurgeries(doctor_id: string) {
-    this.spinnerService.show();
+    this.spinner.show();
     this.surveyService
       .getSurgeriesForDoctor(doctor_id)
       .then((resp) => {
         this.surgeries = resp.data;
-        this.spinnerService.hide();
+        this.spinner.hide();
       })
       .catch((err) => {
-        this.spinnerService.hide();
+        this.spinner.hide();
         console.error(err);
       });
   }
@@ -99,11 +99,12 @@ export class SurveyComponent implements OnInit {
   confirmSurgeryForm() {
     this.surgeryOptionState = 'loading';
 
-    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f.doctor.value)].name;
+    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id.toString() === this.f.doctor.value)].name;
     const primary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.primary_surgery.value)].name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id.toString() === this.f.primary_surgery.value)].name;
     const secondary_surgery =
-      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id == this.f.secondary_surgery.value)]?.name;
+      this.surgeries[this.surgeries.findIndex((doctor) => doctor.id.toString() === this.f.secondary_surgery.value)]
+        ?.name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 1, response: this.f.surgery_date.value },
@@ -139,7 +140,7 @@ export class SurveyComponent implements OnInit {
         localStorage.setItem('questionnaire_submitted', true.toString());
         this.surgeryOptionState = 'static';
 
-        this.toastService.show('Questionnaire submitted successfully.', {
+        this.toast.show('Questionnaire submitted successfully.', {
           classname: 'bg-success text-light',
           icon: 'success',
         });
@@ -149,7 +150,7 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.surgeryOptionState = 'static';
-        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 
@@ -195,7 +196,7 @@ export class SurveyComponent implements OnInit {
   confirmNonSurgeryForm() {
     this.nonSurgeryOptionState = 'loading';
 
-    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id == this.f2.doctor.value)].name;
+    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id.toString() === this.f2.doctor.value)].name;
 
     const data: SubmitQuestionnaire[] = [
       { id: 20, response: this.f2.injury_date.value },
@@ -225,7 +226,7 @@ export class SurveyComponent implements OnInit {
         localStorage.setItem('questionnaire_submitted', true.toString());
         this.nonSurgeryOptionState = 'static';
 
-        this.toastService.show('Questionnaire submitted successfully.', {
+        this.toast.show('Questionnaire submitted successfully.', {
           classname: 'bg-success text-light',
           icon: 'success',
         });
@@ -235,7 +236,7 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.nonSurgeryOptionState = 'static';
-        this.toastService.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
   }
 }

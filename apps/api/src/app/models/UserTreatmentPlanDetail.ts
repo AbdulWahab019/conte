@@ -2,6 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 
 import { sequelize } from './index';
 import { UserTreatmentPlan } from './UserTreatmentPlan';
+import { UserTreatmentPlanTasks, UserTreatmentPlanTasksModel } from './UserTreatmentPlanTasks';
 
 export interface UserTreatmentPlanDetailDefinedAttributes {
   id?: number;
@@ -25,6 +26,7 @@ export interface UserTreatmentPlanDetailDefinedAttributes {
   bullpen_pitches: string;
   live_simulated_game: number;
   innings: number;
+  video_url: string;
 }
 
 export interface UserTreatmentPlanDetailModel
@@ -50,8 +52,10 @@ export interface UserTreatmentPlanDetailModel
   bullpen_pitches: string;
   live_simulated_game: number;
   innings: number;
+  video_url: string;
   created_at: string;
   updated_at: string;
+  tasks: UserTreatmentPlanTasksModel[];
 }
 
 export const UserTreatmentPlanDetail = sequelize.define<
@@ -79,6 +83,7 @@ export const UserTreatmentPlanDetail = sequelize.define<
   bullpen_pitches: DataTypes.STRING,
   live_simulated_game: DataTypes.INTEGER,
   innings: DataTypes.INTEGER,
+  video_url: DataTypes.STRING,
 });
 
 UserTreatmentPlanDetail.sync();
@@ -86,4 +91,6 @@ UserTreatmentPlanDetail.sync();
 // Associations
 UserTreatmentPlanDetail.afterSync(() => {
   UserTreatmentPlanDetail.belongsTo(UserTreatmentPlan, { foreignKey: 'user_tp_id', targetKey: 'id' });
+
+  UserTreatmentPlanDetail.hasMany(UserTreatmentPlanTasks, { foreignKey: 'tp_day', sourceKey: 'tp_day', as: 'tasks' });
 });

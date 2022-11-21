@@ -1,0 +1,107 @@
+.profile-screen {
+  height: 100%;
+  padding: 3vh 5% 16vh 5%;
+
+  display: flex;
+
+  align-items: center;
+
+  background-color: rgb(227, 227, 227);
+}
+
+.profile-container {
+  width: 100%;
+  padding: 6% 4% 6% 4%;
+
+  background-color: rgb(208, 207, 207);
+  border-radius: 8px;
+
+  justify-content: center;
+  text-align: center;
+
+  flex-wrap: wrap;
+
+  .bi-person-bounding-box {
+    font-size: xx-large;
+  }
+
+  .avatar-container {
+    position: relative;
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    i {
+      position: absolute;
+      top: 80%;
+    }
+  }
+
+  .form-field {
+    border: none;
+    margin-bottom: 5%;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    outline: none;
+  }
+  .form-field:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-bottom: 2px solid rgb(91, 243, 131);
+    font-size: 17px;
+  }
+
+  .error-text {
+    color: #d53737;
+    font-size: small;
+    p {
+      margin: 0 !important;
+    }
+  }
+
+  .error-input {
+    border: 2px solid #d53737 !important;
+    box-shadow: 0 0 8px #d53737 !important;
+
+    &:focus {
+      outline: #d53737 !important;
+      box-shadow: 0 0 8px #d53737 !important;
+    }
+  }
+
+  .btn-update {
+    width: 50%;
+    padding: 10px;
+
+    border-radius: 20px;
+    border-style: none;
+
+    background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62) 0%, rgb(31, 92, 234) 100%);
+    color: white;
+    font-weight: 600;
+
+    &:hover {
+      background: radial-gradient(ellipse at right bottom, rgb(50, 51, 62, 0.8) 0%, rgb(31, 92, 234, 0.8) 100%);
+    }
+  }
+
+  .btn-confirm {
+    width: 100%;
+    padding: 10px;
+
+    border-radius: 20px;
+    border-style: none;
+
+    background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59) 0%, rgb(19, 37, 118) 100%);
+    color: white;
+    font-weight: 600;
+
+    &:hover {
+      background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.6) 0%, rgb(19, 37, 118, 0.8) 100%);
+    }
+  }
+}
