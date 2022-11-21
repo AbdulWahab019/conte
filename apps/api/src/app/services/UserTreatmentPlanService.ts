@@ -64,7 +64,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   const { tp_day, formattedTpDate } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({
-    where: { user_id, tp_day },
+    where: { user_id, tp_day, is_skipped: 0 },
     include: [{ model: UserTreatmentPlanTaskFeedback, as: 'feedback' }],
   });
 
@@ -72,6 +72,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
     where: {
       user_id,
       is_completed: 0,
+      is_skipped: 0,
       tp_day: { [Op.lt]: tp_day },
     },
     attributes: ['tp_day'],
