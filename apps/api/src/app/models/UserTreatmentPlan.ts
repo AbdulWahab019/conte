@@ -10,6 +10,7 @@ export interface UserTreatmentPlanDefinedAttributes {
   name: string;
   user_id: number;
   tp_id: number;
+  assigned_at: string;
 }
 
 export interface UserTreatmentPlanModel extends Model<UserTreatmentPlanModel, UserTreatmentPlanDefinedAttributes> {
@@ -17,6 +18,7 @@ export interface UserTreatmentPlanModel extends Model<UserTreatmentPlanModel, Us
   name: string;
   user_id: number;
   tp_id: number;
+  assigned_at: string;
   createdAt: string;
   updatedAt: string;
   details: UserTreatmentPlanDetailModel[];
@@ -39,6 +41,7 @@ export const UserTreatmentPlan = sequelize.define<UserTreatmentPlanModel, UserTr
       unique: 'unique_user_treatment_plan',
       references: { model: 'treatment_plans', key: 'id' },
     },
+    assigned_at: { type: DataTypes.STRING },
   }
 );
 

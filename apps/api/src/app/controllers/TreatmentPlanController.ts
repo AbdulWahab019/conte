@@ -73,10 +73,10 @@ export async function skipUserTasks(req: Request, res: Response) {
 
   const { date } = req.params;
 
-  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['assigned_at'] });
   if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
 
   await skipTPDayTasks(user_id, tp_day);
 

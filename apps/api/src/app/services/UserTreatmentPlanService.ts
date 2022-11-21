@@ -9,6 +9,7 @@ import { getTasksFromTPDay, getUserTreatmentPlanDayByDate } from '../helpers/Tre
 import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
+import { TPStatus } from '@conte/models';
 
 export async function createUserTreatmentPlan(
   user_id: number,
@@ -19,7 +20,7 @@ export async function createUserTreatmentPlan(
 ) {
   // Create User Treatment Plan
   const userTreatmentPlan = await UserTreatmentPlan.create(
-    { name, user_id, tp_id: treatment_plan.id },
+    { name, user_id, tp_id: treatment_plan.id, assigned_at: moment().add(18, 'days').format() },
     { transaction }
   );
 
@@ -29,17 +30,20 @@ export async function createUserTreatmentPlan(
     return {
       user_tp_id: userTreatmentPlan.id,
       ...detail,
-      max_velocity_absolute: user_estimated_max_velocity * (detail.max_velocity_percent / 100),
-      post_max_distance_flat_ground_velocity_absolute:
-        user_estimated_max_velocity * (detail.post_max_distance_flat_ground_velocity_percent / 100),
-      bullpen_max_velocity_absolute: user_estimated_max_velocity * (detail.bullpen_max_velocity_percent / 100),
+      max_velocity_absolute: Number((user_estimated_max_velocity * (detail.max_velocity_percent / 100)).toFixed(0)),
+      post_max_distance_flat_ground_velocity_absolute: Number(
+        (user_estimated_max_velocity * (detail.post_max_distance_flat_ground_velocity_percent / 100)).toFixed(0)
+      ),
+      bullpen_max_velocity_absolute: Number(
+        (user_estimated_max_velocity * (detail.bullpen_max_velocity_percent / 100)).toFixed(0)
+      ),
     };
   });
 
   const tasks = userTreatmentPlanDetailsData.flatMap((user_tp_detail: UserTreatmentPlanDetailDefinedAttributes) => {
-    const tasks = getTasksFromTPDay(user_tp_detail);
+    const tp_day_tasks = getTasksFromTPDay(user_tp_detail);
 
-    return tasks.map((task) => ({
+    return tp_day_tasks.map((task) => ({
       user_id,
       user_tp_id: userTreatmentPlan.id,
       tp_day: user_tp_detail.tp_day,
@@ -58,10 +62,13 @@ export async function createUserTreatmentPlan(
 }
 
 export async function getUserTasksByDate(user_id: number, date: string) {
-  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['assigned_at'] });
   if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const { tp_day, formattedTpDate } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+  const { tp_day, formattedTpDate } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
+
+  let status = TPStatus.STARTED;
+  if (tp_day <= 0) status = TPStatus.NOT_STARTED;
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({
     where: { user_id, tp_day, is_skipped: 0 },
@@ -85,7 +92,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
       .format('YYYY-MM-DD')
   );
 
-  return { todays_tasks, pending_tasks_dates };
+  return { todays_tasks, pending_tasks_dates, status };
 }
 
 export async function updateUserTask(task_id: number, status: boolean, user_id: number, comment: string) {
@@ -101,10 +108,10 @@ export async function updateUserTask(task_id: number, status: boolean, user_id: 
 }
 
 export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, date: string) {
-  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['id', 'createdAt'] });
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['id', 'assigned_at'] });
   if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
 
   const tpStartDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
 

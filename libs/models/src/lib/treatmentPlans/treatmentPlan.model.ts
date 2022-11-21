@@ -33,3 +33,8 @@ export interface FeedbackResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export enum TPStatus {
+  STARTED = 'Started',
+  NOT_STARTED = 'Not started',
+}
