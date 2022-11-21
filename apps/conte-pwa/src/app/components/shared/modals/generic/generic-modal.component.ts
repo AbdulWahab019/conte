@@ -25,10 +25,13 @@ export class GenericModalComponent implements OnInit {
   @Input() list = [];
   @Input() listActionText = '';
   @Input() listActionLogo = '';
+  @Input() listAction!: (args: any) => void;
+  @Input() listSecActionText = '';
+  @Input() listSecActionLogo = '';
+  @Input() listSecAction!: (args: any, secArgs: any) => void;
   @Input() questionAnswers: taskFeedback[] = [];
   @Input() QAbuttonText = '';
   @Input() QAbuttonLogo = '';
-  @Input() listAction!: (args: any) => void;
   @Input() buttonText = '';
   @Input() buttonLoadingText = '';
   @Input() buttonAction!: (args: any) => void;
@@ -47,6 +50,7 @@ export class GenericModalComponent implements OnInit {
       this.buttonState = 'loading';
       await delay(1500);
     }
+
     if (this.questionAnswers?.length) {
       for (const question of this.questionAnswers) {
         if (!question.answer) {
@@ -58,6 +62,7 @@ export class GenericModalComponent implements OnInit {
       const data = { QA: this.questionAnswers, task_id: this.miscData };
       this.buttonAction(data);
     }
+
     this.activeModal.close();
   }
 

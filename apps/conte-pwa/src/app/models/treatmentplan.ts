@@ -3,3 +3,7 @@ export interface taskFeedback {
     answer: string;
   }
   
+export interface submitFeedbackData{
+  QA: taskFeedback[];
+  task_id: number;
+}

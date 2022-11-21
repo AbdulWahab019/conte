@@ -9,6 +9,11 @@ import { CreateFeedbackApiRequest, CreateFeedbackApiResponse } from '@conte/mode
 })
 export class TreatmentPlanService {
   private todaysDate = new Date();
+  private todaysFormattedDate = new NgbDate(
+    this.todaysDate.getFullYear(),
+    this.todaysDate.getMonth() + 1,
+    this.todaysDate.getDate()
+  );
   private treatmentPlanDate = new NgbDate(
     this.todaysDate.getFullYear(),
     this.todaysDate.getMonth() + 1,
@@ -27,6 +32,10 @@ export class TreatmentPlanService {
     return this.treatmentPlanDate;
   }
 
+  getTodaysDate(): NgbDate {
+    return this.todaysFormattedDate;
+  }
+
   async getTreatmentPlanDetails(date: string): Promise<any> {
     return await this.http.get<any>(`${DASHBOARD}`, { params: { date } }).toPromise();
   }
@@ -37,6 +46,10 @@ export class TreatmentPlanService {
 
   async updateTask(task_id: string, status: boolean, data?: { comment: string }): Promise<any> {
     return await this.http.put<any>(`${TREATMENTPLAN}/task/${task_id}/status/${status}`, data).toPromise();
+  }
+
+  async skipTask(date: string): Promise<any> {
+    return await this.http.put<any>(`${TREATMENTPLAN}/tasks/date/${date}/skip`, null).toPromise();
   }
 
   async postTaskFeedback(request: CreateFeedbackApiRequest): Promise<any> {

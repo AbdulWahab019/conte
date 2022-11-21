@@ -10,6 +10,11 @@ export async function getDashboardData(req: Request, res: Response) {
 
   const detail = await getUserTreatmentPlanDetailByUserAndDay(user_id, date);
 
-  const apiResp = { video_url: detail?.tp_detail?.video_url, are_tasks_completed: detail?.are_tasks_completed };
+  const apiResp = {
+    video_url: detail?.video_url,
+    are_tasks_completed: detail?.are_tasks_completed,
+    tpStartDate: detail.tpStartDate,
+  };
+
   return sendResponse(res, 201, SUCCESS, apiResp);
 }

@@ -14,6 +14,7 @@ export interface UserTreatmentPlanTasksDefinedAttributes {
   task_type: number;
   title: string;
   is_completed: boolean;
+  is_skipped: boolean;
 }
 
 export interface UserTreatmentPlanTasksModel
@@ -25,6 +26,7 @@ export interface UserTreatmentPlanTasksModel
   task_type: number;
   title: string;
   is_completed: boolean;
+  is_skipped: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -40,6 +42,7 @@ export const UserTreatmentPlanTasks = sequelize.define<
   task_type: { type: DataTypes.INTEGER },
   title: { type: DataTypes.STRING },
   is_completed: { type: DataTypes.BOOLEAN, defaultValue: false },
+  is_skipped: { type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false },
 });
 
 UserTreatmentPlanTasks.sync();

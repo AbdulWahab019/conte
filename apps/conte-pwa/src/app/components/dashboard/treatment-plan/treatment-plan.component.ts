@@ -7,6 +7,7 @@ import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { submitFeedbackData } from '../../../models/treatmentplan';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -60,6 +61,9 @@ export class TreatmentPlanComponent implements OnInit {
           this.pendingTasksModal.componentInstance.listActionText = 'Navigate';
           this.pendingTasksModal.componentInstance.listActionLogo = `navigate`;
           this.pendingTasksModal.componentInstance.listAction = this.navToSpecificTask;
+          this.pendingTasksModal.componentInstance.listSecActionText = 'Skip';
+          this.pendingTasksModal.componentInstance.listSecActionLogo = `skip`;
+          this.pendingTasksModal.componentInstance.listSecAction = this.skipSpecificTask;
           this.pendingTasksModal.componentInstance.buttonText = 'Acknowledge';
         }
 
@@ -92,6 +96,24 @@ export class TreatmentPlanComponent implements OnInit {
 
     this.modalService.dismissAll(this.pendingTasksModal);
     this.getTasks(date);
+  };
+
+  skipSpecificTask = (date: string, pending_tasks: any): void => {
+    this.spinner.show();
+
+    this.treatmentPlanService
+      .skipTask(date)
+      .then((resp) => {
+        const pending_tasks_dates = pending_tasks.filter((task: string) => task !== date);
+        this.pendingTasksModal.componentInstance.list = pending_tasks_dates;
+        this.spinner.hide();
+        this.toast.show('Task Updated Successfully', { classname: 'bg-success text-light', icon: 'success' });
+      })
+      .catch((err) => {
+        console.error(err);
+        this.spinner.hide();
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   };
 
   updateTask(index: number) {
@@ -154,27 +176,23 @@ export class TreatmentPlanComponent implements OnInit {
     this.taskFeedbackModal.componentInstance.miscData = task_id;
   }
 
-  submitFeedback(feedbackData: any) {
-    const data = [
-      {
-        task_id: feedbackData.task_id,
-        feedback: feedbackData.QA[0].answer,
-        question: feedbackData.QA[0].question,
-        type: 2,
-      },
-    ];
-    const request = { data };
+  submitFeedback = (feedbackData: submitFeedbackData): void => {
+    let data = [];
+    for (const feedback of feedbackData.QA) {
+      data.push({ question: feedback.question, feedback: feedback.answer, task_id: feedbackData.task_id, type: 2 });
+    }
 
-    // this.treatmentPlanService
-    //   .postTaskFeedback(request)
-    //   .then((resp) => {
-    //     this.toast.show('Feedback submitted successfully', { classname: 'bg-success text-light', icon: 'success' });
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     // this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
-    //   });
-  }
+    const request = { data };
+    this.treatmentPlanService
+      .postTaskFeedback(request)
+      .then((resp) => {
+        this.toast.show('Feedback submitted successfully', { classname: 'bg-success text-light', icon: 'success' });
+      })
+      .catch((err) => {
+        console.error(err);
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
+  };
 
   navBack() {
     this.router.navigate(['dashboard']);

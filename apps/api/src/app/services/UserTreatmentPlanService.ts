@@ -72,7 +72,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
   if (tp_day < 0) status = TPStatus.NOT_STARTED;
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({
-    where: { user_id, tp_day },
+    where: { user_id, tp_day, is_skipped: 0 },
     include: [{ model: UserTreatmentPlanTaskFeedback, as: 'feedback' }],
   });
 
@@ -80,6 +80,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
     where: {
       user_id,
       is_completed: 0,
+      is_skipped: 0,
       tp_day: { [Op.lt]: tp_day },
     },
     attributes: ['tp_day'],
@@ -113,6 +114,8 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
 
   const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
 
+  const tpStartDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
+
   const tp_detail = await UserTreatmentPlanDetail.findOne({
     where: { user_tp_id: treatmentPlan.id, tp_day },
     attributes: ['video_url'],
@@ -121,5 +124,5 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
   const are_tasks_completed =
     (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
 
-  return { tp_detail, are_tasks_completed };
+  return { video_url: tp_detail?.video_url, are_tasks_completed, tpStartDate };
 }

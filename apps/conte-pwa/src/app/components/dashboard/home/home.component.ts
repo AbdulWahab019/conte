@@ -14,6 +14,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
   animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate(760)])])],
 })
 export class HomeComponent implements OnInit {
+  tpStartDate!: NgbDate;
+  todaysDate!: NgbDate;
   defaultDate!: NgbDate;
   date = '';
   videoURL = '';
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.todaysDate = this.treatmentPlanService.getTodaysDate();
     this.defaultDate = this.treatmentPlanService.getTreatmentPlanDate();
     this.date = `${this.defaultDate.year}-${this.defaultDate.month}-${this.defaultDate.day}`;
     this.getTreatmentPlanDetail();
@@ -46,6 +49,14 @@ export class HomeComponent implements OnInit {
       .then((resp) => {
         this.videoURL = resp.data?.video_url;
         this.areTasksCompleted = resp.data?.are_tasks_completed;
+        const formattedTpDate = new Date(resp.data.tpStartDate);
+
+        this.tpStartDate = new NgbDate(
+          formattedTpDate.getFullYear(),
+          formattedTpDate.getMonth() + 1,
+          formattedTpDate.getDate() - 1
+        );
+
         this.spinner.hide();
       })
       .catch((err) => {
@@ -53,15 +64,6 @@ export class HomeComponent implements OnInit {
         console.error(err);
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
-  }
-
-  async logout() {
-    localStorage.clear();
-    this.spinner.show();
-    await delay(1000);
-    this.spinner.hide();
-    this.toast.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
-    this.router.navigate(['authentication']);
   }
 
   navToTreatmentPlan() {
