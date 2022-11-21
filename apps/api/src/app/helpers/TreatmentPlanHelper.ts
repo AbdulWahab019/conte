@@ -32,12 +32,13 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
 
   // Update Strings
   if (detail.plyo_throw) {
-    tasks.push(`Throw Plyo ball ${detail.plyo_throw} times.`);
+    tasks.push({ type: 1, title: `Throw Plyo ball ${detail.plyo_throw} times.` });
   }
   if (detail.max_distance && detail.max_velocity_absolute && detail.num_throws_at_max_distance) {
-    tasks.push(
-      `Do ${detail.num_throws_at_max_distance} throws at ${detail.max_distance} feet with ${detail.max_velocity_absolute} velocity.`
-    );
+    tasks.push({
+      type: 2,
+      title: `Do ${detail.num_throws_at_max_distance} throws at ${detail.max_distance} feet with ${detail.max_velocity_absolute} velocity.`,
+    });
   }
   if (
     detail.post_max_distance_flat_ground &&
@@ -45,42 +46,49 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
     detail.post_max_flat_ground_pitches
   ) {
     if (detail.post_max_flat_ground_pitches === 'FB')
-      tasks.push(
-        `Throw Forkball at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`
-      );
+      tasks.push({
+        type: 3,
+        title: `Throw Forkball at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`,
+      });
     else if (detail.post_max_flat_ground_pitches === 'CH')
-      tasks.push(
-        `Throw Changeup at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`
-      );
+      tasks.push({
+        type: 3,
+        title: `Throw Changeup at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`,
+      });
     else
-      tasks.push(
-        `Throw any type of pitches at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`
-      );
+      tasks.push({
+        type: 3,
+        title: `Throw any type of pitches at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`,
+      });
   }
   if (detail.bullpen && detail.bullpen_max_velocity_absolute && detail.bullpen_pitches) {
     if (detail.bullpen_pitches === 'FB')
-      tasks.push(
-        `Throw Forkball bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`
-      );
+      tasks.push({
+        type: 4,
+        title: `Throw Forkball bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`,
+      });
     else if (detail.bullpen_pitches === 'CH')
-      tasks.push(
-        `Throw Changeup bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`
-      );
+      tasks.push({
+        type: 4,
+        title: `Throw Changeup bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`,
+      });
     else
-      tasks.push(
-        `Throw any type of bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`
-      );
+      tasks.push({
+        type: 4,
+        title: `Throw any type of bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`,
+      });
   }
   if (detail.live_simulated_game && detail.innings) {
-    tasks.push(
-      `Play ${detail.live_simulated_game} pitches per innings in live/simulated game. Play ${detail.innings} innings.`
-    );
+    tasks.push({
+      type: 5,
+      title: `Play ${detail.live_simulated_game} pitches per innings in live/simulated game. Play ${detail.innings} innings.`,
+    });
   }
 
   return tasks;
 }
 
-export function getUserTreatmentPlanDayByDate(date: string | Date, treatmentPlanDate: string | Date) {
+export function getUserTreatmentPlanDayByDate(date: string | Date, treatmentPlanDate: string) {
   const formattedDate = moment(date).format('YYYY-MM-DD');
   const formattedTpDate = moment(treatmentPlanDate).format('YYYY-MM-DD');
 
