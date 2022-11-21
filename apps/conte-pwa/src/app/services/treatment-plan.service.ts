@@ -48,6 +48,10 @@ export class TreatmentPlanService {
     return await this.http.put<any>(`${TREATMENTPLAN}/task/${task_id}/status/${status}`, data).toPromise();
   }
 
+  async skipTask(date: string): Promise<any> {
+    return await this.http.put<any>(`${TREATMENTPLAN}/tasks/date/${date}/skip`, null).toPromise();
+  }
+
   async postTaskFeedback(request: CreateFeedbackApiRequest): Promise<any> {
     return await this.http.post<any>(`${TREATMENTPLAN}/task/${request.data[0].task_id}/feedback`, request).toPromise();
   }

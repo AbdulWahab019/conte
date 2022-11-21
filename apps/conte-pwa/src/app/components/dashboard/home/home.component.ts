@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
           formattedTpDate.getMonth() + 1,
           formattedTpDate.getDate() - 1
         );
-        console.log(this.tpStartDate);
+
         this.spinner.hide();
       })
       .catch((err) => {

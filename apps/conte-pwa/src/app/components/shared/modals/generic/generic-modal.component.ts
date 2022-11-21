@@ -28,7 +28,7 @@ export class GenericModalComponent implements OnInit {
   @Input() listAction!: (args: any) => void;
   @Input() listSecActionText = '';
   @Input() listSecActionLogo = '';
-  @Input() listSecAction!: (args: any) => void;
+  @Input() listSecAction!: (args: any, secArgs: any) => void;
   @Input() questionAnswers: taskFeedback[] = [];
   @Input() QAbuttonText = '';
   @Input() QAbuttonLogo = '';
