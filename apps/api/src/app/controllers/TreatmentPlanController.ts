@@ -69,8 +69,7 @@ export async function getTaskFeedback(req: Request, res: Response) {
 }
 
 export async function skipUserTasks(req: Request, res: Response) {
-  // const { id: user_id } = req['user'];
-  const user_id = 34;
+  const { id: user_id } = req['user'];
 
   const { date } = req.params;
 
