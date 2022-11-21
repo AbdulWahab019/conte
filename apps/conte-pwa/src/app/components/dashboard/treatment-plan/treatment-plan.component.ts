@@ -98,9 +98,22 @@ export class TreatmentPlanComponent implements OnInit {
     this.getTasks(date);
   };
 
-  skipSpecificTask = (date: string): void => {
-    this.modalService.dismissAll(this.pendingTasksModal);
-    console.log(date);
+  skipSpecificTask = (date: string, pending_tasks: any): void => {
+    this.spinner.show();
+
+    this.treatmentPlanService
+      .skipTask(date)
+      .then((resp) => {
+        const pending_tasks_dates = pending_tasks.filter((task: string) => task !== date);
+        this.pendingTasksModal.componentInstance.list = pending_tasks_dates;
+        this.spinner.hide();
+        this.toast.show('Task Updated Successfully', { classname: 'bg-success text-light', icon: 'success' });
+      })
+      .catch((err) => {
+        console.error(err);
+        this.spinner.hide();
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   };
 
   updateTask(index: number) {
