@@ -42,7 +42,7 @@ export const UserTreatmentPlanTasks = sequelize.define<
   task_type: { type: DataTypes.INTEGER },
   title: { type: DataTypes.STRING },
   is_completed: { type: DataTypes.BOOLEAN, defaultValue: false },
-  is_skipped: { type: DataTypes.BOOLEAN, defaultValue: false },
+  is_skipped: { type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false },
 });
 
 UserTreatmentPlanTasks.sync();
