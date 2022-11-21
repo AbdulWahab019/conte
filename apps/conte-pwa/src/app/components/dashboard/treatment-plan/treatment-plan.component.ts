@@ -104,10 +104,10 @@ export class TreatmentPlanComponent implements OnInit {
     this.treatmentPlanService
       .skipTask(date)
       .then((resp) => {
-        const pending_tasks_dates = pending_tasks.filter((task: any) => task !== date);
+        const pending_tasks_dates = pending_tasks.filter((task: string) => task !== date);
         this.pendingTasksModal.componentInstance.list = pending_tasks_dates;
         this.spinner.hide();
-        this.toast.show("Task Updated Successfully", { classname: 'bg-success text-light', icon: 'success' });
+        this.toast.show('Task Updated Successfully', { classname: 'bg-success text-light', icon: 'success' });
       })
       .catch((err) => {
         console.error(err);
