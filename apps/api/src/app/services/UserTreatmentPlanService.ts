@@ -41,9 +41,9 @@ export async function createUserTreatmentPlan(
   });
 
   const tasks = userTreatmentPlanDetailsData.flatMap((user_tp_detail: UserTreatmentPlanDetailDefinedAttributes) => {
-    const tasks = getTasksFromTPDay(user_tp_detail);
+    const tp_day_tasks = getTasksFromTPDay(user_tp_detail);
 
-    return tasks.map((task) => ({
+    return tp_day_tasks.map((task) => ({
       user_id,
       user_tp_id: userTreatmentPlan.id,
       tp_day: user_tp_detail.tp_day,
