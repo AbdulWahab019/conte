@@ -63,6 +63,6 @@ export async function getUserTaskFeedback(task_id: number) {
   return await UserTreatmentPlanTaskFeedback.findAll({ attributes: ['id', 'feedback', 'type'], where: { task_id } });
 }
 
-export async function updateUserSkippedTasks(user_id: number, tp_day: number) {
+export async function skipTPDayTasks(user_id: number, tp_day: number) {
   return await UserTreatmentPlanTasks.update({ is_skipped: true }, { where: { user_id, tp_day } });
 }

@@ -5,7 +5,7 @@ import {
   getUserTaskFeedback,
   parseTreatmentPlanFile,
   createUserTaskFeedBack,
-  updateUserSkippedTasks,
+  skipTPDayTasks,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -78,7 +78,7 @@ export async function skipUserTasks(req: Request, res: Response) {
 
   const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
 
-  await updateUserSkippedTasks(user_id, tp_day);
+  await skipTPDayTasks(user_id, tp_day);
 
   return sendResponse(res, 200, SUCCESS);
 }
