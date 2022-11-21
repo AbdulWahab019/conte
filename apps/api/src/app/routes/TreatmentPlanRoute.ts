@@ -26,6 +26,6 @@ router.post('/task/:task_id/feedback', authorize, validateCreateFeedback, postTa
 
 router.get('/task/:task_id/feedback', authorize, getTaskFeedback);
 
-router.put('/skippedtasks/date/:date', authorize, skipUserTasks);
+router.put('/tasks/date/:date/skip', authorize, skipUserTasks);
 
 export default router;
