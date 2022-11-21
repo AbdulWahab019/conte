@@ -1,30 +1,23 @@
 {
-  "name": "conte-pwa",
+  "name": "conte",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/conte-pwa/src",
+  "sourceRoot": "apps/conte/src",
   "prefix": "conte",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/conte-pwa",
-        "index": "apps/conte-pwa/src/index.html",
-        "main": "apps/conte-pwa/src/main.ts",
-        "polyfills": "apps/conte-pwa/src/polyfills.ts",
-        "tsConfig": "apps/conte-pwa/tsconfig.app.json",
+        "outputPath": "dist/apps/conte",
+        "index": "apps/conte/src/index.html",
+        "main": "apps/conte/src/main.ts",
+        "polyfills": "apps/conte/src/polyfills.ts",
+        "tsConfig": "apps/conte/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/conte-pwa/src/favicon.ico",
-          "apps/conte-pwa/src/assets",
-          "apps/conte-pwa/src/manifest.webmanifest",
-          "apps/conte-pwa/src/manifest.webmanifest"
-        ],
-        "styles": ["apps/conte-pwa/src/styles.scss", "node_modules/bootstrap/dist/css/bootstrap.min.css"],
-        "scripts": [],
-        "serviceWorker": true,
-        "ngswConfigPath": "apps/conte-pwa/ngsw-config.json"
+        "assets": ["apps/conte/src/favicon.ico", "apps/conte/src/assets"],
+        "styles": ["apps/conte/src/styles.scss"],
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -32,18 +25,18 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "2mb"
+              "maximumError": "1mb"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "5kb",
-              "maximumError": "10kb"
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
             }
           ],
           "fileReplacements": [
             {
-              "replace": "apps/conte-pwa/src/environments/environment.ts",
-              "with": "apps/conte-pwa/src/environments/environment.prod.ts"
+              "replace": "apps/conte/src/environments/environment.ts",
+              "with": "apps/conte/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -63,34 +56,31 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "conte-pwa:build:production"
+          "browserTarget": "conte:build:production"
         },
         "development": {
-          "browserTarget": "conte-pwa:build:development"
+          "browserTarget": "conte:build:development"
         }
       },
-      "defaultConfiguration": "development",
-      "options": {
-        "proxyConfig": "apps/conte-pwa/proxy.conf.json"
-      }
+      "defaultConfiguration": "development"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "conte-pwa:build"
+        "browserTarget": "conte:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/conte-pwa/**/*.ts", "apps/conte-pwa/**/*.html"]
+        "lintFilePatterns": ["apps/conte/**/*.ts", "apps/conte/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/conte-pwa"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/conte-pwa/jest.config.ts",
+        "jestConfig": "apps/conte/jest.config.ts",
         "passWithNoTests": true
       }
     }
