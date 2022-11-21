@@ -1,5 +1,5 @@
 import { parse } from 'csv-parse';
-import { Attributes, FindOptions, Transaction } from 'sequelize';
+import { Attributes, FindOptions, Transaction, where } from 'sequelize';
 
 import { TreatmentPlan } from '../models/TreatmentPlan';
 import {
@@ -11,6 +11,7 @@ import {
 import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { FeedbackRequest } from '@conte/models';
+import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 
 export async function createTreatmentPlan(
   name: string,
@@ -60,4 +61,8 @@ export async function createUserTaskFeedBack(data: FeedbackRequest[]) {
 
 export async function getUserTaskFeedback(task_id: number) {
   return await UserTreatmentPlanTaskFeedback.findAll({ attributes: ['id', 'feedback', 'type'], where: { task_id } });
+}
+
+export async function updateUserSkippedTasks(user_id: number, tp_day: number) {
+  return await UserTreatmentPlanTasks.update({ is_skipped: true }, { where: { user_id, tp_day } });
 }

@@ -93,7 +93,7 @@ export async function updateUserTask(task_id: number, status: boolean, user_id: 
       task_id,
       feedback: comment,
       type: 1,
-    }
+    };
     await UserTreatmentPlanTaskFeedback.create(data);
   }
   return await UserTreatmentPlanTasks.update({ is_completed: status }, { where: { id: task_id, user_id } });

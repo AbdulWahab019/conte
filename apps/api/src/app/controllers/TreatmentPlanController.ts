@@ -5,12 +5,15 @@ import {
   getUserTaskFeedback,
   parseTreatmentPlanFile,
   createUserTaskFeedBack,
+  updateUserSkippedTasks,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
-import { INTERNAL_SERVER_ERROR, SUCCESS } from '../utils/constants';
+import { INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIReq } from '@conte/models';
+import { getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
+import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 
 export async function uploadTreatmentPlan(req: Request, res: Response) {
   const file: Express.Multer.File = req.file;
@@ -63,4 +66,20 @@ export async function getTaskFeedback(req: Request, res: Response) {
   const apiResp = await getUserTaskFeedback(Number(task_id));
 
   return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function skipUserTasks(req: Request, res: Response) {
+  // const { id: user_id } = req['user'];
+  const user_id = 34;
+
+  const { date } = req.params;
+
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['createdAt'] });
+  if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+
+  await updateUserSkippedTasks(user_id, tp_day);
+
+  return sendResponse(res, 200, SUCCESS);
 }
