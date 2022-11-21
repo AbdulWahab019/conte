@@ -109,10 +109,10 @@ export async function updateUserTask(task_id: number, status: boolean, user_id: 
 }
 
 export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, date: string) {
-  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['id', 'createdAt'] });
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['id', 'assigned_at'] });
   if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
 
   const tpStartDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
 
