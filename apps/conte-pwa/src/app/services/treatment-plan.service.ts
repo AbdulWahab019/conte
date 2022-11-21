@@ -9,6 +9,11 @@ import { CreateFeedbackApiRequest, CreateFeedbackApiResponse } from '@conte/mode
 })
 export class TreatmentPlanService {
   private todaysDate = new Date();
+  private todaysFormattedDate = new NgbDate(
+    this.todaysDate.getFullYear(),
+    this.todaysDate.getMonth() + 1,
+    this.todaysDate.getDate()
+  );
   private treatmentPlanDate = new NgbDate(
     this.todaysDate.getFullYear(),
     this.todaysDate.getMonth() + 1,
@@ -25,6 +30,10 @@ export class TreatmentPlanService {
 
   getTreatmentPlanDate(): NgbDate {
     return this.treatmentPlanDate;
+  }
+
+  getTodaysDate(): NgbDate {
+    return this.todaysFormattedDate;
   }
 
   async getTreatmentPlanDetails(date: string): Promise<any> {

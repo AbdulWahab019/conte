@@ -93,7 +93,7 @@ export async function updateUserTask(task_id: number, status: boolean, user_id: 
       task_id,
       feedback: comment,
       type: 1,
-    }
+    };
     await UserTreatmentPlanTaskFeedback.create(data);
   }
   return await UserTreatmentPlanTasks.update({ is_completed: status }, { where: { id: task_id, user_id } });
@@ -105,6 +105,8 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
 
   const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.createdAt);
 
+  const tpStartDate = moment(treatmentPlan.createdAt).format('YYYY-MM-DD');
+
   const tp_detail = await UserTreatmentPlanDetail.findOne({
     where: { user_tp_id: treatmentPlan.id, tp_day },
     attributes: ['video_url'],
@@ -113,5 +115,5 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
   const are_tasks_completed =
     (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
 
-  return { tp_detail, are_tasks_completed };
+  return { video_url: tp_detail?.video_url, are_tasks_completed, tpStartDate };
 }
