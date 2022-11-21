@@ -32,6 +32,16 @@
       font-size: x-large;
       color: rgb(141, 139, 139);
     }
+
+    &:hover {
+      i {
+        color: blue;
+      }
+      p {
+        color: blue;
+        border-bottom: 2px solid blue;
+      }
+    }
   }
 
   .active-link {

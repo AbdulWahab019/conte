@@ -1,7 +1,6 @@
 <div class="container-fluid home-screen">
   <div class="d-flex home-container">
     <div class="title-tab">
-      <i class="bi bi-box-arrow-left mt-1" (click)="logout()"></i>
       <span class="title display-4">Conte Sports Performance</span>
     </div>
 
@@ -15,6 +14,8 @@
           name="dp1"
           ngbDatepicker
           #d2="ngbDatepicker"
+          [minDate]="tpStartDate"
+          [maxDate]="todaysDate"
           [(ngModel)]="defaultDate"
           (change)="saveDate()"
           (dateSelect)="saveDate()"

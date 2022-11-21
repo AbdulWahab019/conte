@@ -79,7 +79,6 @@
       </div>
     </div>
 
-    <!--Daily Therapy Confirmation-->
     <!-- <div class="d-flex button-container mt-4 mb-2" *ngIf="!noTasks">
       <button
         class="btn btn-primary btn-confirm"
@@ -94,9 +93,15 @@
       </button>
     </div> -->
 
+    <!-- Daily Therapy::Status -->
     <div *ngIf="!noTasks" [ngClass]="!areTasksCompleted ? 'tasks-info mt-4' : 'tasks-info tasks-completed mt-4'" [@fade]>
-      <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Daily Tasks are in Progress...</p>
-      <div *ngIf="areTasksCompleted" [@fade]>
+      <!-- Placeholder -->
+      <span *ngIf="!dailyTasks" class="placeholder-glow">
+        <span class="placeholder col-12 mt-4"></span>
+      </span>
+      
+      <p class="display-5" *ngIf="!areTasksCompleted && dailyTasks" [@fade]>Daily Tasks are in Progress...</p>
+      <div *ngIf="areTasksCompleted && dailyTasks" [@fade]>
         <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
         <a class="display-6" (click)="navBack()">Return Home</a>
       </div>

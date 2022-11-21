@@ -13,6 +13,9 @@
     <div *ngIf="list">
       <div *ngFor="let item of list" class="list mt-1">
         <li>{{ item }}</li>
+        <button *ngIf="listSecAction" (click)="listSecAction(item)" class="list-btn">
+          {{ listSecActionText }}<i *ngIf="listSecActionLogo === 'skip'"class="bi bi-skip-forward ms-1"></i>
+        </button>
         <button *ngIf="listAction" (click)="listAction(item)" class="list-btn">
           {{ listActionText }}<i *ngIf="listActionLogo === 'navigate'" class="bi bi-arrow-bar-right ms-1"></i>
         </button>
