@@ -69,7 +69,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
 
   let status = TPStatus.STARTED;
 
-  if (tp_day < 0) status = TPStatus.NOT_STARTED;
+  if (tp_day <= 0) status = TPStatus.NOT_STARTED;
 
   const todays_tasks = await UserTreatmentPlanTasks.findAll({
     where: { user_id, tp_day, is_skipped: 0 },
