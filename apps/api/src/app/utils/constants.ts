@@ -6,6 +6,7 @@ export const SOMETHING_WENT_WRONG = 'Something went wrong';
 
 // Generic
 export const ACTIVE = 'active';
+export const TRIAL_IN_PROGRESS = 'trialing';
 
 // Errors
 export const SEQUELIZE_UNIQUE_CONSTRAINT_ERROR = 'SequelizeUniqueConstraintError';
