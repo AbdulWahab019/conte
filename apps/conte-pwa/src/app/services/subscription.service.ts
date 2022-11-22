@@ -10,7 +10,7 @@ export class SubscriptionService {
 
   //TODO add interfaces for request and response
 
-  async createSubscriptionSession(data: { product_id: string; success_url: string; cancel_url: string }): Promise<any> {
+  async createSubscriptionSession(data: { success_url: string; cancel_url: string }): Promise<any> {
     return await this.http.post<any>(`${SUBSCRIPTION}/create-checkout-session`, data).toPromise();
   }
 

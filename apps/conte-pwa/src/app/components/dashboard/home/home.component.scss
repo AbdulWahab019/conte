@@ -5,6 +5,14 @@
   background-color: rgb(227, 227, 227);
 }
 
+.h-max {
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .home-container {
   justify-content: center;
   text-align: center;

@@ -113,7 +113,7 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
 
   const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
 
-  const tpStartDate = moment(treatmentPlan.assigned_at).format('YYYY-MM-DD');
+  const tp_start_date = moment(treatmentPlan.assigned_at).format('YYYY-MM-DD');
 
   const tp_detail = await UserTreatmentPlanDetail.findOne({
     where: { user_tp_id: treatmentPlan.id, tp_day },
@@ -123,5 +123,5 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
   const are_tasks_completed =
     (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
 
-  return { video_url: tp_detail?.video_url, are_tasks_completed, tpStartDate };
+  return { video_url: tp_detail?.video_url, are_tasks_completed, tp_start_date };
 }

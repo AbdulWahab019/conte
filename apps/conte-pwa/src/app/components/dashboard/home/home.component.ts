@@ -6,6 +6,7 @@ import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { delay } from '../../../utils/constants';
 import { animate, style, transition, trigger } from '@angular/animations';
+import * as moment from 'moment';
 
 @Component({
   selector: 'conte-home',
@@ -20,6 +21,8 @@ export class HomeComponent implements OnInit {
   date = '';
   videoURL = '';
   areTasksCompleted = false;
+  treatmentPlanStatus = '';
+  treatmentPlanStartDate = new Date();
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -49,15 +52,23 @@ export class HomeComponent implements OnInit {
       .then((resp) => {
         this.videoURL = resp.data?.video_url;
         this.areTasksCompleted = resp.data?.are_tasks_completed;
-        const formattedTpDate = new Date(resp.data.tpStartDate);
+        const diff = moment(resp.data.tp_start_date).diff(moment(new Date()), 'days') + 1;
 
-        this.tpStartDate = new NgbDate(
-          formattedTpDate.getFullYear(),
-          formattedTpDate.getMonth() + 1,
-          formattedTpDate.getDate() - 1
-        );
+        if (diff < 0) {
+          this.treatmentPlanStatus = 'started';
+          const formattedTpDate = new Date(resp.data.tp_start_date);
 
-        this.spinner.hide();
+          this.tpStartDate = new NgbDate(
+            formattedTpDate.getFullYear(),
+            formattedTpDate.getMonth() + 1,
+            formattedTpDate.getDate() - 1
+          );
+
+          this.spinner.hide();
+        } else {
+          this.treatmentPlanStartDate = new Date(resp.data.tp_start_date);
+          this.treatmentPlanStatus = 'pending';
+        }
       })
       .catch((err) => {
         this.spinner.hide();

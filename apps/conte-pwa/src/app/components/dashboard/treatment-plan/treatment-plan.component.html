@@ -25,13 +25,13 @@
       <span *ngIf="!noTasks">Today's Treatment Plan</span>
 
       <!-- Placeholders -->
-      <span *ngIf="!dailyTasks" class="placeholder-glow">
+      <span *ngIf="!dailyTasks && !noTasks" class="placeholder-glow">
         <span class="placeholder col-12 mt-4"></span>
       </span>
-      <span *ngIf="!dailyTasks" class="placeholder-glow">
+      <span *ngIf="!dailyTasks && !noTasks" class="placeholder-glow">
         <span class="placeholder col-12 mt-4"></span>
       </span>
-      <span *ngIf="!dailyTasks" class="placeholder-glow">
+      <span *ngIf="!dailyTasks && !noTasks" class="placeholder-glow">
         <span class="placeholder col-12 mt-4"></span>
       </span>
 
@@ -94,12 +94,16 @@
     </div> -->
 
     <!-- Daily Therapy::Status -->
-    <div *ngIf="!noTasks" [ngClass]="!areTasksCompleted ? 'tasks-info mt-4' : 'tasks-info tasks-completed mt-4'" [@fade]>
+    <div
+      *ngIf="!noTasks"
+      [ngClass]="!areTasksCompleted ? 'tasks-info mt-4' : 'tasks-info tasks-completed mt-4'"
+      [@fade]
+    >
       <!-- Placeholder -->
       <span *ngIf="!dailyTasks" class="placeholder-glow">
         <span class="placeholder col-12 mt-4"></span>
       </span>
-      
+
       <p class="display-5" *ngIf="!areTasksCompleted && dailyTasks" [@fade]>Daily Tasks are in Progress...</p>
       <div *ngIf="areTasksCompleted && dailyTasks" [@fade]>
         <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
