@@ -1,5 +1,7 @@
 <div
-  [ngClass]="treatmentPlanStatus === 'started' ? 'container-fluid home-screen' : 'container-fluid home-screen h-max'"
+  [ngClass]="
+    treatmentPlanStatus === 'pending' ? 'container-fluid home-screen count-down' : 'container-fluid home-screen'
+  "
 >
   <div class="d-flex home-container">
     <div class="title-tab">
@@ -36,13 +38,6 @@
         <img src="assets/logos/Throwing Progression Pro-02.png" />
       </div>
 
-      <!-- <iframe
-      width="100%"
-      height="300px"
-      class="mt-4 mb-4"
-      src="https://www.youtube.com/embed/MC2qa5mfRJ8?autoplay=1&mute=1"
-    ></iframe> -->
-
       <!-- <div class="d-flex info-tab mb-2">
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
@@ -68,9 +63,23 @@
       </div>
     </ng-container>
 
-    <div *ngIf="treatmentPlanStatus === 'pending'">
+    <!-- Count Down Timer|| Case: Treatment Plan Status: pending -->
+    <div *ngIf="treatmentPlanStatus === 'pending'" class="timer">
       <h4 class="display-6">Your Treatment Plan Starts in</h4>
-      <conte-count-down [dDay]="treatmentPlanStartDate"></conte-count-down>
+      <div class="timer-container">
+        <conte-count-down [dDay]="treatmentPlanStartDate"></conte-count-down>
+      </div>
     </div>
   </div>
+
+  <!-- Place Holders -->
+  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+    <span class="placeholder col-12" style="height: 10vh"></span>
+  </span>
+  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+    <span class="placeholder col-12 mt-4" style="height: 30vh"></span>
+  </span>
+  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+    <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
+  </span>
 </div>

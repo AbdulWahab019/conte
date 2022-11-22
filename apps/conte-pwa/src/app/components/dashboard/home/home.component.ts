@@ -4,7 +4,6 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerService } from '../../../services/spinner.service';
 import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
-import { delay } from '../../../utils/constants';
 import { animate, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
 
@@ -23,6 +22,7 @@ export class HomeComponent implements OnInit {
   areTasksCompleted = false;
   treatmentPlanStatus = '';
   treatmentPlanStartDate = new Date();
+  apiLoaded = false;
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -50,18 +50,19 @@ export class HomeComponent implements OnInit {
     this.treatmentPlanService
       .getTreatmentPlanDetails(this.date)
       .then((resp) => {
+        this.apiLoaded = true;
         this.videoURL = resp.data?.video_url;
         this.areTasksCompleted = resp.data?.are_tasks_completed;
-        const diff = moment(resp.data.tp_start_date).diff(moment(new Date()), 'days') + 1;
+        const tpDiff = moment(resp.data.tp_start_date).diff(moment(new Date()), 'days');
 
-        if (diff < 0) {
+        if (tpDiff <= 0) {
           this.treatmentPlanStatus = 'started';
           const formattedTpDate = new Date(resp.data.tp_start_date);
 
           this.tpStartDate = new NgbDate(
             formattedTpDate.getFullYear(),
             formattedTpDate.getMonth() + 1,
-            formattedTpDate.getDate() - 1
+            formattedTpDate.getDate()
           );
 
           this.spinner.hide();
