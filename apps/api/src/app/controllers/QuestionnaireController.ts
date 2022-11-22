@@ -31,7 +31,10 @@ export async function submitQuestionnaireHttpReq(req: Request, res: Response) {
     user_treatment_plan_name = 'User Treatment Plan',
   }: SubmitQuestionnaireAPIRequest = req.body;
 
+  let surgery_date = null;
   const questionnaireObj: CreateQuestionnaire[] = data.map((question) => {
+    if (question.id === 1) surgery_date = question.response;
+
     const { title, type } = questionnaires[question.id];
     return { user_id: user.id, question_title: title, response: question.response, type };
   });
@@ -43,6 +46,7 @@ export async function submitQuestionnaireHttpReq(req: Request, res: Response) {
     surgery_id,
     user_demographics,
     user_treatment_plan_name,
+    surgery_date,
   });
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
