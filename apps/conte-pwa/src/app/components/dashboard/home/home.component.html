@@ -1,4 +1,8 @@
-<div class="container-fluid home-screen">
+<div
+  [ngClass]="
+    treatmentPlanStatus === 'pending' ? 'container-fluid home-screen count-down' : 'container-fluid home-screen'
+  "
+>
   <div class="d-flex home-container">
     <div class="title-tab">
       <span class="title display-4">Conte Sports Performance</span>
@@ -6,39 +10,35 @@
 
     <hr />
 
-    <div class="calender-widget">
-      <div class="plan-date">
-        <input
-          placeholder="Treatment Plan Date"
-          class="form-control date"
-          name="dp1"
-          ngbDatepicker
-          #d2="ngbDatepicker"
-          [(ngModel)]="defaultDate"
-          (change)="saveDate()"
-          (dateSelect)="saveDate()"
-        />
-        <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
+    <ng-container *ngIf="treatmentPlanStatus === 'started'">
+      <div class="calender-widget">
+        <div class="plan-date">
+          <input
+            placeholder="Treatment Plan Date"
+            class="form-control date"
+            name="dp1"
+            ngbDatepicker
+            #d2="ngbDatepicker"
+            [(ngModel)]="defaultDate"
+            [minDate]="tpStartDate"
+            [maxDate]="todaysDate"
+            (change)="saveDate()"
+            (dateSelect)="saveDate()"
+          />
+          <i class="bi bi-calendar-date" (click)="d2.toggle()"></i>
+        </div>
       </div>
-    </div>
 
-    <!-- Treatment Plan Video -->
-    <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL">
-      Your browser does not support the video playback.
-    </video>
-    <!-- CASE// No Video -->
-    <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
-      <img src="assets/logos/Throwing Progression Pro-02.png" />
-    </div>
+      <!-- Treatment Plan Video -->
+      <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL">
+        Your browser does not support the video playback.
+      </video>
+      <!-- CASE// No Video -->
+      <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
+        <img src="assets/logos/Throwing Progression Pro-02.png" />
+      </div>
 
-    <!-- <iframe
-      width="100%"
-      height="300px"
-      class="mt-4 mb-4"
-      src="https://www.youtube.com/embed/MC2qa5mfRJ8?autoplay=1&mute=1"
-    ></iframe> -->
-
-    <!-- <div class="d-flex info-tab mb-2">
+      <!-- <div class="d-flex info-tab mb-2">
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
         <p class="display-5">45 MPH</p>
@@ -50,16 +50,36 @@
       </div>
     </div> -->
 
-    <div
-      [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
-      (click)="!areTasksCompleted && navToTreatmentPlan()"
-    >
-      Today's Treatment Plan
-      <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Click Here</p>
-      <div *ngIf="areTasksCompleted" [@fade]>
-        <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
-        <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
+      <div
+        [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
+        (click)="!areTasksCompleted && navToTreatmentPlan()"
+      >
+        Today's Treatment Plan
+        <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Click Here</p>
+        <div *ngIf="areTasksCompleted" [@fade]>
+          <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
+          <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Count Down Timer|| Case: Treatment Plan Status: pending -->
+    <div *ngIf="treatmentPlanStatus === 'pending'" class="timer">
+      <h4 class="display-6">Your Treatment Plan Starts in</h4>
+      <div class="timer-container">
+        <conte-count-down [dDay]="treatmentPlanStartDate"></conte-count-down>
       </div>
     </div>
   </div>
+
+  <!-- Place Holders -->
+  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+    <span class="placeholder col-12" style="height: 10vh"></span>
+  </span>
+  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+    <span class="placeholder col-12 mt-4" style="height: 30vh"></span>
+  </span>
+  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+    <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
+  </span>
 </div>
