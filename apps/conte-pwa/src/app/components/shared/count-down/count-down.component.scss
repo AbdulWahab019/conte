@@ -1,11 +1,37 @@
 .timer {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 1.4em;
-    letter-spacing: -1px;
-  }
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 1.4em;
+  letter-spacing: -1px;
+}
 
-  .timer span {
-    font-size: 1.5em;
-    margin: 0 3px 0 10px;
+.timer span {
+  font-size: 1.5em;
+  margin: 0 3px 0 10px;
+}
+
+.timer-container {
+  padding: 5% 20px 5% 20px;
+
+  color: rgb(208, 207, 207);
+  background-color: rgb(0, 52, 125);
+
+  border-radius: 20px;
+}
+
+h1 {
+  padding: 2% 0 2% 0;
+
+  border-radius: 6px;
+  border-top: 4px goldenrod solid;
+  border-bottom: 4px goldenrod solid;
+
+  cursor: pointer;
+
+  &:hover {
+    color: goldenrod;
+
+    border-top: 4px black solid;
+    border-bottom: 4px black solid;
   }
+}
