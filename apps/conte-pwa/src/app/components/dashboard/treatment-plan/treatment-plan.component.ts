@@ -177,7 +177,7 @@ export class TreatmentPlanComponent implements OnInit {
   }
 
   submitFeedback = (feedbackData: submitFeedbackData): void => {
-    let data = [];
+    const data = [];
     for (const feedback of feedbackData.QA) {
       data.push({ question: feedback.question, feedback: feedback.answer, task_id: feedbackData.task_id, type: 2 });
     }
