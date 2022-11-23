@@ -64,11 +64,8 @@
     </ng-container>
 
     <!-- Count Down Timer|| Case: Treatment Plan Status: pending -->
-    <div *ngIf="treatmentPlanStatus === 'pending'" class="timer">
-      <h4 class="display-6">Your Treatment Plan Starts in</h4>
-      <div class="timer-container">
-        <conte-count-down [dDay]="treatmentPlanStartDate"></conte-count-down>
-      </div>
+    <div *ngIf="treatmentPlanStatus === 'pending'" class="w-100">
+      <conte-count-down [dDay]="treatmentPlanStartDate"></conte-count-down>
     </div>
   </div>
 
