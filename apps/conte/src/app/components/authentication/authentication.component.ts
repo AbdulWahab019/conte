@@ -77,6 +77,7 @@ export class AuthenticationComponent implements OnInit {
       email: this.f.email.value,
       password: this.f.password.value,
     };
+    console.log(credentials);
         localStorage.setItem('token', '1234567890');
         localStorage.setItem('user_email', 'test@test.com');
 
@@ -91,7 +92,6 @@ export class AuthenticationComponent implements OnInit {
       password: this.f2.password.value,
       confirm_password: this.f2.confirm_password.value,
     };
-    console.log(credentials);
         localStorage.setItem('token', '12345');
         localStorage.setItem('user_email', 'test@test.com');
         this.buttonState = 'static';
