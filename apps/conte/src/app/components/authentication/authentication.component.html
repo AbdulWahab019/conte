@@ -1,158 +1,136 @@
 <div class="container-fluid authentication-screen">
-    <div class="container-fluid authentication-container">
-      <div class="logo-container">
-        <!-- <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" /> -->
-      </div>
-      <div class="authentication-form">
-        <!-- Switch Panel -->
-        <div class="d-flex switch-panel mb-5">
-          <button
-            [disabled]="registerState || buttonState === 'loading'"
-            (click)="switchForm()"
-          >
-            <span class="display-6">SIGN UP</span>
-          </button>
-          <button
-            [disabled]="loginState || buttonState === 'loading'"
-            (click)="switchForm()"
-          >
-            <span class="display-6">LOG IN</span>
-          </button>
+  <div class="container-fluid authentication-container">
+    <div>
+      <div class="wrapper">
+        <div class="container">
+          <section class="login__wrapper">
+            <div class="login__area">
+              <div class="logo-container">
+                <img
+                  class="logo"
+                  src="../../../assets/logos/ThrowingProgressionPro.png"
+                  alt="logo"
+                  width="100"
+                  height="100"
+                />
+              </div>
+              <h1 *ngIf="registerState" class="display-6">Register for an Account</h1>
+              <h1 *ngIf="!registerState">Login to your Account</h1>
+              <div class="form__wrapper">
+                <div class="d-flex switch-panel mb-5">
+                  <button [disabled]="registerState || buttonState === 'loading'" (click)="switchForm()">
+                    <span class="display-6" [ngClass]="{ Auth_text: registerState }">SIGN UP</span>
+                  </button>
+                  <button [disabled]="loginState || buttonState === 'loading'" (click)="switchForm()">
+                    <span class="display-6" [ngClass]="{ Auth_text: !registerState }">LOG IN</span>
+                  </button>
+                </div>
+                <!-- Registration -->
+                <form [formGroup]="registrationForm" (submit)="register()" *ngIf="registerState">
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="email" placeholder="Email Address" />
+                    <div *ngIf="f2.email.touched || f2.email.dirty">
+                      <p *ngIf="f2.email.errors?.required" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Email Address is required to sign up.
+                      </p>
+                      <p *ngIf="f2.email.errors?.email" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Please enter a valid email address.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Password" />
+                    <div *ngIf="f2.password.touched || f2.password.dirty">
+                      <p *ngIf="f2.password.errors?.minlength" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Password must be atleast 8 characters long.
+                      </p>
+                      <p *ngIf="f2.password.errors?.required" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Password is required to sign up.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="Confirm Password"
+                      formControlName="confirm_password"
+                    />
+                    <div *ngIf="f2.confirm_password.touched || f2.confirm_password.dirty">
+                      <p *ngIf="f2.errors?.mismatch" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Passwords do not match.
+                      </p>
+                      <p *ngIf="!f2.errors?.mismatch" class="link__style" style="color: green">
+                        <i class="fa fa-check mr-1" aria-hidden="true"></i>Passwords matched
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mb-30">
+                    <a class="link__style pb-30">
+                      Already have an Account?
+                      <a class="link point" [routerLink]="['/login']"><strong>Sign in</strong></a></a
+                    >
+                  </div>
+                  <button
+                    [disabled]="!f2 ? f2.invalid : f2.invalid"
+                    type="button"
+                    type="submit"
+                    class="btn btn-primary login__btn"
+                  >
+                    Register
+                  </button>
+                </form>
+
+                <!-- Login -->
+                <form [formGroup]="signinForm" (submit)="login()" *ngIf="!registerState">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [readonly]="email"
+                      formControlName="email"
+                      placeholder="Email Address"
+                    />
+                    <div *ngIf="f.email.touched || f.email.dirty">
+                      <p *ngIf="f.email.errors?.required" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Email Address is required to log in.
+                      </p>
+                      <p *ngIf="f.email.errors?.email" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Please enter a valid email address.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group mb-1">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Password" />
+                    <div *ngIf="f.password.touched || f.password.dirty">
+                      <p *ngIf="f.password.errors?.required" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Password is required to login.
+                      </p>
+                      <p *ngIf="f.password.errors?.minlength" class="link__style" style="color: red">
+                        <i class="fa fa-times mr-1" aria-hidden="true"></i>Password must be atleast 8 characters long.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mb-30">
+                    <a *ngIf="!email" class="link__style pb-30">
+                      Not a member yet?
+                      <a class="link point" [routerLink]="['/register']"><strong>Register</strong></a></a
+                    >
+                  </div>
+                  <button
+                    [disabled]="signinForm.invalid"
+                    type="button"
+                    type="submit"
+                    class="btn btn-primary login__btn"
+                  >
+                    Login
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
         </div>
-  
-        <!-- Login Form//start -->
-        <form [formGroup]="signinForm" *ngIf="loginState" (submit)="login()" [@fade]>
-          <!-- Email Group//start -->
-          <div *ngIf="f.email.touched && f.email.dirty" class="error-text m-0">
-            <p *ngIf="f.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
-            <p *ngIf="f.email.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.</p>
-          </div>
-          <input
-            type="email"
-            placeholder="Email ID"
-            formControlName="email"
-            autocomplete="off"
-          />
-          <!-- Email Group//end -->
-  
-          <!-- Password Group//start -->
-          <div *ngIf="f.password.touched && f.password.dirty" class="error-text">
-            <p *ngIf="f.password.errors?.required">
-              <i class="bi bi-x-circle-fill me-1"></i>Password is required to login.
-            </p>
-            <p *ngIf="f.password.errors?.minlength">
-              <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8 characters long.
-            </p>
-          </div>
-          <input
-            placeholder="Password"
-            id="password"
-            style="background-color: transparent !important"
-            formControlName="password"
-            autocomplete="off"
-          />
-  
-          <div class="d-flex justify-content-end">
-            <p class="reset-pass">Forgot Password?</p>
-          </div>
-          <!-- Password Group//end -->
-  
-          <div class="d-flex justify-content-center mt-2 mb-2">
-            <input type="checkbox" class="checkbox" name="checkbox" checked="true" />
-            <span class="text">Keep me signed in on this device</span>
-          </div>
-  
-          <div class="d-flex justify-content-center mt-4 mb-3">
-            <button
-              class="btn btn-primary btn-authenticate"
-              type="submit"
-              (click)="login()"
-              [disabled]="signinForm.invalid || buttonState === 'loading'"
-            >
-              <span *ngIf="buttonState === 'static'">LOGIN</span>
-              <div *ngIf="buttonState === 'loading'">
-                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                <span>Logging in...</span>
-              </div>
-            </button>
-          </div>
-        </form>
-        <!-- Login Form//end -->
-  
-        <!-- Signup Form//start -->
-        <form [formGroup]="signinForm" *ngIf="registerState" (submit)="register()" [@fade]>
-          <!-- Email Group//start -->
-          <div *ngIf="f2.email.touched && f2.email.dirty" class="error-text m-0">
-            <p *ngIf="f2.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
-            <p *ngIf="f2.email.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.</p>
-          </div>
-          <input
-            type="email"
-            placeholder="Email ID"
-            formControlName="email"
-            autocomplete="off"
-          />
-  
-          <!-- Email Group//end -->
-     
-          <!-- Password Group//start -->
-          <div *ngIf="f2.password.touched && f2.password.dirty" class="error-text">
-            <p *ngIf="f2.password.errors?.required">
-              <i class="bi bi-x-circle-fill me-1"></i>Password is required to login.
-            </p>
-            <p *ngIf="f2.password.errors?.minlength">
-              <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8 characters long.
-            </p>
-          </div>
-
-          <!-- Password -->
-          <input
-            id="password"
-            placeholder="Password"
-            formControlName="password"
-            autocomplete="off"
-          />
-  
-          <!-- Confirm Password -->
-          <input
-            id="password"
-            placeholder="Confirm Password"
-            formControlName="confirm_password"
-            autocomplete="off"
-          />
-  
-          <div
-            *ngIf="
-              (f2.password.touched || f2.password.dirty) && (f2.confirm_password.touched || f2.confirm_password.dirty)
-            "
-            class="error-text"
-          >
-            <p *ngIf="registrationForm.errors?.['mismatch']">
-              <i class="bi bi-x-circle-fill me-1"></i>Passwords do not match.
-            </p>
-            <p *ngIf="!registrationForm.errors?.['mismatch']" style="color: green">
-              <i class="bi bi-check-circle-fill me-1"></i>Passwords matched
-            </p>
-          </div>
-          <!-- Password Group//end -->
-
-          <div class="d-flex justify-content-center mt-4 mb-3">
-            <button
-              class="btn btn-primary btn-authenticate"
-              type="submit"
-              (click)="register()"
-              [disabled]="registrationForm.invalid || buttonState === 'loading'"
-            >
-              <span *ngIf="buttonState === 'static'">REGISTER</span>
-              <div *ngIf="buttonState === 'loading'">
-                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                <span>Signing you up...</span>
-              </div>
-            </button>
-          </div>
-        </form>
-        <!-- Signup Form//end -->
       </div>
     </div>
   </div>
-  
+</div>

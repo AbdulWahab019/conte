@@ -1,0 +1,55 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Verahealth | Dashboard</title>
+  </head>
+
+  <body class="right-border">
+    <div class="wrappers d-flex align-items-stretch">
+      <nav id="sidebar" class="wrappers">
+        <span class="border-bottom d-flex">
+          <a
+            href="https://verahealth.app/"
+            target="_blank"
+          >
+            <img
+              *ngIf="!showHideToggle && !mobile; else croppedLogo"
+              src="../../assets/Verahealth-Logo.png"
+              [@fadeIn]
+              alt="Verahealth"
+            />
+            <ng-template #croppedLogo>
+              <img src="../../assets/Verahealth-Logo@cropped.png" class="cropped" [@fadeIn] alt="Verahealth" />
+            </ng-template>
+          </a>
+        </span>
+        <ul>
+          <li
+            *ngFor="let comp of navbarComponents"
+          >
+            <a
+              *ngIf="navigateFromDash"
+              class="point"
+              [href]="[comp.activePath]"
+            >
+              <img class="simple-icon" [src]="comp.svgSrc" alt="dashboard" />
+              <img class="active-icon" [src]="comp.activeSvgSrc" alt="dashboard" />
+              <span style="margin-right: 2px" class="small-menu">{{ comp.title }}</span>
+            </a>
+            <a
+              *ngIf="!navigateFromDash"
+              class="point"
+              [style.padding]=""
+              [style.font-size]=""
+              [style.line-height]=""
+            >
+              <img class="simple-icon" [src]="comp.svgSrc" alt="dashboard" />
+              <img class="active-icon" [src]="comp.activeSvgSrc" alt="dashboard" />
+              <span style="margin-right: 2px" class="small-menu" [style]="">{{ comp.title }}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html> -->

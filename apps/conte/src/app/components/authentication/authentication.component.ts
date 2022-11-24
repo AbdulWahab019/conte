@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl,FormGroup, Validators } from '@angular/forms';
-import { ToastService } from '../../services/toast.service';
-
-
+import { ToastService } from '../../Shared/services/toast.service';
 
 @Component({
   selector: 'conte-dashboard',
@@ -93,7 +91,7 @@ export class AuthenticationComponent implements OnInit {
       password: this.f2.password.value,
       confirm_password: this.f2.confirm_password.value,
     };
-
+    console.log(credentials);
         localStorage.setItem('token', '12345');
         localStorage.setItem('user_email', 'test@test.com');
         this.buttonState = 'static';
