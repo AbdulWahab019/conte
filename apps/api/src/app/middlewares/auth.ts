@@ -24,9 +24,9 @@ export async function authorize(req: Request, res: Response, next: NextFunction)
     req['token'] = token;
     req['user'] = user;
 
-    next();
+    return next();
   } catch (error) {
-    sendResponse(res, 401, AUTHENTICATION_FAILED, undefined, error);
+    return sendResponse(res, 401, AUTHENTICATION_FAILED, undefined, error);
   }
 }
 
@@ -47,8 +47,8 @@ export async function authorizeWebUser(req: Request, res: Response, next: NextFu
     req['token'] = token;
     req['user'] = user;
 
-    next();
+    return next();
   } catch (error) {
-    sendResponse(res, 401, AUTHENTICATION_FAILED, undefined, error);
+    return sendResponse(res, 401, AUTHENTICATION_FAILED, undefined, error);
   }
 }
