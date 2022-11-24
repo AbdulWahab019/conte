@@ -10,7 +10,7 @@
 
     <hr />
 
-    <ng-container *ngIf="treatmentPlanStatus === 'started'">
+    <ng-container *ngIf="treatmentPlanStatus === 'started' && apiLoaded">
       <div class="calender-widget">
         <div class="plan-date">
           <input
@@ -19,7 +19,7 @@
             name="dp1"
             ngbDatepicker
             #d2="ngbDatepicker"
-            [(ngModel)]="defaultDate"
+            [(ngModel)]="treatmentPlanDate"
             [minDate]="tpStartDate"
             [maxDate]="todaysDate"
             (change)="saveDate()"
@@ -30,11 +30,11 @@
       </div>
 
       <!-- Treatment Plan Video -->
-      <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL">
+      <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL && apiLoaded">
         Your browser does not support the video playback.
       </video>
       <!-- CASE// No Video -->
-      <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL">
+      <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL && apiLoaded">
         <img src="assets/logos/Throwing Progression Pro-02.png" />
       </div>
 
@@ -52,6 +52,7 @@
 
       <div
         [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
+        *ngIf="!noTasksAvailable && apiLoaded"
         (click)="!areTasksCompleted && navToTreatmentPlan()"
       >
         Today's Treatment Plan
@@ -59,6 +60,14 @@
         <div *ngIf="areTasksCompleted" [@fade]>
           <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
           <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
+        </div>
+      </div>
+
+      <div class="tasks-unavailable" *ngIf="noTasksAvailable && apiLoaded">
+        <img src="assets/images/no_tasks_found.png" height="150" width="150" />
+        <div>
+          <p class="display-6">No Tasks Assigned for Today</p>
+          <a class="display-6" *ngIf="pendingTasks" (click)="checkPendingTasks()">Review Pending Tasks</a>
         </div>
       </div>
     </ng-container>
@@ -70,13 +79,13 @@
   </div>
 
   <!-- Place Holders -->
-  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+  <span *ngIf="!apiLoaded" class="placeholder-glow">
     <span class="placeholder col-12" style="height: 10vh"></span>
   </span>
-  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+  <span *ngIf="!apiLoaded" class="placeholder-glow">
     <span class="placeholder col-12 mt-4" style="height: 30vh"></span>
   </span>
-  <span *ngIf="!treatmentPlanStatus" class="placeholder-glow">
+  <span *ngIf="!apiLoaded" class="placeholder-glow">
     <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
   </span>
 </div>

@@ -7,7 +7,7 @@ import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { submitFeedbackData } from '../../../models/treatmentplan';
+import { submitFeedbackData, therapyTask } from '../../../models/treatmentplan';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -25,7 +25,8 @@ export class TreatmentPlanComponent implements OnInit {
     this.todaysDate.getDate()
   );
   buttonState = 'loading';
-  dailyTasks!: any;
+  dailyTasks: therapyTask[] = [] as therapyTask[];
+  pendingTasks!: any;
   noTasks = false;
   areTasksCompleted = false;
   pendingTasksModal: any;
@@ -34,8 +35,8 @@ export class TreatmentPlanComponent implements OnInit {
   constructor(
     private treatmentPlanService: TreatmentPlanService,
     private router: Router,
-    private spinner: SpinnerService,
     private modalService: NgbModal,
+    private spinner: SpinnerService,
     private toast: ToastService
   ) {}
 
@@ -43,7 +44,10 @@ export class TreatmentPlanComponent implements OnInit {
     this.treatmentPlanDate = this.treatmentPlanService.getTreatmentPlanDate();
     this.date = `${this.treatmentPlanDate.month} - ${this.treatmentPlanDate.day} - ${this.treatmentPlanDate.year}`;
 
-    this.getTasks();
+    this.dailyTasks = await this.treatmentPlanService.getTherapyTasks();
+    this.pendingTasks = await this.treatmentPlanService.getPendingTasks();
+    if (this.pendingTasks) this.checkPendingTasks(this.pendingTasks);
+    if (!this.dailyTasks.length) this.getTasks();
   }
 
   getTasks(date = `${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`) {
@@ -54,17 +58,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
         if (resp.data.pending_tasks_dates?.length) {
-          this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
-          this.pendingTasksModal.componentInstance.heading = 'Pending Tasks';
-          this.pendingTasksModal.componentInstance.body = 'You have incompleted tasks on the following dates:';
-          this.pendingTasksModal.componentInstance.list = resp.data.pending_tasks_dates;
-          this.pendingTasksModal.componentInstance.listActionText = 'Navigate';
-          this.pendingTasksModal.componentInstance.listActionLogo = `navigate`;
-          this.pendingTasksModal.componentInstance.listAction = this.navToSpecificTask;
-          this.pendingTasksModal.componentInstance.listSecActionText = 'Skip';
-          this.pendingTasksModal.componentInstance.listSecActionLogo = `skip`;
-          this.pendingTasksModal.componentInstance.listSecAction = this.skipSpecificTask;
-          this.pendingTasksModal.componentInstance.buttonText = 'Acknowledge';
+          this.checkPendingTasks(resp.data.pending_tasks_dates);
         }
 
         if (this.dailyTasks?.length) {
@@ -80,6 +74,20 @@ export class TreatmentPlanComponent implements OnInit {
         console.error(err);
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
+  }
+
+  checkPendingTasks(pendingTasks: any) {
+    this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.pendingTasksModal.componentInstance.heading = 'Pending Tasks';
+    this.pendingTasksModal.componentInstance.body = 'You have incompleted tasks on the following dates:';
+    this.pendingTasksModal.componentInstance.list = pendingTasks;
+    this.pendingTasksModal.componentInstance.listActionText = 'Navigate';
+    this.pendingTasksModal.componentInstance.listActionLogo = `navigate`;
+    this.pendingTasksModal.componentInstance.listAction = this.navToSpecificTask;
+    this.pendingTasksModal.componentInstance.listSecActionText = 'Skip';
+    this.pendingTasksModal.componentInstance.listSecActionLogo = `skip`;
+    this.pendingTasksModal.componentInstance.listSecAction = this.skipSpecificTask;
+    this.pendingTasksModal.componentInstance.buttonText = 'Acknowledge';
   }
 
   navToSpecificTask = (date: string): void => {
@@ -161,7 +169,7 @@ export class TreatmentPlanComponent implements OnInit {
     else this.areTasksCompleted = true;
   }
 
-  bullpenFeedback(task_id: string) {
+  bullpenFeedback(task_id: number) {
     this.taskFeedbackModal = this.modalService.open(GenericModalComponent, { centered: true });
     this.taskFeedbackModal.componentInstance.heading = 'Conte; Task Feedback';
     this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
