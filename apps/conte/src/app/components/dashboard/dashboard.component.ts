@@ -1,6 +1,8 @@
 import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { UserService } from '../../Shared/services/user.service';
+import { UserTableData } from '../../Shared/models/UserTableData';
 
 
 @Component({
@@ -10,6 +12,11 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 })
 export class DashboardComponent implements OnInit {
   url = '';
-  constructor(private router: Router) {}
-  ngOnInit(): void {}
+  allUsers : UserTableData[] = [];
+  constructor(private router: Router,private UsersService : UserService) {}
+  ngOnInit(): void {
+    this.UsersService.getAllUsers().then((resp)=>{
+      this.allUsers = resp.data.users;
+    })
+}
 }

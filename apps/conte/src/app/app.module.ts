@@ -7,11 +7,12 @@ import { AppRoutingModule } from './app.routing.module';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent,AuthenticationComponent,DashboardComponent],
-  imports: [BrowserModule,FormsModule,ReactiveFormsModule, AppRoutingModule,BrowserAnimationsModule],
+  imports: [BrowserModule,FormsModule,HttpClientModule,ReactiveFormsModule, AppRoutingModule,BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

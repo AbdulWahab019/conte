@@ -3,6 +3,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../../Shared/services/toast.service';
+import { AuthenticationService } from '../../Shared/services/auth.service';
 
 @Component({
   selector: 'conte-dashboard',
@@ -26,7 +27,12 @@ export class AuthenticationComponent implements OnInit {
   confirm_password = '';
   buttonState = 'static';
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private toast: ToastService) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private toast: ToastService,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     if (this.formType === 'login') {
@@ -71,12 +77,25 @@ export class AuthenticationComponent implements OnInit {
       email: this.f.email.value,
       password: this.f.password.value,
     };
-        localStorage.setItem('token', '1234567890');
-        localStorage.setItem('user_email', 'test@test.com');
+    this.authService
+    .userLogin(credentials)
+    .then((resp) => {
+      console.log(resp.data);
+      localStorage.setItem('token', resp.data.token);
+      localStorage.setItem('user_email', resp.data.email);
+      localStorage.setItem('is_verified', resp.data.is_verified);
+      localStorage.setItem('user_id', resp.data.user_id);
+      this.buttonState = 'static';
 
-          this.router.navigate(['home']);
+      this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-    this.router.navigate(['home']);
+      this.router.navigate(['home']);
+    })
+    .catch((err) => {
+      console.error(err);
+      this.buttonState = 'static';
+      this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+    });
   }
 
   register() {
@@ -86,12 +105,24 @@ export class AuthenticationComponent implements OnInit {
       password: this.f.password.value,
       confirm_password: this.f.confirm_password.value,
     };
-    localStorage.setItem('token', '12345');
-    localStorage.setItem('user_email', 'test@test.com');
-    this.buttonState = 'static';
+    this.authService
+    .userRegister(credentials)
+    .then((resp) => {
+      localStorage.setItem('token', resp.data.token);
+      localStorage.setItem('user_email', resp.data.email);
+      localStorage.setItem('is_verified', resp.data.is_verified);
+      localStorage.setItem('user_id', resp.data.user_id);
+      this.buttonState = 'static';
 
-    this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
+      this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-    this.router.navigate(['home']);
+      this.router.navigate(['home']);
+    })
+    .catch((err:any) => {
+      console.error(err);
+      this.buttonState = 'static';
+      this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+    });
+
   }
 }

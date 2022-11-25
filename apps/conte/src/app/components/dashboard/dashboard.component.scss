@@ -27,7 +27,14 @@ a {
       font-family: 'Calibri', sans-serif !important
   }
  
-
+.tableMain{
+    margin-top: 2%;
+    margin-left: 3%;
+    margin-right: 2%;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 6px;
+}
  .card {
         position: relative;
      display: -webkit-box;
