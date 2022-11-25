@@ -16,11 +16,16 @@ export async function createUserTreatmentPlan(
   user_estimated_max_velocity: number,
   treatment_plan: TreatmentPlanModel,
   name: string,
+  surgery_date: string,
   { transaction = undefined }: { transaction?: Transaction } = {}
 ) {
+  const assigned_at = surgery_date
+    ? moment(surgery_date).add(18, 'weeks').format('YYYY-MM-DD')
+    : moment().add(1, 'day').format('YYYY-MM-DD');
+
   // Create User Treatment Plan
   const userTreatmentPlan = await UserTreatmentPlan.create(
-    { name, user_id, tp_id: treatment_plan.id, assigned_at: moment().add(18, 'days').format() },
+    { name, user_id, tp_id: treatment_plan.id, assigned_at },
     { transaction }
   );
 

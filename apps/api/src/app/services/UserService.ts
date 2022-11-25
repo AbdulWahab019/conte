@@ -2,6 +2,7 @@ import { User, UserModel, UserProfile } from '../models/User';
 import { Transaction } from 'sequelize';
 import { APIError } from '../utils/apiError';
 import { USER_NOT_FOUND } from '../utils/constants';
+import { sequelize } from '../models';
 
 async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -43,4 +44,28 @@ export async function updateUser(
   return user;
 }
 
-export { isTermsOfUseAccepted, isOrientationVideoWatched };
+async function getUsersData() {
+  const users = await User.findAll({
+    attributes: {
+      include: [
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM user_treatment_plan_tasks AS task WHERE task.is_skipped = 1 AND task.user_id = [User].id )`
+          ),
+          'num_skipped_tasks',
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM user_treatment_plan_tasks AS task WHERE task.is_completed = 1 AND task.user_id = [User].id )`
+          ),
+          'num_completed_tasks',
+        ],
+      ],
+      exclude: ['createdAt', 'updatedAt', 'stripe_customer_id', 'stripe_subscription_id', 'password'],
+    },
+  });
+
+  return users;
+}
+
+export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData };

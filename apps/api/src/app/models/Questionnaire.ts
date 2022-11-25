@@ -50,4 +50,5 @@ export interface SubmitQuestionnaireData {
   surgery_id: number;
   user_demographics: UserDemographics;
   user_treatment_plan_name: string;
+  surgery_date: string;
 }
