@@ -11,6 +11,6 @@ router.put('/accept-terms-of-use', authorize, acceptTermsOfUse);
 
 router.put('/watch-orientation-video', authorize, watchOrientationVideo);
 
-router.get('/web', getAllUsers);
+router.get('/web',authorizeWebUser, getAllUsers);
 
 export default router;
