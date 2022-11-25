@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DASHBOARD, TREATMENTPLAN } from '../utils/constants';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { CreateFeedbackApiRequest, CreateFeedbackApiResponse } from '@conte/models';
+import { CreateFeedbackApiRequest } from '@conte/models';
+import { therapyTask } from '../models/treatmentplan';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,9 @@ export class TreatmentPlanService {
     this.todaysDate.getDate()
   );
 
+  private dailyTasks: therapyTask[] = [] as therapyTask[];
+  private pendingTasks: any;
+
   constructor(private http: HttpClient) {}
 
   //TODO add interfaces for request and response
@@ -30,6 +34,22 @@ export class TreatmentPlanService {
 
   getTreatmentPlanDate(): NgbDate {
     return this.treatmentPlanDate;
+  }
+
+  setTherapyTasks(tasks: therapyTask[]) {
+    this.dailyTasks = tasks;
+  }
+
+  getTherapyTasks(): therapyTask[] {
+    return this.dailyTasks;
+  }
+
+  setPendingTasks(pendingTasks: any) {
+    this.pendingTasks = pendingTasks;
+  }
+
+  getPendingTasks(): any {
+    return this.pendingTasks;
   }
 
   getTodaysDate(): NgbDate {
@@ -44,7 +64,7 @@ export class TreatmentPlanService {
     return await this.http.get<any>(`${TREATMENTPLAN}/tasks/date/${date}`).toPromise();
   }
 
-  async updateTask(task_id: string, status: boolean, data?: { comment: string }): Promise<any> {
+  async updateTask(task_id: number, status: boolean, data?: { comment: string }): Promise<any> {
     return await this.http.put<any>(`${TREATMENTPLAN}/task/${task_id}/status/${status}`, data).toPromise();
   }
 

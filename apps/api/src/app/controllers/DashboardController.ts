@@ -13,7 +13,7 @@ export async function getDashboardData(req: Request, res: Response) {
   const apiResp = {
     video_url: detail?.video_url,
     are_tasks_completed: detail?.are_tasks_completed,
-    tpStartDate: detail.tpStartDate,
+    tp_start_date: detail.tp_start_date,
   };
 
   return sendResponse(res, 201, SUCCESS, apiResp);

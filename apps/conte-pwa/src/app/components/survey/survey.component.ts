@@ -54,7 +54,7 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
       });
-    await delay(1500);
+    await delay(1800);
 
     this.surgeryForm = this.formBuilder.group({
       surgery_date: new FormControl('', [Validators.required]),
@@ -165,7 +165,7 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
       });
-    await delay(1500);
+    await delay(1800);
 
     this.nonSurgeryForm = this.formBuilder.group({
       injury_date: new FormControl('', [Validators.required]),

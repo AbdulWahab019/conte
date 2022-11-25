@@ -1,0 +1,9 @@
+<div class="timer" *ngIf="showTimer" [@fade]>
+  <h4 class="display-6">Your Treatment Plan Starts in</h4>
+  <div class="timer-container">
+    <span id="days" style="margin: 0"> {{ daysToDday }} </span>Day(s) <span id="hours"> {{ hoursToDday }} </span>Hrs
+    <span id="minutes"> {{ minutesToDday }} </span>Min <span id="seconds"> {{ secondsToDday }} </span>S
+  </div>
+</div>
+
+<h1 *ngIf="!showTimer" class="start-btn" [@fade] (click)="navToDashboard()">Start Your Treatment Plan</h1>
