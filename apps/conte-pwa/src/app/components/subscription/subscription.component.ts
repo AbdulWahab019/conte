@@ -17,7 +17,6 @@ export class SubscriptionComponent implements OnInit {
   subscriptionFormRendered = false;
   buttonState = 'static';
   subscriptionState = '';
-  product_id = '';
   sub = '';
 
   constructor(
@@ -67,13 +66,7 @@ export class SubscriptionComponent implements OnInit {
       });
   }
 
-  freeTrial() {
-    this.product_id = 'price_1M1ug4DYXkLuaaiouGCyxv7L';
-    this.sub = 'trial';
-  }
-
   monthlySubscription() {
-    this.product_id = 'price_1Lnkt2DYXkLuaaio98IVVgWl';
     this.sub = 'monthly';
   }
 
@@ -81,7 +74,6 @@ export class SubscriptionComponent implements OnInit {
     this.buttonState = 'loading';
 
     const url_data = {
-      product_id: this.product_id,
       success_url: STRIPE_SUCCESS,
       cancel_url: STRIPE_FAIL,
     };

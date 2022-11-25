@@ -41,7 +41,7 @@ export const UserTreatmentPlan = sequelize.define<UserTreatmentPlanModel, UserTr
       unique: 'unique_user_treatment_plan',
       references: { model: 'treatment_plans', key: 'id' },
     },
-    assigned_at: { type: DataTypes.STRING },
+    assigned_at: { type: DataTypes.DATE },
   }
 );
 

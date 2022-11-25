@@ -38,15 +38,6 @@
             <h5 class="display 6">$10.00 / month</h5>
           </div>
         </div>
-
-        <div (click)="freeTrial()" [ngClass]="sub === 'trial' ? 'selected-product' : 'product'">
-          <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" />
-
-          <div class="description">
-            <h3 class="display 5">Free Trial</h3>
-            <h5 class="display 6">3 Days</h5>
-          </div>
-        </div>
       </div>
 
       <!-- CONFIRM BUTTON -->
@@ -55,7 +46,7 @@
           class="btn btn-primary btn-confirm"
           type="button"
           (click)="confirmSubscription()"
-          [disabled]="!this.product_id || buttonState === 'loading'"
+          [disabled]="!this.sub || buttonState === 'loading'"
         >
           <span *ngIf="buttonState === 'static'" class="display-6">Subscribe</span>
           <div *ngIf="buttonState === 'loading'">

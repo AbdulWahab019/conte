@@ -78,7 +78,7 @@ export const User = sequelize.define<UserModel, UserDefinedAttributes>('user', {
   is_subscribed: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 });
 
-User.sync({});
+User.sync();
 
 // Associations
 User.afterSync(() => {
