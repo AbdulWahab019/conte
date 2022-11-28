@@ -75,3 +75,6 @@ export const TASK_ID_REQUIRED = 'Task id is required';
 export const QUESTION_REQUIRED = 'Question is required';
 export const FEEDBACK_REQUIRED = 'Feedback is required';
 export const TYPE_REQUIRED = 'Task type is required';
+
+// Tasks
+export const NO_TASKS_EXIST = 'No tasks exist for today';
