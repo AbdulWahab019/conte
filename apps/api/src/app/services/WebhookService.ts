@@ -22,9 +22,16 @@ export async function handleStripeListenerEvent(
   switch (eventType) {
     case 'checkout.session.completed':
       await User.update(
-        { stripe_customer_id: data.object.customer, stripe_subscription_id: data.object.subscription },
+        {
+          stripe_customer_id: data.object.customer,
+          stripe_subscription_id: data.object.subscription,
+          is_subscribed: true,
+        },
         { where: { id: data.object.metadata.user_id } }
       );
+      break;
+    case 'customer.subscription.deleted':
+      await User.update({ is_subscribed: false }, { where: { id: data.object.metadata.user_id } });
       break;
     default:
       console.log('Unhandled event type: ', eventType);

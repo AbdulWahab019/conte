@@ -26,6 +26,7 @@ export async function submitQuestionnaire({
   surgery_id,
   user_demographics,
   user_treatment_plan_name,
+  surgery_date,
 }: SubmitQuestionnaireData) {
   const transaction = await sequelize.transaction();
   try {
@@ -40,6 +41,7 @@ export async function submitQuestionnaire({
       user_demographics.estimated_max_velocity,
       treatmentPlan.toJSON(),
       user_treatment_plan_name,
+      surgery_date,
       { transaction }
     );
 

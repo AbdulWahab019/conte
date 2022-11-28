@@ -14,6 +14,7 @@ import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.componen
 import { TaskDetailsComponent } from './treatment-plan/task-details/task-details.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
     HttpClientModule,
     NgbModule,
     CommonModule,
+    SharedModule,
     RouterModule.forChild(routes),
   ],
 })

@@ -32,6 +32,7 @@ export interface UserDefinedAttributes {
   stripe_subscription_id: string;
   is_terms_of_use_accepted: boolean;
   is_orientation_video_watched: boolean;
+  is_subscribed: boolean;
 }
 
 export interface UserModel extends Model<UserModel, UserDefinedAttributes> {
@@ -51,6 +52,7 @@ export interface UserModel extends Model<UserModel, UserDefinedAttributes> {
   stripe_subscription_id: string;
   is_terms_of_use_accepted: boolean;
   is_orientation_video_watched: boolean;
+  is_subscribed: boolean;
   questionnaires?: QuestionnaireModel[];
   createdAt: string;
   updatedAt: string;
@@ -73,6 +75,7 @@ export const User = sequelize.define<UserModel, UserDefinedAttributes>('user', {
   stripe_subscription_id: { type: DataTypes.STRING },
   is_terms_of_use_accepted: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   is_orientation_video_watched: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+  is_subscribed: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 });
 
 User.sync();

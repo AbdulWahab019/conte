@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { sendResponse } from '../utils/appUtils';
-import { isOrientationVideoWatched, isTermsOfUseAccepted } from '../services/UserService';
+import { getUsersData, isOrientationVideoWatched, isTermsOfUseAccepted } from '../services/UserService';
 import { BAD_REQUEST, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
@@ -32,4 +32,10 @@ export async function watchOrientationVideo(req: Request, res: Response) {
   if (!resp) throw new APIError(400, BAD_REQUEST, new Error(SOMETHING_WENT_WRONG));
 
   return sendResponse(res, 200, SUCCESS);
+}
+
+export async function getAllUsers(req: Request, res: Response) {
+  const users = await getUsersData();
+
+  return sendResponse(res, 200, SUCCESS, { users });
 }

@@ -29,7 +29,7 @@ export async function createTreatmentPlan(
 }
 
 export async function getTreatmentPlanByDoctorAndSurgery(doctor_id: number, surgery_id?: number) {
-  const where = Object.assign({}, { doctor_id }, surgery_id ? { surgery_id } : {});
+  const where = Object.assign({}, { doctor_id }, surgery_id ? { surgery_id } : { surgery_id: null });
   return await TreatmentPlan.findOne({
     where,
     attributes: { exclude: ['created_at', 'updated_at'] },

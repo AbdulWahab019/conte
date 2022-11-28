@@ -16,11 +16,16 @@ export async function createUserTreatmentPlan(
   user_estimated_max_velocity: number,
   treatment_plan: TreatmentPlanModel,
   name: string,
+  surgery_date: string,
   { transaction = undefined }: { transaction?: Transaction } = {}
 ) {
+  const assigned_at = surgery_date
+    ? moment(surgery_date).add(18, 'weeks').format('YYYY-MM-DD')
+    : moment().add(1, 'day').format('YYYY-MM-DD');
+
   // Create User Treatment Plan
   const userTreatmentPlan = await UserTreatmentPlan.create(
-    { name, user_id, tp_id: treatment_plan.id, assigned_at: moment().add(18, 'days').format() },
+    { name, user_id, tp_id: treatment_plan.id, assigned_at },
     { transaction }
   );
 
@@ -113,7 +118,7 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
 
   const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
 
-  const tpStartDate = moment(treatmentPlan.assigned_at).format('YYYY-MM-DD');
+  const tp_start_date = moment(treatmentPlan.assigned_at).format('YYYY-MM-DD');
 
   const tp_detail = await UserTreatmentPlanDetail.findOne({
     where: { user_tp_id: treatmentPlan.id, tp_day },
@@ -123,5 +128,5 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
   const are_tasks_completed =
     (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
 
-  return { video_url: tp_detail?.video_url, are_tasks_completed, tpStartDate };
+  return { video_url: tp_detail?.video_url, are_tasks_completed, tp_start_date };
 }
