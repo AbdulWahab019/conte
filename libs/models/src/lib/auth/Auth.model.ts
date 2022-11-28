@@ -25,3 +25,25 @@ export interface AccountLoginAPIRes {
   is_orientation_video_watched: boolean;
   is_questionnaire_submitted: boolean;
 }
+export interface RegisterWebUserReq {
+  email: string;
+  password: string;
+}
+
+export interface RegisterWebUserRes {
+  user_id: string;
+  email: string;
+  is_verified: boolean;
+  token: string;
+}
+
+export interface LoginWebUserReq {
+  email: string;
+  password: string;
+}
+
+export interface LoginWebUserRes {
+  email: string;
+  password: string;
+  token: string;
+}
