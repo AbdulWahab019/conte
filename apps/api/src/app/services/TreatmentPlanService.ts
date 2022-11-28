@@ -66,3 +66,7 @@ export async function getUserTaskFeedback(task_id: number) {
 export async function skipTPDayTasks(user_id: number, tp_day: number) {
   return await UserTreatmentPlanTasks.update({ is_skipped: true }, { where: { user_id, tp_day } });
 }
+
+export async function getUserSkippedTasks(user_id: number) {
+  return await UserTreatmentPlanTasks.findAll({ where: { user_id, is_skipped: true } });
+}

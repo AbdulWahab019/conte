@@ -8,8 +8,10 @@ import {
   postTaskFeedback,
   getTaskFeedback,
   skipUserTasks,
+  getAllTreatmentPlans,
+  getSkippedTasks,
 } from '../controllers/TreatmentPlanController';
-import { authorize } from '../middlewares/auth';
+import { authorize, authorizeWebUser } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -27,5 +29,9 @@ router.post('/task/:task_id/feedback', authorize, validateCreateFeedback, postTa
 router.get('/task/:task_id/feedback', authorize, getTaskFeedback);
 
 router.put('/tasks/date/:date/skip', authorize, skipUserTasks);
+
+router.get('/web', authorizeWebUser, getAllTreatmentPlans);
+
+router.get('/skipped-tasks', authorizeWebUser, getSkippedTasks);
 
 export default router;
