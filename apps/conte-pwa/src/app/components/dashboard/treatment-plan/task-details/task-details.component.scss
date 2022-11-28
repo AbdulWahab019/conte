@@ -32,6 +32,16 @@
   color: black;
   border-radius: 4px 4px 0 4px;
   border-bottom: 6px solid black;
+  
+  i {
+    position: absolute;
+    right: 1%;
+    top: 5%;
+
+    font-size: 28px;
+
+    cursor: pointer;
+  }
 }
 
 .comments-container {
