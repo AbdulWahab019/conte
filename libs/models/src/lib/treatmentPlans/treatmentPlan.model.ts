@@ -9,13 +9,6 @@ export interface UploadTreatmentPlanAPIReq {
   read_to_line?: number;
 }
 
-export interface createTreatmentPlanAPIRes {
-  name: string;
-  doctor_id: number;
-  surgery_id: number;
-  TreatmentPlanDetails: [];
-}
-
 export interface CreateFeedbackApiRequest {
   data: FeedbackRequest[];
 }
@@ -46,8 +39,14 @@ export enum TPStatus {
   NOT_STARTED = 'Not started',
 }
 
-export interface getUserTasksByDateRes {
-  // TODO - Update this interface
+export interface GetUserTasksByDateRes {
+  todays_tasks: TaskResponse[];
+  pending_tasks_dates: string[];
+  status: string;
+}
+
+export interface TaskResponse {
+  id: number;
   user_id: number;
   user_tp_id: number;
   tp_day: number;
@@ -55,7 +54,7 @@ export interface getUserTasksByDateRes {
   title: string;
   is_completed: boolean;
   is_skipped: boolean;
-  UserTreatmentPlanTaskFeedback: [];
+  feedback: string[];
 }
 
 export interface GetUserTaskFeedback {

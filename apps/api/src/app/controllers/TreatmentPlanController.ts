@@ -36,7 +36,8 @@ export async function uploadTreatmentPlan(req: Request, res: Response) {
 }
 
 export async function getTasksByDate(req: Request, res: Response) {
-  const { id: user_id } = req['user'];
+  // const { id: user_id } = req['user'];
+  const user_id = 59;
   const { date } = req.params;
 
   const tasks = await getUserTasksByDate(user_id, date);
