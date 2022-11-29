@@ -11,12 +11,11 @@ import {
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
-import { INTERNAL_SERVER_ERROR, NO_SKIPPED_TASKS, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
+import { INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIReq } from '@conte/models';
 import { getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
-import { TreatmentPlan } from '../models/TreatmentPlan';
 
 export async function uploadTreatmentPlan(req: Request, res: Response) {
   const file: Express.Multer.File = req.file;
