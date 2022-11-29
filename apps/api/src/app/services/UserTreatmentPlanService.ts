@@ -149,3 +149,35 @@ export async function getUserTreatmentPlanTasks(user_id: number, start_tp_day: n
     order: [['tp_day', 'ASC']],
   });
 }
+
+export async function getUserTasksCalendarService(user_id: number, date: string) {
+  const month = moment(date).month();
+  const monthFirstDate = moment(date).startOf('month');
+  const totalDaysInMonth = moment().month(month).daysInMonth();
+
+  const day = moment(date).date(1).format('YYYY-MM-DD');
+
+  const userTreatmentPlan = await getUserTreatmentPlan(user_id);
+  if (!userTreatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(day, userTreatmentPlan.assigned_at);
+  const end_tp_day = tp_day + totalDaysInMonth - 1;
+
+  const TreatmentPlanTasks = await getUserTreatmentPlanTasks(user_id, tp_day, end_tp_day);
+
+  const user_tasks = [];
+  for (let i = tp_day; i <= end_tp_day; i++) {
+    const taskDay = TreatmentPlanTasks.find((task) => task.tp_day === i)?.toJSON() || { tp_day: i, total_tasks: 0 };
+    const date = i === tp_day ? monthFirstDate.format('YYYY-MM-DD') : monthFirstDate.add(1, 'day').format('YYYY-MM-DD');
+
+    user_tasks.push({
+      tp_day: taskDay.tp_day,
+      total_tasks: taskDay.total_tasks,
+      date,
+      selected: moment(date).diff(moment(), 'days') === 0,
+      day: moment(date).format('dddd'),
+    });
+  }
+
+  return user_tasks;
+}

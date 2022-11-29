@@ -6,6 +6,6 @@ const router = Router();
 
 router.get('/', authorize, getDashboardData);
 
-router.post('/calender/date/:date', authorize, getUserTasksCalender);
+router.get('/calender/date/:date', authorize, getUserTasksCalender);
 
 export default router;
