@@ -7,6 +7,7 @@ import {
   createUserTaskFeedBack,
   skipTPDayTasks,
   getUserSkippedAndCompletedTasks,
+  getTreatmentPlans,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -86,7 +87,7 @@ export async function skipUserTasks(req: Request, res: Response) {
 }
 
 export async function getAllTreatmentPlans(req: Request, res: Response) {
-  const apiResp = await TreatmentPlan.findAll();
+  const apiResp = await getTreatmentPlans();
 
   return sendResponse(res, 200, SUCCESS, apiResp);
 }

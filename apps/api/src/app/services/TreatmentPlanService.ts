@@ -67,6 +67,10 @@ export async function skipTPDayTasks(user_id: number, tp_day: number) {
   return await UserTreatmentPlanTasks.update({ is_skipped: true }, { where: { user_id, tp_day } });
 }
 
+export async function getTreatmentPlans() {
+  return await TreatmentPlan.findAll();
+}
+
 export async function getUserSkippedAndCompletedTasks(user_id: number) {
   const tasks = await UserTreatmentPlanTasks.findAll({
     where: { user_id, [Op.or]: [{ is_skipped: true }, { is_completed: true }] },
