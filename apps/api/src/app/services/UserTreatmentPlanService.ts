@@ -10,6 +10,7 @@ import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { TPStatus } from '@conte/models';
+import { sequelize } from '../models';
 
 export async function createUserTreatmentPlan(
   user_id: number,
@@ -129,4 +130,22 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
     (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
 
   return { video_url: tp_detail?.video_url, are_tasks_completed, tp_start_date };
+}
+
+export async function getUserTreatmentPlan(user_id: number) {
+  return await UserTreatmentPlan.findOne({
+    where: { user_id },
+  });
+}
+
+export async function getUserTreatmentPlanTasks(user_id: number, start_tp_day: number, end_tp_day: number) {
+  return await UserTreatmentPlanTasks.findAll({
+    attributes: ['tp_day', [sequelize.fn('COUNT', 'tp_day'), 'total_tasks']],
+    where: {
+      user_id,
+      tp_day: { [Op.gte]: start_tp_day, [Op.lte]: end_tp_day },
+    },
+    group: ['tp_day'],
+    order: [['tp_day', 'ASC']],
+  });
 }
