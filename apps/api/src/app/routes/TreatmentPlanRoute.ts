@@ -32,6 +32,6 @@ router.put('/tasks/date/:date/skip', authorize, skipUserTasks);
 
 router.get('/web', authorizeWebUser, getAllTreatmentPlans);
 
-router.get('/skipped-tasks/:user_id/web', authorizeWebUser, getSkippedAndCompletedTasks);
+router.get('/tasks/:user_id/web', authorizeWebUser, getSkippedAndCompletedTasks);
 
 export default router;
