@@ -15,6 +15,6 @@ import { CountDownComponent } from './count-down/count-down.component';
 @NgModule({
   declarations: [GenericModalComponent, ToastComponent, SpinnerComponent, CountDownComponent],
   imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule, CommonModule],
-  exports: [ToastComponent, SpinnerComponent, CountDownComponent],
+  exports: [GenericModalComponent, ToastComponent, SpinnerComponent, CountDownComponent],
 })
 export class SharedModule {}

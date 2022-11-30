@@ -20,8 +20,6 @@
             ngbDatepicker
             #d2="ngbDatepicker"
             [(ngModel)]="treatmentPlanDate"
-            [minDate]="tpStartDate"
-            [maxDate]="todaysDate"
             (change)="saveDate()"
             (dateSelect)="saveDate()"
           />

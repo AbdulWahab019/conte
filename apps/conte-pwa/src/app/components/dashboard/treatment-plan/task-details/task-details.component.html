@@ -2,13 +2,14 @@
 <div class="modal-content">
   <div class="modal-body">
     <h4 class="modal-title display-6">Conte; Daily Task</h4>
+    <i class="bi bi-x-lg" (click)="activeModal.dismiss()"></i>
     <span class="display-5">{{ task.title }}</span>
     <p class="display-6 mt-2">Due Date: {{ dueDate }}</p>
   </div>
 
   <div class="modal-footer">
     <!-- Treatment Plan Task Video -->
-    <video class="mt-4 mb-4" controls playsinline *ngIf="videoURL" [src]="videoURL" [@fade]>
+    <video class="mt-4 mb-4" controls playsinline loop autoplay muted *ngIf="videoURL" [src]="videoURL" [@fade]>
       Your browser does not support the video playback.
     </video>
     <!-- CASE// No Video -->
