@@ -1,5 +1,5 @@
 import { GenericResponse } from '../api/api.model';
-import { User, UserDemographics } from '../users/user.model';
+import { User, UserDemographics, UserTreatmentPlan } from '../users/user.model';
 
 export interface QuestionnaireInterface {
   [key: number]: {
@@ -18,17 +18,7 @@ export interface CreateQuestionnaireAPIRequest {
 }
 
 export interface CreateQuestionnaireAPIResponse extends GenericResponse {
-  data: CreateQuestionnaireAPI;
-}
-
-export interface CreateQuestionnaireAPI {
-  id: number;
-  user_id: number;
-  question_title: string;
-  response: number;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
+  data: CreateQuestionnaire[];
 }
 
 export interface SubmitQuestionnaireAPIRequest {
@@ -45,12 +35,12 @@ export interface SubmitQuestionnaireData {
   doctor_id: number;
   surgery_id: number;
   user_demographics: UserDemographics;
-  user_treatment_plan_name: string;
+  user_treatment_plan_name?: string;
   surgery_date: string;
 }
 
 export interface CreateQuestionnaire {
-  id: 455;
+  id: number;
   user_id: number;
   question_title: string;
   response: string;
@@ -59,15 +49,6 @@ export interface CreateQuestionnaire {
   updatedAt: string;
 }
 
-export interface UserTreatmentPlan {
-  id: number;
-  name: string;
-  user_id: number;
-  tp_id: number;
-  assigned_at: string;
-  updatedAt: string;
-  createdAt: string;
-}
 export interface SubmitQuestionnaireApiResponse extends GenericResponse {
   data: SubmitQuestionnaireAPI;
 }

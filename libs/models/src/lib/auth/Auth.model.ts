@@ -61,6 +61,5 @@ export interface LoginWebUserResponse extends GenericResponse {
 export interface LoginWebUser {
   user_id: string;
   email: string;
-  is_verified: boolean;
   token: string;
 }

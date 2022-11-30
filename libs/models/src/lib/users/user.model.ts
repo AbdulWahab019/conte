@@ -22,7 +22,7 @@ export interface UserDemographics {
   estimated_max_velocity: number;
 }
 
-export interface GetUserProfileApiRes extends GenericResponse {
+export interface GetUserProfileApiResponse extends GenericResponse {
   data: GetUserProfileData;
 }
 
@@ -105,4 +105,14 @@ export interface GetDashboardData {
   video_url: string;
   are_tasks_completed: boolean;
   tp_start_date: string;
+}
+
+export interface UserTreatmentPlan {
+  id: number;
+  name: string;
+  user_id: number;
+  tp_id: number;
+  assigned_at: string;
+  updatedAt: string;
+  createdAt: string;
 }
