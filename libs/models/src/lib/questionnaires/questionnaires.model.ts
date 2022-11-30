@@ -1,3 +1,4 @@
+import { GenericResponse } from '../api/api.model';
 import { User, UserDemographics } from '../users/user.model';
 
 export interface QuestionnaireInterface {
@@ -16,7 +17,11 @@ export interface CreateQuestionnaireAPIRequest {
   data: SubmitQuestionnaire[];
 }
 
-export interface CreateQuestionnaireAPIResponse {
+export interface CreateQuestionnaireAPIResponse extends GenericResponse {
+  data: CreateQuestionnaireAPI;
+}
+
+export interface CreateQuestionnaireAPI {
   id: number;
   user_id: number;
   question_title: string;
@@ -58,7 +63,11 @@ export interface UserTreatmentPlan {
   tp_id: number;
   assigned_at: string;
 }
-export interface SubmitQuestionnaireApiResponse {
+export interface SubmitQuestionnaireApiResponse extends GenericResponse {
+  data: SubmitQuestionnaireAPI;
+}
+
+export interface SubmitQuestionnaireAPI {
   questionnaireObj: CreateQuestionnaire[];
   user_treatment_plan: UserTreatmentPlan[];
 }

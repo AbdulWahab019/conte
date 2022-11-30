@@ -1,6 +1,6 @@
 import { GenericResponse } from '../api/api.model';
 
-export interface UploadTreatmentPlanAPIReq {
+export interface UploadTreatmentPlanAPIRequest {
   file: File;
   doctor_id: number;
   surgery_id?: number;
@@ -39,7 +39,11 @@ export enum TPStatus {
   NOT_STARTED = 'Not started',
 }
 
-export interface GetUserTasksByDateRes {
+export interface GetUserTasksByDateResponse extends GenericResponse {
+  data: GetUserTasksByDate;
+}
+
+export interface GetUserTasksByDate {
   todays_tasks: TaskResponse[];
   pending_tasks_dates: string[];
   status: string;
@@ -57,12 +61,16 @@ export interface TaskResponse {
   feedback: string[];
 }
 
-export interface GetUserTaskFeedbackAPIResponse {
+export interface GetUserTaskFeedbackAPIResponse extends GenericResponse {
+  data: GetUserTaskFeedback;
+}
+
+export interface GetUserTaskFeedback {
   id: number;
   feedback: string;
   type: number;
 }
 
-export interface UpdateTaskAPIReq {
+export interface UpdateTaskAPIRequest {
   comment: string;
 }

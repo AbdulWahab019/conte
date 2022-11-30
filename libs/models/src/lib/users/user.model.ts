@@ -46,7 +46,11 @@ export interface GetUserProfileData {
   is_questionnaire_submitted: boolean;
 }
 
-export interface UpdateUserResponse {
+export interface UpdateUserResponse extends GenericResponse {
+  data: UpdateUser;
+}
+
+export interface UpdateUser {
   email: string;
   first_name: string;
   last_name: string;
@@ -59,7 +63,11 @@ export interface UpdateUserResponse {
   estimated_max_velocity: number;
 }
 
-export interface GetUserDataApiRes {
+export interface GetUserDataApiResponse extends GenericResponse {
+  data: GetUserData;
+}
+
+export interface GetUserData {
   first_name: string;
   last_name: string;
   cell_phone: string;
@@ -76,7 +84,11 @@ export interface GetUserDataApiRes {
   num_skipped_tasks: number;
   num_completed_tasks: number;
 }
-export interface GetUserTasksCalenderAPIRes {
+export interface GetUserTasksCalendarAPIResponse extends GenericResponse {
+  data: GetUserTasksCalendar;
+}
+
+export interface GetUserTasksCalendar {
   tp_day: number;
   total_tasks: number;
   date: string;

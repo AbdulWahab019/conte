@@ -1,14 +1,20 @@
-export interface CreateAccountAPIReq {
+import { GenericResponse } from '../api/api.model';
+
+export interface CreateAccountAPIRequest {
   email: string;
   password: string;
 }
 
-export interface AccountLoginAPIReq {
+export interface AccountLoginAPIRequest {
   email: string;
   password: string;
 }
 
-export interface CreateAccountAPIRes {
+export interface CreateAccountAPIResponse extends GenericResponse {
+  data: CreateAccountPWA;
+}
+
+export interface CreateAccountPWA {
   user_id: number;
   email: string;
   token: string;
@@ -16,8 +22,11 @@ export interface CreateAccountAPIRes {
   is_orientation_video_watched: boolean;
   is_questionnaire_submitted: boolean;
 }
+export interface AccountLoginAPIResponse extends GenericResponse {
+  data: AccountLoginPWA;
+}
 
-export interface AccountLoginAPIRes {
+export interface AccountLoginPWA {
   user_id: number;
   email: string;
   token: string;
@@ -25,25 +34,33 @@ export interface AccountLoginAPIRes {
   is_orientation_video_watched: boolean;
   is_questionnaire_submitted: boolean;
 }
-export interface RegisterWebUserReq {
+export interface RegisterWebUserRequest {
   email: string;
   password: string;
 }
 
-export interface RegisterWebUserRes {
+export interface RegisterWebUserResponse extends GenericResponse {
+  data: RegisterWebUser;
+}
+
+export interface RegisterWebUser {
   user_id: string;
   email: string;
   is_verified: boolean;
   token: string;
 }
-
-export interface LoginWebUserReq {
+export interface LoginWebUserRequest {
   email: string;
   password: string;
 }
 
-export interface LoginWebUserRes {
+export interface LoginWebUserResponse extends GenericResponse {
+  data: LoginWebUser;
+}
+
+export interface LoginWebUser {
   user_id: string;
   email: string;
+  is_verified: boolean;
   token: string;
 }

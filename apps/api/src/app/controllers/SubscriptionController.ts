@@ -4,7 +4,7 @@ import { sendResponse } from '../utils/appUtils';
 import { isSubscribed } from '../services/SubscriptionService';
 import { SUCCESS } from '../utils/constants';
 import { createSubscriptionCheckoutSession } from '../utils/stripe';
-import { CreateCheckoutSessionAPIReq } from '@conte/models';
+import { CreateCheckoutSessionAPIRequest } from '@conte/models';
 import { UserModel } from '../models/User';
 import Stripe from 'stripe';
 
@@ -19,7 +19,7 @@ export async function isUserSubscribed(req: Request, res: Response) {
 
 export async function createSubscriptionSession(req: Request, res: Response) {
   const { id: user_id, email, stripe_customer_id } = req['user'];
-  const { success_url, cancel_url }: CreateCheckoutSessionAPIReq = req.body;
+  const { success_url, cancel_url }: CreateCheckoutSessionAPIRequest = req.body;
 
   const session: Stripe.Response<Stripe.Checkout.Session> = await createSubscriptionCheckoutSession(
     { user_id, email },
