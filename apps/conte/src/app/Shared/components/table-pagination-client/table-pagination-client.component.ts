@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ServerSidePages } from '../../models/pagination';
 import { TreatmentPlanService } from '../../services/treatmentPlan.service';
+import { TableHeaders } from '../../models/Generic';
 
 @Component({
   selector: 'app-table-pagination-client',
@@ -8,7 +9,7 @@ import { TreatmentPlanService } from '../../services/treatmentPlan.service';
   styleUrls: ['./table-pagination-client.component.scss'],
 })
 export class TablePaginationClientComponent implements OnInit {
-  @Input() headers: any = [];
+  @Input() headers: TableHeaders[] = [];
   @Input() data: any = [];
   @Input() paginateId: string = '1';
   @Input() hasActions: boolean = false;

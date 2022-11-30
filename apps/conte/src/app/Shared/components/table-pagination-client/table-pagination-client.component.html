@@ -66,15 +66,15 @@
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">
             <!-- Default Case -->
-            <span *ngIf="header !== 'physician_notes' && header !== 'group'">
-              {{ record[header] || record[header['title']] | customFieldFormat: header }}
+            <!-- <span *ngIf="header !== 'physician_notes' && header !== 'group'">
+              {{ record[header] || record[header['title']] | customFieldFormat: header }} -->
               <!-- For Row: Where value = 'null' -->
-              <span *ngIf="!record[header] && !record[header['title']]" style="color: gray"> None Specified </span>
-            </span>
+              <!-- <span *ngIf="!record[header] && !record[header['title']]" style="color: gray"> None Specified </span>
+            </span> -->
             <!-- For Column: 'Group//form' -->
-            <span *ngIf="header === 'group'">
-              <div *ngIf="record[header] || record[header['title']]; else noGroup">
-                {{ record[header] || record[header['title']] | customFieldFormat: header }}
+            <span>
+              <div *ngIf="record[header.value] || record[header['title']]; else noGroup">
+                {{ record[header.value] || record[header['title']] | customFieldFormat: header.value }}
                 <i
                   class="fa fa-pencil-square fa-lg ml-1 c-point"
                   (click)="groupAssignFunction(record)"

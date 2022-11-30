@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../../Shared/services/toast.service';
 import { AuthenticationService } from '../../Shared/services/auth.service';
+import { RegisterCreds } from '../../Shared/models/AuthCreds';
+import { LoginCreds } from '../../Shared/models/AuthCreds';
 
 @Component({
   selector: 'conte-dashboard',
@@ -73,7 +75,7 @@ export class AuthenticationComponent implements OnInit {
 
   login() {
     this.buttonState = 'loading';
-    const credentials = {
+    const credentials : LoginCreds = {
       email: this.f.email.value,
       password: this.f.password.value,
     };
@@ -100,7 +102,7 @@ export class AuthenticationComponent implements OnInit {
 
   register() {
     this.buttonState = 'loading';
-    const credentials = {
+    const credentials : RegisterCreds = {
       email: this.f.email.value,
       password: this.f.password.value,
       confirm_password: this.f.confirm_password.value,

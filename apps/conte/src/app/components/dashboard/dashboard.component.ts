@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../Shared/services/user.service';
+import { TableHeaders } from '../../Shared/models/Generic';
 
 @Component({
   selector: 'conte-dashboard',
@@ -11,7 +12,7 @@ export class DashboardComponent implements OnInit {
   url = '';
   allUsers: any = [];
 
-  orderTableHeaders: any = [
+  orderTableHeaders: TableHeaders[] = [
     { title: 'id', value: 'id', sort: true, orderBy: '' },
     {
       title: 'Name',
