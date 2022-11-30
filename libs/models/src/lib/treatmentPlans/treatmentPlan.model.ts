@@ -132,24 +132,11 @@ export interface GetUserSkippedAndCompletedTasksAPIResponse extends GenericRespo
 }
 
 export interface GetUserSkippedAndCompletedTasks {
-  completed_tasks: CompletedTasks[];
-  Skipped_tasks: SkippedTasks[];
+  completed_tasks: Tasks[];
+  skipped_tasks: Tasks[];
 }
 
-export interface CompletedTasks {
-  id: number;
-  user_id: number;
-  user_tp_id: number;
-  tp_day: number;
-  task_type: number;
-  title: string;
-  is_completed: boolean;
-  is_skipped: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface SkippedTasks {
+export interface Tasks {
   id: number;
   user_id: number;
   user_tp_id: number;

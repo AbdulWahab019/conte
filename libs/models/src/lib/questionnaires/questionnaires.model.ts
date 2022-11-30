@@ -68,6 +68,6 @@ export interface SubmitQuestionnaireApiResponse extends GenericResponse {
 }
 
 export interface SubmitQuestionnaireAPI {
-  questionnaireObj: CreateQuestionnaire[];
-  user_treatment_plan: UserTreatmentPlan[];
+  questionnaire: CreateQuestionnaire[];
+  userTreatmentPlan: UserTreatmentPlan;
 }
