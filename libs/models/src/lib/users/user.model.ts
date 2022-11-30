@@ -95,3 +95,13 @@ export interface GetUserTasksCalendar {
   selected: boolean;
   day: string;
 }
+
+export interface GetDashboardDataAPIResponse extends GenericResponse {
+  data: GetDashboardData;
+}
+
+export interface GetDashboardData {
+  video_url: string;
+  are_tasks_completed: boolean;
+  tp_start_date: string;
+}

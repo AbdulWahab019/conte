@@ -9,6 +9,47 @@ export interface UploadTreatmentPlanAPIRequest {
   read_to_line?: number;
 }
 
+export interface UploadTreatmentPlanAPIResponse extends GenericResponse {
+  data: UploadTreatmentPlan;
+}
+
+export interface UploadTreatmentPlan {
+  id: number;
+  name: string;
+  doctor_id: number;
+  surgery_id?: number;
+  createdAt: string;
+  updatedAt: string;
+  TreatmentPlanDetails: TreatmentPlanDetail[];
+}
+
+export interface TreatmentPlanDetail {
+  id: number;
+  tp_id: number;
+  tp_day: number;
+  tp_weekday: string;
+  week_from_sx: number;
+  month_from_sx: number;
+  plyo_throw: number;
+  max_distance: number;
+  max_velocity_percent: number;
+  max_velocity_absolute: number;
+  num_throws_at_max_distance: number;
+  post_max_distance_flat_ground: number;
+  post_max_distance_flat_ground_velocity_percent: number;
+  post_max_distance_flat_ground_velocity_absolute: number;
+  post_max_flat_ground_pitches: string;
+  bullpen: number;
+  bullpen_max_velocity_percent: number;
+  bullpen_max_velocity_absolute: number;
+  bullpen_pitches: string;
+  live_simulated_game: number;
+  innings: number;
+  video_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface CreateFeedbackApiRequest {
   data: FeedbackRequest[];
 }
@@ -73,4 +114,50 @@ export interface GetUserTaskFeedback {
 
 export interface UpdateTaskAPIRequest {
   comment: string;
+}
+
+export interface GetAllTreatmentPlansAPIResponse extends GenericResponse {
+  data: GetAllTreatmentPlans;
+}
+
+export interface GetAllTreatmentPlans {
+  id: number;
+  name: string;
+  doctor_id: number;
+  surgery_id: number;
+}
+
+export interface GetUserSkippedAndCompletedTasksAPIResponse extends GenericResponse {
+  data: GetUserSkippedAndCompletedTasks;
+}
+
+export interface GetUserSkippedAndCompletedTasks {
+  completed_tasks: CompletedTasks[];
+  Skipped_tasks: SkippedTasks[];
+}
+
+export interface CompletedTasks {
+  id: number;
+  user_id: number;
+  user_tp_id: number;
+  tp_day: number;
+  task_type: number;
+  title: string;
+  is_completed: boolean;
+  is_skipped: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SkippedTasks {
+  id: number;
+  user_id: number;
+  user_tp_id: number;
+  tp_day: number;
+  task_type: number;
+  title: string;
+  is_completed: boolean;
+  is_skipped: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
