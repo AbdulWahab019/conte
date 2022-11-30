@@ -10,6 +10,7 @@ import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { TPStatus } from '@conte/models';
+import { sequelize } from '../models';
 
 export async function createUserTreatmentPlan(
   user_id: number,
@@ -129,4 +130,55 @@ export async function getUserTreatmentPlanDetailByUserAndDay(user_id: number, da
     (await UserTreatmentPlanTasks.count({ where: { user_id, tp_day, is_completed: false } })) === 0;
 
   return { video_url: tp_detail?.video_url, are_tasks_completed, tp_start_date };
+}
+
+export async function getUserTreatmentPlan(user_id: number) {
+  return await UserTreatmentPlan.findOne({
+    where: { user_id },
+  });
+}
+
+export async function getUserTreatmentPlanTasks(user_id: number, start_tp_day: number, end_tp_day: number) {
+  return await UserTreatmentPlanTasks.findAll({
+    attributes: ['tp_day', [sequelize.fn('COUNT', 'tp_day'), 'total_tasks']],
+    where: {
+      user_id,
+      tp_day: { [Op.gte]: start_tp_day, [Op.lte]: end_tp_day },
+    },
+    group: ['tp_day'],
+    order: [['tp_day', 'ASC']],
+  });
+}
+
+export async function getUserTasksCalendarService(user_id: number, date: string) {
+  const month = moment(date).month();
+  const monthFirstDate = moment(date).startOf('month');
+  const totalDaysInMonth = moment().month(month).daysInMonth();
+
+  const day = moment(date).date(1).format('YYYY-MM-DD');
+
+  const userTreatmentPlan = await getUserTreatmentPlan(user_id);
+  if (!userTreatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(day, userTreatmentPlan.assigned_at);
+  const end_tp_day = tp_day + totalDaysInMonth - 1;
+
+  const TreatmentPlanTasks = await getUserTreatmentPlanTasks(user_id, tp_day, end_tp_day);
+
+  const user_tasks = [];
+  for (let i = tp_day; i <= end_tp_day; i++) {
+    const taskDay = TreatmentPlanTasks.find((task) => task.tp_day === i)?.toJSON() || { tp_day: i, total_tasks: 0 };
+    const task_date =
+      i === tp_day ? monthFirstDate.format('YYYY-MM-DD') : monthFirstDate.add(1, 'day').format('YYYY-MM-DD');
+
+    user_tasks.push({
+      tp_day: taskDay.tp_day,
+      total_tasks: taskDay.total_tasks,
+      date: task_date,
+      selected: moment(task_date).diff(moment(), 'days') === 0,
+      day: moment(task_date).format('dddd'),
+    });
+  }
+
+  return user_tasks;
 }

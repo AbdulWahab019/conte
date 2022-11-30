@@ -12,4 +12,5 @@ router.post('/login', validateLogin, accountLogin);
 router.post('/register/web', validateRegisterAccount, createWebAccount);
 
 router.post('/login/web', validateLogin, webAccountLogin);
+
 export default router;

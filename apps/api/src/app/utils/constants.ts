@@ -79,5 +79,4 @@ export const FEEDBACK_REQUIRED = 'Feedback is required';
 export const TYPE_REQUIRED = 'Task type is required';
 
 // Tasks
-export const NO_TASKS_EXIST = 'No tasks exist for today';
 export const NO_SKIPPED_TASKS = 'No tasks are skipped by the user';
