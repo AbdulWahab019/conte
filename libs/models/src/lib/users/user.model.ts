@@ -1,3 +1,15 @@
+import { GenericResponse } from '../api/api.model';
+
+export interface User extends UserDemographics {
+  id: number;
+  email: string;
+  password: string;
+  stripe_customer_id: string;
+  stripe_subscription_id: string;
+  is_terms_of_use_accepted: boolean;
+  is_orientation_video_watched: boolean;
+  is_subscribed: boolean;
+}
 export interface UserDemographics {
   first_name: string;
   last_name: string;
@@ -10,7 +22,11 @@ export interface UserDemographics {
   estimated_max_velocity: number;
 }
 
-export interface GetUserProfileApiRes {
+export interface GetUserProfileApiRes extends GenericResponse {
+  data: GetUserProfileData;
+}
+
+export interface GetUserProfileData {
   id: number;
   first_name: string;
   last_name: string;

@@ -1,6 +1,4 @@
-import { UserDemographics } from '../users/user.model';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { UserModel } from '../../../../../apps/api/src/app/models/User';
+import { User, UserDemographics } from '../users/user.model';
 
 export interface QuestionnaireInterface {
   [key: number]: {
@@ -38,7 +36,7 @@ export interface SubmitQuestionnaireAPIRequest {
 
 export interface SubmitQuestionnaireData {
   questionnaireObj: CreateQuestionnaire[];
-  user: UserModel[];
+  user: User[];
   doctor_id: number;
   surgery_id: number;
   user_demographics: UserDemographics;
