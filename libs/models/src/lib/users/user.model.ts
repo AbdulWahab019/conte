@@ -68,6 +68,7 @@ export interface GetUserDataApiResponse extends GenericResponse {
 }
 
 export interface GetUserData {
+  id: number;
   first_name: string;
   last_name: string;
   cell_phone: string;

@@ -50,10 +50,13 @@ export interface SubmitQuestionnaireData {
 }
 
 export interface CreateQuestionnaire {
+  id: 455;
   user_id: number;
   question_title: string;
   response: string;
   type: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface UserTreatmentPlan {
@@ -62,6 +65,8 @@ export interface UserTreatmentPlan {
   user_id: number;
   tp_id: number;
   assigned_at: string;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface SubmitQuestionnaireApiResponse extends GenericResponse {
   data: SubmitQuestionnaireAPI;
