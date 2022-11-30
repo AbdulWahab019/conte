@@ -168,14 +168,15 @@ export async function getUserTasksCalendarService(user_id: number, date: string)
   const user_tasks = [];
   for (let i = tp_day; i <= end_tp_day; i++) {
     const taskDay = TreatmentPlanTasks.find((task) => task.tp_day === i)?.toJSON() || { tp_day: i, total_tasks: 0 };
-    const date = i === tp_day ? monthFirstDate.format('YYYY-MM-DD') : monthFirstDate.add(1, 'day').format('YYYY-MM-DD');
+    const task_date =
+      i === tp_day ? monthFirstDate.format('YYYY-MM-DD') : monthFirstDate.add(1, 'day').format('YYYY-MM-DD');
 
     user_tasks.push({
       tp_day: taskDay.tp_day,
       total_tasks: taskDay.total_tasks,
-      date,
-      selected: moment(date).diff(moment(), 'days') === 0,
-      day: moment(date).format('dddd'),
+      date: task_date,
+      selected: moment(task_date).diff(moment(), 'days') === 0,
+      day: moment(task_date).format('dddd'),
     });
   }
 
