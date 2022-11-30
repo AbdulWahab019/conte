@@ -1,5 +1,5 @@
 import { parse } from 'csv-parse';
-import { Attributes, FindOptions, Transaction } from 'sequelize';
+import { Attributes, FindOptions, Op, Transaction } from 'sequelize';
 
 import { TreatmentPlan } from '../models/TreatmentPlan';
 import {
@@ -65,4 +65,24 @@ export async function getUserTaskFeedback(task_id: number) {
 
 export async function skipTPDayTasks(user_id: number, tp_day: number) {
   return await UserTreatmentPlanTasks.update({ is_skipped: true }, { where: { user_id, tp_day } });
+}
+
+export async function getTreatmentPlans() {
+  return await TreatmentPlan.findAll();
+}
+
+export async function getUserSkippedAndCompletedTasks(user_id: number) {
+  const tasks = await UserTreatmentPlanTasks.findAll({
+    where: { user_id, [Op.or]: [{ is_skipped: true }, { is_completed: true }] },
+  });
+
+  const completed_tasks = [];
+  const skipped_tasks = [];
+
+  tasks.forEach((task) => {
+    if (task.is_completed) completed_tasks.push(task);
+    else if (task.is_skipped) skipped_tasks.push(task);
+  });
+
+  return { completed_tasks, skipped_tasks };
 }

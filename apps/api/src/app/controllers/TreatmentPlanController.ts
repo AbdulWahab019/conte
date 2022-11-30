@@ -6,6 +6,8 @@ import {
   parseTreatmentPlanFile,
   createUserTaskFeedBack,
   skipTPDayTasks,
+  getUserSkippedAndCompletedTasks,
+  getTreatmentPlans,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -81,4 +83,18 @@ export async function skipUserTasks(req: Request, res: Response) {
   await skipTPDayTasks(user_id, tp_day);
 
   return sendResponse(res, 200, SUCCESS);
+}
+
+export async function getAllTreatmentPlans(req: Request, res: Response) {
+  const apiResp = await getTreatmentPlans();
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function getSkippedAndCompletedTasks(req: Request, res: Response) {
+  const { user_id } = req.params;
+
+  const apiResp = await getUserSkippedAndCompletedTasks(Number(user_id));
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
 }

@@ -33,7 +33,7 @@ export const UserTreatmentPlanTaskFeedback = sequelize.define<
   type: { type: DataTypes.INTEGER },
 });
 
-UserTreatmentPlanTaskFeedback.sync({ alter: true });
+UserTreatmentPlanTaskFeedback.sync();
 
 // Associations
 UserTreatmentPlanTaskFeedback.afterSync(() => {
