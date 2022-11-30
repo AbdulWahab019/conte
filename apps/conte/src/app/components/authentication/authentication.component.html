@@ -73,7 +73,7 @@
             (click)="formType === 'login' ? login() : register()"
             [disabled]="authenticationForm.invalid || buttonState === 'loading'"
           >
-            <span *ngIf="buttonState === 'static'">login</span>
+            <span *ngIf="buttonState === 'static'">{{ formType === 'login' ? 'Login' : 'Sign up' }}</span>
             <div *ngIf="buttonState === 'loading'">
               <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
               <span>{{ formType === 'login' ? 'Logging you in' : 'Signing you up' }}</span>

@@ -9,11 +9,24 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavbarComponent } from './components/dashboard/navbar/navbar.component';
+import { DashboardModule } from './components/dashboard/dashboard.module';
+
+/* Interceptors */
+import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent,AuthenticationComponent,DashboardComponent],
-  imports: [BrowserModule,FormsModule,HttpClientModule,ReactiveFormsModule, AppRoutingModule,BrowserAnimationsModule],
-  providers: [],
+  declarations: [AppComponent, NxWelcomeComponent, AuthenticationComponent],
+  imports: [
+    BrowserModule,
+    DashboardModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

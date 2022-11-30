@@ -1,9 +1,6 @@
 import { Router } from '@angular/router';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { UserService } from '../../Shared/services/user.service';
-import { UserTableData } from '../../Shared/models/UserTableData';
-
 
 @Component({
   selector: 'conte-dashboard',
@@ -12,11 +9,29 @@ import { UserTableData } from '../../Shared/models/UserTableData';
 })
 export class DashboardComponent implements OnInit {
   url = '';
-  allUsers : UserTableData[] = [];
+  allUsers : any = [];
+
+  orderTableHeaders: any = [
+    { title: 'id', value: 'id', sort: true, orderBy: '' },
+    {
+      title: 'Name',
+      value: 'Name',
+      sort: true,
+      orderBy: '',
+    },
+    { title: 'estimated_max_velocity', value: 'estimated_max_velocity', sort: true, orderBy: '' },
+    { title: 'email', value: 'email', sort: true, orderBy: '' }
+  ];
   constructor(private router: Router,private UsersService : UserService) {}
   ngOnInit(): void {
     this.UsersService.getAllUsers().then((resp)=>{
-      this.allUsers = resp.data.users;
+      
+      this.allUsers = resp.data.users.map((order: any) => ({
+            id: order.id,
+            Name: `${order.last_name}, ${order.first_name}`,
+            estimated_max_velocity: order.estimated_max_velocity,
+            email: order.email,
+          }));
     })
 }
 }

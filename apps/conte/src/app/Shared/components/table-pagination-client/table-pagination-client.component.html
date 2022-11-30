@@ -1,0 +1,410 @@
+<div class="table-data__wrapper table-responsive">
+  <table class="table table-data">
+    <thead>
+      <tr>
+        <th *ngFor="let header of headers" scope="col">
+          <!-- start//Sorting//header -->
+          <span
+            *ngIf="header['sort']; else noSort"
+            (click)="header['sort'] && orderByFunction(header['value'])"
+            [ngStyle]="header['sort'] ? { cursor: 'pointer' } : { cursor: 'default' }"
+          >
+            {{ header['title'] }}
+            <svg width="21px" height="21px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+              <g
+                fill="none"
+                [ngClass]="{ 'asc-sort': header['orderBy'] === 'ASC', 'desc-sort': header['orderBy'] === 'DESC' }"
+                fill-rule="evenodd"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                transform="translate(2 4)"
+              >
+                <path d="m8.5 8.5 4 4.107 4-4.107" />
+                <path d="m8.5 4.5-4-4-4 3.997" />
+                <path d="m4.5.5v12" />
+                <path d="m12.5.5v12" />
+              </g>
+            </svg>
+          </span>
+          <ng-template #noSort>
+            {{ header['title'] || header }}
+          </ng-template>
+        </th>
+        <!-- end//Sorting//header -->
+
+        <th *ngIf="hasActions" class="ng-star-inserted">Actions</th>
+
+        <!-- Add Content Button//header -->
+        <th *ngIf="addContent" style="padding-right: 20px; width: 40px" class="ng-star-inserted">
+          <svg
+            width="20"
+            height="20"
+            (click)="addContent()"
+            ngbTooltip="Add New"
+            style="cursor: pointer"
+            viewBox="0 0 18 18"
+            fill="#073786"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.784 17.732V10.856H0.412V7.148H6.784V0.235999H10.816V7.148H17.188V10.856H10.816V17.732H6.784Z"
+              fill="#073786"
+            />
+          </svg>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let record of data">
+        <tr
+          [ngClass]="selectContent && record ? 'selected-row' : 'hover-row'"
+          [style]="selectContent ? 'cursor:pointer;' : ''"
+          container="body"
+          (click)="expanssionToggle(record)"
+        >
+          <!-- start//Table Data -->
+          <td *ngFor="let header of headers">
+            <!-- Default Case -->
+            <span *ngIf="header !== 'physician_notes' && header !== 'group'">
+              {{ record[header] || record[header['title']] | customFieldFormat: header }}
+              <!-- For Row: Where value = 'null' -->
+              <span *ngIf="!record[header] && !record[header['title']]" style="color: gray"> None Specified </span>
+            </span>
+            <!-- For Column: 'Group//form' -->
+            <span *ngIf="header === 'group'">
+              <div *ngIf="record[header] || record[header['title']]; else noGroup">
+                {{ record[header] || record[header['title']] | customFieldFormat: header }}
+                <i
+                  class="fa fa-pencil-square fa-lg ml-1 c-point"
+                  (click)="groupAssignFunction(record)"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <ng-template #noGroup>
+                <div style="color: gray">
+                  Not Assigned
+                  <i
+                    class="fa fa-pencil-square fa-lg ml-1 c-point"
+                    (click)="groupAssignFunction(record)"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              </ng-template>
+            </span>
+            <!-- For Column: 'Physician Notes//order-management' -->
+            <!-- <h6 *ngIf="title === 'physician_notes'" style="width: 220px; font-size: 14px">
+              {{ record[header] || record[header['title']] | customFieldFormat: header }}
+            </h6> -->
+          </td>
+
+          <!-- end//Table Data -->
+
+          <!-- start//Action Buttons -->
+          <ng-container *ngIf="hasActions">
+            <td style="cursor: default">
+              <!-- <div [ngStyle]="{ display: this.style, 'align-items': 'center', 'justify-content': 'center' }"> -->
+              <div>
+                <button *ngIf="deleteFunction" class="btn del-btn" (click)="deleteFunction(record)" ngbTooltip="Delete">
+                  <img src="/assets/icons/trash.svg" />
+                </button>
+                <button
+                  *ngIf="editFunction"
+                  class="btn btn-info action-color"
+                  (click)="editFunction(record)"
+                  ngbTooltip="Edit"
+                >
+                  <i class="far fa-edit" style="color: white"></i>
+                </button>
+                <button
+                  *ngIf="cloneFunction"
+                  class="btn btn-success action-color"
+                  (click)="cloneFunction(record)"
+                  ngbTooltip="Clone"
+                >
+                  <i style="color: white" class="fa fa-clone" aria-hidden="true"></i>
+                </button>
+                <button
+                  *ngIf="previewFunction"
+                  class="btn btn-info action-color"
+                  (click)="previewFunction(record)"
+                  ngbTooltip="Preview"
+                >
+                  <i style="color: white" class="fa fa-print" aria-hidden="true"></i>
+                </button>
+                <button
+                  *ngIf="responseFunction"
+                  class="btn btn-success action-color"
+                  (click)="responseFunction(record)"
+                  ngbTooltip="Form Responses"
+                >
+                  <i style="color: white" class="fa fa-file-text-o" aria-hidden="true"></i>
+                </button>
+                <button
+                  *ngIf="assignFunction"
+                  class="btn btn-info action-color"
+                  (click)="assignFunction(record)"
+                  ngbTooltip="Assign"
+                >
+                  <i style="color: white" class="fa fa-exchange" aria-hidden="true"></i>
+                </button>
+                <button
+                  *ngIf="downloadFunction"
+                  class="btn primary-btn"
+                  (click)="downloadFunction(record)"
+                  ngbTooltip="Download"
+                >
+                  <img src="/assets/icons/download.svg" />
+                </button>
+                <button
+                  *ngIf="archivedFunction"
+                  class="btn primary-btn"
+                  (click)="archivedFunction(record)"
+                  ngbTooltip="Archive / Unarchive"
+                >
+                  <i class="fas fa-archive" style="color: white"></i>
+                </button>
+                <button *ngIf="playContent" class="btn primary-btn" (click)="playContent(record)" ngbTooltip="Play">
+                  <img src="/assets/icons/play.svg" />
+                </button>
+                <button *ngIf="pauseContent" class="btn primary-btn" (click)="pauseContent(record)" ngbTooltip="Pause">
+                  <img src="/assets/icons/pause.svg" />
+                </button>
+                <button *ngIf="showChatButton" class="btn primary-btn" (click)="showChat(record)" ngbTooltip="Chat">
+                  <img src="/assets/icons/messages1.svg" />
+                </button>
+                <button
+                  *ngIf="createContent && createContentButtonOnCondition && record"
+                  class="btn primary-btn text-white"
+                  (click)="createContent(record)"
+                >
+                  {{ createContentButtonText }}
+                </button>
+                <div *ngIf="userRoleDeleteFunction">
+                  <span *ngIf="record === 'admin'" style="font-style: italic">Admin</span>
+                  <span *ngIf="record === 'invited'" style="font-style: italic">Invited</span>
+                  <span *ngIf="!record || record === 'user'"
+                    ><button class="btn del-btn" (click)="userRoleDeleteFunction(record)" ngbTooltip="Delete">
+                      <img src="/assets/icons/trash.svg" /></button
+                  ></span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <!-- end//Action Buttons -->
+          <td *ngIf="addContent">&nbsp;</td>
+        </tr>
+        <div class="expansion" *ngIf="record.expanssion">
+          <div class="record-container">
+            <div *ngFor="let data of idSpecificData; let i = index">
+            <div *ngIf="data.id === record.id">
+              <div class="child-container" *ngIf="data?.data?.completed_tasks.length > 0">
+                <h4>Completed Tasks</h4>
+               <div class="task-list" *ngFor="let data of data?.data?.completed_tasks; let i = index">
+                <p>{{data.title}}</p>
+               </div>
+              </div>
+              <div class="child-container" *ngIf="data?.data?.skipped_tasks.length > 0">
+                <h4>Skipped Tasks</h4>
+                <div class="task-list" *ngFor="let data of data?.data?.skipped_tasks let i = index">
+                  <p>{{data.title}}</p>
+                 </div>
+              </div>
+              <div class="child-container" *ngIf="data?.data?.completed_tasks.length === 0">
+              <h4>Completed Tasks</h4>  
+              <p>No completed tasks found</p>
+              </div>
+              <div class="child-container" *ngIf="data?.data?.skipped_tasks.length === 0">
+              <h4>Skipped Tasks</h4>  
+              <p>No skipped tasks found</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </tbody>
+  </table>
+  <!-- PAGINATION -->
+  <div *ngIf="isPaginationEnabled">
+    <!-- start//Client Side Pagination -->
+    <pagination-template
+      *ngIf="!serverSidePagination"
+      [id]="paginateId"
+      #p="paginationApi"
+      (pageChange)="currentPage = $event"
+      class="c-pagination__wrapper"
+    >
+      <div>
+        <div *ngIf="showRowDisplay" class="row-display">
+          Displaying
+          <span *ngIf="p.getTotalItems() === 0" class="rows-record current">0</span>
+          <span *ngIf="p.getTotalItems() !== 0" class="rows-record current">{{
+            p.isLastPage() ? (p.getTotalItems() % pageSize === 0 ? pageSize : p.getTotalItems() % pageSize) : pageSize
+          }}</span>
+          out of
+          <span class="rows-record"> {{ p.getTotalItems() }}</span>
+        </div>
+      </div>
+      <div class="next-prev__wrapper">
+        <span class="no-of-pages"
+          >Page <b>{{ p.getTotalItems() === 0 ? 0 : currentPage }}</b> out of <b>{{ getTotalPages() }}</b></span
+        >
+        <span class="nxt-prev-page-arrows">
+          <!-- Pagination: First Page -->
+          <span
+            class="prev-btn"
+            [ngbTooltip]="!p.isFirstPage() ? 'First Page' : ''"
+            (click)="!p.isFirstPage() ? p.setCurrent(1) : ''"
+            [ngClass]="{ next: !p.isFirstPage(), first: p.isFirstPage() }"
+          >
+            <i class="fas fa-angle-left"><i class="fas fa-angle-left"></i></i>
+          </span>
+          <!-- Pagination: Previous Page -->
+          <span
+            class="prev-btn"
+            [ngbTooltip]="!p.isFirstPage() ? 'Previous Page' : ''"
+            (click)="!p.isFirstPage() ? p.previous() : ''"
+            [ngClass]="{ next: !p.isFirstPage(), first: p.isFirstPage() }"
+          >
+            <i class="fas fa-angle-left"></i>
+          </span>
+          <!-- Pagination: Next Page -->
+          <span
+            class="nxt-btn"
+            [ngbTooltip]="!p.isLastPage() ? 'Next Page' : ''"
+            (click)="!p.isLastPage() ? p.next() : ''"
+            [ngClass]="{ next: !p.isLastPage(), last: p.isLastPage() }"
+          >
+            <i class="fas fa-angle-right"></i>
+          </span>
+          <!-- Pagination: Last Page -->
+          <span
+            class="nxt-btn"
+            [ngbTooltip]="!p.isLastPage() ? 'Last Page' : ''"
+            (click)="!p.isLastPage() ? p.setCurrent(p.getLastPage()) : ''"
+            [ngClass]="{ next: !p.isLastPage(), last: p.isLastPage() }"
+          >
+            <i class="fas fa-angle-right"></i><i class="fas fa-angle-right"></i>
+          </span>
+        </span>
+      </div>
+    </pagination-template>
+    <!-- end//Client Side Pagination -->
+
+    <!-- start//Server Side Pagination -->
+    <div *ngIf="serverSidePagination" class="c-pagination__wrapper">
+      <div class="row-display">
+        Displaying
+        <span class="rows-record current"
+          >{{
+            serverSidePagination.currentPage === serverSidePagination.totalPages
+              ? serverSidePagination.total - (data?.length - 1)
+              : data?.length * serverSidePagination.currentPage - (data?.length - 1)
+          }}
+          -
+          {{
+            serverSidePagination.currentPage === serverSidePagination.totalPages
+              ? serverSidePagination.total
+              : data?.length * serverSidePagination.currentPage
+          }}</span
+        >
+        out of
+        <span class="rows-record"> {{ serverSidePagination.total }}</span> records
+      </div>
+      <div class="next-prev__wrapper d-flex">
+        <span class="no-of-pages pt-1"
+          >Page <b>{{ serverSidePagination.currentPage }}</b> out of <b>{{ serverSidePagination.totalPages }}</b></span
+        >
+        <span class="nxt-prev-page-arrows">
+          <!-- Server Side Pagination: First Page -->
+          <span
+            *ngIf="paginationFirstPage"
+            class="prev-btn"
+            (click)="paginationFirstPage()"
+            [ngClass]="{ next: serverSidePagination.prevPage, first: !serverSidePagination.prevPage }"
+          >
+            <i class="fas fa-angle-left"></i>
+            <i class="fas fa-angle-left"></i>
+          </span>
+          <!-- Server Side Pagination: Previous Page -->
+          <span
+            *ngIf="paginationPrevPage"
+            class="prev-btn"
+            [ngbTooltip]="serverSidePagination.prevPage ? 'Previous Page' : ''"
+            (click)="paginationPrevPage()"
+            [ngClass]="{ next: serverSidePagination.prevPage, first: !serverSidePagination.prevPage }"
+          >
+            <i class="fas fa-angle-left"></i>
+          </span>
+
+          <!-- start//Server Side Pagination: Custom Page -->
+          <span
+            class="input-group page-group"
+            *ngIf="paginationCustomPage"
+            [ngbTooltip]="
+              !serverSidePagination.prevPage && !serverSidePagination.nextPage ? '' : 'Navigate to custom page'
+            "
+            placement="top"
+            container="body"
+            (keyup.enter)="
+              !serverSidePagination.prevPage && !serverSidePagination.nextPage
+                ? ''
+                : paginationCustomPage(+customPage.value)
+            "
+          >
+            <input
+              [disabled]="!serverSidePagination.prevPage && !serverSidePagination.nextPage"
+              #customPage
+              type="number"
+              min="1"
+              [max]="serverSidePagination.totalPages"
+              integer
+              class="form-control page-input"
+              placeholder="Page#"
+            />
+            <div
+              class="input-group-append"
+              [style]="!serverSidePagination.prevPage && !serverSidePagination.nextPage ? '' : 'cursor: pointer'"
+              (click)="
+                !serverSidePagination.prevPage && !serverSidePagination.nextPage
+                  ? ''
+                  : paginationCustomPage(+customPage.value)
+              "
+            >
+              <span class="input-group-text page-enter">
+                <i class="fas fa-check mt-1"></i>
+              </span>
+            </div>
+          </span>
+          <!-- end//Server Side Pagination: Custom Page -->
+
+          <!-- Server Side Pagination: Next Page -->
+          <span
+            *ngIf="paginationNextPage"
+            class="nxt-btn"
+            [ngbTooltip]="serverSidePagination.nextPage ? 'Next Page' : ''"
+            (click)="paginationNextPage()"
+            [ngClass]="{ next: serverSidePagination.nextPage, first: !serverSidePagination.nextPage }"
+          >
+            <i class="fas fa-angle-right"></i>
+          </span>
+          <!-- Server Side Pagination: Last Page -->
+          <span
+            *ngIf="paginationLastPage"
+            class="nxt-btn"
+            [ngbTooltip]="serverSidePagination.nextPage ? 'Last Page' : ''"
+            (click)="paginationLastPage()"
+            [ngClass]="{ next: serverSidePagination.nextPage, first: !serverSidePagination.nextPage }"
+          >
+            <i class="fas fa-angle-right"></i>
+            <i class="fas fa-angle-right"></i>
+          </span>
+        </span>
+      </div>
+    </div>
+    <!-- end//Server Side Pagination -->
+  </div>
+</div>
+
+<!-- Comment Layout:  (state)//(description)//(category) || (description)-->
