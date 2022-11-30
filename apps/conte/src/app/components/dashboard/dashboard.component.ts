@@ -13,15 +13,14 @@ export class DashboardComponent implements OnInit {
   allUsers: any = [];
 
   orderTableHeaders: TableHeaders[] = [
-    { title: 'id', value: 'id', sort: true, orderBy: '' },
+    { title: 'id', value: 'id', sort: false},
     {
       title: 'Name',
       value: 'Name',
-      sort: true,
-      orderBy: '',
+      sort: false
     },
-    { title: 'estimated_max_velocity', value: 'estimated_max_velocity', sort: true, orderBy: '' },
-    { title: 'email', value: 'email', sort: true, orderBy: '' },
+    { title: 'estimated_max_velocity', value: 'estimated_max_velocity', sort: false},
+    { title: 'email', value: 'email', sort: false},
   ];
   constructor(private router: Router, private UsersService: UserService) {}
   ngOnInit(): void {
