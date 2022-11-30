@@ -10,7 +10,7 @@
             [ngStyle]="header['sort'] ? { cursor: 'pointer' } : { cursor: 'default' }"
           >
             {{ header['title'] }}
-            <svg width="21px" height="21px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+            <!-- <svg width="21px" height="21px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
               <g
                 fill="none"
                 [ngClass]="{ 'asc-sort': header['orderBy'] === 'ASC', 'desc-sort': header['orderBy'] === 'DESC' }"
@@ -25,7 +25,7 @@
                 <path d="m4.5.5v12" />
                 <path d="m12.5.5v12" />
               </g>
-            </svg>
+            </svg> -->
           </span>
           <ng-template #noSort>
             {{ header['title'] || header }}
@@ -37,7 +37,7 @@
 
         <!-- Add Content Button//header -->
         <th *ngIf="addContent" style="padding-right: 20px; width: 40px" class="ng-star-inserted">
-          <svg
+          <!-- <svg
             width="20"
             height="20"
             (click)="addContent()"
@@ -51,7 +51,7 @@
               d="M6.784 17.732V10.856H0.412V7.148H6.784V0.235999H10.816V7.148H17.188V10.856H10.816V17.732H6.784Z"
               fill="#073786"
             />
-          </svg>
+          </svg> -->
         </th>
       </tr>
     </thead>
@@ -226,9 +226,9 @@
     </tbody>
   </table>
   <!-- PAGINATION -->
-  <div *ngIf="isPaginationEnabled">
+  <!-- <div *ngIf="isPaginationEnabled"> -->
     <!-- start//Client Side Pagination -->
-    <pagination-template
+    <!-- <pagination-template
       *ngIf="!serverSidePagination"
       [id]="paginateId"
       #p="paginationApi"
@@ -250,50 +250,50 @@
         <span class="no-of-pages"
           >Page <b>{{ p.getTotalItems() === 0 ? 0 : currentPage }}</b> out of <b>{{ getTotalPages() }}</b></span
         >
-        <span class="nxt-prev-page-arrows">
+        <span class="nxt-prev-page-arrows"> -->
           <!-- Pagination: First Page -->
-          <span
+          <!-- <span
             class="prev-btn"
             [ngbTooltip]="!p.isFirstPage() ? 'First Page' : ''"
             (click)="!p.isFirstPage() ? p.setCurrent(1) : ''"
             [ngClass]="{ next: !p.isFirstPage(), first: p.isFirstPage() }"
           >
             <i class="fas fa-angle-left"><i class="fas fa-angle-left"></i></i>
-          </span>
+          </span> -->
           <!-- Pagination: Previous Page -->
-          <span
+          <!-- <span
             class="prev-btn"
             [ngbTooltip]="!p.isFirstPage() ? 'Previous Page' : ''"
             (click)="!p.isFirstPage() ? p.previous() : ''"
             [ngClass]="{ next: !p.isFirstPage(), first: p.isFirstPage() }"
           >
             <i class="fas fa-angle-left"></i>
-          </span>
+          </span> -->
           <!-- Pagination: Next Page -->
-          <span
+          <!-- <span
             class="nxt-btn"
             [ngbTooltip]="!p.isLastPage() ? 'Next Page' : ''"
             (click)="!p.isLastPage() ? p.next() : ''"
             [ngClass]="{ next: !p.isLastPage(), last: p.isLastPage() }"
           >
             <i class="fas fa-angle-right"></i>
-          </span>
+          </span> -->
           <!-- Pagination: Last Page -->
-          <span
+          <!-- <span
             class="nxt-btn"
             [ngbTooltip]="!p.isLastPage() ? 'Last Page' : ''"
             (click)="!p.isLastPage() ? p.setCurrent(p.getLastPage()) : ''"
             [ngClass]="{ next: !p.isLastPage(), last: p.isLastPage() }"
           >
             <i class="fas fa-angle-right"></i><i class="fas fa-angle-right"></i>
-          </span>
-        </span>
+          </span> -->
+        <!-- </span>
       </div>
-    </pagination-template>
+    </pagination-template> -->
     <!-- end//Client Side Pagination -->
 
     <!-- start//Server Side Pagination -->
-    <div *ngIf="serverSidePagination" class="c-pagination__wrapper">
+    <!-- <div *ngIf="serverSidePagination" class="c-pagination__wrapper">
       <div class="row-display">
         Displaying
         <span class="rows-record current"
@@ -316,9 +316,9 @@
         <span class="no-of-pages pt-1"
           >Page <b>{{ serverSidePagination.currentPage }}</b> out of <b>{{ serverSidePagination.totalPages }}</b></span
         >
-        <span class="nxt-prev-page-arrows">
+        <span class="nxt-prev-page-arrows"> -->
           <!-- Server Side Pagination: First Page -->
-          <span
+          <!-- <span
             *ngIf="paginationFirstPage"
             class="prev-btn"
             (click)="paginationFirstPage()"
@@ -326,9 +326,9 @@
           >
             <i class="fas fa-angle-left"></i>
             <i class="fas fa-angle-left"></i>
-          </span>
+          </span> -->
           <!-- Server Side Pagination: Previous Page -->
-          <span
+          <!-- <span
             *ngIf="paginationPrevPage"
             class="prev-btn"
             [ngbTooltip]="serverSidePagination.prevPage ? 'Previous Page' : ''"
@@ -336,10 +336,10 @@
             [ngClass]="{ next: serverSidePagination.prevPage, first: !serverSidePagination.prevPage }"
           >
             <i class="fas fa-angle-left"></i>
-          </span>
+          </span> -->
 
           <!-- start//Server Side Pagination: Custom Page -->
-          <span
+          <!-- <span
             class="input-group page-group"
             *ngIf="paginationCustomPage"
             [ngbTooltip]="
@@ -376,11 +376,11 @@
                 <i class="fas fa-check mt-1"></i>
               </span>
             </div>
-          </span>
+          </span> -->
           <!-- end//Server Side Pagination: Custom Page -->
 
           <!-- Server Side Pagination: Next Page -->
-          <span
+          <!-- <span
             *ngIf="paginationNextPage"
             class="nxt-btn"
             [ngbTooltip]="serverSidePagination.nextPage ? 'Next Page' : ''"
@@ -388,9 +388,9 @@
             [ngClass]="{ next: serverSidePagination.nextPage, first: !serverSidePagination.nextPage }"
           >
             <i class="fas fa-angle-right"></i>
-          </span>
+          </span> -->
           <!-- Server Side Pagination: Last Page -->
-          <span
+          <!-- <span
             *ngIf="paginationLastPage"
             class="nxt-btn"
             [ngbTooltip]="serverSidePagination.nextPage ? 'Last Page' : ''"
@@ -402,9 +402,8 @@
           </span>
         </span>
       </div>
-    </div>
+    </div> -->
     <!-- end//Server Side Pagination -->
   </div>
-</div>
 
 <!-- Comment Layout:  (state)//(description)//(category) || (description)-->
