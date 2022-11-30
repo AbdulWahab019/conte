@@ -1,4 +1,4 @@
-export interface GetAllSurgeriesByDoctor {
+export interface GetAllSurgeriesByDoctorAPIResponse {
   id: number;
   name: string;
 }

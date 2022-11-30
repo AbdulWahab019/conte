@@ -57,7 +57,7 @@ export interface TaskResponse {
   feedback: string[];
 }
 
-export interface GetUserTaskFeedback {
+export interface GetUserTaskFeedbackAPIResponse {
   id: number;
   feedback: string;
   type: number;

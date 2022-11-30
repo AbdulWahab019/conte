@@ -10,6 +10,26 @@ export interface UserDemographics {
   estimated_max_velocity: number;
 }
 
+export interface GetUserProfileApiRes {
+  id: number;
+  first_name: string;
+  last_name: string;
+  cell_phone: string;
+  birth_date: string;
+  address: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  email: string;
+  estimated_max_velocity: number;
+  stripe_customer_id: string;
+  stripe_subscription_id: string;
+  is_terms_of_use_accepted: boolean;
+  is_orientation_video_watched: boolean;
+  is_subscribed: boolean;
+  is_questionnaire_submitted: boolean;
+}
+
 export interface UpdateUserResponse {
   email: string;
   first_name: string;
