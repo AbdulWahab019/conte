@@ -43,7 +43,7 @@ export interface LoginWebUserReq {
 }
 
 export interface LoginWebUserRes {
+  user_id: string;
   email: string;
-  password: string;
   token: string;
 }

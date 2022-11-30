@@ -40,3 +40,10 @@ export interface GetUserDataApiRes {
   num_skipped_tasks: number;
   num_completed_tasks: number;
 }
+export interface GetUserTasksCalenderAPIRes {
+  tp_day: number;
+  total_tasks: number;
+  date: string;
+  selected: boolean;
+  day: string;
+}

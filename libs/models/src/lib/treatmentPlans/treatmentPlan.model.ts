@@ -62,3 +62,7 @@ export interface GetUserTaskFeedback {
   feedback: string;
   type: number;
 }
+
+export interface UpdateTaskAPIReq {
+  comment: string;
+}
