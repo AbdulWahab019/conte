@@ -88,7 +88,7 @@ export async function getUserSkippedAndCompletedTasks(user_id: number) {
   const skipped_tasks = [];
   const pending_tasks = [];
 
-  tasks.map((task) => {
+  tasks.forEach((task) => {
     if (task.is_completed) completed_tasks.push(task);
     else if (task.is_skipped) skipped_tasks.push(task);
     else pending_tasks.push(task);
