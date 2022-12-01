@@ -123,7 +123,8 @@ export class SurveyComponent implements OnInit {
   confirmQuestionnaire() {
     this.submissionState = 'loading';
 
-    const doctor = this.doctors[this.doctors.findIndex((doctor) => doctor.id.toString() === this.f.doctor.value)].name;
+    const doctor =
+      this.doctors[this.doctors.findIndex((doctor: doctor) => doctor.id.toString() === this.f.doctor.value)].name;
 
     const user_demographics: UserDemographics = {
       first_name: this.f.first_name.value,
@@ -142,10 +143,11 @@ export class SurveyComponent implements OnInit {
 
     if (this.questionnaireType === 'surgery') {
       const primary_surgery =
-        this.surgeries[this.surgeries.findIndex((doctor) => doctor.id.toString() === this.f.primary_surgery.value)]
-          .name;
+        this.surgeries[
+          this.surgeries.findIndex((surgery: surgery) => surgery.id.toString() === this.f.primary_surgery.value)
+        ].name;
       const secondary_surgery =
-        this.surgeries[this.surgeries.findIndex((doctor) => doctor.id.toString() === this.f.secondary_surgery.value)]
+        this.surgeries[this.surgeries.findIndex((surgery: surgery) => surgery.id.toString() === this.f.secondary_surgery.value)]
           ?.name;
 
       data = [
