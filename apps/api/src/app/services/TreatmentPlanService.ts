@@ -8,10 +8,12 @@ import {
   TreatmentPlanDetailsFileAttributes,
 } from '../models/TreatmentPlanDetail';
 
-import { transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
+import { getUserTreatmentPlanDayByDate, transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { FeedbackRequest } from '@conte/models';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
+import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
+import moment = require('moment');
 
 export async function createTreatmentPlan(
   name: string,
@@ -72,17 +74,23 @@ export async function getTreatmentPlans() {
 }
 
 export async function getUserSkippedAndCompletedTasks(user_id: number) {
-  const tasks = await UserTreatmentPlanTasks.findAll({
-    where: { user_id, [Op.or]: [{ is_skipped: true }, { is_completed: true }] },
-  });
+  const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['assigned_at'] });
+
+  const date = moment().toDate();
+
+  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
+
+  const tasks = await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day: { [Op.lte]: tp_day } } });
 
   const completed_tasks = [];
   const skipped_tasks = [];
+  const pending_tasks = [];
 
-  tasks.forEach((task) => {
+  tasks.map((task) => {
     if (task.is_completed) completed_tasks.push(task);
     else if (task.is_skipped) skipped_tasks.push(task);
+    else pending_tasks.push(task);
   });
 
-  return { completed_tasks, skipped_tasks };
+  return { completed_tasks, skipped_tasks, pending_tasks };
 }
