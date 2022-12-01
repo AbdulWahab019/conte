@@ -1,5 +1,6 @@
 import { GenericResponse } from '../api/api.model';
-import { User, UserDemographics, UserTreatmentPlan } from '../users/user.model';
+import { UserTreatmentPlan } from '../treatmentPlans/treatmentPlan.model';
+import { User, UserDemographics } from '../users/user.model';
 
 export interface QuestionnaireInterface {
   [key: number]: {

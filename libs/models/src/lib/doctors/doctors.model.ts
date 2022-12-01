@@ -1,7 +1,7 @@
 import { GenericResponse } from '../api/api.model';
 
 export interface GetAllDoctorsAPIResponse extends GenericResponse {
-  data: GetAllDoctors;
+  data: GetAllDoctors[];
 }
 
 export interface GetAllDoctors {

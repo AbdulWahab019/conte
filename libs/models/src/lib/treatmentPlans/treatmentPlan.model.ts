@@ -50,22 +50,22 @@ export interface TreatmentPlanDetail {
   updated_at: string;
 }
 
-export interface CreateFeedbackApiRequest {
-  data: FeedbackRequest[];
+export interface PostTaskFeedbackApiRequest {
+  data: TaskFeedbackRequest[];
 }
 
-export interface FeedbackRequest {
+export interface TaskFeedbackRequest {
   task_id: number;
   question?: string;
   feedback: string;
   type: number;
 }
 
-export interface CreateFeedbackApiResponse extends GenericResponse {
-  data: FeedbackResponse[];
+export interface PostFeedbackApiResponse extends GenericResponse {
+  data: TaskFeedbackResponse[];
 }
 
-export interface FeedbackResponse {
+export interface TaskFeedbackResponse {
   id: number;
   task_id: number;
   question: string;
@@ -80,7 +80,7 @@ export enum TPStatus {
   NOT_STARTED = 'Not started',
 }
 
-export interface GetUserTasksByDateResponse extends GenericResponse {
+export interface GetUserTasksByDateAPIResponse extends GenericResponse {
   data: GetUserTasksByDate;
 }
 
@@ -99,11 +99,21 @@ export interface TaskResponse {
   title: string;
   is_completed: boolean;
   is_skipped: boolean;
-  feedback: string[];
+  feedback: FeedbackData[];
+}
+
+export interface FeedbackData {
+  id: number;
+  task_id: number;
+  question: string;
+  feedback: string;
+  type: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface GetUserTaskFeedbackAPIResponse extends GenericResponse {
-  data: GetUserTaskFeedback;
+  data: GetUserTaskFeedback[];
 }
 
 export interface GetUserTaskFeedback {
@@ -112,12 +122,8 @@ export interface GetUserTaskFeedback {
   type: number;
 }
 
-export interface UpdateTaskAPIRequest {
-  comment: string;
-}
-
 export interface GetAllTreatmentPlansAPIResponse extends GenericResponse {
-  data: GetAllTreatmentPlans;
+  data: GetAllTreatmentPlans[];
 }
 
 export interface GetAllTreatmentPlans {
@@ -132,11 +138,12 @@ export interface GetUserSkippedAndCompletedTasksAPIResponse extends GenericRespo
 }
 
 export interface GetUserSkippedAndCompletedTasks {
-  completed_tasks: Tasks[];
-  skipped_tasks: Tasks[];
+  completed_tasks: Task[];
+  skipped_tasks: Task[];
+  pending_tasks: Task[];
 }
 
-export interface Tasks {
+export interface Task {
   id: number;
   user_id: number;
   user_tp_id: number;
@@ -147,4 +154,22 @@ export interface Tasks {
   is_skipped: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export type SkipUserTasksAPIResponse = GenericResponse;
+
+export interface UpdateTaskAPIRequest {
+  comment: string;
+}
+
+export type UpdateTaskAPIResponse = GenericResponse;
+
+export interface UserTreatmentPlan {
+  id: number;
+  name: string;
+  user_id: number;
+  tp_id: number;
+  assigned_at: string;
+  updatedAt: string;
+  createdAt: string;
 }

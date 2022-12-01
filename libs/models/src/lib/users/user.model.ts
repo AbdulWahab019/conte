@@ -26,23 +26,7 @@ export interface GetUserProfileApiResponse extends GenericResponse {
   data: GetUserProfileData;
 }
 
-export interface GetUserProfileData {
-  id: number;
-  first_name: string;
-  last_name: string;
-  cell_phone: string;
-  birth_date: string;
-  address: string;
-  city: string;
-  state: string;
-  zip_code: string;
-  email: string;
-  estimated_max_velocity: number;
-  stripe_customer_id: string;
-  stripe_subscription_id: string;
-  is_terms_of_use_accepted: boolean;
-  is_orientation_video_watched: boolean;
-  is_subscribed: boolean;
+export interface GetUserProfileData extends User {
   is_questionnaire_submitted: boolean;
 }
 
@@ -67,26 +51,12 @@ export interface GetUserDataApiResponse extends GenericResponse {
   data: GetUserData;
 }
 
-export interface GetUserData {
-  id: number;
-  first_name: string;
-  last_name: string;
-  cell_phone: string;
-  birth_date: string;
-  address: string;
-  city: string;
-  state: string;
-  zip_code: string;
-  email: string;
-  estimated_max_velocity: number;
-  is_terms_of_use_accepted: boolean;
-  is_orientation_video_watched: boolean;
-  is_subscribed: boolean;
+export interface GetUserData extends User, Omit<User, 'stripe_customer_id' | 'stripe_subscription_id'> {
   num_skipped_tasks: number;
   num_completed_tasks: number;
 }
 export interface GetUserTasksCalendarAPIResponse extends GenericResponse {
-  data: GetUserTasksCalendar;
+  data: GetUserTasksCalendar[];
 }
 
 export interface GetUserTasksCalendar {
@@ -107,12 +77,6 @@ export interface GetDashboardData {
   tp_start_date: string;
 }
 
-export interface UserTreatmentPlan {
-  id: number;
-  name: string;
-  user_id: number;
-  tp_id: number;
-  assigned_at: string;
-  updatedAt: string;
-  createdAt: string;
-}
+export type AcceptTermsOfUseAPIResponse = GenericResponse;
+
+export type WatchOrientationVideoAPIResponse = GenericResponse;

@@ -49,6 +49,7 @@ export interface RegisterWebUser {
   is_verified: boolean;
   token: string;
 }
+
 export interface LoginWebUserRequest {
   email: string;
   password: string;

@@ -10,7 +10,7 @@ import {
 
 import { getUserTreatmentPlanDayByDate, transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
-import { FeedbackRequest } from '@conte/models';
+import { PostTaskFeedbackApiRequest } from '@conte/models';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import moment = require('moment');
@@ -57,7 +57,7 @@ export function parseTreatmentPlanFile(
   });
 }
 
-export async function createUserTaskFeedBack(data: FeedbackRequest[]) {
+export async function createUserTaskFeedBack(data: PostTaskFeedbackApiRequest[]) {
   return await UserTreatmentPlanTaskFeedback.bulkCreate(data);
 }
 

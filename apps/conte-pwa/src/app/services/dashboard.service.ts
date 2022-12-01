@@ -16,12 +16,12 @@ export class DashboardService {
   getTrialView(): boolean {
     return this.trialView;
   }
-  
+
   async getTreatmentPlanDetails(date: string): Promise<any> {
     return await this.http.get<any>(`${DASHBOARD}`, { params: { date } }).toPromise();
   }
 
   async getCalendarDetails(date: string): Promise<any> {
-    return await this.http.get<any>(`${DASHBOARD}/calender/date/${date}`).toPromise();
+    return await this.http.get<any>(`${DASHBOARD}/calendar/date/${date}`).toPromise();
   }
 }

@@ -1,7 +1,7 @@
 import { GenericResponse } from '../api/api.model';
 
 export interface GetAllSurgeriesByDoctorAPIResponse extends GenericResponse {
-  data: GetAllSurgeriesByDoctor;
+  data: GetAllSurgeriesByDoctor[];
 }
 
 export interface GetAllSurgeriesByDoctor {
