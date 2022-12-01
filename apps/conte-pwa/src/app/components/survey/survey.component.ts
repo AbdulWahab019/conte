@@ -147,8 +147,9 @@ export class SurveyComponent implements OnInit {
           this.surgeries.findIndex((surgery: surgery) => surgery.id.toString() === this.f.primary_surgery.value)
         ].name;
       const secondary_surgery =
-        this.surgeries[this.surgeries.findIndex((surgery: surgery) => surgery.id.toString() === this.f.secondary_surgery.value)]
-          ?.name;
+        this.surgeries[
+          this.surgeries.findIndex((surgery: surgery) => surgery.id.toString() === this.f.secondary_surgery.value)
+        ]?.name;
 
       data = [
         { id: 1, response: this.f.surgery_date.value },
