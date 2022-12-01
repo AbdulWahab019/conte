@@ -210,10 +210,20 @@
                   <p>{{data.title}}</p>
                  </div>
               </div>
-              <div class="child-container" *ngIf="data?.data?.completed_tasks.length === 0">
-              <h4>Completed Tasks</h4>  
-              <p>No completed tasks found</p>
+              <div class="child-container" *ngIf="data?.data?.pending_tasks.length > 0">
+                <h4>Pending Tasks</h4>
+                <div class="task-list" *ngFor="let data of data?.data?.pending_tasks let i = index">
+                  <p>{{data.title}}</p>
+                 </div>
               </div>
+              <div class="child-container" *ngIf="data?.data?.pending_tasks.length === 0">
+              <h4>Pending Tasks</h4>  
+              <p>No Pending tasks found</p>
+              </div>
+              <div class="child-container" *ngIf="data?.data?.completed_tasks.length === 0">
+                <h4>Completed Tasks</h4>  
+                <p>No completed tasks found</p>
+                </div>
               <div class="child-container" *ngIf="data?.data?.skipped_tasks.length === 0">
               <h4>Skipped Tasks</h4>  
               <p>No skipped tasks found</p>

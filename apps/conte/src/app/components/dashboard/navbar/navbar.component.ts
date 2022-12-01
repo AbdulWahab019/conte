@@ -15,7 +15,7 @@ import { NAVBAR_COMPONENTS } from '../../../Shared/constants/navbar-config';
     '(window:resize)': 'onResize($event)',
   },
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   // activePath: string;
   // navbarComponents = NAVBAR_COMPONENTS;
   isNavbarVisible: boolean = true;
@@ -50,11 +50,11 @@ export class NavbarComponent implements OnInit {
     // });
   }
 
-  ngOnInit(): void {
+  // ngOnInit(): void {
     // this.init();
-  }
+  // }
 
-  async init(): Promise<void> {
+  // async init(): Promise<void> {
     // this.userRole = await this.authService.getUserRole();
 
     // switch (this.userRole) {
@@ -84,7 +84,7 @@ export class NavbarComponent implements OnInit {
     // });
 
     // this.mobile = window.innerWidth <= 767;
-  }
+  // }
 
   // ngOnChanges(changes: SimpleChanges) {
   //   if (changes.showHideToggle && changes.showHideToggle.currentValue) {
