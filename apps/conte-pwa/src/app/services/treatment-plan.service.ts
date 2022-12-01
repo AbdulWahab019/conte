@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TREATMENTPLAN } from '../utils/constants';
-import { CreateFeedbackApiRequest } from '@conte/models';
+import { PostTaskFeedbackApiRequest } from '@conte/models';
 import { therapyTask } from '../models/treatmentplan';
 import * as moment from 'moment';
 
@@ -54,7 +54,7 @@ export class TreatmentPlanService {
     return await this.http.put<any>(`${TREATMENTPLAN}/tasks/date/${date}/skip`, null).toPromise();
   }
 
-  async postTaskFeedback(request: CreateFeedbackApiRequest): Promise<any> {
+  async postTaskFeedback(request: PostTaskFeedbackApiRequest): Promise<any> {
     return await this.http.post<any>(`${TREATMENTPLAN}/task/${request.data[0].task_id}/feedback`, request).toPromise();
   }
 
