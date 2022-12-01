@@ -3,7 +3,7 @@ import { Subscription, interval } from 'rxjs';
 import { SpinnerService } from '../../../services/spinner.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { delay } from '../../../utils/constants';
-import { Router } from '@angular/router';
+import { DashboardService } from '../../../services/dashboard.service';
 
 @Component({
   selector: 'conte-count-down',
@@ -16,6 +16,7 @@ export class CountDownComponent implements OnInit, OnDestroy {
 
   public dateNow = new Date();
   @Input() dDay = new Date('Jan 01 2023 00:00:00');
+  @Input() navToDashboard!: () => void;
   milliSecondsInASecond = 1000;
   hoursInADay = 24;
   minutesInAnHour = 60;
@@ -28,7 +29,10 @@ export class CountDownComponent implements OnInit, OnDestroy {
   hoursToDday!: number;
   daysToDday!: number;
 
-  constructor(private spinner: SpinnerService, private router: Router) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private spinner: SpinnerService
+  ) {}
 
   async ngOnInit() {
     this.subscription = interval(1000).subscribe((x) => {
@@ -61,10 +65,9 @@ export class CountDownComponent implements OnInit, OnDestroy {
     );
   }
 
-  navToDashboard() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['dashboard']);
-    });
+  trialView() {
+    this.dashboardService.setTrialView();
+    this.navToDashboard();
   }
 
   ngOnDestroy() {

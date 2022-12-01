@@ -19,8 +19,8 @@ export function routes(app: Application) {
   app.use('/treatment-plan', TreatmentPlanRoute);
   app.use('/doctor', DoctorRoute);
   app.use('/surgery', SurgeryRoute);
-  app.use('/webhook', WebhookRoute);
   app.use('/dashboard', DashboardRoute);
+  app.use('/webhook', WebhookRoute);
 
   app.use(error);
 }

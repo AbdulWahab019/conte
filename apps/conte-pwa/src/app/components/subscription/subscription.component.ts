@@ -17,7 +17,6 @@ export class SubscriptionComponent implements OnInit {
   subscriptionFormRendered = false;
   buttonState = 'static';
   subscriptionState = '';
-  sub = '';
 
   constructor(
     private subscriptionService: SubscriptionService,
@@ -55,7 +54,7 @@ export class SubscriptionComponent implements OnInit {
         } else if (!resp.data.is_subscribed) {
           await delay(2000);
           this.renderingSubscriptionForm = true;
-          await delay(2000);
+          await delay(1000);
           this.subscriptionFormRendered = true;
         }
       })
@@ -64,10 +63,6 @@ export class SubscriptionComponent implements OnInit {
         this.buttonState = 'static';
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
-  }
-
-  monthlySubscription() {
-    this.sub = 'monthly';
   }
 
   confirmSubscription() {

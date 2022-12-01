@@ -15,7 +15,7 @@ export async function createSubscriptionCheckoutSession(
   customer_id: string,
   success_url: string,
   cancel_url: string
-) {
+): Promise<Stripe.Response<Stripe.Checkout.Session>> {
   return await stripe.checkout.sessions.create({
     mode: 'subscription',
     subscription_data: { trial_period_days: 3 },
