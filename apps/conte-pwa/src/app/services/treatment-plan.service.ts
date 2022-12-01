@@ -1,25 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DASHBOARD, TREATMENTPLAN } from '../utils/constants';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { TREATMENTPLAN } from '../utils/constants';
 import { CreateFeedbackApiRequest } from '@conte/models';
 import { therapyTask } from '../models/treatmentplan';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TreatmentPlanService {
-  private todaysDate = new Date();
-  private todaysFormattedDate = new NgbDate(
-    this.todaysDate.getFullYear(),
-    this.todaysDate.getMonth() + 1,
-    this.todaysDate.getDate()
-  );
-  private treatmentPlanDate = new NgbDate(
-    this.todaysDate.getFullYear(),
-    this.todaysDate.getMonth() + 1,
-    this.todaysDate.getDate()
-  );
+  private treatmentPlanDate = moment().format('YYYY-MM-DD');
 
   private dailyTasks: therapyTask[] = [] as therapyTask[];
   private pendingTasks: any;
@@ -28,11 +18,11 @@ export class TreatmentPlanService {
 
   //TODO add interfaces for request and response
 
-  setTreatmentPlanDate(date: NgbDate) {
+  setTreatmentPlanDate(date: string) {
     this.treatmentPlanDate = date;
   }
 
-  getTreatmentPlanDate(): NgbDate {
+  getTreatmentPlanDate(): string {
     return this.treatmentPlanDate;
   }
 
@@ -50,14 +40,6 @@ export class TreatmentPlanService {
 
   getPendingTasks(): any {
     return this.pendingTasks;
-  }
-
-  getTodaysDate(): NgbDate {
-    return this.todaysFormattedDate;
-  }
-
-  async getTreatmentPlanDetails(date: string): Promise<any> {
-    return await this.http.get<any>(`${DASHBOARD}`, { params: { date } }).toPromise();
   }
 
   async getDailyTasks(date: string): Promise<any> {
