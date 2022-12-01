@@ -1,5 +1,18 @@
 import { GenericResponse } from '../api/api.model';
 
+export interface Task {
+  id: number;
+  user_id: number;
+  user_tp_id: number;
+  tp_day: number;
+  task_type: number;
+  title: string;
+  is_completed: boolean;
+  is_skipped: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface UploadTreatmentPlanAPIRequest {
   file: File;
   doctor_id: number;
@@ -90,15 +103,7 @@ export interface GetUserTasksByDate {
   status: string;
 }
 
-export interface TaskResponse {
-  id: number;
-  user_id: number;
-  user_tp_id: number;
-  tp_day: number;
-  task_type: number;
-  title: string;
-  is_completed: boolean;
-  is_skipped: boolean;
+export interface TaskResponse extends Omit<Task, 'createdAt' | 'updatedAt'> {
   feedback: FeedbackData[];
 }
 
@@ -143,23 +148,10 @@ export interface GetUserSkippedAndCompletedTasks {
   pending_tasks: Task[];
 }
 
-export interface Task {
-  id: number;
-  user_id: number;
-  user_tp_id: number;
-  tp_day: number;
-  task_type: number;
-  title: string;
-  is_completed: boolean;
-  is_skipped: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export type SkipUserTasksAPIResponse = GenericResponse;
 
 export interface UpdateTaskAPIRequest {
-  comment: string;
+  comment?: string;
 }
 
 export type UpdateTaskAPIResponse = GenericResponse;

@@ -10,6 +10,7 @@ export interface User extends UserDemographics {
   is_orientation_video_watched: boolean;
   is_subscribed: boolean;
 }
+
 export interface UserDemographics {
   first_name: string;
   last_name: string;
@@ -48,20 +49,23 @@ export interface UpdateUser {
 }
 
 export interface GetUserDataApiResponse extends GenericResponse {
-  data: GetUserData;
+  data: { users: GetUserData[] };
 }
 
-export interface GetUserData extends User, Omit<User, 'stripe_customer_id' | 'stripe_subscription_id'> {
+export interface GetUserData extends Omit<User, 'password' | 'stripe_customer_id' | 'stripe_subscription_id'> {
   num_skipped_tasks: number;
   num_completed_tasks: number;
 }
+
 export interface GetUserTasksCalendarAPIResponse extends GenericResponse {
-  data: GetUserTasksCalendar[];
+  data: TaskCalendar[];
 }
 
-export interface GetUserTasksCalendar {
+export interface TaskCalendar {
   tp_day: number;
   total_tasks: number;
+  completed_tasks: number;
+  skipped_tasks: number;
   date: string;
   selected: boolean;
   day: string;

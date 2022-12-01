@@ -80,7 +80,9 @@ export async function getUserSkippedAndCompletedTasks(user_id: number) {
 
   const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
 
-  const tasks = await UserTreatmentPlanTasks.findAll({ where: { user_id, tp_day: { [Op.lte]: tp_day } } });
+  const tasks = await UserTreatmentPlanTasks.findAll({
+    where: { user_id, [Op.or]: { is_completed: 1, is_skipped: 1, tp_day: { [Op.lte]: tp_day } } },
+  });
 
   const completed_tasks = [];
   const skipped_tasks = [];

@@ -45,7 +45,7 @@ export async function updateUser(
 }
 
 async function getUsersData() {
-  const users = await User.findAll({
+  return await User.findAll({
     attributes: {
       include: [
         [
@@ -64,8 +64,6 @@ async function getUsersData() {
       exclude: ['createdAt', 'updatedAt', 'stripe_customer_id', 'stripe_subscription_id', 'password'],
     },
   });
-
-  return users;
 }
 
 export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData };

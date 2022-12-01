@@ -11,22 +11,14 @@ export interface AccountLoginAPIRequest {
 }
 
 export interface CreateAccountAPIResponse extends GenericResponse {
-  data: CreateAccountPWA;
+  data: AuthPWAResponse;
 }
 
-export interface CreateAccountPWA {
-  user_id: number;
-  email: string;
-  token: string;
-  is_terms_of_use_accepted: boolean;
-  is_orientation_video_watched: boolean;
-  is_questionnaire_submitted: boolean;
-}
 export interface AccountLoginAPIResponse extends GenericResponse {
-  data: AccountLoginPWA;
+  data: AuthPWAResponse;
 }
 
-export interface AccountLoginPWA {
+export interface AuthPWAResponse {
   user_id: number;
   email: string;
   token: string;
@@ -34,20 +26,14 @@ export interface AccountLoginPWA {
   is_orientation_video_watched: boolean;
   is_questionnaire_submitted: boolean;
 }
+
 export interface RegisterWebUserRequest {
   email: string;
   password: string;
 }
 
 export interface RegisterWebUserResponse extends GenericResponse {
-  data: RegisterWebUser;
-}
-
-export interface RegisterWebUser {
-  user_id: string;
-  email: string;
-  is_verified: boolean;
-  token: string;
+  data: AuthWebResponse;
 }
 
 export interface LoginWebUserRequest {
@@ -56,11 +42,12 @@ export interface LoginWebUserRequest {
 }
 
 export interface LoginWebUserResponse extends GenericResponse {
-  data: LoginWebUser;
+  data: Omit<AuthWebResponse, 'is_verified'>;
 }
 
-export interface LoginWebUser {
+export interface AuthWebResponse {
   user_id: string;
   email: string;
   token: string;
+  is_verified: boolean;
 }
