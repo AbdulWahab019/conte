@@ -11,7 +11,7 @@
       <button
         class="btn btn-primary btn-confirm"
         type="button"
-        (click)="renderSurgeryForm()"
+        (click)="questionnaireSelect('surgery')"
         [disabled]="surgeryOptionState === 'loading' || nonSurgeryOptionState === 'loading'"
       >
         <span *ngIf="surgeryOptionState === 'static'" class="display-6">Surgery</span>
@@ -27,7 +27,7 @@
       <button
         class="btn btn-primary btn-confirm"
         type="button"
-        (click)="renderNonSurgeryForm()"
+        (click)="questionnaireSelect('non-surgery')"
         [disabled]="nonSurgeryOptionState === 'loading' || surgeryOptionState === 'loading'"
       >
         <span *ngIf="nonSurgeryOptionState === 'static'" class="display-6">Non-Surgery</span>
@@ -42,53 +42,23 @@
 <!-- Survey Screen//end -->
 
 <!-- Questionnaire//start -->
-<div class="container-fluid d-flex survey-sub-screen" *ngIf="surgeryQuestionnaire || nonSurgeryQuestionnaire">
-  <!-- Surgery Questionnaire//start -->
-  <div class="container-fluid d-flex survey-container" *ngIf="surgeryQuestionnaire" [@fade]>
+<div class="container-fluid d-flex survey-sub-screen" *ngIf="questionnaireRendered">
+  <div class="container-fluid d-flex survey-container" *ngIf="questionnaireRendered" [@fade]>
     <div class="d-flex title-bar">
       <i class="bi bi-arrow-left" (click)="navBack()"></i>
       <h1 class="display-2">Conte</h1>
     </div>
-    <h1 class="display-4 mb-4"><b>Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
-    <form [formGroup]="surgeryForm" (submit)="confirmSurgeryForm()">
+    <h1 class="display-4 mb-4">
+      <b>{{ questionnaireType === 'surgery' ? 'Surgery Questionnaire' : 'Non-Surgery Questionnaire' }}</b
+      ><i class="bi bi-clipboard2-check ms-1"></i>
+    </h1>
+    <form [formGroup]="questionnaire" (submit)="confirmQuestionnaire()">
       <!--------------------------------->
-      <!-- SURGERY || POSITION DETAILS -->
+      <!--  POSITION DETAILS -->
       <!--------------------------------->
       <p class="display-5 mt-5"><b>Position Details</b><i class="bi bi-journal-medical ms-1"></i></p>
 
-      <!--  SURGERY || Doctor//start -->
-      <div *ngIf="f.doctor.touched || f.doctor.dirty" class="error-text">
-        <p *ngIf="f.doctor.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Doctor selection is required.</p>
-      </div>
-
-      <select
-        formControlName="doctor"
-        (change)="getSurgeries($any($event.target).value)"
-        [ngClass]="
-          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
-            ? 'form-select select error-input '
-            : 'form-select select'
-        "
-      >
-        <option value="" disabled hidden>Choose your Doctor*</option>
-        <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f.doctor.value">
-          {{ doctor.name }}
-        </option>
-      </select>
-      <!--  SURGERY || Doctor//end -->
-
-      <!-- <input
-        type="text"
-        [ngClass]="
-          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
-            ? 'form-control question error-input '
-            : 'form-control question'
-        "
-        placeholder="Doctor*"
-        formControlName="doctor"
-      /> -->
-
-      <!--  SURGERY || Position//start -->
+      <!-- Position//start -->
       <div *ngIf="f.position.touched || f.position.dirty" class="error-text">
         <p *ngIf="f.position.errors?.required">
           <i class="bi bi-x-circle-fill me-1"></i>Position selection is required.
@@ -109,9 +79,9 @@
         <option value="outfielder">Outfielder</option>
         <option value="catcher">Catcher</option>
       </select>
-      <!--  SURGERY || Position//end -->
+      <!-- Position//end -->
 
-      <!--  SURGERY || EMV//start -->
+      <!-- EMV//start -->
       <div *ngIf="f.estimated_max_velocity.touched || f.estimated_max_velocity.dirty" class="error-text">
         <p *ngIf="f.estimated_max_velocity.errors?.required">
           <i class="bi bi-x-circle-fill me-1"></i>Estimated Max Velocity is required.
@@ -133,103 +103,179 @@
         placeholder="Estimated Max Velocity(MH)*"
         formControlName="estimated_max_velocity"
       />
-      <!--  SURGERY || EMV//end -->
+      <!-- EMV//end -->
 
       <!-------------------------------->
-      <!-- SURGERY || SURGERY DETAILS -->
+      <!-- SURGERY/INJURY DETAILS -->
       <!-------------------------------->
-      <p class="display-5 mt-5"><b>Surgery Details</b><i class="bi bi-clipboard2-pulse ms-1"></i></p>
+      <p class="display-5 mt-5">
+        <b>{{ questionnaireType === 'surgery' ? 'Surgery Details' : 'Injury Details' }}</b
+        ><i class="bi bi-clipboard2-pulse ms-1"></i>
+      </p>
 
-      <!-- SURGERY || Surgery Date//start -->
-      <div *ngIf="f.surgery_date.touched || f.surgery_date.dirty" class="error-text">
-        <p *ngIf="f.surgery_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Surgery Date is required.</p>
-      </div>
-
-      <input
-        placeholder="Surgery Date*"
-        [ngClass]="
-          (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
-            ? 'form-control question error-input '
-            : 'form-control question'
-        "
-        type="date"
-        max="9999-12-31"
-        formControlName="surgery_date"
-      />
-      <!-- SURGERY || Surgery Date//end -->
-
-      <!-- SURGERY || Primary Surgery//start -->
-      <div *ngIf="f.primary_surgery.touched || f.primary_surgery.dirty" class="error-text">
-        <p *ngIf="f.primary_surgery.errors?.required">
-          <i class="bi bi-x-circle-fill me-1"></i>Primary Surgery is required.
+      <!--  Doctor//start -->
+      <div *ngIf="f.doctor.touched || f.doctor.dirty" class="error-text">
+        <p *ngIf="f.doctor.errors?.required">
+          <i class="bi bi-x-circle-fill me-1"></i>
+          {{ questionnaireType === 'surgery' ? 'Surgeon selection is required' : 'Doctor selection is required' }}
         </p>
       </div>
 
       <select
-        formControlName="primary_surgery"
+        formControlName="doctor"
+        (change)="questionnaireType === 'surgery' ? getSurgeries($any($event.target).value) : ''"
         [ngClass]="
-          (f.primary_surgery.touched || f.primary_surgery.dirty) && f.primary_surgery.errors
-            ? 'form-select question error-input '
-            : 'form-select question'
+          (f.doctor.touched || f.doctor.dirty) && f.doctor.errors
+            ? 'form-select select error-input '
+            : 'form-select select'
         "
       >
-        <option value="" hidden disabled selected>Choose Primary Surgery*</option>
-        <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
-        <ng-container *ngIf="surgeries">
-          <option *ngFor="let surgery of surgeries" [value]="surgery.id">
-            {{ surgery.name }}
-          </option></ng-container
-        >
+        <option value="" disabled hidden>
+          {{ questionnaireType === 'surgery' ? 'Choose your Surgeon*' : 'Choose your Doctor*' }}
+        </option>
+        <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f.doctor.value">
+          {{ doctor.name }}
+        </option>
       </select>
+      <!--  Doctor//end -->
+
+      <!-- NON-SURGERY || Doctor Dictation//start -->
+      <ng-container *ngIf="questionnaireType === 'non-surgery'">
+        <div *ngIf="f.doctor_dictation.touched || f.doctor_dictation.dirty" class="error-text">
+          <p *ngIf="f.doctor_dictation.errors?.required">
+            <i class="bi bi-x-circle-fill me-1"></i>Doctor Dictation is required.
+          </p>
+        </div>
+
+        <input
+          type="text"
+          [ngClass]="
+            (f.doctor_dictation.touched || f.doctor_dictation.dirty) && f.doctor_dictation.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
+          placeholder="Doctor Dictation*"
+          formControlName="doctor_dictation"
+        />
+      </ng-container>
+      <!-- NON-SURGERY || Doctor Dictation//end -->
+
+      <!-- SURGERY || Surgery Date//start -->
+      <ng-container *ngIf="questionnaireType === 'surgery'">
+        <div *ngIf="f.surgery_date.touched || f.surgery_date.dirty" class="error-text">
+          <p *ngIf="f.surgery_date.errors?.required">
+            <i class="bi bi-x-circle-fill me-1"></i>Surgery Date is required.
+          </p>
+        </div>
+
+        <input
+          placeholder="Surgery Date*"
+          [ngClass]="
+            (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question'
+          "
+          type="text"
+          onfocus="(this.type='date')"
+          onblur="(this.type='text')"
+          max="9999-12-31"
+          formControlName="surgery_date"
+      /></ng-container>
+      <!-- SURGERY || Surgery Date//end -->
+
+      <!-- SURGERY || Primary Surgery//start -->
+      <ng-container *ngIf="questionnaireType === 'surgery'">
+        <div *ngIf="f.primary_surgery.touched || f.primary_surgery.dirty" class="error-text">
+          <p *ngIf="f.primary_surgery.errors?.required">
+            <i class="bi bi-x-circle-fill me-1"></i>Primary Surgery is required.
+          </p>
+        </div>
+
+        <select
+          formControlName="primary_surgery"
+          [ngClass]="
+            (f.primary_surgery.touched || f.primary_surgery.dirty) && f.primary_surgery.errors
+              ? 'form-select question error-input '
+              : 'form-select question'
+          "
+        >
+          <option value="" hidden disabled selected>Choose Primary Surgery*</option>
+          <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
+          <ng-container *ngIf="surgeries">
+            <option *ngFor="let surgery of surgeries" [value]="surgery.id">
+              {{ surgery.name }}
+            </option></ng-container
+          >
+        </select></ng-container
+      >
       <!-- SURGERY || Primary Surgery//end -->
 
-      <!-- <input
-        type="text"
-        [ngClass]="
-          (f.primary_surgery.touched || f.primary_surgery.dirty) && f.primary_surgery.errors
-            ? 'form-control question error-input '
-            : 'form-control question'
-        "
-        placeholder="Primary Surgery*"
-        formControlName="primary_surgery"
-      /> -->
-
       <!-- SURGERY || Secondary Surgery//start -->
-      <select
-        formControlName="secondary_surgery"
-        [ngClass]="
-          (f.secondary_surgery.touched || f.secondary_surgery.dirty) && f.secondary_surgery.errors
-            ? 'form-select question error-input '
-            : 'form-select question'
-        "
-      >
-        <option value="" hidden disabled selected>Choose Secondary Surgery</option>
-        <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
-        <ng-container *ngIf="surgeries">
-          <option *ngFor="let surgery of surgeries" [value]="surgery.id">
-            {{ surgery.name }}
-          </option></ng-container
+      <ng-container *ngIf="questionnaireType === 'surgery'">
+        <select
+          formControlName="secondary_surgery"
+          [ngClass]="
+            (f.secondary_surgery.touched || f.secondary_surgery.dirty) && f.secondary_surgery.errors
+              ? 'form-select question error-input '
+              : 'form-select question'
+          "
         >
-      </select>
+          <option value="" hidden disabled selected>Choose Secondary Surgery</option>
+          <option value="" *ngIf="!surgeries.length" disabled>Please choose a Doctor First</option>
+          <ng-container *ngIf="surgeries">
+            <option *ngFor="let surgery of surgeries" [value]="surgery.id">
+              {{ surgery.name }}
+            </option></ng-container
+          >
+        </select></ng-container
+      >
       <!-- SURGERY || Secondary Surgery//end -->
 
-      <!-- <input
-        type="text"
-        [ngClass]="
-          (f.secondary_surgery.touched || f.secondary_surgery.dirty) && f.secondary_surgery.errors
-            ? 'form-control question error-input '
-            : 'form-control question'
-        "
-        placeholder="Secondary Surgery*"
-        formControlName="secondary_surgery"
-      /> -->
+      <!-- NON-SURGERY || Injury Date//start -->
+      <ng-container *ngIf="questionnaireType === 'non-surgery'">
+        <div *ngIf="f.injury_date.touched || f.injury_date.dirty" class="error-text">
+          <p *ngIf="f.injury_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
+        </div>
+
+        <input
+          placeholder="Injury Date*"
+          [ngClass]="
+            (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
+          type="text"
+          onfocus="(this.type='date')"
+          onblur="(this.type='text')"
+          max="9999-12-31"
+          formControlName="injury_date"
+      /></ng-container>
+      <!-- NON-SURGERY || Injury Date//end -->
+
+      <!-- NON-SURGERY || Injury//start -->
+      <ng-container *ngIf="questionnaireType === 'non-surgery'">
+        <div *ngIf="f.injury.touched || f.injury.dirty" class="error-text">
+          <p *ngIf="f.injury.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury name is required.</p>
+        </div>
+
+        <input
+          type="text"
+          [ngClass]="
+            (f.injury.touched || f.injury.dirty) && f.injury.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
+          placeholder="Injury Occured*"
+          formControlName="injury"
+      /></ng-container>
+      <!-- NON-SURGERY || Injury//end -->
 
       <!-------------------------------------------->
-      <!-- SURGERY || DEMOGRAPHIC/CONTACT DETAILS -->
+      <!-- DEMOGRAPHIC/CONTACT DETAILS -->
       <!-------------------------------------------->
       <p class="display-5 mt-5"><b>Demographics/Contact Details</b><i class="bi bi-person-badge-fill ms-1"></i></p>
 
-      <!-- SURGERY || First & Last Name//start -->
+      <!-- First & Last Name//start -->
       <div
         *ngIf="f.first_name.touched || f.first_name.dirty || f.last_name.touched || f.last_name.dirty"
         class="error-text"
@@ -280,9 +326,9 @@
           formControlName="last_name"
         />
       </div>
-      <!-- SURGERY || First & Last Name//end -->
+      <!-- First & Last Name//end -->
 
-      <!-- SURGERY || Cell Phone//start -->
+      <!-- Cell Phone//start -->
       <div *ngIf="f.cell_phone.touched || f.cell_phone.dirty" class="error-text">
         <p *ngIf="f.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
       </div>
@@ -300,12 +346,13 @@
             ? 'form-control question error-input '
             : 'form-control question '
         "
+        maxlength="12"
         placeholder="Cell Phone*"
         formControlName="cell_phone"
       />
-      <!-- SURGERY || Cell Phone//end -->
+      <!-- Cell Phone//end -->
 
-      <!-- SURGERY || Birth Date//start -->
+      <!-- Birth Date//start -->
       <div *ngIf="f.birth_date.touched || f.birth_date.dirty" class="error-text">
         <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
       </div>
@@ -317,13 +364,15 @@
             ? 'form-control question error-input '
             : 'form-control question '
         "
-        type="date"
+        type="text"
+        onfocus="(this.type='date')"
+        onblur="(this.type='text')"
         max="2000-01-01"
         formControlName="birth_date"
       />
-      <!-- SURGERY || Birth Date//end -->
+      <!-- Birth Date//end -->
 
-      <!-- SURGERY || Address//start -->
+      <!-- Address//start -->
       <div *ngIf="f.address.touched || f.address.dirty" class="error-text">
         <p *ngIf="f.address.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Address is required.</p>
       </div>
@@ -338,9 +387,9 @@
         placeholder="Address*"
         formControlName="address"
       />
-      <!-- SURGERY || Address//end -->
+      <!-- Address//end -->
 
-      <!-- SURGERY || City & State//start -->
+      <!-- City & State//start -->
       <div *ngIf="f.city.touched || f.city.dirty" class="error-text">
         <p *ngIf="f.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
       </div>
@@ -379,9 +428,9 @@
           formControlName="state"
         />
       </div>
-      <!-- SURGERY || City & State//end -->
+      <!-- City & State//end -->
 
-      <!-- SURGERY || ZIP Code//start -->
+      <!-- ZIP Code//start -->
       <div *ngIf="f.zip_code.touched || f.zip_code.dirty" class="error-text">
         <p *ngIf="f.zip_code.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>ZIP Code is required.</p>
       </div>
@@ -406,23 +455,23 @@
         placeholder="ZIP Code*"
         formControlName="zip_code"
       />
-      <!-- SURGERY || ZIP Code//end -->
+      <!-- ZIP Code//end -->
 
-      <!-- SURGERY || Form Info -->
-      <div *ngIf="surgeryForm.invalid" class="info-text" [@fade]>
+      <!-- Form Info -->
+      <div *ngIf="questionnaire.invalid" class="info-text" [@fade]>
         <p><i class="bi bi-info-circle me-1"></i>Fields marked with * are required to submit.</p>
       </div>
 
-      <!-- SURGERY || Submit Button -->
+      <!-- Submit Button -->
       <div class="d-flex justify-content-center mt-4 mb-3">
         <button
           class="btn btn-primary btn-confirm"
           type="submit"
-          (click)="confirmSurgeryForm()"
-          [disabled]="surgeryForm.invalid || surgeryOptionState == 'loading' || surgeryOptionState == 'loading'"
+          (click)="confirmQuestionnaire()"
+          [disabled]="questionnaire.invalid || submissionState == 'loading'"
         >
-          <span *ngIf="surgeryOptionState === 'static'" class="display-6">Submit</span>
-          <div *ngIf="surgeryOptionState === 'loading'">
+          <span *ngIf="submissionState === 'static'" class="display-6">Submit</span>
+          <div *ngIf="submissionState === 'loading'">
             <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
             <span class="display-6">Submitting...</span>
           </div>
@@ -430,380 +479,5 @@
       </div>
     </form>
   </div>
-  <!-- Surgery Questionnaire//end -->
-
-  <!-- -------------------------- -->
-
-  <!-- Non Surgery Questionnaire//start -->
-  <div class="container-fluid d-flex survey-container" *ngIf="nonSurgeryQuestionnaire" [@fade]>
-    <div class="d-flex title-bar">
-      <i class="bi bi-arrow-left" (click)="navBack()"></i>
-      <h1 class="display-2">Conte</h1>
-    </div>
-    <h1 class="display-4 mb-4"><b>Non-Surgery Questionnaire</b><i class="bi bi-clipboard2-check ms-1"></i></h1>
-    <form [formGroup]="nonSurgeryForm" (submit)="confirmNonSurgeryForm()">
-      <!------------------------------------->
-      <!-- NON-SURGERY || POSITION DETAILS -->
-      <!------------------------------------->
-      <p class="display-5 mt-3"><b>Position Details</b><i class="bi bi-journal-medical ms-1"></i></p>
-
-      <!-- NON-SURGERY || Doctor//start -->
-      <div *ngIf="f2.doctor.touched || f2.doctor.dirty" class="error-text">
-        <p *ngIf="f2.doctor.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Doctor Selection is required.</p>
-      </div>
-
-      <select
-        formControlName="doctor"
-        (change)="getSurgeries($any($event.target).value)"
-        [ngClass]="
-          (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
-            ? 'form-select question error-input '
-            : 'form-select question '
-        "
-      >
-        <option value="" disabled hidden>Choose your Doctor*</option>
-        <option *ngFor="let doctor of doctors" [value]="doctor.id" [selected]="doctor.id === f2.doctor.value">
-          {{ doctor.name }}
-        </option>
-      </select>
-      <!-- NON-SURGERY || Doctor//end -->
-
-      <!-- <input
-        type="text"
-        [ngClass]="
-          (f2.doctor.touched || f2.doctor.dirty) && f2.doctor.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Doctor*"
-        formControlName="doctor"
-      /> -->
-
-      <!-- NON-SURGERY || Doctor Dictation//start -->
-      <div *ngIf="f2.doctor_dictation.touched || f2.doctor_dictation.dirty" class="error-text">
-        <p *ngIf="f2.doctor_dictation.errors?.required">
-          <i class="bi bi-x-circle-fill me-1"></i>Doctor Dictation is required.
-        </p>
-      </div>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.doctor_dictation.touched || f2.doctor_dictation.dirty) && f2.doctor_dictation.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Doctor Dictation*"
-        formControlName="doctor_dictation"
-      />
-      <!-- NON-SURGERY || Doctor Dictaion//end -->
-
-      <!-- NON-SURGERY || Position//start -->
-      <div *ngIf="f2.position.touched || f2.position.dirty" class="error-text">
-        <p *ngIf="f2.position.errors?.required">
-          <i class="bi bi-x-circle-fill me-1"></i>Position selection is required.
-        </p>
-      </div>
-
-      <select
-        formControlName="position"
-        [ngClass]="
-          (f2.position.touched || f2.position.dirty) && f2.position.errors
-            ? 'form-select question error-input '
-            : 'form-select question '
-        "
-      >
-        <option value="" disabled hidden>Choose your Position*</option>
-        <option value="pitcher">Pitcher</option>
-        <option value="infielder">Infielder</option>
-        <option value="outfielder">Outfielder</option>
-        <option value="catcher">Catcher</option>
-      </select>
-      <!-- NON-SURGERY || Position//end -->
-
-      <!-- NON-SURGERY || EMV//start -->
-      <div *ngIf="f2.estimated_max_velocity.touched || f2.estimated_max_velocity.dirty" class="error-text">
-        <p *ngIf="f2.estimated_max_velocity.errors?.required">
-          <i class="bi bi-x-circle-fill me-1"></i>Estimated Max Velocity is required.
-        </p>
-      </div>
-      <div *ngIf="f2.estimated_max_velocity.touched && f2.estimated_max_velocity.dirty" class="error-text">
-        <p *ngIf="f2.estimated_max_velocity.errors?.pattern">
-          <i class="bi bi-x-circle-fill me-1"></i>EMV can only contain numbers.
-        </p>
-      </div>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.estimated_max_velocity.touched || f2.estimated_max_velocity.dirty) && f2.estimated_max_velocity.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Estimated Max Velocity*"
-        formControlName="estimated_max_velocity"
-      />
-      <!-- NON-SURGERY || EMV//end -->
-
-      <!----------------------------------->
-      <!-- NON-SURGERY || INJURY DETAILS -->
-      <!----------------------------------->
-      <p class="display-5 mt-5"><b>Injury Details</b><i class="bi bi-clipboard2-pulse ms-1"></i></p>
-
-      <!-- NON-SURGERY || Injury//start -->
-      <div *ngIf="f2.injury_date.touched || f2.injury_date.dirty" class="error-text">
-        <p *ngIf="f2.injury_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
-      </div>
-
-      <input
-        placeholder="Injury Date*"
-        [ngClass]="
-          (f2.injury_date.touched || f2.injury_date.dirty) && f2.injury_date.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        type="date"
-        max="9999-12-31"
-        formControlName="injury_date"
-      />
-      <!-- NON-SURGERY || Injury//end -->
-
-      <!-- <select
-        [ngClass]="
-          (f2.injury.touched || f2.injury.dirty) && f2.injury.errors
-            ? 'form-select question error-input '
-            : 'form-select question '
-        "
-        formControlName="injury"
-      >
-        <option value="" disabled hidden>Choose Injury*</option>
-        <option value="Surgery 1">Surgery One</option>
-        <option value="Surgery 2">Surgery Two</option>
-        <option value="Surgery 3">Surgery Three</option>
-      </select> -->
-
-      <!-- NON-SURGERY || Injury//start -->
-      <div *ngIf="f2.injury.touched || f2.injury.dirty" class="error-text">
-        <p *ngIf="f2.injury.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury name is required.</p>
-      </div>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.injury.touched || f2.injury.dirty) && f2.injury.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Injury Occured*"
-        formControlName="injury"
-      />
-      <!-- NON-SURGERY || Injury//end -->
-
-      <!------------------------------------------------->
-      <!-- NON-SURGERY || DEMOGRAPHIC/CCONTACT DETAILS -->
-      <!------------------------------------------------->
-      <p class="display-5 mt-5"><b>Demographics/Contact Details</b><i class="bi bi-person-badge-fill ms-1"></i></p>
-
-      <!-- NON-SURGERY || First & Last Name//start -->
-      <div
-        *ngIf="f2.first_name.touched || f2.first_name.dirty || f2.last_name.touched || f2.last_name.dirty"
-        class="error-text"
-      >
-        <p *ngIf="f2.first_name.errors?.required || f2.last_name.errors?.required">
-          <i class="bi bi-x-circle-fill me-1"></i>Name is required.
-        </p>
-      </div>
-
-      <div *ngIf="f2.first_name.touched && f2.first_name.dirty" class="error-text">
-        <p *ngIf="f2.first_name.errors?.minlength">
-          <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
-        </p>
-        <p *ngIf="f2.first_name.errors?.maxlength">
-          <i class="bi bi-x-circle-fill me-1"></i>First name should be between 2 and 20 characters.
-        </p>
-      </div>
-
-      <div *ngIf="f2.last_name.touched && f2.last_name.dirty" class="error-text">
-        <p *ngIf="f2.last_name.errors?.minlength">
-          <i class="bi bi-x-circle-fill me-1"></i>Last name should be between 2 and 20 characters.
-        </p>
-        <p *ngIf="f2.last_name.errors?.maxlength">
-          <i class="bi bi-x-circle-fill me-1"></i>Last name should be between 2 and 20 characters.
-        </p>
-      </div>
-
-      <div class="row">
-        <input
-          type="text"
-          [ngClass]="
-            (f2.first_name.touched || f2.first_name.dirty) && f2.first_name.errors
-              ? 'form-control question col me-3 error-input '
-              : 'form-control question col me-3 '
-          "
-          placeholder="First Name*"
-          formControlName="first_name"
-        />
-        <input
-          type="text"
-          [ngClass]="
-            (f2.last_name.touched || f2.last_name.dirty) && f2.last_name.errors
-              ? 'form-control question col  error-input '
-              : 'form-control question col  '
-          "
-          placeholder="Last Name*"
-          formControlName="last_name"
-        />
-      </div>
-      <!-- NON-SURGERY || First & Last Name//end -->
-
-      <!-- NON-SURGERY || Cell Phone//start -->
-      <div *ngIf="f2.cell_phone.touched || f2.cell_phone.dirty" class="error-text">
-        <p *ngIf="f2.cell_phone.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Cell Phone is required.</p>
-      </div>
-      <div *ngIf="f2.cell_phone.touched && f2.cell_phone.dirty" class="error-text">
-        <p *ngIf="f2.cell_phone.errors?.pattern">
-          <i class="bi bi-x-circle-fill me-1"></i>Please enter your phone number in valid format.
-        </p>
-      </div>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.cell_phone.touched || f2.cell_phone.dirty) && f2.cell_phone.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Cell Phone*"
-        formControlName="cell_phone"
-      />
-      <!-- NON-SURGERY || Cell Phone//end -->
-
-      <!-- NON-SURGERY || Birth Date//start -->
-      <div *ngIf="f2.birth_date.touched || f2.birth_date.dirty" class="error-text">
-        <p *ngIf="f2.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
-      </div>
-
-      <input
-        placeholder="Birth Date*"
-        [ngClass]="
-          (f2.birth_date.touched || f2.birth_date.dirty) && f2.birth_date.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        type="date"
-        max="2000-01-01"
-        formControlName="birth_date"
-      />
-      <!-- NON-SURGERY || Birth Date//end -->
-
-      <!-- NON-SURGERY || Address//start -->
-      <div *ngIf="f2.address.touched || f2.address.dirty" class="error-text">
-        <p *ngIf="f2.address.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Address is required.</p>
-      </div>
-
-      <input
-        type="text"
-        [ngClass]="
-          (f2.address.touched || f2.address.dirty) && f2.address.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="Address*"
-        formControlName="address"
-      />
-      <!-- NON-SURGERY || Address//end -->
-
-      <!-- NON-SURGERY || City & State//start -->
-      <div *ngIf="f2.city.touched || f2.city.dirty" class="error-text">
-        <p *ngIf="f2.city.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>City name is required.</p>
-      </div>
-
-      <div *ngIf="f2.state.touched || f2.state.dirty" class="error-text">
-        <p *ngIf="f2.state.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>State name is required.</p>
-      </div>
-
-      <div *ngIf="f2.city.touched && f2.city.dirty" class="error-text">
-        <p *ngIf="f2.city.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid City name.</p>
-      </div>
-
-      <div *ngIf="f2.state.touched && f2.state.dirty" class="error-text">
-        <p *ngIf="f2.state.errors?.pattern"><i class="bi bi-x-circle-fill me-1"></i>Invalid State.</p>
-      </div>
-
-      <div class="row">
-        <input
-          type="text"
-          [ngClass]="
-            (f2.city.touched || f2.city.dirty) && f2.city.errors
-              ? 'form-control question col me-3 error-input '
-              : 'form-control question col me-3 '
-          "
-          placeholder="City*"
-          formControlName="city"
-        />
-        <input
-          type="text"
-          [ngClass]="
-            (f2.state.touched || f2.state.dirty) && f2.state.errors
-              ? 'form-control question col error-input '
-              : 'form-control question col '
-          "
-          placeholder="State*"
-          formControlName="state"
-        />
-      </div>
-      <!-- NON-SURGERY || City & State//end -->
-
-      <!-- NON-SURGERY || ZIP Code//start -->
-      <div *ngIf="f2.zip_code.touched || f2.zip_code.dirty" class="error-text">
-        <p *ngIf="f2.zip_code.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>ZIP Code is required.</p>
-      </div>
-
-      <div *ngIf="f2.zip_code.touched && f2.zip_code.dirty" class="error-text">
-        <p *ngIf="f2.zip_code.errors?.minlength">
-          <i class="bi bi-x-circle-fill me-1"></i>ZIP code must be atleast 5 characters long.
-        </p>
-        <p *ngIf="f2.zip_code.errors?.pattern">
-          <i class="bi bi-x-circle-fill me-1"></i>ZIP code can only contain numbers.
-        </p>
-      </div>
-      <input
-        type="text"
-        maxlength="5"
-        [ngClass]="
-          (f2.zip_code.touched || f2.zip_code.dirty) && f2.zip_code.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        placeholder="ZIP Code*"
-        formControlName="zip_code"
-      />
-      <!-- NON-SURGERY || ZIP Code//end -->
-
-      <!-- NON-SURGERY || Form Info -->
-      <div *ngIf="nonSurgeryForm.invalid" class="info-text" [@fade]>
-        <p><i class="bi bi-info-circle me-1"></i>Fields marked with * are required to submit.</p>
-      </div>
-
-      <!-- NON-SURGERY || Submit Button -->
-      <div class="d-flex justify-content-center mt-3 mb-3">
-        <button
-          class="btn btn-primary btn-confirm"
-          type="submit"
-          (click)="confirmNonSurgeryForm()"
-          [disabled]="
-            nonSurgeryForm.invalid || nonSurgeryOptionState == 'loading' || nonSurgeryOptionState == 'loading'
-          "
-        >
-          <span *ngIf="nonSurgeryOptionState === 'static'" class="display-6">Submit</span>
-          <div *ngIf="nonSurgeryOptionState === 'loading'">
-            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-            <span class="display-6">Submitting...</span>
-          </div>
-        </button>
-      </div>
-    </form>
-  </div>
-  <!-- Non Surgery Questionnaire//end -->
 </div>
 <!-- Questionnaire//end -->
