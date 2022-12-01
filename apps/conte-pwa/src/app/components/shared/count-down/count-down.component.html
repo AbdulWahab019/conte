@@ -6,4 +6,5 @@
   </div>
 </div>
 
-<h1 *ngIf="!showTimer" class="start-btn" [@fade] (click)="navToDashboard()">Start Your Treatment Plan</h1>
+<h6 *ngIf="showTimer" class="nav-btn mt-3" [@fade] (click)="trialView()">Navigate to Dashboard</h6>
+<h1 *ngIf="!showTimer" class="nav-btn" [@fade] (click)="navToDashboard()">Start Your Treatment Plan</h1>

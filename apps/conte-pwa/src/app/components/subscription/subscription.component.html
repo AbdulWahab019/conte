@@ -30,7 +30,7 @@
     <!-- SUBSCRIPTION FORM -->
     <div *ngIf="subscriptionFormRendered">
       <div class="subscriptions">
-        <div (click)="monthlySubscription()" [ngClass]="sub === 'monthly' ? 'selected-product mb-2' : 'product mb-2 '">
+        <div class="product mb-2">
           <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" />
 
           <div class="description">
@@ -46,7 +46,7 @@
           class="btn btn-primary btn-confirm"
           type="button"
           (click)="confirmSubscription()"
-          [disabled]="!this.sub || buttonState === 'loading'"
+          [disabled]="buttonState === 'loading'"
         >
           <span *ngIf="buttonState === 'static'" class="display-6">Subscribe</span>
           <div *ngIf="buttonState === 'loading'">

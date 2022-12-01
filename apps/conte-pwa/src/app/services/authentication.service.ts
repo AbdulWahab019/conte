@@ -11,11 +11,11 @@ export class AuthenticationService {
   //TODO add interfaces for request and response
 
   async accountRegister(credentials: { email: string; password: string; confirm_password: string }): Promise<any> {
-    return await this.http.post<any>(`${AUTH}/register`, credentials).toPromise();
+    return await this.http.post<any>(`${AUTH}/register`, credentials, { headers: { skip: 'true' } }).toPromise();
   }
 
   async accountLogin(credentials: { email: string; password: string }): Promise<any> {
-    return await this.http.post<any>(`${AUTH}/login`, credentials).toPromise();
+    return await this.http.post<any>(`${AUTH}/login`, credentials, { headers: { skip: 'true' } }).toPromise();
   }
 
   async getUserDetails(): Promise<any> {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerService } from '../../../services/spinner.service';
 import { ToastService } from '../../../services/toast.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
@@ -19,11 +19,6 @@ export class TreatmentPlanComponent implements OnInit {
   todaysDate = new Date();
   date = '';
   renderTaskDetails = false;
-  treatmentPlanDate = new NgbDate(
-    this.todaysDate.getFullYear(),
-    this.todaysDate.getMonth() + 1,
-    this.todaysDate.getDate()
-  );
   buttonState = 'loading';
   dailyTasks: therapyTask[] = [] as therapyTask[];
   pendingTasks!: any;
@@ -41,8 +36,7 @@ export class TreatmentPlanComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.treatmentPlanDate = this.treatmentPlanService.getTreatmentPlanDate();
-    this.date = `${this.treatmentPlanDate.month} - ${this.treatmentPlanDate.day} - ${this.treatmentPlanDate.year}`;
+    this.date = this.treatmentPlanService.getTreatmentPlanDate();
 
     this.dailyTasks = await this.treatmentPlanService.getTherapyTasks();
     this.pendingTasks = await this.treatmentPlanService.getPendingTasks();
@@ -50,11 +44,11 @@ export class TreatmentPlanComponent implements OnInit {
     if (!this.dailyTasks.length) this.getTasks();
   }
 
-  getTasks(date = `${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`) {
+  getTasks() {
     this.spinner.show();
 
     this.treatmentPlanService
-      .getDailyTasks(date)
+      .getDailyTasks(this.date)
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
         if (resp.data.pending_tasks_dates?.length) {
@@ -92,18 +86,11 @@ export class TreatmentPlanComponent implements OnInit {
 
   navToSpecificTask = (date: string): void => {
     this.date = date;
-    const formattedDate = new Date(date);
 
-    this.treatmentPlanDate = new NgbDate(
-      formattedDate.getFullYear(),
-      formattedDate.getMonth() + 1,
-      formattedDate.getDate()
-    );
-
-    this.treatmentPlanService.setTreatmentPlanDate(this.treatmentPlanDate);
+    this.treatmentPlanService.setTreatmentPlanDate(date);
 
     this.modalService.dismissAll(this.pendingTasksModal);
-    this.getTasks(date);
+    this.getTasks();
   };
 
   skipSpecificTask = (date: string, pending_tasks: any): void => {

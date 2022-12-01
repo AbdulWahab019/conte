@@ -43,47 +43,105 @@
     background-color: #686867;
   }
 
-  .calender-widget {
-    height: 100px;
+  .calendar-widget {
     width: 100%;
-    padding: 5%;
+    padding: 2%;
 
     border-radius: 26px;
 
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 
     background-color: rgb(218, 218, 218);
 
-    .plan-date {
+    .spinner-border {
+      margin: 10px 0 10px 0;
+      font-size: x-large;
+      color: #020254;
+
+      height: 4vh;
+      width: 4vh;
+    }
+
+    .widget-heading {
       width: 100%;
-      position: relative;
+      font-size: large;
+      font-weight: 500;
+      color: #020254;
+      margin-bottom: 5px;
+    }
 
-      i {
-        position: absolute;
-        top: 0;
-        right: 0;
+    .calendar {
+      width: 80%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
 
-        margin: 0.4rem 1% 0 0;
-        font-size: 18px;
+    @media screen and (min-width: 1350px) {
+      .calendar {
+        width: 60%;
+      }
+    }
+
+    .horizontal {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
+    i {
+      padding: 0 3px 0 3px;
+      border-radius: 8px;
+      background-color: #e2dede;
+      box-shadow: 0 2px 10px grey;
+
+      cursor: pointer;
+    }
+
+    .days {
+      margin: 0 0 10px 20px;
+
+      &:first-child {
+        margin: 0 0 10px 0;
+      }
+
+      .day-name {
+        color: #9e9a9a;
+        font-size: medium;
+      }
+      .day-digit {
+        margin-bottom: 4px;
+
+        color: #020254;
+        font-size: x-large;
+        font-family: sans-serif;
+
         cursor: pointer;
       }
 
-      .date {
-        border: none;
-        border-bottom: 2px solid black;
-        outline: none;
-
-        background-color: transparent;
+      .selected-digit {
+        color: white;
+        background-color: #2f2fb7;
+        border-radius: 24px;
+        padding: 0 5px 0 5px;
       }
-      .date:focus {
-        outline: none !important;
-        box-shadow: none !important;
-        border-bottom: 2px solid rgb(91, 243, 131);
 
-        font-size: 17px;
+      .status {
+        width: 8px;
+        height: 8px;
+        border-radius: 24px;
+        background-color: grey;
       }
+
+      .status-active {
+        background-color: rgb(14, 135, 14);
+      }
+    }
+
+    .active {
+      background-color: red;
     }
   }
 
@@ -244,6 +302,7 @@
     width: 100%;
 
     margin-bottom: 25px; /* Temp till screen is filled */
+    padding-right: 2%;
 
     display: flex;
     justify-content: center;

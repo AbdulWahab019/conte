@@ -140,7 +140,12 @@ export async function getUserTreatmentPlan(user_id: number) {
 
 export async function getUserTreatmentPlanTasks(user_id: number, start_tp_day: number, end_tp_day: number) {
   return await UserTreatmentPlanTasks.findAll({
-    attributes: ['tp_day', [sequelize.fn('COUNT', 'tp_day'), 'total_tasks']],
+    attributes: [
+      'tp_day',
+      [sequelize.fn('COUNT', 'tp_day'), 'total_tasks'],
+      [sequelize.literal(`sum(IIF(is_completed = 1, 1, 0))`), 'completed_tasks'],
+      [sequelize.literal(`sum(IIF(is_skipped = 1, 1, 0))`), 'skipped_tasks'],
+    ],
     where: {
       user_id,
       tp_day: { [Op.gte]: start_tp_day, [Op.lte]: end_tp_day },
@@ -167,13 +172,20 @@ export async function getUserTasksCalendarService(user_id: number, date: string)
 
   const user_tasks = [];
   for (let i = tp_day; i <= end_tp_day; i++) {
-    const taskDay = TreatmentPlanTasks.find((task) => task.tp_day === i)?.toJSON() || { tp_day: i, total_tasks: 0 };
+    const taskDay = TreatmentPlanTasks.find((task) => task.tp_day === i)?.toJSON() || {
+      tp_day: i,
+      total_tasks: 0,
+      completed_tasks: 0,
+      skipped_tasks: 0,
+    };
     const task_date =
       i === tp_day ? monthFirstDate.format('YYYY-MM-DD') : monthFirstDate.add(1, 'day').format('YYYY-MM-DD');
 
     user_tasks.push({
       tp_day: taskDay.tp_day,
       total_tasks: taskDay.total_tasks,
+      completed_tasks: taskDay.completed_tasks,
+      skipped_tasks: taskDay.skipped_tasks,
       date: task_date,
       selected: moment(task_date).diff(moment(), 'days') === 0,
       day: moment(task_date).format('dddd'),
