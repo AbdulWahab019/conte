@@ -8,7 +8,7 @@ export interface submitFeedbackData {
   task_id: number;
 }
 
-export interface monthlyData {
+export interface dailyData {
   tp_day: number;
   total_tasks: number;
   completed_tasks: number;

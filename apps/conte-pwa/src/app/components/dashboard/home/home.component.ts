@@ -6,7 +6,7 @@ import { ToastService } from '../../../services/toast.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
-import { monthlyData } from '../../../models/treatmentplan';
+import { dailyData } from '../../../models/treatmentplan';
 import { DashboardService } from '../../../services/dashboard.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { delay } from '../../../utils/constants';
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   pendingTasks: any;
   pendingTasksModal: any;
   taskFeedbackModal: any;
-  monthlyData: monthlyData[] = [];
+  monthlyData: dailyData[] = [];
   currentMonth = moment().format('MMMM');
   currentYear = moment().format('YYYY');
   @ViewChild('selectedDay') private selectedDay: ElementRef = {} as ElementRef;
@@ -122,7 +122,7 @@ export class HomeComponent implements OnInit {
           date.selected = false;
         });
 
-        this.monthlyData[this.monthlyData.findIndex((day: monthlyData) => day.date === this.date)].selected = true;
+        this.monthlyData[this.monthlyData.findIndex((day: dailyData) => day.date === this.date)].selected = true;
         this.calendarApiLoaded = true;
 
         this.scrollToSelectedDay();
@@ -147,8 +147,8 @@ export class HomeComponent implements OnInit {
   saveDate(date: string, index: number) {
     this.treatmentPlanService.setTreatmentPlanDate(date);
     this.date = date;
-    this.monthlyData.forEach((date) => {
-      date.selected = false;
+    this.monthlyData.forEach((day: dailyData) => {
+      day.selected = false;
     });
 
     this.monthlyData[index].selected = true;
