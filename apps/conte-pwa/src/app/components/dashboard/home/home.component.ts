@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerService } from '../../../services/spinner.service';
 import { ToastService } from '../../../services/toast.service';
-import { TreatmentPlanService } from '../../../services/treatment-plan.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
+import { dailyData } from '../../../models/treatmentplan';
+import { DashboardService } from '../../../services/dashboard.service';
+import { TreatmentPlanService } from '../../../services/treatment-plan.service';
+import { delay } from '../../../utils/constants';
 
 @Component({
   selector: 'conte-home',
@@ -15,12 +18,11 @@ import { GenericModalComponent } from '../../shared/modals/generic/generic-modal
   animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate(760)])])],
 })
 export class HomeComponent implements OnInit {
-  tpStartDate!: NgbDate;
-  todaysDate!: NgbDate;
-  treatmentPlanDate!: NgbDate;
   date = '';
+  trialView = false;
   videoURL = '';
   apiLoaded = false;
+  calendarApiLoaded = false;
   areTasksCompleted = false;
   treatmentPlanStatus = '';
   treatmentPlanStartDate = new Date();
@@ -28,8 +30,13 @@ export class HomeComponent implements OnInit {
   pendingTasks: any;
   pendingTasksModal: any;
   taskFeedbackModal: any;
+  monthlyData: dailyData[] = [];
+  currentMonth = moment().format('MMMM');
+  currentYear = moment().format('YYYY');
+  @ViewChild('selectedDay') private selectedDay: ElementRef = {} as ElementRef;
 
   constructor(
+    private dashboardService: DashboardService,
     private treatmentPlanService: TreatmentPlanService,
     private router: Router,
     private modalService: NgbModal,
@@ -38,38 +45,30 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.todaysDate = this.treatmentPlanService.getTodaysDate();
-    this.treatmentPlanDate = this.treatmentPlanService.getTreatmentPlanDate();
-    this.date = `${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`;
+    this.date = this.treatmentPlanService.getTreatmentPlanDate();
+    this.trialView = this.dashboardService.getTrialView();
     this.getTreatmentPlanDetail();
+    this.getCalendarData();
   }
 
-  saveDate() {
-    this.treatmentPlanService.setTreatmentPlanDate(this.treatmentPlanDate);
-    this.date = `${this.treatmentPlanDate.year}-${this.treatmentPlanDate.month}-${this.treatmentPlanDate.day}`;
-    this.getTreatmentPlanDetail();
+  handleNav = (): void => {
+    this.ngOnInit();
   }
+
 
   getTreatmentPlanDetail() {
     this.spinner.show();
     this.apiLoaded = false;
 
-    this.treatmentPlanService
+    this.dashboardService
       .getTreatmentPlanDetails(this.date)
       .then((resp) => {
         this.videoURL = resp.data?.video_url;
         this.areTasksCompleted = resp.data?.are_tasks_completed;
         const tpDiff = moment(resp.data.tp_start_date).diff(moment(new Date()), 'days');
 
-        if (tpDiff <= 0) {
+        if (tpDiff <= 0 || this.trialView) {
           this.treatmentPlanStatus = 'started';
-          const formattedTpDate = new Date(resp.data.tp_start_date);
-
-          this.tpStartDate = new NgbDate(
-            formattedTpDate.getFullYear(),
-            formattedTpDate.getMonth() + 1,
-            formattedTpDate.getDate()
-          );
 
           this.treatmentPlanService
             .getDailyTasks(this.date)
@@ -89,6 +88,7 @@ export class HomeComponent implements OnInit {
                 this.noTasksAvailable = true;
               }
 
+              this.getCalendarData();
               this.apiLoaded = true;
               this.spinner.hide();
             })
@@ -109,6 +109,64 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  getCalendarData() {
+    this.calendarApiLoaded = false;
+    this.currentMonth = moment(this.date).format('MMMM');
+    this.currentYear = moment(this.date).format('YYYY');
+
+    this.dashboardService
+      .getCalendarDetails(this.date)
+      .then((resp) => {
+        this.monthlyData = resp.data;
+        this.monthlyData.forEach((date) => {
+          date.selected = false;
+        });
+
+        this.monthlyData[this.monthlyData.findIndex((day: dailyData) => day.date === this.date)].selected = true;
+        this.calendarApiLoaded = true;
+
+        this.scrollToSelectedDay();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  async scrollToSelectedDay() {
+    await delay(1000)
+    const element = document.getElementById('selected-day');
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'center',
+      });
+    }
+  }
+
+  saveDate(date: string, index: number) {
+    this.treatmentPlanService.setTreatmentPlanDate(date);
+    this.date = date;
+    this.monthlyData.forEach((day: dailyData) => {
+      day.selected = false;
+    });
+
+    this.monthlyData[index].selected = true;
+    this.getTreatmentPlanDetail();
+  }
+
+  previousMonth() {
+    this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).subtract(1, 'month').format('YYYY-MM-DD'));
+    this.date = this.treatmentPlanService.getTreatmentPlanDate();
+    this.getCalendarData();
+  }
+
+  nextMonth() {
+    this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).add(1, 'month').format('YYYY-MM-DD'));
+    this.date = this.treatmentPlanService.getTreatmentPlanDate();
+    this.getCalendarData();
+  }
+
   checkPendingTasks() {
     this.pendingTasksModal = this.modalService.open(GenericModalComponent, { centered: true });
     this.pendingTasksModal.componentInstance.heading = 'Pending Tasks';
@@ -125,15 +183,8 @@ export class HomeComponent implements OnInit {
 
   navToSpecificDay = (date: string): void => {
     this.date = date;
-    const formattedDate = new Date(date);
 
-    this.treatmentPlanDate = new NgbDate(
-      formattedDate.getFullYear(),
-      formattedDate.getMonth() + 1,
-      formattedDate.getDate()
-    );
-
-    this.treatmentPlanService.setTreatmentPlanDate(this.treatmentPlanDate);
+    this.treatmentPlanService.setTreatmentPlanDate(date);
 
     this.modalService.dismissAll(this.pendingTasksModal);
     this.getTreatmentPlanDetail();

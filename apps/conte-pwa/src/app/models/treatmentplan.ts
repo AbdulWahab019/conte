@@ -8,6 +8,16 @@ export interface submitFeedbackData {
   task_id: number;
 }
 
+export interface dailyData {
+  tp_day: number;
+  total_tasks: number;
+  completed_tasks: number;
+  skipped_tasks: number;
+  date: string;
+  selected: boolean;
+  day: string;
+}
+
 export interface therapyTask {
   id: number;
   user_id: number;
