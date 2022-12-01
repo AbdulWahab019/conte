@@ -102,14 +102,7 @@ export async function getUserTasksByDate(user_id: number, date: string) {
 }
 
 export async function updateUserTask(task_id: number, status: boolean, user_id: number, comment: string) {
-  if (comment) {
-    const data = {
-      task_id,
-      feedback: comment,
-      type: 1,
-    };
-    await UserTreatmentPlanTaskFeedback.create(data);
-  }
+  if (comment) await UserTreatmentPlanTaskFeedback.create({ task_id, feedback: comment, type: 1 });
   return await UserTreatmentPlanTasks.update({ is_completed: status }, { where: { id: task_id, user_id } });
 }
 

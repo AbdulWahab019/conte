@@ -22,7 +22,7 @@ export async function getDashboardData(req: Request, res: Response) {
   return sendResponse(res, 201, SUCCESS, apiResp);
 }
 
-export async function getUserTasksCalender(req: Request, res: Response) {
+export async function getUserTasksCalendar(req: Request, res: Response) {
   const { id: user_id } = req['user'];
   const { date } = req.params;
 
