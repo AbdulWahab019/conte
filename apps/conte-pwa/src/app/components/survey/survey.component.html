@@ -168,19 +168,36 @@
           </p>
         </div>
 
-        <input
-          placeholder="Surgery Date*"
+        <!-- <input
+          placeholder="Surgery Date*; "
           [ngClass]="
             (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
               ? 'form-control question error-input '
               : 'form-control question'
           "
-          type="text"
-          onfocus="(this.type='date')"
-          onblur="(this.type='text')"
+          type="date"
           max="9999-12-31"
           formControlName="surgery_date"
-      /></ng-container>
+        /> -->
+
+        <div class="icon-append">
+          <input
+            placeholder="Surgery Date*"
+            [ngClass]="
+              (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
+                ? 'form-control question error-input '
+                : 'form-control question'
+            "
+            name="dp1"
+            ngbDatepicker
+            readonly
+            (click)="d1.toggle()"
+            #d1="ngbDatepicker"
+            formControlName="surgery_date"
+          />
+          <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
+        </div>
+      </ng-container>
       <!-- SURGERY || Surgery Date//end -->
 
       <!-- SURGERY || Primary Surgery//start -->
@@ -237,19 +254,34 @@
           <p *ngIf="f.injury_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
         </div>
 
-        <input
-          placeholder="Injury Date*"
+        <!-- <input
+          placeholder="Injury Date*; "
           [ngClass]="
             (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
               ? 'form-control question error-input '
               : 'form-control question '
           "
-          type="text"
-          onfocus="(this.type='date')"
-          onblur="(this.type='text')"
+          type="date"
           max="9999-12-31"
-          formControlName="injury_date"
-      /></ng-container>
+          formControlName="injury_date" /> -->
+
+        <div class="icon-append">
+          <input
+            placeholder="Injury Date*"
+            [ngClass]="
+              (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
+                ? 'form-control question error-input '
+                : 'form-control question'
+            "
+            name="dp1"
+            ngbDatepicker
+            #d2="ngbDatepicker"
+            readonly
+            (click)="d2.toggle()"
+            formControlName="injury_date"
+          />
+          <i class="bi bi-calendar-date" (click)="d2.toggle()"></i></div
+      ></ng-container>
       <!-- NON-SURGERY || Injury Date//end -->
 
       <!-- NON-SURGERY || Injury//start -->
@@ -357,19 +389,36 @@
         <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
       </div>
 
-      <input
-        placeholder="Birth Date*"
+      <!-- <input
+        placeholder="Birth Date*; "
         [ngClass]="
           (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
             ? 'form-control question error-input '
             : 'form-control question '
         "
-        type="text"
-        onfocus="(this.type='date')"
-        onblur="(this.type='text')"
+        type="date"
         max="2000-01-01"
         formControlName="birth_date"
-      />
+      /> -->
+
+      <div class="icon-append">
+        <input
+          placeholder="Birth Date*"
+          [ngClass]="
+            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question'
+          "
+          name="dp1"
+          ngbDatepicker
+          readonly
+          (click)="d3.toggle()"
+          #d3="ngbDatepicker"
+          [maxDate]="{ year: 1999, month: 12, day: 31 }"
+          formControlName="birth_date"
+        />
+        <i class="bi bi-calendar-date" (click)="d3.toggle()"></i>
+      </div>
       <!-- Birth Date//end -->
 
       <!-- Address//start -->
