@@ -126,11 +126,13 @@ export class SurveyComponent implements OnInit {
     const doctor =
       this.doctors[this.doctors.findIndex((doctor: doctor) => doctor.id.toString() === this.f.doctor.value)].name;
 
+    const birth_date = `${this.f.birth_date.value.year}-${this.f.birth_date.value.month}-${this.f.birth_date.value.day}`;
+
     const user_demographics: UserDemographics = {
       first_name: this.f.first_name.value,
       last_name: this.f.last_name.value,
       cell_phone: this.f.cell_phone.value,
-      birth_date: this.f.birth_date.value,
+      birth_date,
       address: this.f.address.value,
       city: this.f.city.value,
       state: this.f.state.value,
@@ -151,8 +153,10 @@ export class SurveyComponent implements OnInit {
           this.surgeries.findIndex((surgery: surgery) => surgery.id.toString() === this.f.secondary_surgery.value)
         ]?.name;
 
+      const surgery_date = `${this.f.surgery_date.value.year}-${this.f.surgery_date.value.month}-${this.f.surgery_date.value.day}`;
+
       data = [
-        { id: 1, response: this.f.surgery_date.value },
+        { id: 1, response: surgery_date },
         { id: 2, response: primary_surgery },
         { id: 4, response: doctor },
         { id: 5, response: this.f.position.value },
@@ -167,8 +171,10 @@ export class SurveyComponent implements OnInit {
         user_demographics,
       };
     } else {
+      const injury_date = `${this.f.injury_date.value.year}-${this.f.injury_date.value.month}-${this.f.injury_date.value.day}`;
+
       data = [
-        { id: 20, response: this.f.injury_date.value },
+        { id: 20, response: injury_date },
         { id: 21, response: this.f.injury.value },
         { id: 22, response: doctor },
         { id: 23, response: this.f.doctor_dictation.value },
