@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SharedModule } from './components/shared/shared.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 /* Interceptors */
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -42,6 +43,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
     DashboardModule,
     SharedModule,
     BrowserAnimationsModule,
