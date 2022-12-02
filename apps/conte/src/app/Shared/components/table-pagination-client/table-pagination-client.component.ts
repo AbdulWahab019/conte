@@ -76,7 +76,8 @@ export class TablePaginationClientComponent implements OnInit {
       this.totalPages = Math.ceil(this.data.length / this.pageSize);
       this.setTotalPages.emit(this.totalPages);
       return this.totalPages;
-    } else return 0;
+    }
+    return 0;
   }
 
   showChat(record: any) {
@@ -93,7 +94,6 @@ export class TablePaginationClientComponent implements OnInit {
 
         if (!match) {
           this.idSpecificData.push({ id: record.id, data: resp.data });
-          console.log(this.idSpecificData);
         }
       });
       record.expanssion = true;
