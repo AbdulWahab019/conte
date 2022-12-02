@@ -168,19 +168,22 @@
           </p>
         </div>
 
-        <!-- <input
-          placeholder="Surgery Date*; "
-          [ngClass]="
-            (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question'
-          "
-          type="date"
-          max="9999-12-31"
-          formControlName="surgery_date"
-        /> -->
+        <div class="form-floating">
+          <input
+            placeholder="Surgery Date*"
+            [ngClass]="
+              (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
+                ? 'form-control question error-input '
+                : 'form-control question'
+            "
+            type="date"
+            max="9999-12-31"
+            formControlName="surgery_date"
+          />
+          <label>Surgery Date*</label>
+        </div>
 
-        <div class="icon-append">
+        <!-- <div class="icon-append">
           <input
             placeholder="Surgery Date*"
             [ngClass]="
@@ -189,14 +192,14 @@
                 : 'form-control question'
             "
             name="dp1"
-            ngbDatepicker
+            n gbDatepicker
             readonly
             (click)="d1.toggle()"
             #d1="ngbDatepicker"
             formControlName="surgery_date"
           />
           <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
-        </div>
+        </div> -->
       </ng-container>
       <!-- SURGERY || Surgery Date//end -->
 
@@ -254,18 +257,21 @@
           <p *ngIf="f.injury_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
         </div>
 
-        <!-- <input
-          placeholder="Injury Date*; "
-          [ngClass]="
-            (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          type="date"
-          max="9999-12-31"
-          formControlName="injury_date" /> -->
+        <div class="form-floating">
+          <input
+            placeholder="Injury Date* "
+            [ngClass]="
+              (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
+                ? 'form-control question error-input '
+                : 'form-control question '
+            "
+            type="date"
+            max="9999-12-31"
+            formControlName="injury_date"
+          /><label>Injury Date*</label>
+        </div>
 
-        <div class="icon-append">
+        <!-- <div class="icon-append">
           <input
             placeholder="Injury Date*"
             [ngClass]="
@@ -280,8 +286,8 @@
             (click)="d2.toggle()"
             formControlName="injury_date"
           />
-          <i class="bi bi-calendar-date" (click)="d2.toggle()"></i></div
-      ></ng-container>
+          <i class="bi bi-calendar-date" (click)="d2.toggle()"></i></div> -->
+      </ng-container>
       <!-- NON-SURGERY || Injury Date//end -->
 
       <!-- NON-SURGERY || Injury//start -->
@@ -385,23 +391,26 @@
       <!-- Cell Phone//end -->
 
       <!-- Birth Date//start -->
+      <label>Birth Date*</label>
       <div *ngIf="f.birth_date.touched || f.birth_date.dirty" class="error-text">
         <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
       </div>
 
-      <!-- <input
-        placeholder="Birth Date*; "
-        [ngClass]="
-          (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
-            ? 'form-control question error-input '
-            : 'form-control question '
-        "
-        type="date"
-        max="2000-01-01"
-        formControlName="birth_date"
-      /> -->
+      <div class="form-floating">
+        <input
+          placeholder="Birth Date*"
+          [ngClass]="
+            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
+              ? 'form-control question error-input '
+              : 'form-control question '
+          "
+          type="date"
+          max="2004-01-01"
+          formControlName="birth_date"
+        /><label>Birth Date*</label>
+      </div>
 
-      <div class="icon-append">
+      <!-- <div class="icon-append">
         <input
           placeholder="Birth Date*"
           [ngClass]="
@@ -418,7 +427,7 @@
           formControlName="birth_date"
         />
         <i class="bi bi-calendar-date" (click)="d3.toggle()"></i>
-      </div>
+      </div> -->
       <!-- Birth Date//end -->
 
       <!-- Address//start -->
