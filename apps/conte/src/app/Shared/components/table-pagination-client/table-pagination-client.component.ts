@@ -102,7 +102,6 @@ export class TablePaginationClientComponent implements OnInit {
 
   getCurrentShowingRecords(pageSize: number, currentPage: number, totalRecords: number) {
     let last = pageSize * currentPage;
-    console.log(last);
     const first = last - (pageSize - 1);
     if (last > totalRecords) last = totalRecords;
     return `${first} - ${last}`;

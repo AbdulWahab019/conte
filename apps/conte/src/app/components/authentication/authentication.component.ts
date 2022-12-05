@@ -91,7 +91,7 @@ export class AuthenticationComponent implements OnInit {
 
       this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-      this.router.navigate(['home']);
+      this.router.navigate(['dashboard/users']);
     })
     .catch((err) => {
       console.error(err);
@@ -118,7 +118,7 @@ export class AuthenticationComponent implements OnInit {
 
       this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-      this.router.navigate(['home']);
+      this.router.navigate(['dashboard/users']);
     })
     .catch((err:any) => {
       console.error(err);

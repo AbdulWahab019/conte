@@ -21,7 +21,9 @@ export class TreatmentPlanService {
   private pendingTasks: any;
 
   constructor(private http: HttpClient) {}
-
+  async getTreatmentPlans(): Promise<any> {
+    return await this.http.get<any>(`${TREATMENTPLAN}/web`).toPromise();
+  }
   async getTasks(task_id: string): Promise<any> {
     return await this.http.get<any>(`${TREATMENTPLAN}/tasks/${task_id}/web`).toPromise();
   }

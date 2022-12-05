@@ -1,4 +1,4 @@
-<div class="table-data__wrapper table-responsive">
+<div class="table-data__wrapper">
   <table class="table table-data">
     <thead>
       <tr>
@@ -10,25 +10,9 @@
             [ngStyle]="header['sort'] ? { cursor: 'pointer' } : { cursor: 'default' }"
           >
             {{ header['title'] }}
-            <!-- <svg width="21px" height="21px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-              <g
-                fill="none"
-                [ngClass]="{ 'asc-sort': header['orderBy'] === 'ASC', 'desc-sort': header['orderBy'] === 'DESC' }"
-                fill-rule="evenodd"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                transform="translate(2 4)"
-              >
-                <path d="m8.5 8.5 4 4.107 4-4.107" />
-                <path d="m8.5 4.5-4-4-4 3.997" />
-                <path d="m4.5.5v12" />
-                <path d="m12.5.5v12" />
-              </g>
-            </svg> -->
           </span>
           <ng-template #noSort>
-            {{ header['title'] || header }}
+            {{ header['value'] || header }}
           </ng-template>
         </th>
         <!-- end//Sorting//header -->
@@ -58,28 +42,15 @@
     <tbody>
       <ng-container *ngFor="let record of data">
         <tr
-          [ngClass]="selectContent && record ? 'selected-row' : 'hover-row'"
           [style]="selectContent ? 'cursor:pointer;' : ''"
           container="body"
           (click)="expanssionToggle(record)"
         >
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">
-            <!-- Default Case -->
-            <!-- <span *ngIf="header !== 'physician_notes' && header !== 'group'">
-              {{ record[header] || record[header['title']] | customFieldFormat: header }} -->
-              <!-- For Row: Where value = 'null' -->
-              <!-- <span *ngIf="!record[header] && !record[header['title']]" style="color: gray"> None Specified </span>
-            </span> -->
-            <!-- For Column: 'Group//form' -->
             <span>
-              <div *ngIf="record[header.value] || record[header['title']]; else noGroup">
-                {{ record[header.value] || record[header['title']] | customFieldFormat: header.value }}
-                <i
-                  class="fa fa-pencil-square fa-lg ml-1 c-point"
-                  (click)="groupAssignFunction(record)"
-                  aria-hidden="true"
-                ></i>
+              <div>
+                {{ record[header['value']] }}
               </div>
               <ng-template #noGroup>
                 <div style="color: gray">
@@ -92,10 +63,6 @@
                 </div>
               </ng-template>
             </span>
-            <!-- For Column: 'Physician Notes//order-management' -->
-            <!-- <h6 *ngIf="title === 'physician_notes'" style="width: 220px; font-size: 14px">
-              {{ record[header] || record[header['title']] | customFieldFormat: header }}
-            </h6> -->
           </td>
 
           <!-- end//Table Data -->
@@ -197,38 +164,38 @@
         <div class="expansion" *ngIf="record.expanssion">
           <div class="record-container">
             <div *ngFor="let data of idSpecificData; let i = index">
-            <div *ngIf="data.id === record.id">
-              <div class="child-container" *ngIf="data?.data?.completed_tasks.length > 0">
-                <h4>Completed Tasks</h4>
-               <div class="task-list" *ngFor="let data of data?.data?.completed_tasks; let i = index">
-                <p>{{data.title}}</p>
-               </div>
-              </div>
-              <div class="child-container" *ngIf="data?.data?.skipped_tasks.length > 0">
-                <h4>Skipped Tasks</h4>
-                <div class="task-list" *ngFor="let data of data?.data?.skipped_tasks let i = index">
-                  <p>{{data.title}}</p>
-                 </div>
-              </div>
-              <div class="child-container" *ngIf="data?.data?.pending_tasks.length > 0">
-                <h4>Pending Tasks</h4>
-                <div class="task-list" *ngFor="let data of data?.data?.pending_tasks let i = index">
-                  <p>{{data.title}}</p>
-                 </div>
-              </div>
-              <div class="child-container" *ngIf="data?.data?.pending_tasks.length === 0">
-              <h4>Pending Tasks</h4>  
-              <p>No Pending tasks found</p>
-              </div>
-              <div class="child-container" *ngIf="data?.data?.completed_tasks.length === 0">
-                <h4>Completed Tasks</h4>  
-                <p>No completed tasks found</p>
+              <div *ngIf="data.id === record.id">
+                <div class="child-container" *ngIf="data?.data?.completed_tasks.length > 0">
+                  <h4>Completed Tasks</h4>
+                  <div class="task-list" *ngFor="let data of data?.data?.completed_tasks; let i = index">
+                    <p>{{ data.title }}</p>
+                  </div>
                 </div>
-              <div class="child-container" *ngIf="data?.data?.skipped_tasks.length === 0">
-              <h4>Skipped Tasks</h4>  
-              <p>No skipped tasks found</p>
+                <div class="child-container" *ngIf="data?.data?.skipped_tasks.length > 0">
+                  <h4>Skipped Tasks</h4>
+                  <div class="task-list" *ngFor="let data of data?.data?.skipped_tasks; let i = index">
+                    <p>{{ data.title }}</p>
+                  </div>
+                </div>
+                <div class="child-container" *ngIf="data?.data?.pending_tasks.length > 0">
+                  <h4>Pending Tasks</h4>
+                  <div class="task-list" *ngFor="let data of data?.data?.pending_tasks; let i = index">
+                    <p>{{ data.title }}</p>
+                  </div>
+                </div>
+                <div class="child-container" *ngIf="data?.data?.pending_tasks.length === 0">
+                  <h4>Pending Tasks</h4>
+                  <p>No Pending tasks found</p>
+                </div>
+                <div class="child-container" *ngIf="data?.data?.completed_tasks.length === 0">
+                  <h4>Completed Tasks</h4>
+                  <p>No completed tasks found</p>
+                </div>
+                <div class="child-container" *ngIf="data?.data?.skipped_tasks.length === 0">
+                  <h4>Skipped Tasks</h4>
+                  <p>No skipped tasks found</p>
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
@@ -237,8 +204,8 @@
   </table>
   <!-- PAGINATION -->
   <!-- <div *ngIf="isPaginationEnabled"> -->
-    <!-- start//Client Side Pagination -->
-    <!-- <pagination-template
+  <!-- start//Client Side Pagination -->
+  <!-- <pagination-template
       *ngIf="!serverSidePagination"
       [id]="paginateId"
       #p="paginationApi"
@@ -261,8 +228,8 @@
           >Page <b>{{ p.getTotalItems() === 0 ? 0 : currentPage }}</b> out of <b>{{ getTotalPages() }}</b></span
         >
         <span class="nxt-prev-page-arrows"> -->
-          <!-- Pagination: First Page -->
-          <!-- <span
+  <!-- Pagination: First Page -->
+  <!-- <span
             class="prev-btn"
             [ngbTooltip]="!p.isFirstPage() ? 'First Page' : ''"
             (click)="!p.isFirstPage() ? p.setCurrent(1) : ''"
@@ -270,8 +237,8 @@
           >
             <i class="fas fa-angle-left"><i class="fas fa-angle-left"></i></i>
           </span> -->
-          <!-- Pagination: Previous Page -->
-          <!-- <span
+  <!-- Pagination: Previous Page -->
+  <!-- <span
             class="prev-btn"
             [ngbTooltip]="!p.isFirstPage() ? 'Previous Page' : ''"
             (click)="!p.isFirstPage() ? p.previous() : ''"
@@ -279,8 +246,8 @@
           >
             <i class="fas fa-angle-left"></i>
           </span> -->
-          <!-- Pagination: Next Page -->
-          <!-- <span
+  <!-- Pagination: Next Page -->
+  <!-- <span
             class="nxt-btn"
             [ngbTooltip]="!p.isLastPage() ? 'Next Page' : ''"
             (click)="!p.isLastPage() ? p.next() : ''"
@@ -288,8 +255,8 @@
           >
             <i class="fas fa-angle-right"></i>
           </span> -->
-          <!-- Pagination: Last Page -->
-          <!-- <span
+  <!-- Pagination: Last Page -->
+  <!-- <span
             class="nxt-btn"
             [ngbTooltip]="!p.isLastPage() ? 'Last Page' : ''"
             (click)="!p.isLastPage() ? p.setCurrent(p.getLastPage()) : ''"
@@ -297,13 +264,13 @@
           >
             <i class="fas fa-angle-right"></i><i class="fas fa-angle-right"></i>
           </span> -->
-        <!-- </span>
+  <!-- </span>
       </div>
     </pagination-template> -->
-    <!-- end//Client Side Pagination -->
+  <!-- end//Client Side Pagination -->
 
-    <!-- start//Server Side Pagination -->
-    <!-- <div *ngIf="serverSidePagination" class="c-pagination__wrapper">
+  <!-- start//Server Side Pagination -->
+  <!-- <div *ngIf="serverSidePagination" class="c-pagination__wrapper">
       <div class="row-display">
         Displaying
         <span class="rows-record current"
@@ -327,8 +294,8 @@
           >Page <b>{{ serverSidePagination.currentPage }}</b> out of <b>{{ serverSidePagination.totalPages }}</b></span
         >
         <span class="nxt-prev-page-arrows"> -->
-          <!-- Server Side Pagination: First Page -->
-          <!-- <span
+  <!-- Server Side Pagination: First Page -->
+  <!-- <span
             *ngIf="paginationFirstPage"
             class="prev-btn"
             (click)="paginationFirstPage()"
@@ -337,8 +304,8 @@
             <i class="fas fa-angle-left"></i>
             <i class="fas fa-angle-left"></i>
           </span> -->
-          <!-- Server Side Pagination: Previous Page -->
-          <!-- <span
+  <!-- Server Side Pagination: Previous Page -->
+  <!-- <span
             *ngIf="paginationPrevPage"
             class="prev-btn"
             [ngbTooltip]="serverSidePagination.prevPage ? 'Previous Page' : ''"
@@ -348,8 +315,8 @@
             <i class="fas fa-angle-left"></i>
           </span> -->
 
-          <!-- start//Server Side Pagination: Custom Page -->
-          <!-- <span
+  <!-- start//Server Side Pagination: Custom Page -->
+  <!-- <span
             class="input-group page-group"
             *ngIf="paginationCustomPage"
             [ngbTooltip]="
@@ -387,10 +354,10 @@
               </span>
             </div>
           </span> -->
-          <!-- end//Server Side Pagination: Custom Page -->
+  <!-- end//Server Side Pagination: Custom Page -->
 
-          <!-- Server Side Pagination: Next Page -->
-          <!-- <span
+  <!-- Server Side Pagination: Next Page -->
+  <!-- <span
             *ngIf="paginationNextPage"
             class="nxt-btn"
             [ngbTooltip]="serverSidePagination.nextPage ? 'Next Page' : ''"
@@ -399,8 +366,8 @@
           >
             <i class="fas fa-angle-right"></i>
           </span> -->
-          <!-- Server Side Pagination: Last Page -->
-          <!-- <span
+  <!-- Server Side Pagination: Last Page -->
+  <!-- <span
             *ngIf="paginationLastPage"
             class="nxt-btn"
             [ngbTooltip]="serverSidePagination.nextPage ? 'Last Page' : ''"
@@ -413,7 +380,5 @@
         </span>
       </div>
     </div> -->
-    <!-- end//Server Side Pagination -->
-  </div>
-
-<!-- Comment Layout:  (state)//(description)//(category) || (description)-->
+  <!-- end//Server Side Pagination -->
+</div>

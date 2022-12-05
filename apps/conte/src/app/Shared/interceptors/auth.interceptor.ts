@@ -10,6 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router, private toast: ToastService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.headers.get('skip')) return next.handle(request);
     const token = localStorage.getItem('token');
     let authRequest = request;
 

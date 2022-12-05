@@ -3,12 +3,12 @@
     <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
       <div class="container">
         <img
-              src="../../../assets/logos/ThrowingProgressionPro.png"
-              alt="logo"
-              width="100"
-              height="73"
-              alt="Verahealth"
-            />
+          src="../../../assets/logos/ThrowingProgressionPro.png"
+          alt="logo"
+          width="100"
+          height="73"
+          alt="ThrowingProgression"
+        />
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <div class="ms-auto d-none d-lg-block">
             <!-- <div class="input-group">
@@ -43,12 +43,7 @@
       <app-navbar></app-navbar>
     </div>
     <div class="col-10">
-      <div class="card">
-        <app-table-pagination-client
-        [headers]="orderTableHeaders"
-        [data]="this.allUsers"
-        ></app-table-pagination-client>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

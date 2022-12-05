@@ -1,38 +1,14 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../Shared/services/user.service';
-import { TableHeaders } from '../../Shared/models/Generic';
 
 @Component({
   selector: 'conte-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   url = '';
-  allUsers: any = [];
-
-  orderTableHeaders: TableHeaders[] = [
-    { title: 'id', value: 'id', sort: false},
-    {
-      title: 'Name',
-      value: 'Name',
-      sort: false
-    },
-    { title: 'estimated_max_velocity', value: 'estimated_max_velocity', sort: false},
-    { title: 'email', value: 'email', sort: false},
-  ];
-  constructor(private router: Router, private UsersService: UserService) {}
-  ngOnInit(): void {
-    this.UsersService.getAllUsers().then((resp) => {
-      this.allUsers = resp.data.users.map((order: any) => ({
-        id: order.id,
-        Name: `${order.last_name}, ${order.first_name}`,
-        estimated_max_velocity: order.estimated_max_velocity,
-        email: order.email,
-      }));
-    });
-  }
+  constructor(private router: Router) {}
   logout() {
     localStorage.clear();
     this.router.navigate(['']);

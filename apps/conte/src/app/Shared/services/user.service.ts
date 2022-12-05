@@ -11,7 +11,6 @@ export class UserService {
   //TODO add interfaces for request and response
 
   async getAllUsers(): Promise<any> {
-    console.log('in');
     return await this.http.get<any>(`${USER}/web`).toPromise();
   }
 
