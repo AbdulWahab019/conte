@@ -2,10 +2,9 @@ import 'express-async-errors';
 
 import express = require('express');
 import cors = require('cors');
-
+import Sentry = require('@sentry/node');
+import Tracing = require('@sentry/tracing');
 import helmet from 'helmet';
-import * as Sentry from '@sentry/node';
-import * as Tracing from '@sentry/tracing';
 
 import { environment } from './config/config';
 import { routes } from './app/routes';

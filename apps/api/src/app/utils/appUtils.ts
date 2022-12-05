@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import * as Sentry from '@sentry/node';
+import { captureException } from '@sentry/node';
 
 export function sendResponse(res: Response, code: number, message: string, data?: unknown, error = undefined) {
-  if (error) Sentry.captureException(error);
+  if (error) captureException(error);
 
   return res.status(code).send({ code, message, data, error: error && error.message });
 }
