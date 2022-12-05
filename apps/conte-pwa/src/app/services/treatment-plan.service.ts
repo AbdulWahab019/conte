@@ -18,6 +18,12 @@ export class TreatmentPlanService {
 
   //TODO add interfaces for request and response
 
+  clearAllData(){
+    this.treatmentPlanDate = moment().format('YYYY-MM-DD');
+    this.dailyTasks = [];
+    this.pendingTasks = [];
+  }
+
   setTreatmentPlanDate(date: string) {
     this.treatmentPlanDate = date;
   }

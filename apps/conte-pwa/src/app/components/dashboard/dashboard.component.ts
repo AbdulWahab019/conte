@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { ToastService } from '../../services/toast.service';
+import { TreatmentPlanService } from '../../services/treatment-plan.service';
 import { delay } from '../../utils/constants';
 
 @Component({
@@ -12,7 +13,7 @@ import { delay } from '../../utils/constants';
 export class DashboardComponent implements OnInit {
   url = '';
 
-  constructor(private router: Router, private spinner: SpinnerService, private toast: ToastService) {}
+  constructor(private treatmentPlanService : TreatmentPlanService,private router: Router, private spinner: SpinnerService, private toast: ToastService) {}
 
   ngOnInit(): void {
     this.url = this.router.url;
@@ -20,7 +21,11 @@ export class DashboardComponent implements OnInit {
 
   navToHome() {
     this.url = '/dashboard';
-    this.router.navigate(['dashboard']);
+    this.treatmentPlanService.clearAllData();
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['dashboard']);
+    });
   }
 
   navToContact() {
@@ -35,6 +40,8 @@ export class DashboardComponent implements OnInit {
 
   async logout() {
     localStorage.clear();
+    this.treatmentPlanService.clearAllData();
+
     this.spinner.show();
     await delay(1000);
     this.spinner.hide();
