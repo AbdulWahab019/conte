@@ -8,18 +8,19 @@ import {
   skipTPDayTasks,
   getUserSkippedAndCompletedTasks,
   getTreatmentPlans,
+  getTreatmentPlanByPK,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
 import { INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
-import { UploadTreatmentPlanAPIReq } from '@conte/models';
+import { UploadTreatmentPlanAPIRequest } from '@conte/models';
 import { getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 
 export async function uploadTreatmentPlan(req: Request, res: Response) {
   const file: Express.Multer.File = req.file;
-  const { read_from_line, read_to_line, name, doctor_id, surgery_id }: UploadTreatmentPlanAPIReq = req.body;
+  const { read_from_line, read_to_line, name, doctor_id, surgery_id }: UploadTreatmentPlanAPIRequest = req.body;
 
   // Parse the file
   const treatmentPlanDetails = await parseTreatmentPlanFile(file, read_from_line, read_to_line);
@@ -95,6 +96,14 @@ export async function getSkippedAndCompletedTasks(req: Request, res: Response) {
   const { user_id } = req.params;
 
   const apiResp = await getUserSkippedAndCompletedTasks(Number(user_id));
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function getTreatmentPlanById(req: Request, res: Response) {
+  const { id } = req.params;
+
+  const apiResp = await getTreatmentPlanByPK(Number(id));
 
   return sendResponse(res, 200, SUCCESS, apiResp);
 }

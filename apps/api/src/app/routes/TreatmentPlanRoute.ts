@@ -10,6 +10,7 @@ import {
   skipUserTasks,
   getAllTreatmentPlans,
   getSkippedAndCompletedTasks,
+  getTreatmentPlanById,
 } from '../controllers/TreatmentPlanController';
 import { authorize, authorizeWebUser } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
@@ -31,6 +32,8 @@ router.get('/task/:task_id/feedback', authorize, getTaskFeedback);
 router.put('/tasks/date/:date/skip', authorize, skipUserTasks);
 
 router.get('/web', authorizeWebUser, getAllTreatmentPlans);
+
+router.get('/:id/web', authorizeWebUser, getTreatmentPlanById);
 
 router.get('/tasks/:user_id/web', authorizeWebUser, getSkippedAndCompletedTasks);
 
