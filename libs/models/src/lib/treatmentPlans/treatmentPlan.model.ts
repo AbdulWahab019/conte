@@ -165,3 +165,16 @@ export interface UserTreatmentPlan {
   updatedAt: string;
   createdAt: string;
 }
+
+export interface GetTreatmentPlanById extends GenericResponse {
+  data: GetTreatmentPlanByPK;
+}
+
+export interface GetTreatmentPlanByPK {
+  id: number;
+  name: string;
+  doctor_id: number;
+  surgery_id: number;
+  createdAt: string;
+  updatedAt: string;
+}
