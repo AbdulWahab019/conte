@@ -23,7 +23,6 @@ export class TreatmentplansComponent implements OnInit {
 
   ngOnInit(): void {
     this.TreatmentPlanService.getTreatmentPlans().then((resp) => {
-      console.log(resp.data);
       this.treatmentplans = resp.data.map((user: any) => ({
         id: user.id,
         Name: user.name,
