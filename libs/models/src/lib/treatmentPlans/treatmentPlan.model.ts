@@ -128,14 +128,7 @@ export interface GetUserTaskFeedback {
 }
 
 export interface GetAllTreatmentPlansAPIResponse extends GenericResponse {
-  data: GetAllTreatmentPlans[];
-}
-
-export interface GetAllTreatmentPlans {
-  id: number;
-  name: string;
-  doctor_id: number;
-  surgery_id: number;
+  data: TreatmentPlan[];
 }
 
 export interface GetUserSkippedAndCompletedTasksAPIResponse extends GenericResponse {
@@ -167,10 +160,10 @@ export interface UserTreatmentPlan {
 }
 
 export interface GetTreatmentPlanById extends GenericResponse {
-  data: GetTreatmentPlanByPK;
+  data: TreatmentPlan;
 }
 
-export interface GetTreatmentPlanByPK {
+export interface TreatmentPlan {
   id: number;
   name: string;
   doctor_id: number;
