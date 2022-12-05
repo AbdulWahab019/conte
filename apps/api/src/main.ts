@@ -1,8 +1,11 @@
 import 'express-async-errors';
+import 'source-map-support';
 import express = require('express');
 import cors = require('cors');
 
 import helmet from 'helmet';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 
 import { environment } from './config/config';
 import { routes } from './app/routes';
@@ -10,6 +13,24 @@ import { sequelize } from './config/db';
 
 const PORT = environment.PORT;
 const app = express();
+
+if (environment.ENV !== 'dev')
+  Sentry.init({
+    dsn: environment.SENTRY_DSN,
+    integrations: [new Sentry.Integrations.Http({ tracing: true }), new Tracing.Integrations.Express({ app })],
+    tracesSampleRate: 1.0,
+    environment: environment.ENV,
+    release: environment.SENTRY_RELEASE,
+  });
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
+app.use(Sentry.Handlers.errorHandler());
+app.use(function onError(err: Error, req, res, next) {
+  res.statusCode = 500;
+  res.end(res.sentry + '\n');
+});
 
 sequelize
   .authenticate()
