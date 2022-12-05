@@ -87,6 +87,6 @@ export async function getUserSkippedAndCompletedTasks(user_id: number) {
   return { completed_tasks, skipped_tasks };
 }
 
-export async function getTreatmentPlanByTPId(id: number) {
-  return await TreatmentPlan.findOne({ where: { id } });
+export async function getTreatmentPlanByPK(id: number) {
+  return await TreatmentPlan.findByPk(id);
 }
