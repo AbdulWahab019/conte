@@ -4,12 +4,6 @@
   "
 >
   <div class="d-flex home-container">
-    <div class="title-tab">
-      <span class="title display-4">Conte Sports Performance</span>
-    </div>
-
-    <hr />
-
     <ng-container *ngIf="(treatmentPlanStatus === 'started' || trialView) && apiLoaded">
       <!-- Calendar widget -->
       <div class="calendar-widget align-items-center" *ngIf="!calendarApiLoaded">
@@ -87,6 +81,12 @@
           <p class="display-6">No Tasks Assigned for Today</p>
           <a class="display-6" *ngIf="pendingTasks" (click)="checkPendingTasks()">Review Pending Tasks</a>
         </div>
+      </div>
+
+      <!-- Footer -->
+      <hr />
+      <div class="footer-tab">
+        <span class="title display-4">powered by VYTLsft</span>
       </div>
     </ng-container>
 
