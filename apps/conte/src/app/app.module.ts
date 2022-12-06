@@ -11,14 +11,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/dashboard/navbar/navbar.component';
 import { DashboardModule } from './components/dashboard/dashboard.module';
+import { SharedModule } from './Shared/shared.module';
 
 /* Interceptors */
 import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
+
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent, AuthenticationComponent],
   imports: [
     BrowserModule,
+    SharedModule,
     DashboardModule,
     FormsModule,
     HttpClientModule,

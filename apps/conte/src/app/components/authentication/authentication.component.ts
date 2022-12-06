@@ -82,7 +82,6 @@ export class AuthenticationComponent implements OnInit {
     this.authService
     .userLogin(credentials)
     .then((resp) => {
-      console.log(resp.data);
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('user_email', resp.data.email);
       localStorage.setItem('is_verified', resp.data.is_verified);
