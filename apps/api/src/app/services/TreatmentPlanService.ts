@@ -1,7 +1,7 @@
 import { parse } from 'csv-parse';
 import { Attributes, FindOptions, Op, Transaction } from 'sequelize';
 
-import { TreatmentPlan } from '../models/TreatmentPlan';
+import { TreatmentPlan, TreatmentPlanSurgeryData } from '../models/TreatmentPlan';
 import {
   TreatmentPlanDetail,
   TreatmentPlanDetailModel,
@@ -20,9 +20,13 @@ export async function createTreatmentPlan(
   doctor_id: number,
   surgery_id: number,
   treatmentPlanFileDetails: TreatmentPlanDetailsFileAttributes[],
+  { week_from_surgery, month_from_surgery }: TreatmentPlanSurgeryData,
   { transaction }: { transaction?: Transaction }
 ) {
-  const treatmentPlan = await TreatmentPlan.create({ name, doctor_id, surgery_id }, { transaction });
+  const treatmentPlan = await TreatmentPlan.create(
+    { name, doctor_id, surgery_id, week_from_surgery, month_from_surgery },
+    { transaction }
+  );
 
   const treatmentPlanDetails = treatmentPlanFileDetails.map((detail) => ({ ...detail, tp_id: treatmentPlan.id }));
   await TreatmentPlanDetail.bulkCreate(treatmentPlanDetails, { transaction });
@@ -54,6 +58,32 @@ export function parseTreatmentPlanFile(
 
       resolve(records);
     });
+  });
+}
+
+export function parseTreatmentPlanFileForSurgery(
+  file: Express.Multer.File,
+  colLine: number
+): Promise<TreatmentPlanSurgeryData[]> {
+  return new Promise((resolve, reject) => {
+    parse(
+      file.buffer,
+      {
+        fromLine: colLine,
+        toLine: colLine + 1,
+        relaxQuotes: true,
+        columns: true,
+        onRecord: (record: string[]) => ({
+          week_from_surgery: Number(record['Week From Sx']) || -1,
+          month_from_surgery: Number(record['Month From Sx']) || -1,
+        }),
+      },
+      (err, records) => {
+        if (err) reject(err);
+
+        resolve(records);
+      }
+    );
   });
 }
 

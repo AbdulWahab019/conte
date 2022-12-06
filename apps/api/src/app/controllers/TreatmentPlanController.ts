@@ -9,6 +9,7 @@ import {
   getUserSkippedAndCompletedTasks,
   getTreatmentPlans,
   getTreatmentPlanByPK,
+  parseTreatmentPlanFileForSurgery,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -25,10 +26,19 @@ export async function uploadTreatmentPlan(req: Request, res: Response) {
   // Parse the file
   const treatmentPlanDetails = await parseTreatmentPlanFile(file, read_from_line, read_to_line);
 
+  const [treatmentPlanSurgeryData] = await parseTreatmentPlanFileForSurgery(file, read_from_line - 1);
+
   const transaction = await sequelize.transaction();
   try {
     // Save in DB
-    const treatmentPlan = await createTreatmentPlan(name, doctor_id, surgery_id, treatmentPlanDetails, { transaction });
+    const treatmentPlan = await createTreatmentPlan(
+      name,
+      doctor_id,
+      surgery_id,
+      treatmentPlanDetails,
+      treatmentPlanSurgeryData,
+      { transaction }
+    );
 
     transaction.commit();
     return sendResponse(res, 200, SUCCESS, treatmentPlan);

@@ -20,8 +20,11 @@ export async function createUserTreatmentPlan(
   surgery_date: string,
   { transaction = undefined }: { transaction?: Transaction } = {}
 ) {
+  let week_from_surgery = treatment_plan.week_from_surgery;
+  if (!treatment_plan.week_from_surgery || treatment_plan.week_from_surgery === -1) week_from_surgery = 0;
+
   let assigned_at = surgery_date
-    ? moment(surgery_date).add(18, 'weeks').format('YYYY-MM-DD')
+    ? moment(surgery_date).add(week_from_surgery, 'weeks').format('YYYY-MM-DD')
     : moment().add(1, 'day').format('YYYY-MM-DD');
 
   const assigned_at_day = moment(assigned_at).day();
