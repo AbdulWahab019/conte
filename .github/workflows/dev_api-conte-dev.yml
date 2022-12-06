@@ -27,9 +27,6 @@ jobs:
           npm install
           npm run build:api --if-present
 
-      - name: install build dependencies
-        run: cd dist/apps/api && npm i
-
       - name: Create Sentry Release & Upload Sourcemaps
         uses: getsentry/action-release@v1
         env:
@@ -65,6 +62,9 @@ jobs:
 
       - name: unzip artifact for deployment
         run: unzip release.zip
+
+      - name: install dependencies
+        run: npm i
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
