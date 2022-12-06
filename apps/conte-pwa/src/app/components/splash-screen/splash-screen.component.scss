@@ -25,4 +25,33 @@
     height: 7vh;
     width: 7vh;
   }
+
+  .footer-tab {
+    width: 100%;
+
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+
+    .title {
+      width: 100%;
+      
+      font-size: x-large;
+      font-weight: 400;
+    }
+  }
+
+  hr {
+    border: 0;
+    clear: both;
+    display: block;
+
+    width: 70%;
+    height: 1px;
+    margin: 0.6rem 0;
+
+    background-color: #ffffff;
+  }
 }

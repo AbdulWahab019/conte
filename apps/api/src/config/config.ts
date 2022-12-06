@@ -16,5 +16,8 @@ export const environment = {
 
   JWT_TOKEN_SECRET: process.env.JWT_TOKEN_SECRET || env.JWT_TOKEN_SECRET,
 
+  SENTRY_DSN: process.env.SENTRY_DSN || env.SENTRY_DSN,
+  SENTRY_RELEASE: process.env.SENTRY_RELEASE || env.SENTRY_RELEASE,
+
   ENV: process.env.ENV || env.ENV,
 };

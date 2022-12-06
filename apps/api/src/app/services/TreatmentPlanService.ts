@@ -96,3 +96,7 @@ export async function getUserSkippedAndCompletedTasks(user_id: number) {
 
   return { completed_tasks, skipped_tasks, pending_tasks };
 }
+
+export async function getTreatmentPlanByPK(id: number) {
+  return await TreatmentPlan.findByPk(id);
+}

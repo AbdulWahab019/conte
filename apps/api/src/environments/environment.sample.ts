@@ -14,5 +14,8 @@ export const environment = {
 
   JWT_TOKEN_SECRET: '',
 
+  SENTRY_DSN: '',
+  SENTRY_RELEASE: '',
+
   ENV: '',
 };
