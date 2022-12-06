@@ -13,11 +13,14 @@
 
   .footer-tab {
     width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
     
     .title {
-      display: flex;
-      justify-content: center;
-      text-align: center;
+      width: 100%;
 
       font-size: x-large;
       font-weight: 400;
@@ -31,7 +34,7 @@
 
     width: 96%;
     height: 1px;
-    margin: 0.6rem 0;
+    margin: 0.6rem 0 0 0;
 
     background-color: #686867;
   }
