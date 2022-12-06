@@ -28,40 +28,6 @@ jobs:
       - name: install build dependencies
         run: cd dist/apps/api && npm i
 
-      - name: Zip artifact for deployment
-        run: cd dist/apps/api && zip release.zip . -r
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: node-app
-          path: dist/apps/api/release.zip
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Test'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: node-app
-
-      - name: unzip artifact for deployment
-        run: unzip release.zip
-
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'api-conte-dev'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_987CF8476A064CA096FD5875AC2B6770 }}
-          package: .
-
       - name: Create Sentry Release & Upload Sourcemaps
         uses: getsentry/action-release@v1
         env:
@@ -72,3 +38,37 @@ jobs:
           environment: test
           sourcemaps: .
           version: ${{ secrets.SENTRY_RELEASE }}
+
+      - name: Zip artifact for deployment
+        run: cd dist/apps/api && zip release.zip . -r
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: node-app
+          path: dist/apps/api/release.zip
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   environment:
+  #     name: 'Test'
+  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+  #   steps:
+  #     - name: Download artifact from build job
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: node-app
+
+  #     - name: unzip artifact for deployment
+  #       run: unzip release.zip
+
+  #     - name: 'Deploy to Azure Web App'
+  #       id: deploy-to-webapp
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: 'api-conte-dev'
+  #         slot-name: 'Production'
+  #         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_987CF8476A064CA096FD5875AC2B6770 }}
+  #         package: .
