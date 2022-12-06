@@ -36,6 +36,7 @@ jobs:
         with:
           environment: 'test'
           sourcemaps: './dist/apps/api'
+          url_prefix: '/home/site/wwwroot'
           version: ${{ secrets.SENTRY_RELEASE }}
 
       - name: Zip artifact for deployment
