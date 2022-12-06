@@ -25,6 +25,9 @@ jobs:
           npm install
           npm run build:api --if-present
 
+      - name: install build dependencies
+        run: cd dist/apps/api && npm i
+
       - name: Zip artifact for deployment
         run: cd dist/apps/api && zip release.zip . -r
 
@@ -58,3 +61,13 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_987CF8476A064CA096FD5875AC2B6770 }}
           package: .
+
+      - name: Create Sentry Release & Upload Sourcemaps
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: test
+          sourcemaps: .
+          version: ${{ secrets.SENTRY_RELEASE }}
