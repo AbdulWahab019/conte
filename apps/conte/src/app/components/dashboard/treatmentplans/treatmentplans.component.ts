@@ -19,10 +19,10 @@ export class TreatmentplansComponent implements OnInit {
     { title: 'doctor id', value: 'doctor_id', sort: false },
     { title: 'created at', value: 'createdAt', sort: false },
   ];
-  constructor(private TreatmentPlanService : TreatmentPlanService) {}
+  constructor(private treatmentPlanService : TreatmentPlanService) {}
 
   ngOnInit(): void {
-    this.TreatmentPlanService.getTreatmentPlans().then((resp) => {
+    this.treatmentPlanService.getTreatmentPlans().then((resp) => {
       this.treatmentplans = resp.data.map((user: any) => ({
         id: user.id,
         Name: user.name,

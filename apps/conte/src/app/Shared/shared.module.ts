@@ -1,6 +1,5 @@
 import { importProvidersFrom, NgModule } from "@angular/core";
 import { TablePaginationClientComponent } from "./components/table-pagination-client/table-pagination-client.component";
-import { customFieldFormatPipe } from "./pipes/custom-field-format.pipe";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -12,7 +11,6 @@ import { ToastComponent } from "./components/toast/toast.component";
 @NgModule({
   declarations: [
     TablePaginationClientComponent,
-    customFieldFormatPipe,
     ToastComponent
   ],
   imports: [
