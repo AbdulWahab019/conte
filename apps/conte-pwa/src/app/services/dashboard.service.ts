@@ -6,16 +6,7 @@ import { DASHBOARD } from '../utils/constants';
   providedIn: 'root',
 })
 export class DashboardService {
-  private trialView = false;
   constructor(private http: HttpClient) {}
-
-  setTrialView() {
-    this.trialView = true;
-  }
-
-  getTrialView(): boolean {
-    return this.trialView;
-  }
 
   async getTreatmentPlanDetails(date: string): Promise<any> {
     return await this.http.get<any>(`${DASHBOARD}`, { params: { date } }).toPromise();
