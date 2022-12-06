@@ -34,8 +34,8 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
-          environment: test
-          sourcemaps: .
+          environment: 'test'
+          sourcemaps: './dist/apps/api'
           version: ${{ secrets.SENTRY_RELEASE }}
 
       - name: Zip artifact for deployment
