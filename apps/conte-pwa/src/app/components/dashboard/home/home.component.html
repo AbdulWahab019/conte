@@ -1,54 +1,49 @@
-<div
-  [ngClass]="
-    treatmentPlanStatus === 'pending' ? 'container-fluid home-screen count-down' : 'container-fluid home-screen'
-  "
->
-  <div class="d-flex home-container">
-    <ng-container *ngIf="(treatmentPlanStatus === 'started' || trialView) && apiLoaded">
-      <!-- Calendar widget -->
-      <div class="calendar-widget align-items-center" *ngIf="!calendarApiLoaded">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      </div>
+<div class="container-fluid home-screen">
+  <div class="d-flex home-container" *ngIf="apiLoaded">
+    <!-- Calendar widget -->
+    <div class="calendar-widget align-items-center" *ngIf="!calendarApiLoaded">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </div>
 
-      <div class="calendar-widget" *ngIf="calendarApiLoaded">
-        <span class="widget-heading display-6">{{ currentMonth }}&nbsp;{{ currentYear }}</span>
-        <i class="bi bi-chevron-left me-2" (click)="previousMonth()"></i>
-        <div class="calendar horizontal">
-          <div class="days" *ngFor="let day of monthlyData; let i = index">
-            <div class="day-name">{{ day.day[0] }}{{ day.day[1] }}{{ day.day[2] }}</div>
+    <div class="calendar-widget" *ngIf="calendarApiLoaded">
+      <span class="widget-heading display-6">{{ currentMonth }}&nbsp;{{ currentYear }}</span>
+      <i class="bi bi-chevron-left me-2" (click)="previousMonth()"></i>
+      <div class="calendar horizontal">
+        <div class="days" *ngFor="let day of monthlyData; let i = index">
+          <div class="day-name">{{ day.day[0] }}{{ day.day[1] }}{{ day.day[2] }}</div>
+          <div
+            [id]="day.selected ? 'selected-day' : ''"
+            [ngClass]="day.selected ? 'day-digit selected-digit' : 'day-digit'"
+            (click)="saveDate(day.date, i)"
+          >
+            {{ i + 1 }}
+          </div>
+          <div class="d-flex justify-content-center">
             <div
-              [id]="day.selected ? 'selected-day' : ''"
-              [ngClass]="day.selected ? 'day-digit selected-digit' : 'day-digit'"
-              (click)="saveDate(day.date, i)"
-            >
-              {{ i + 1 }}
-            </div>
-            <div class="d-flex justify-content-center">
-              <div
-                [ngClass]="
-                  day.total_tasks > 0 && day.total_tasks != day.skipped_tasks
-                    ? day.total_tasks === day.completed_tasks
-                      ? 'status status-active'
-                      : 'status'
-                    : ''
-                "
-              ></div>
-            </div>
+              [ngClass]="
+                day.total_tasks > 0 && day.total_tasks != day.skipped_tasks
+                  ? day.total_tasks === day.completed_tasks
+                    ? 'status status-active'
+                    : 'status'
+                  : ''
+              "
+            ></div>
           </div>
         </div>
-        <i class="bi bi-chevron-right ms-2" (click)="nextMonth()"></i>
       </div>
+      <i class="bi bi-chevron-right ms-2" (click)="nextMonth()"></i>
+    </div>
 
-      <!-- Treatment Plan Video -->
-      <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL && apiLoaded">
-        Your browser does not support the video playback.
-      </video>
-      <!-- CASE// No Video -->
-      <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL && apiLoaded">
-        <img src="assets/logos/Throwing Progression Pro-02.png" />
-      </div>
+    <!-- Treatment Plan Video -->
+    <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL && apiLoaded">
+      Your browser does not support the video playback.
+    </video>
+    <!-- CASE// No Video -->
+    <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL && apiLoaded">
+      <img src="assets/logos/Throwing Progression Pro-02.png" />
+    </div>
 
-      <!-- <div class="d-flex info-tab mb-2">
+    <!-- <div class="d-flex info-tab mb-2">
       <div class="speed-info me-2">
         Today's<br />Max Speed<br />
         <p class="display-5">45 MPH</p>
@@ -60,39 +55,43 @@
       </div>
       </div> -->
 
-      <!-- Daily Therapy Nav -->
-      <div
-        [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
-        *ngIf="!noTasksAvailable && apiLoaded"
-        (click)="!areTasksCompleted && navToTreatmentPlan()"
-      >
-        Today's Treatment Plan
-        <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Click Here</p>
-        <div *ngIf="areTasksCompleted" [@fade]>
-          <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
-          <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
-        </div>
+    <!-- Daily Therapy Nav -->
+    <div
+      [ngClass]="!areTasksCompleted ? 'treatment-plan' : 'treatment-plan tasks-completed'"
+      *ngIf="!noTasksAvailable && apiLoaded && treatmentPlanStatus === 'started'"
+      (click)="!areTasksCompleted && navToTreatmentPlan()"
+    >
+      Today's Treatment Plan
+      <p class="display-5" *ngIf="!areTasksCompleted" [@fade]>Click Here</p>
+      <div *ngIf="areTasksCompleted" [@fade]>
+        <p class="display-5 mb-2">All Tasks Completed for Today<i class="bi bi-check2-all"></i></p>
+        <a class="display-6" (click)="navToTreatmentPlan()">Review Progress</a>
       </div>
+    </div>
 
-      <!-- Case// No Therapy Tasks Available -->
-      <div class="tasks-unavailable" *ngIf="noTasksAvailable && apiLoaded">
-        <img src="assets/images/no_tasks_found.png" height="150" width="150" />
-        <div>
-          <p class="display-6">No Tasks Assigned for Today</p>
-          <a class="display-6" *ngIf="pendingTasks" (click)="checkPendingTasks()">Review Pending Tasks</a>
-        </div>
+    <!-- Case// No Therapy Tasks Available -->
+    <div class="tasks-unavailable" *ngIf="noTasksAvailable && apiLoaded && treatmentPlanStatus === 'started'">
+      <img src="assets/images/no_tasks_found.png" height="150" width="150" />
+      <div>
+        <p class="display-6">No Tasks Assigned for Today</p>
+        <a class="display-6" *ngIf="pendingTasks" (click)="checkPendingTasks()">Review Pending Tasks</a>
       </div>
-
-      <!-- Footer -->
-      <hr />
-      <div class="footer-tab">
-        <span class="title display-4">powered by VYTLsft</span>
-      </div>
-    </ng-container>
+    </div>
 
     <!-- Count Down Timer|| Case: Treatment Plan Status: pending -->
-    <div *ngIf="treatmentPlanStatus === 'pending' && !trialView" class="w-100">
-      <conte-count-down [dDay]="treatmentPlanStartDate" [navToDashboard]="handleNav"></conte-count-down>
+    <div *ngIf="treatmentPlanStatus === 'pending'" class="tasks-unavailable w-100">
+      <div class="timer-container" [@fade]>
+        <h4 class="display-6">Your Treatment Plan Starts in</h4>
+        <div class="timer">
+          <span id="days" style="margin: 0"> {{ tpDaysRemaining }} </span>Day(s)
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-tab">
+      <hr />
+      <span class="title display-4">powered by VYTLsft</span>
     </div>
   </div>
 
@@ -105,5 +104,8 @@
   </span>
   <span *ngIf="!apiLoaded" class="placeholder-glow">
     <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
+  </span>
+  <span *ngIf="!apiLoaded" class="placeholder-glow">
+    <span class="placeholder col-12 mt-5" style="height: 10vh"></span>
   </span>
 </div>

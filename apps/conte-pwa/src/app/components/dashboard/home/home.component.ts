@@ -19,12 +19,12 @@ import { delay } from '../../../utils/constants';
 })
 export class HomeComponent implements OnInit {
   date = '';
-  trialView = false;
   videoURL = '';
   apiLoaded = false;
   calendarApiLoaded = false;
   areTasksCompleted = false;
   treatmentPlanStatus = '';
+  tpDaysRemaining = 0;
   treatmentPlanStartDate = new Date();
   noTasksAvailable = false;
   pendingTasks: any;
@@ -46,15 +46,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.date = this.treatmentPlanService.getTreatmentPlanDate();
-    this.trialView = this.dashboardService.getTrialView();
     this.getTreatmentPlanDetail();
     this.getCalendarData();
   }
 
   handleNav = (): void => {
     this.ngOnInit();
-  }
-
+  };
 
   getTreatmentPlanDetail() {
     this.spinner.show();
@@ -65,9 +63,9 @@ export class HomeComponent implements OnInit {
       .then((resp) => {
         this.videoURL = resp.data?.video_url;
         this.areTasksCompleted = resp.data?.are_tasks_completed;
-        const tpDiff = moment(resp.data.tp_start_date).diff(moment(new Date()), 'days');
+        this.tpDaysRemaining = moment(resp.data.tp_start_date).diff(moment(this.date), 'days');
 
-        if (tpDiff <= 0 || this.trialView) {
+        if (this.tpDaysRemaining <= 0) {
           this.treatmentPlanStatus = 'started';
 
           this.treatmentPlanService
@@ -98,6 +96,10 @@ export class HomeComponent implements OnInit {
               this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
             });
         } else {
+          this.apiLoaded = true;
+          this.getCalendarData();
+          this.spinner.hide();
+
           this.treatmentPlanStartDate = new Date(resp.data.tp_start_date);
           this.treatmentPlanStatus = 'pending';
         }
@@ -133,7 +135,7 @@ export class HomeComponent implements OnInit {
   }
 
   async scrollToSelectedDay() {
-    await delay(1000)
+    await delay(1000);
     const element = document.getElementById('selected-day');
     if (element) {
       element.scrollIntoView({
