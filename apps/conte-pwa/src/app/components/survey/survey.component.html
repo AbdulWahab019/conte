@@ -166,7 +166,7 @@
           <p *ngIf="!surgeryDate?.length"><i class="bi bi-x-circle-fill me-1"></i>Surgery Date is required.</p>
         </div>
 
-        <div class="icon-append mb-2">
+        <div class="icon-append mb-4">
           <input
             [ngClass]="
               surgeryDateDirty && !surgeryDate ? 'form-control question error-input ' : 'form-control question'
@@ -241,7 +241,7 @@
           <p *ngIf="!injuryDate?.length"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
         </div>
 
-        <div class="icon-append mb-2">
+        <div class="icon-append mb-4">
           <input
             [ngClass]="injuryDateDirty && !injuryDate ? 'form-control question error-input ' : 'form-control question'"
             matInput

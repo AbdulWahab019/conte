@@ -133,9 +133,7 @@ export class SurveyComponent implements OnInit {
       this.surgeryDateTouched = true;
     } else if (status === 'blur') {
       if (!this.surgeryDateTouched) return;
-      else {
-        this.surgeryDateDirty = true;
-      }
+      this.surgeryDateDirty = true;
     }
   }
 
@@ -148,9 +146,7 @@ export class SurveyComponent implements OnInit {
       this.injuryDateTouched = true;
     } else if (status === 'blur') {
       if (!this.injuryDateTouched) return;
-      else {
-        this.injuryDateDirty = true;
-      }
+      this.injuryDateDirty = true;
     }
   }
 
@@ -159,13 +155,10 @@ export class SurveyComponent implements OnInit {
   }
 
   birthDateStatus(status: string) {
-    if (status === 'focus') {
-      this.birthDateTouched = true;
-    } else if (status === 'blur') {
+    if (status === 'focus') this.birthDateTouched = true;
+    else if (status === 'blur') {
       if (!this.birthDateTouched) return;
-      else {
-        this.birthDateDirty = true;
-      }
+      this.birthDateDirty = true;
     }
   }
 
@@ -173,14 +166,10 @@ export class SurveyComponent implements OnInit {
     this.birthDate = date ? moment(date).format('YYYY-MM-DD') : '';
   }
 
-  dateValidation(): Boolean{
-    if(this.questionnaireType ==='surgery'){
-      if(this.surgeryDate && this.birthDate) return false;
-      else return true;
-    }else{
-      if(this.injuryDate && this.birthDate) return false;
-      else return true;
-    }
+  dateValidation(): Boolean {
+    if (this.questionnaireType === 'surgery' && this.surgeryDate && this.birthDate) return false;
+    else if (this.questionnaireType === 'non-surgery' && this.injuryDate && this.birthDate) return false;
+    else return true;
   }
   /*  Form Dates Validation//end */
 
