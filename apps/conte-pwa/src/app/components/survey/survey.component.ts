@@ -169,7 +169,7 @@ export class SurveyComponent implements OnInit {
   dateValidation(): Boolean {
     if (this.questionnaireType === 'surgery' && this.surgeryDate && this.birthDate) return false;
     else if (this.questionnaireType === 'non-surgery' && this.injuryDate && this.birthDate) return false;
-    else return true;
+    return true;
   }
   /*  Form Dates Validation//end */
 
