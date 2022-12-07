@@ -162,44 +162,28 @@
 
       <!-- SURGERY || Surgery Date//start -->
       <ng-container *ngIf="questionnaireType === 'surgery'">
-        <div *ngIf="f.surgery_date.touched || f.surgery_date.dirty" class="error-text">
-          <p *ngIf="f.surgery_date.errors?.required">
-            <i class="bi bi-x-circle-fill me-1"></i>Surgery Date is required.
-          </p>
+        <div *ngIf="surgeryDateDirty" class="error-text">
+          <p *ngIf="!surgeryDate?.length"><i class="bi bi-x-circle-fill me-1"></i>Surgery Date is required.</p>
         </div>
 
-        <div class="form-floating">
+        <div class="icon-append mb-4">
           <input
-            placeholder="Surgery Date*"
             [ngClass]="
-              (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
-                ? 'form-control question error-input '
-                : 'form-control question'
+              surgeryDateDirty && !surgeryDate ? 'form-control question error-input ' : 'form-control question'
             "
-            type="date"
-            max="9999-12-31"
-            formControlName="surgery_date"
+            matInput
+            mask="M0/d0/0000"
+            (focus)="surgeryDateStatus('focus')"
+            (blur)="surgeryDateStatus('blur')"
+            (change)="updateSurgeryDate($any($event.target).value)"
+            (dateChange)="updateSurgeryDate($any($event.target).value)"
+            [matDatepicker]="surgeryDatePicker"
+            placeholder="Surgery Date*"
           />
-          <label>Surgery Date*</label>
+          <mat-hint>format: mm/dd/yyyy</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="surgeryDatePicker"> </mat-datepicker-toggle>
+          <mat-datepicker touchUi #surgeryDatePicker></mat-datepicker>
         </div>
-
-        <!-- <div class="icon-append">
-          <input
-            placeholder="Surgery Date*"
-            [ngClass]="
-              (f.surgery_date.touched || f.surgery_date.dirty) && f.surgery_date.errors
-                ? 'form-control question error-input '
-                : 'form-control question'
-            "
-            name="dp1"
-            n gbDatepicker
-            readonly
-            (click)="d1.toggle()"
-            #d1="ngbDatepicker"
-            formControlName="surgery_date"
-          />
-          <i class="bi bi-calendar-date" (click)="d1.toggle()"></i>
-        </div> -->
       </ng-container>
       <!-- SURGERY || Surgery Date//end -->
 
@@ -253,40 +237,26 @@
 
       <!-- NON-SURGERY || Injury Date//start -->
       <ng-container *ngIf="questionnaireType === 'non-surgery'">
-        <div *ngIf="f.injury_date.touched || f.injury_date.dirty" class="error-text">
-          <p *ngIf="f.injury_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
+        <div *ngIf="injuryDateDirty" class="error-text">
+          <p *ngIf="!injuryDate?.length"><i class="bi bi-x-circle-fill me-1"></i>Injury date is required.</p>
         </div>
 
-        <div class="form-floating">
+        <div class="icon-append mb-4">
           <input
-            placeholder="Injury Date* "
-            [ngClass]="
-              (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
-                ? 'form-control question error-input '
-                : 'form-control question '
-            "
-            type="date"
-            max="9999-12-31"
-            formControlName="injury_date"
-          /><label>Injury Date*</label>
-        </div>
-
-        <!-- <div class="icon-append">
-          <input
+            [ngClass]="injuryDateDirty && !injuryDate ? 'form-control question error-input ' : 'form-control question'"
+            matInput
+            mask="M0/d0/0000"
+            (focus)="injuryDateStatus('focus')"
+            (blur)="injuryDateStatus('blur')"
+            (change)="updateInjuryDate($any($event.target).value)"
+            (dateChange)="updateInjuryDate($any($event.target).value)"
+            [matDatepicker]="injuryDatePicker"
             placeholder="Injury Date*"
-            [ngClass]="
-              (f.injury_date.touched || f.injury_date.dirty) && f.injury_date.errors
-                ? 'form-control question error-input '
-                : 'form-control question'
-            "
-            name="dp1"
-            ngbDatepicker
-            #d2="ngbDatepicker"
-            readonly
-            (click)="d2.toggle()"
-            formControlName="injury_date"
           />
-          <i class="bi bi-calendar-date" (click)="d2.toggle()"></i></div> -->
+          <mat-hint>format: mm/dd/yyyy</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="injuryDatePicker"> </mat-datepicker-toggle>
+          <mat-datepicker touchUi #injuryDatePicker></mat-datepicker>
+        </div>
       </ng-container>
       <!-- NON-SURGERY || Injury Date//end -->
 
@@ -384,49 +354,34 @@
             ? 'form-control question error-input '
             : 'form-control question '
         "
-        maxlength="12"
+        mask="(000) 000-0000"
+        maxlength="14"
         placeholder="Cell Phone*"
         formControlName="cell_phone"
       />
       <!-- Cell Phone//end -->
 
       <!-- Birth Date//start -->
-      <div *ngIf="f.birth_date.touched || f.birth_date.dirty" class="error-text">
-        <p *ngIf="f.birth_date.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
+      <div *ngIf="birthDateDirty" class="error-text">
+        <p *ngIf="!birthDate?.length"><i class="bi bi-x-circle-fill me-1"></i>Birth Date is required.</p>
       </div>
 
-      <div class="form-floating">
+      <div class="icon-append mb-2">
         <input
+          [ngClass]="birthDateDirty && !birthDate ? 'form-control question error-input ' : 'form-control question'"
+          matInput
+          mask="M0/d0/0000"
+          (focus)="birthDateStatus('focus')"
+          (blur)="birthDateStatus('blur')"
+          (change)="updateBirthDate($any($event.target).value)"
+          (dateChange)="updateBirthDate($any($event.target).value)"
+          [matDatepicker]="birthDatePicker"
           placeholder="Birth Date*"
-          [ngClass]="
-            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question '
-          "
-          type="date"
-          max="2004-01-01"
-          formControlName="birth_date"
-        /><label>Birth Date*</label>
-      </div>
-
-      <!-- <div class="icon-append">
-        <input
-          placeholder="Birth Date*"
-          [ngClass]="
-            (f.birth_date.touched || f.birth_date.dirty) && f.birth_date.errors
-              ? 'form-control question error-input '
-              : 'form-control question'
-          "
-          name="dp1"
-          ngbDatepicker
-          readonly
-          (click)="d3.toggle()"
-          #d3="ngbDatepicker"
-          [maxDate]="{ year: 1999, month: 12, day: 31 }"
-          formControlName="birth_date"
         />
-        <i class="bi bi-calendar-date" (click)="d3.toggle()"></i>
-      </div> -->
+        <mat-hint>format: mm/dd/yyyy</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="birthDatePicker"> </mat-datepicker-toggle>
+        <mat-datepicker touchUi #birthDatePicker></mat-datepicker>
+      </div>
       <!-- Birth Date//end -->
 
       <!-- Address//start -->
@@ -525,7 +480,9 @@
           class="btn btn-primary btn-confirm"
           type="submit"
           (click)="confirmQuestionnaire()"
-          [disabled]="questionnaire.invalid || submissionState == 'loading'"
+          [disabled]="
+            questionnaire.invalid || dateValidation() || submissionState === 'loading'
+          "
         >
           <span *ngIf="submissionState === 'static'" class="display-6">Submit</span>
           <div *ngIf="submissionState === 'loading'">
