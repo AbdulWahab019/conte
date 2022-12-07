@@ -8,6 +8,8 @@ export interface TreatmentPlanDetailsFileAttributes {
   tp_weekday: string;
   week_from_sx: number;
   month_from_sx: number;
+  week_of_throwing: number;
+  month_of_throwing: number;
   plyo_throw: number;
   max_distance: number;
   max_velocity_percent: number;
@@ -33,6 +35,8 @@ export interface TreatmentPlanDetailDefinedAttributes {
   tp_weekday: string;
   week_from_sx: number;
   month_from_sx: number;
+  week_of_throwing: number;
+  month_of_throwing: number;
   plyo_throw: number;
   max_distance: number;
   max_velocity_percent: number;
@@ -59,6 +63,8 @@ export interface TreatmentPlanDetailModel
   tp_weekday: string;
   week_from_sx: number;
   month_from_sx: number;
+  week_of_throwing: number;
+  month_of_throwing: number;
   plyo_throw: number;
   max_distance: number;
   max_velocity_percent: number;
@@ -88,6 +94,8 @@ export const TreatmentPlanDetail = sequelize.define<TreatmentPlanDetailModel, Tr
     tp_weekday: { type: DataTypes.STRING, allowNull: false },
     week_from_sx: DataTypes.INTEGER,
     month_from_sx: DataTypes.FLOAT,
+    week_of_throwing: DataTypes.INTEGER,
+    month_of_throwing: DataTypes.INTEGER,
     plyo_throw: DataTypes.INTEGER,
     max_distance: DataTypes.INTEGER,
     max_velocity_percent: DataTypes.FLOAT,
