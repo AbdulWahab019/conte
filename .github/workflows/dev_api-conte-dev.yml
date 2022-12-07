@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: 'Test'
 
     steps:
       - uses: actions/checkout@v2
@@ -25,8 +27,17 @@ jobs:
           npm install
           npm run build:api --if-present
 
-      - name: install build dependencies
-        run: cd dist/apps/api && npm i
+      - name: Create Sentry Release & Upload Sourcemaps
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: 'test'
+          sourcemaps: './dist/apps/api'
+          url_prefix: '/home/site/wwwroot'
+          version: ${{ secrets.SENTRY_RELEASE }}
 
       - name: Zip artifact for deployment
         run: cd dist/apps/api && zip release.zip . -r
@@ -52,6 +63,9 @@ jobs:
 
       - name: unzip artifact for deployment
         run: unzip release.zip
+
+      - name: install dependencies
+        run: npm i
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
