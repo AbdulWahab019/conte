@@ -14,6 +14,8 @@ import { PostTaskFeedbackApiRequest } from '@conte/models';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import moment = require('moment');
+import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
+import { APIError } from '../utils/apiError';
 
 export async function createTreatmentPlan(
   name: string,
@@ -75,6 +77,7 @@ export async function getTreatmentPlans() {
 
 export async function getUserSkippedAndCompletedTasks(user_id: number) {
   const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['assigned_at'] });
+  if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
   const date = moment().toDate();
 
