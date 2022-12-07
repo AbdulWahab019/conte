@@ -14,6 +14,10 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SharedModule } from './components/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 
 /* Interceptors */
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -43,6 +47,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
     NgxMaskModule.forRoot(),
     DashboardModule,
     SharedModule,

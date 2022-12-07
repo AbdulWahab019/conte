@@ -6,7 +6,6 @@
 }
 
 .survey-sub-screen {
-  height: 100%;
   background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.8) 0%, rgb(19, 37, 118) 100%);
   padding: 5%;
   align-items: center;
@@ -74,13 +73,17 @@
 
     .icon-append {
       position: relative;
-      i {
+      mat-datepicker-toggle {
         position: absolute;
         top: 0;
         right: 0;
-        margin: 0.4rem 1% 0 0;
         font-size: 18px;
         cursor: pointer;
+      }
+      mat-hint {
+        position: absolute;
+        top: 38px;
+        right: 0;
       }
     }
 

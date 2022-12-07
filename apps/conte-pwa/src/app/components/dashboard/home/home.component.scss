@@ -1,8 +1,12 @@
 .home-screen {
-  height: 100%;
   padding: 5% 2% 5% 2%;
-
   background-color: rgb(227, 227, 227);
+}
+
+@media screen and (max-width: 1024px) {
+  .home-screen {
+    height: 100%;
+  }
 }
 
 .home-container {
@@ -22,7 +26,8 @@
     .title {
       width: 100%;
 
-      font-size: x-large;
+      font-size: medium;
+      color: gray;
       font-weight: 400;
     }
   }
@@ -32,7 +37,7 @@
     clear: both;
     display: block;
 
-    width: 96%;
+    width: 20%;
     height: 1px;
     margin: 0.6rem 0 0 0;
 

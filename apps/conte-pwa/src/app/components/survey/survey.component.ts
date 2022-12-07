@@ -9,6 +9,7 @@ import { SurveyService } from '../../services/survey.service';
 import { doctor } from '../../models/doctor';
 import { surgery } from '../../models/surgery';
 import { SpinnerService } from '../../services/spinner.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'conte-survey',
@@ -26,6 +27,15 @@ export class SurveyComponent implements OnInit {
   doctors: doctor[] = [];
   surgeries: surgery[] = [];
   questionnaire: FormGroup = {} as FormGroup;
+  surgeryDate = '';
+  surgeryDateTouched = false;
+  surgeryDateDirty = false;
+  injuryDate = '';
+  injuryDateTouched = false;
+  injuryDateDirty = false;
+  birthDate = '';
+  birthDateTouched = false;
+  birthDateDirty = false;
 
   constructor(
     private surveyService: SurveyService,
@@ -40,6 +50,7 @@ export class SurveyComponent implements OnInit {
   navBack() {
     this.questionnaireType = '';
     this.surveyScreen = true;
+    this.questionnaireRendered = false;
   }
 
   questionnaireSelect(type: string) {
@@ -63,7 +74,6 @@ export class SurveyComponent implements OnInit {
 
     if (this.questionnaireType === 'surgery') {
       this.questionnaire = this.formBuilder.group({
-        surgery_date: new FormControl('', [Validators.required]),
         primary_surgery: new FormControl('', [Validators.required]),
         secondary_surgery: new FormControl('', []),
         doctor: new FormControl('', [Validators.required]),
@@ -72,7 +82,6 @@ export class SurveyComponent implements OnInit {
         first_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
         last_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
         cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,15}')]),
-        birth_date: new FormControl('', [Validators.required]),
         address: new FormControl('', [Validators.required]),
         city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
         state: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
@@ -80,7 +89,6 @@ export class SurveyComponent implements OnInit {
       });
     } else
       this.questionnaire = this.formBuilder.group({
-        injury_date: new FormControl('', [Validators.required]),
         injury: new FormControl('', [Validators.required]),
         doctor: new FormControl('', [Validators.required]),
         doctor_dictation: new FormControl('', [Validators.required]),
@@ -89,7 +97,6 @@ export class SurveyComponent implements OnInit {
         first_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
         last_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
         cell_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]{10,12}')]),
-        birth_date: new FormControl('', [Validators.required]),
         address: new FormControl('', [Validators.required]),
         city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
         state: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
@@ -120,6 +127,63 @@ export class SurveyComponent implements OnInit {
       });
   }
 
+  /*  Form Dates Validation//start */
+  surgeryDateStatus(status: string) {
+    if (status === 'focus') {
+      this.surgeryDateTouched = true;
+    } else if (status === 'blur') {
+      if (!this.surgeryDateTouched) return;
+      else {
+        this.surgeryDateDirty = true;
+      }
+    }
+  }
+
+  updateSurgeryDate(date: string) {
+    this.surgeryDate = date ? moment(date).format('YYYY-MM-DD') : '';
+  }
+
+  injuryDateStatus(status: string) {
+    if (status === 'focus') {
+      this.injuryDateTouched = true;
+    } else if (status === 'blur') {
+      if (!this.injuryDateTouched) return;
+      else {
+        this.injuryDateDirty = true;
+      }
+    }
+  }
+
+  updateInjuryDate(date: any) {
+    this.injuryDate = date ? moment(date).format('YYYY-MM-DD') : '';
+  }
+
+  birthDateStatus(status: string) {
+    if (status === 'focus') {
+      this.birthDateTouched = true;
+    } else if (status === 'blur') {
+      if (!this.birthDateTouched) return;
+      else {
+        this.birthDateDirty = true;
+      }
+    }
+  }
+
+  updateBirthDate(date: string) {
+    this.birthDate = date ? moment(date).format('YYYY-MM-DD') : '';
+  }
+
+  dateValidation(): Boolean{
+    if(this.questionnaireType ==='surgery'){
+      if(this.surgeryDate && this.birthDate) return false;
+      else return true;
+    }else{
+      if(this.injuryDate && this.birthDate) return false;
+      else return true;
+    }
+  }
+  /*  Form Dates Validation//end */
+
   confirmQuestionnaire() {
     this.submissionState = 'loading';
 
@@ -130,7 +194,7 @@ export class SurveyComponent implements OnInit {
       first_name: this.f.first_name.value,
       last_name: this.f.last_name.value,
       cell_phone: this.f.cell_phone.value,
-      birth_date: this.f.birth_date.value,
+      birth_date: this.birthDate,
       address: this.f.address.value,
       city: this.f.city.value,
       state: this.f.state.value,
@@ -152,7 +216,7 @@ export class SurveyComponent implements OnInit {
         ]?.name;
 
       data = [
-        { id: 1, response: this.f.surgery_date.value },
+        { id: 1, response: this.surgeryDate },
         { id: 2, response: primary_surgery },
         { id: 4, response: doctor },
         { id: 5, response: this.f.position.value },
@@ -168,7 +232,7 @@ export class SurveyComponent implements OnInit {
       };
     } else {
       data = [
-        { id: 20, response: this.f.injury_date.value },
+        { id: 20, response: this.injuryDate },
         { id: 21, response: this.f.injury.value },
         { id: 22, response: doctor },
         { id: 23, response: this.f.doctor_dictation.value },
