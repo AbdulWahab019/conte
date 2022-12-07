@@ -77,7 +77,7 @@ export async function getTreatmentPlans() {
 
 export async function getUserSkippedAndCompletedTasks(user_id: number) {
   const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['assigned_at'] });
-  if (!treatmentPlan) return new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
+  if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
   const date = moment().toDate();
 
