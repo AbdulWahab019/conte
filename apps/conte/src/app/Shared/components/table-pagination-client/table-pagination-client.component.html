@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let record of data">
-        <tr container="body" (click)="expanssionToggle(record)">
+        <tr container="body" (click)="expansionToggle(record)">
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">
             <span>
@@ -34,37 +34,37 @@
 
           <!-- end//Table Data -->
         </tr>
-        <div class="expansion" *ngIf="record.expanssion">
+        <div class="expansion" *ngIf="record.expansion">
           <div class="record-container">
-            <div *ngFor="let data of idSpecificData; let i = index">
-              <div *ngIf="data.id === record.id">
-                <div class="child-container" *ngIf="data?.data?.completed_tasks.length > 0">
+            <div *ngFor="let row of tableData; let i = index">
+              <div *ngIf="row.id === record.id">
+                <div class="child-container" *ngIf="row?.data?.completed_tasks.length > 0">
                   <h4>Completed Tasks</h4>
-                  <div class="task-list" *ngFor="let data of data?.data?.completed_tasks; let i = index">
-                    <p>{{ data.title }}</p>
+                  <div class="task-list" *ngFor="let task of row?.data?.completed_tasks; let i = index">
+                    <p>{{ task.title }}</p>
                   </div>
                 </div>
-                <div class="child-container" *ngIf="data?.data?.skipped_tasks.length > 0">
+                <div class="child-container" *ngIf="row?.data?.skipped_tasks.length > 0">
                   <h4>Skipped Tasks</h4>
-                  <div class="task-list" *ngFor="let data of data?.data?.skipped_tasks; let i = index">
-                    <p>{{ data.title }}</p>
+                  <div class="task-list" *ngFor="let task of row?.data?.skipped_tasks; let i = index">
+                    <p>{{ task.title }}</p>
                   </div>
                 </div>
-                <div class="child-container" *ngIf="data?.data?.pending_tasks.length > 0">
+                <div class="child-container" *ngIf="row?.data?.pending_tasks.length > 0">
                   <h4>Pending Tasks</h4>
-                  <div class="task-list" *ngFor="let data of data?.data?.pending_tasks; let i = index">
-                    <p>{{ data.title }}</p>
+                  <div class="task-list" *ngFor="let task of row?.data?.pending_tasks; let i = index">
+                    <p>{{ task.title }}</p>
                   </div>
                 </div>
-                <div class="child-container" *ngIf="data?.data?.pending_tasks.length === 0">
+                <div class="child-container" *ngIf="row?.data?.pending_tasks.length === 0">
                   <h4>Pending Tasks</h4>
                   <p>No Pending tasks found</p>
                 </div>
-                <div class="child-container" *ngIf="data?.data?.completed_tasks.length === 0">
+                <div class="child-container" *ngIf="row?.data?.completed_tasks.length === 0">
                   <h4>Completed Tasks</h4>
                   <p>No completed tasks found</p>
                 </div>
-                <div class="child-container" *ngIf="data?.data?.skipped_tasks.length === 0">
+                <div class="child-container" *ngIf="row?.data?.skipped_tasks.length === 0">
                   <h4>Skipped Tasks</h4>
                   <p>No skipped tasks found</p>
                 </div>

@@ -13,9 +13,6 @@ export class DashboardComponent {
   logout() {
     localStorage.clear();
     this.router.navigate(['']);
-    // this.spinner.show();
-    // await delay(1000);
-    // this.spinner.hide();
     this.toast.show('Logged out successfully.', { classname: 'bg-success text-light', icon: 'success' });
   }
 }

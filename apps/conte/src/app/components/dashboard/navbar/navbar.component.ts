@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { NAVBAR_COMPONENTS } from '../../../Shared/constants/navbar-config';
 @Component({
@@ -13,14 +12,8 @@ import { NAVBAR_COMPONENTS } from '../../../Shared/constants/navbar-config';
   },
 })
 export class NavbarComponent {
-  isNavbarVisible: boolean = true;
   navbarComponents = NAVBAR_COMPONENTS;
-  hyperLinkStyle: any;
-  hyperNavStyle: any;
-  smallClass: any;
-  hyperLinkPadding: any;
   hyperLinkFontSize: any;
-  hyperLinkLineHeight: any;
   navigateFromDash: boolean = false;
   previousUrl: any;
   currentUrl: string;

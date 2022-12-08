@@ -88,9 +88,7 @@ export class AuthenticationComponent implements OnInit {
       localStorage.setItem('user_id', resp.data.user_id);
       this.buttonState = 'static';
 
-      this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
-
-      this.router.navigate(['dashboard/users']);
+      this.router.navigate(['dashboard']);
     })
     .catch((err) => {
       console.error(err);

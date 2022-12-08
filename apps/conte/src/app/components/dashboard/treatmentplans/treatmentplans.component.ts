@@ -25,7 +25,7 @@ export class TreatmentplansComponent implements OnInit {
     this.treatmentPlanService.getTreatmentPlans().then((resp) => {
       this.treatmentplans = resp.data.map((user: any) => ({
         id: user.id,
-        Name: user.name,
+        name: user.name,
         surgery_id: user.surgery_id,
         doctor_id: user.doctor_id,
         createdAt : user.createdAt,
