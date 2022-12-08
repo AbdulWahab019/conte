@@ -23,10 +23,9 @@ export async function uploadTreatmentPlan(req: Request, res: Response) {
   const file: Express.Multer.File = req.file;
   const { read_from_line, read_to_line, name, doctor_id, surgery_id }: UploadTreatmentPlanAPIRequest = req.body;
 
+  const [treatmentPlanSurgeryData] = await parseTreatmentPlanFileForSurgery(file, read_from_line - 1);
   // Parse the file
   const treatmentPlanDetails = await parseTreatmentPlanFile(file, read_from_line, read_to_line);
-
-  const [treatmentPlanSurgeryData] = await parseTreatmentPlanFileForSurgery(file, read_from_line - 1);
 
   const transaction = await sequelize.transaction();
   try {
