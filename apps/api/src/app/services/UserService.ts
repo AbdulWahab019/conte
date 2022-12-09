@@ -1,8 +1,11 @@
 import { User, UserModel, UserProfile } from '../models/User';
-import { Transaction } from 'sequelize';
+import { Model, Transaction, where } from 'sequelize';
 import { APIError } from '../utils/apiError';
 import { USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
+import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
+import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
+import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 
 async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -66,4 +69,24 @@ async function getUsersData() {
   });
 }
 
-export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData };
+async function getUserTPData(user_id: number) {
+  return await UserTreatmentPlan.findOne({
+    where: { user_id },
+    include: [
+      {
+        model: UserTreatmentPlanDetail,
+        as: 'details',
+        attributes: ['tp_day'],
+        include: [
+          {
+            model: UserTreatmentPlanTasks,
+            as: 'tasks',
+            attributes: [[sequelize.fn('COUNT', 'tp_day'), 'total_tasks']],
+          },
+        ],
+      },
+    ],
+  });
+}
+
+export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData, getUserTPData };

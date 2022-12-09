@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { sendResponse } from '../utils/appUtils';
-import { getUsersData, isOrientationVideoWatched, isTermsOfUseAccepted } from '../services/UserService';
+import { getUsersData, getUserTPData, isOrientationVideoWatched, isTermsOfUseAccepted } from '../services/UserService';
 import { BAD_REQUEST, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
@@ -38,4 +38,12 @@ export async function getAllUsers(req: Request, res: Response) {
   const users = await getUsersData();
 
   return sendResponse(res, 200, SUCCESS, { users });
+}
+
+export async function getUserTreatmentPlanDetails(req: Request, res: Response) {
+  const { user_id } = req.params;
+
+  const userData = await getUserTPData(Number(user_id));
+
+  return sendResponse(res, 200, SUCCESS, userData);
 }

@@ -1,6 +1,12 @@
 import { Router } from 'express';
 
-import { acceptTermsOfUse, getAllUsers, getUserProfile, watchOrientationVideo } from '../controllers/UserController';
+import {
+  acceptTermsOfUse,
+  getAllUsers,
+  getUserProfile,
+  getUserTreatmentPlanDetails,
+  watchOrientationVideo,
+} from '../controllers/UserController';
 import { authorize, authorizeWebUser } from '../middlewares/auth';
 
 const router = Router();
@@ -12,5 +18,7 @@ router.put('/accept-terms-of-use', authorize, acceptTermsOfUse);
 router.put('/watch-orientation-video', authorize, watchOrientationVideo);
 
 router.get('/web', authorizeWebUser, getAllUsers);
+
+router.get('/:user_id/web', authorizeWebUser, getUserTreatmentPlanDetails);
 
 export default router;
