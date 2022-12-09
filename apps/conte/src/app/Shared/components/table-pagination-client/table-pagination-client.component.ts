@@ -11,7 +11,7 @@ export class TablePaginationClientComponent implements OnInit {
   @Input() headers: TableHeaders[] = [];
   @Input() data: any = [];
 
-  idSpecificData: { id: number; data: any }[] = [];
+  tableData: { id: number; data: any }[] = [];
 
   constructor(private treatmentPlanService: TreatmentPlanService) {}
 
@@ -19,18 +19,18 @@ export class TablePaginationClientComponent implements OnInit {
 
   ngOnChanges(): void {}
 
-  expanssionToggle(record: any) {
-    if (record.expanssion === true) {
-      record.expanssion = false;
+  expansionToggle(record: any) {
+    if (record.expansion === true) {
+      record.expansion = false;
     } else {
       this.treatmentPlanService.getTasks(record.id).then((resp) => {
-        const match = this.idSpecificData.find((item) => item.id === record.id);
+        const match = this.tableData.find((item) => item.id === record.id);
 
         if (!match) {
-          this.idSpecificData.push({ id: record.id, data: resp.data });
+          this.tableData.push({ id: record.id, data: resp.data });
         }
       });
-      record.expanssion = true;
+      record.expansion = true;
     }
   }
 }

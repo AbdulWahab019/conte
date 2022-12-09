@@ -3,3 +3,9 @@ export interface TableHeaders {
   value: string;
   sort: boolean;
 }
+export interface NavbarComponentModel {
+  title: string;
+  activePath: string;
+  svgSrc: string;
+  activeSvgSrc: string;
+}

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +14,7 @@ import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, AuthenticationComponent],
+  declarations: [AppComponent, AuthenticationComponent],
   imports: [
     BrowserModule,
     SharedModule,

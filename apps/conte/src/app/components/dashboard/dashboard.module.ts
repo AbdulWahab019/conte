@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard.component';
 import { SharedModule } from '../../Shared/shared.module';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
+import { UserManagmentComponent } from './home/user-managment.component';
 import { TreatmentplansComponent } from './treatmentplans/treatmentplans.component';
 
 
@@ -14,14 +14,14 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     children: [
-      { path: 'users', title: 'Home', component: HomeComponent },
-      { path: 'treatment-plans', title: 'treatment-plan', component: TreatmentplansComponent },
+      { path: '', title: 'Home', component: UserManagmentComponent },
+      { path: 'treatment-plans', title: 'Treatment Plan', component: TreatmentplansComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, NavbarComponent, HomeComponent, TreatmentplansComponent],
+  declarations: [DashboardComponent, NavbarComponent, UserManagmentComponent, TreatmentplansComponent],
   imports: [CommonModule, FormsModule, RouterModule, SharedModule, ReactiveFormsModule, RouterModule.forChild(routes)],
   exports: [RouterModule, DashboardComponent, NavbarComponent],
 })
