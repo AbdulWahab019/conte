@@ -29,7 +29,7 @@ export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlan
   };
 }
 
-export function validateTreatmentPlanDetails(keys: string[]) {
+export function validateTreatmentPlanFile(keys: string[]) {
   const record = Object.keys(keys);
 
   if (!record[0].toLowerCase().includes('tp day')) throw new Error('Tp Day should be at column 1');

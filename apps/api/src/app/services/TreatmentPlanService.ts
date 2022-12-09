@@ -11,7 +11,7 @@ import {
 import {
   getUserTreatmentPlanDayByDate,
   transformToTreatmentPlanDetails,
-  validateTreatmentPlanDetails,
+  validateTreatmentPlanFile,
 } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { PostTaskFeedbackApiRequest } from '@conte/models';
@@ -80,7 +80,7 @@ export function parseTreatmentPlanFileForSurgery(
         columns: true,
 
         onRecord: (record: string[]) => {
-          validateTreatmentPlanDetails(record);
+          validateTreatmentPlanFile(record);
           return {
             week_from_surgery: Number(record['Week From Sx']) || -1,
             month_from_surgery: Number(record['Month From Sx']) || -1,
