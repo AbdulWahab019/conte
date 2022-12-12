@@ -1,0 +1,249 @@
+.authentication-screen {
+  position: relative;
+  text-align: center;
+  background: linear-gradient(60deg, rgb(234, 210, 24, 0.8) 0%, rgb(30, 32, 32) 100%);
+  color: white;
+}
+
+.authentication-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 70vh;
+
+  h1 {
+    width: 100%;
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .logo {
+      height: 30vh;
+      width: 35vh;
+    }
+  }
+
+  .authentication-form {
+    width: 40%;
+    padding: 2% 3% 0 3%;
+
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    border-radius: 4px;
+
+    box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.4); // background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.8) 0%, rgb(19, 37, 118) 100%);
+
+    .switch-panel {
+      button {
+        padding: 3px;
+
+        font-size: 18px;
+
+        border-style: none;
+
+        color: white;
+        background-color: transparent;
+
+        cursor: pointer;
+      }
+
+      .active-state {
+        border-bottom: 3px solid rgb(12, 0, 122);
+        color: black;
+        span {
+          font-size: 22px;
+          font-weight: 500;;
+        }
+        cursor: default;
+      }
+
+      .display-6 {
+        font-size: large;
+      }
+    }
+
+    .form-group {
+      position: relative;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .input-style {
+      padding: 13px 20px;
+      padding-left: 55px;
+      height: 48px;
+      width: 100%;
+      font-weight: 500;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.5px;
+
+      outline: none;
+      border: none;
+      color: #c4c3ca;
+      background-color: #1f2029;
+      box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+
+      &:focus {
+        color: #c4c3ca;
+        background-color: #1f2029;
+      }
+
+      &:active {
+        color: #c4c3ca;
+        background-color: #1f2029;
+      }
+    }
+
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 50px #1f2029 inset;
+      box-shadow: 0 0 0 50px #1f2029 inset;
+      -webkit-text-fill-color: #c4c3ca;
+    }
+
+    input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 50px #1f2029 inset;
+      box-shadow: 0 0 0 50px #1f2029 inset;
+      -webkit-text-fill-color: #c4c3ca;
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 0;
+      left: 18px;
+      height: 48px;
+      font-size: 24ox;
+      line-height: 48px;
+      text-align: left;
+      color: #ffeba7;
+    }
+
+    .reset-pass {
+      color: rgb(91, 243, 131, 0.6);
+      cursor: pointer;
+    }
+
+    .checkbox {
+      margin: 0.2rem 10px 0 0;
+      height: 12px;
+      width: 12px;
+    }
+
+    .text {
+      color: rgb(199, 197, 197);
+      font-size: 13px;
+    }
+
+    #password {
+      -webkit-text-security: disc;
+    }
+
+    .error-text {
+      color: #d53737;
+      font-size: small;
+      text-align: start;
+
+      p {
+        margin: 3px 0 0 0 !important;
+      }
+    }
+
+    .error-input {
+      border-bottom: 2px solid #d53737 !important;
+    }
+
+    .btn-authenticate {
+      width: 170px;
+      padding: 10px;
+
+      border-radius: 4px;
+      border-style: none;
+      -webkit-transition: all 200ms linear;
+      transition: all 200ms linear;
+
+      font-weight: 600;
+
+      color: #102770;
+      background-color: #ffeba7;
+      box-shadow: 0 18px 24px 0 rgb(16, 39, 112, 0.2);
+
+      cursor: pointer;
+    }
+
+    button:active {
+      background-color: #102770;
+      color: #ffeba7;
+    }
+    button:hover {
+      background-color: #102770;
+      color: #ffeba7;
+    }
+    button:focus {
+      background-color: #102770;
+      color: #ffeba7;
+    }
+  }
+}
+
+.waves {
+  position: relative;
+  width: 100%;
+  height: 15vh;
+  margin-bottom: -7px; /*Fix for safari gap*/
+  min-height: 100px;
+  max-height: 150px;
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+@media (max-width: 1000px) {
+  .waves {
+    height: 40px;
+    min-height: 40px;
+  }
+  .authentication-container {
+    padding: 0 5% 0 5%;
+  }
+  .authentication-form {
+    width: 100% !important;
+  }
+  h1 {
+    font-size: 24px;
+  }
+}

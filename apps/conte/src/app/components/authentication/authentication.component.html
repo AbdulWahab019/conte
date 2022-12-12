@@ -1,0 +1,120 @@
+<div class="authentication-screen">
+  <!--Content before waves-->
+  <div class="container-fluid authentication-container">
+    <!-- Logo -->
+    <div class="logo-container">
+      <img class="logo" src="../../../assets/logos/ThrowingProgressionPro.png" alt="logo" width="100" height="100" />
+    </div>
+
+    <div class="authentication-form">
+      <div class="d-flex switch-panel mb-4">
+        <button
+          [ngClass]="formType === 'register' ? 'active-state me-4' : 'me-4'"
+          [disabled]="formType === 'register' || buttonState === 'loading'"
+          (click)="switchForm()"
+        >
+          <span class="display-6">SIGN UP</span>
+        </button>
+        <button
+          [ngClass]="formType === 'login' ? 'active-state' : ''"
+          [disabled]="formType === 'login' || buttonState === 'loading'"
+          (click)="switchForm()"
+        >
+          <span class="display-6">LOG IN</span>
+        </button>
+      </div>
+
+      <!-- Registration -->
+      <form [formGroup]="authenticationForm" (submit)="formType === 'login' ? login() : register()">
+        <!-- Email -->
+        <div class="form-group mb-3">
+          <input type="text" class="input-style" formControlName="email" placeholder="Email Address" />
+          <i class="bi bi-at input-icon"></i>
+
+          <div *ngIf="f.email.touched || f.email.dirty" class="error-text m-0">
+            <p *ngIf="f.email.errors?.email"><i class="bi bi-x-circle-fill m-1"></i>Please enter a valid Email.</p>
+            <p *ngIf="f.email.errors?.required"><i class="bi bi-x-circle-fill me-1"></i>Email is required to log in.</p>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-3">
+          <input type="password" class="input-style" formControlName="password" placeholder="Password" />
+          <i class="bi bi-lock input-icon"></i>
+
+          <div *ngIf="f.password.touched || f.password.dirty" class="error-text">
+            <p *ngIf="f.password.errors?.required">
+              <i class="bi bi-x-circle-fill me-1"></i>Password is required to login.
+            </p>
+            <p *ngIf="f.password.errors?.minlength">
+              <i class="bi bi-x-circle-fill me-1"></i>Password must be atleast 8 characters long.
+            </p>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group mb-3" *ngIf="formType === 'register'" [@fadeInOut]>
+          <input
+            type="password"
+            class="input-style"
+            formControlName="confirm_password"
+            placeholder="Confirm Password"
+          />
+          <i class="bi bi-lock-fill input-icon"></i>
+
+          <div
+            *ngIf="(f.password.touched || f.password.dirty) && (f.confirm_password.touched || f.confirm_password.dirty)"
+            class="error-text"
+          >
+            <p *ngIf="authenticationForm.errors?.['mismatch']">
+              <i class="bi bi-x-circle-fill me-1"></i>Passwords do not match.
+            </p>
+            <p *ngIf="!authenticationForm.errors?.['mismatch']" style="color: green">
+              <i class="bi bi-check-circle-fill me-1"></i>Passwords matched
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 mb-2">
+          <button
+            class="btn btn-primary btn-authenticate"
+            type="submit"
+            (click)="formType === 'login' ? login() : register()"
+            [disabled]="authenticationForm.invalid || buttonState === 'loading'"
+          >
+            <span *ngIf="buttonState === 'static'"
+              >{{ formType === 'login' ? 'LOGIN' : 'SIGN UP' }}<i class="bi bi-box-arrow-in-right ms-1"></i
+            ></span>
+            <div *ngIf="buttonState === 'loading'">
+              <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              <span>{{ formType === 'login' ? 'Logging you in' : 'Signing you up' }}</span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--Waves Container-->
+  <div>
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+      </defs>
+      <g class="parallax">
+        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <!--Waves end-->
+</div>
