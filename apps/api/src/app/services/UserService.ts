@@ -1,5 +1,5 @@
 import { User, UserModel, UserProfile } from '../models/User';
-import { Model, Transaction, where } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import { APIError } from '../utils/apiError';
 import { USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
@@ -81,7 +81,7 @@ async function getUserTPData(user_id: number) {
           {
             model: UserTreatmentPlanTasks,
             as: 'tasks',
-            attributes: [[sequelize.fn('COUNT', 'tp_day'), 'total_tasks']],
+            where: { user_id, tp_day: { [Op.col]: 'details.tp_day' } },
           },
         ],
       },
