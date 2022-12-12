@@ -16,7 +16,7 @@
         "tsConfig": "apps/conte/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/conte/src/favicon.ico", "apps/conte/src/assets"],
-        "styles": ["apps/conte/src/styles.scss"],
+        "styles": ["apps/conte/src/styles.scss", "node_modules/bootstrap/dist/css/bootstrap.min.css"],
         "scripts": []
       },
       "configurations": {
