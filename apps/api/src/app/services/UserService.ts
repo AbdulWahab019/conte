@@ -76,11 +76,12 @@ async function getUserTPData(user_id: number) {
       {
         model: UserTreatmentPlanDetail,
         as: 'details',
-        attributes: ['tp_day'],
+        attributes: ['tp_day', 'tp_weekday', 'video_url', 'created_at'],
         include: [
           {
             model: UserTreatmentPlanTasks,
             as: 'tasks',
+            attributes: ['id', 'task_type', 'title', 'is_completed', 'is_skipped'],
             where: { user_id, tp_day: { [Op.col]: 'details.tp_day' } },
           },
         ],
