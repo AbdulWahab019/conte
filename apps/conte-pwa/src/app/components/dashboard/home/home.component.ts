@@ -55,7 +55,6 @@ export class HomeComponent implements OnInit {
   };
 
   getTreatmentPlanDetail() {
-    this.spinner.show();
     this.apiLoaded = false;
 
     this.dashboardService
@@ -88,24 +87,20 @@ export class HomeComponent implements OnInit {
 
               this.getCalendarData();
               this.apiLoaded = true;
-              this.spinner.hide();
             })
             .catch((err) => {
-              this.spinner.hide();
               console.error(err);
               this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
             });
         } else {
           this.apiLoaded = true;
           this.getCalendarData();
-          this.spinner.hide();
 
           this.treatmentPlanStartDate = new Date(resp.data.tp_start_date);
           this.treatmentPlanStatus = 'pending';
         }
       })
       .catch((err) => {
-        this.spinner.hide();
         console.error(err);
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
