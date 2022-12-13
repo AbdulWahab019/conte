@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { GenericResponse } from '../api/api.model';
 
 export interface User extends UserDemographics {

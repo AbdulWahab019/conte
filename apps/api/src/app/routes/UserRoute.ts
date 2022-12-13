@@ -23,6 +23,6 @@ router.get('/web', authorizeWebUser, getAllUsers);
 
 router.get('/:user_id/web', authorizeWebUser, getUserTreatmentPlanDetails);
 
-router.put('/:user_id/task/:task_id/update/web', authorizeWebUser, validateTaskUpdate, updateUserTPTask);
+router.put('/:user_id/task/:task_id/web', authorizeWebUser, validateTaskUpdate, updateUserTPTask);
 
 export default router;
