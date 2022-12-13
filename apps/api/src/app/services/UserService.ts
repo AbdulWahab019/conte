@@ -1,8 +1,11 @@
 import { User, UserModel, UserProfile } from '../models/User';
-import { Transaction } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import { APIError } from '../utils/apiError';
 import { USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
+import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
+import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
+import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 
 async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -66,4 +69,29 @@ async function getUsersData() {
   });
 }
 
-export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData };
+async function getUserTPData(user_id: number) {
+  return await UserTreatmentPlan.findOne({
+    where: { user_id },
+    include: [
+      {
+        model: UserTreatmentPlanDetail,
+        as: 'details',
+        attributes: ['tp_day', 'tp_weekday', 'video_url', 'created_at'],
+        include: [
+          {
+            model: UserTreatmentPlanTasks,
+            as: 'tasks',
+            attributes: ['id', 'task_type', 'title', 'is_completed', 'is_skipped'],
+            where: { user_id, tp_day: { [Op.col]: 'details.tp_day' } },
+          },
+        ],
+      },
+    ],
+  });
+}
+
+async function updateTaskWeb(user_id: number, task_id: number, data: any) {
+  return await UserTreatmentPlanTasks.update({ ...data }, { where: { user_id, id: task_id } });
+}
+
+export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData, getUserTPData, updateTaskWeb };

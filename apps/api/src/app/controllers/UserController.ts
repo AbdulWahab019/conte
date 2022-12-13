@@ -1,7 +1,13 @@
 import { Request, Response } from 'express';
 
 import { sendResponse } from '../utils/appUtils';
-import { getUsersData, isOrientationVideoWatched, isTermsOfUseAccepted } from '../services/UserService';
+import {
+  getUsersData,
+  getUserTPData,
+  isOrientationVideoWatched,
+  isTermsOfUseAccepted,
+  updateTaskWeb,
+} from '../services/UserService';
 import { BAD_REQUEST, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
@@ -38,4 +44,28 @@ export async function getAllUsers(req: Request, res: Response) {
   const users = await getUsersData();
 
   return sendResponse(res, 200, SUCCESS, { users });
+}
+
+export async function getUserTreatmentPlanDetails(req: Request, res: Response) {
+  const { user_id } = req.params;
+
+  const userData = await getUserTPData(Number(user_id));
+
+  return sendResponse(res, 200, SUCCESS, userData);
+}
+
+export async function updateUserTPTask(req: Request, res: Response) {
+  const { user_id, task_id } = req.params;
+  const { data } = req.body;
+
+  const dataObj = {
+    task_type: data.details[0].tasks[0].task_type,
+    title: data.details[0].tasks[0].title,
+    is_completed: data.details[0].tasks[0].is_completed,
+    is_skipped: data.details[0].tasks[0].is_skipped,
+  };
+
+  const apiResp = await updateTaskWeb(Number(user_id), Number(task_id), dataObj);
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
 }

@@ -80,3 +80,4 @@ export const TYPE_REQUIRED = 'Task type is required';
 
 // Tasks
 export const NO_SKIPPED_TASKS = 'No tasks are skipped by the user';
+export const DATA_NOT_OBJECT = 'Data must be an object';
