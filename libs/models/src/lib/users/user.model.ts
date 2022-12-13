@@ -87,10 +87,10 @@ export type AcceptTermsOfUseAPIResponse = GenericResponse;
 export type WatchOrientationVideoAPIResponse = GenericResponse;
 
 export interface UpdateUserTPTaskAPIRequest {
-  task_type: number;
-  title: string;
-  is_completed: boolean;
-  is_skipped: boolean;
+  task_type?: number;
+  title?: string;
+  is_completed?: boolean;
+  is_skipped?: boolean;
 }
 
 export type UpdateUserTPTaskAPIResponse = GenericResponse;
