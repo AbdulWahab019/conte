@@ -59,10 +59,10 @@ export async function updateUserTPTask(req: Request, res: Response) {
   const { data } = req.body;
 
   const dataObj = {
-    task_type: data.details[0].tasks[0].task_type,
-    title: data.details[0].tasks[0].title,
-    is_completed: data.details[0].tasks[0].is_completed,
-    is_skipped: data.details[0].tasks[0].is_skipped,
+    task_type: data.task_type,
+    title: data.title,
+    is_completed: data.is_completed,
+    is_skipped: data.is_skipped,
   };
 
   const apiResp = await updateTaskWeb(Number(user_id), Number(task_id), dataObj);

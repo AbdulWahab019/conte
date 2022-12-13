@@ -6,6 +6,7 @@ import { sequelize } from '../models';
 import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
+import { UpdateUserTPTaskAPIRequest } from '@conte/models';
 
 async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -90,7 +91,7 @@ async function getUserTPData(user_id: number) {
   });
 }
 
-async function updateTaskWeb(user_id: number, task_id: number, data: any) {
+async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
   return await UserTreatmentPlanTasks.update({ ...data }, { where: { user_id, id: task_id } });
 }
 
