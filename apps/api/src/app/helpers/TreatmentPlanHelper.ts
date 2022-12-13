@@ -29,6 +29,41 @@ export function transformToTreatmentPlanDetails(record: string[]): TreatmentPlan
   };
 }
 
+export function validateTreatmentPlanFile(keys: string[]) {
+  const record = Object.keys(keys);
+
+  if (!record[0].toLowerCase().includes('tp day')) throw new Error('Tp Day should be at column 1');
+  if (!record[1].toLowerCase().includes('week day')) throw new Error('Week Day column not found');
+  if (!record[2].toLowerCase().includes('week from sx')) throw new Error('Week from sx not found');
+  if (!record[3].toLowerCase().includes('month from sx')) throw new Error('Month From Sx not found');
+  if (!record[4].toLowerCase().includes('week of throwing')) throw new Error('Week of throwing not found');
+  if (!record[5].toLowerCase().includes('month of throwing')) throw new Error('Month Of Throwing not found');
+  if (!record[6].toLowerCase().includes('plyo throw')) throw new Error('Plyo throw not found');
+  if (!record[7].toLowerCase().includes('max distance')) throw new Error('Max Distance (Feet) not found');
+  if (!record[8].toLowerCase().includes('% max velocity')) throw new Error('& Max Velocity not found');
+  if (!record[9].toLowerCase().includes('max velocity*')) throw new Error('Max Velocity (Absolute) not found');
+  if (!record[10].toLowerCase().includes('number throws at max distance'))
+    throw new Error('Number Throws at Max Distance ** not found');
+  if (!record[11].toLowerCase().includes('post max dist flat ground 60'))
+    throw new Error('Post Max Dist Flat Ground 60 not found');
+  if (!record[12].toLowerCase().includes('post max distance flat ground % max velocity'))
+    throw new Error('Post Max Distance Flat Ground % Max Velocity not found');
+  if (!record[13].toLowerCase().includes('post max distance flat ground velocity'))
+    throw new Error('Post Max Distance Flat Ground Velocity not found');
+  if (!record[14].toLowerCase().includes('post max flat ground pitches'))
+    throw new Error('Post Max Flat Ground Pitches not found');
+  if (!record[15].toLowerCase().includes('bullpen')) throw new Error('Bullpen not found');
+  if (!record[16].toLowerCase().includes('bullpen % max velocity')) throw new Error('Bullpen % Max Velocity not found');
+  if (!record[17].toLowerCase().includes('bullpen max velocity')) throw new Error('Bullpen Max Velocity not found');
+  if (!record[18].toLowerCase().includes('bullpen pitches')) throw new Error('Bullpen Pitches not found');
+  if (!record[19].toLowerCase().includes('live/simulated game pitches'))
+    throw new Error('Live/Simulated Game Pitches not found');
+  if (!record[20].toLowerCase().includes('innings')) throw new Error('Innings not found');
+  if (!record[21].toLowerCase().includes('video url')) throw new Error('Video Url not found');
+
+  return true;
+}
+
 export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttributes) {
   const tasks = [];
 

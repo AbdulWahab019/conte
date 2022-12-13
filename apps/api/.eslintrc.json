@@ -4,7 +4,9 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "complexity": ["error", 25]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],

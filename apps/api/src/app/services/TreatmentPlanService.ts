@@ -8,7 +8,11 @@ import {
   TreatmentPlanDetailsFileAttributes,
 } from '../models/TreatmentPlanDetail';
 
-import { getUserTreatmentPlanDayByDate, transformToTreatmentPlanDetails } from '../helpers/TreatmentPlanHelper';
+import {
+  getUserTreatmentPlanDayByDate,
+  transformToTreatmentPlanDetails,
+  validateTreatmentPlanFile,
+} from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { PostTaskFeedbackApiRequest } from '@conte/models';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
@@ -57,7 +61,6 @@ export function parseTreatmentPlanFile(
   return new Promise((resolve, reject) => {
     parse(file.buffer, { from, to, relaxQuotes: true, onRecord: transformToTreatmentPlanDetails }, (err, records) => {
       if (err) reject(err);
-
       resolve(records);
     });
   });
@@ -75,14 +78,17 @@ export function parseTreatmentPlanFileForSurgery(
         toLine: colLine + 1,
         relaxQuotes: true,
         columns: true,
-        onRecord: (record: string[]) => ({
-          week_from_surgery: Number(record['Week From Sx']) || -1,
-          month_from_surgery: Number(record['Month From Sx']) || -1,
-        }),
+
+        onRecord: (record: string[]) => {
+          validateTreatmentPlanFile(record);
+          return {
+            week_from_surgery: Number(record['Week From Sx']) || -1,
+            month_from_surgery: Number(record['Month From Sx']) || -1,
+          };
+        },
       },
       (err, records) => {
         if (err) reject(err);
-
         resolve(records);
       }
     );
