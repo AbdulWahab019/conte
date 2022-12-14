@@ -8,6 +8,7 @@ import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { UpdateUserTPTaskAPIRequest } from '@conte/models';
 import moment = require('moment');
+import { getDateByTpDay } from '../helpers/TreatmentPlanHelper';
 
 export async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -72,7 +73,7 @@ export async function getUsersData() {
 }
 
 export async function getUserTPData(user_id: number) {
-  return await UserTreatmentPlan.findOne({
+  let data = await UserTreatmentPlan.findOne({
     where: { user_id },
     include: [
       {
@@ -90,6 +91,16 @@ export async function getUserTPData(user_id: number) {
       },
     ],
   });
+
+  data = data.toJSON();
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  data.details = data.details.map((detail) => ({
+    tp_date: getDateByTpDay(detail.tp_day, data.assigned_at),
+    ...detail,
+  }));
+  return data;
 }
 
 export async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
