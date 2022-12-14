@@ -12,6 +12,8 @@ import { BAD_REQUEST, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
 import { UserModel } from '../models/User';
+import moment = require('moment');
+import { captureException } from '@sentry/node';
 
 export async function getUserProfile(req: Request, res: Response) {
   const user: UserModel = req['user'];
@@ -68,4 +70,46 @@ export async function updateUserTPTask(req: Request, res: Response) {
   const apiResp = await updateTaskWeb(Number(user_id), Number(task_id), dataObj);
 
   return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function renderUserTreatmentPlanDetails(req: Request, res: Response) {
+  try {
+    const { user_id } = req.params;
+
+    const dataObj = (await getUserTPData(Number(user_id))).toJSON();
+
+    const header = 'User Treatment Plan';
+
+    const tp_details = `Name, ${dataObj.name}
+    Assigned At, ${moment(dataObj.assigned_at).format('YYYY-MM-DD')}`;
+
+    const task_header = 'Tasks Report';
+
+    const task_table_header = 'Treatment Plan Day, Type, Title, Is_Completed, Is_Skipped';
+
+    let task_records = '';
+
+    dataObj.details.forEach((detail) => {
+      detail.tasks.forEach((task) => {
+        task_records += `${detail.tp_day}, ${task.task_type}, ${task.title}, ${task.is_completed},${task.is_skipped} \n`;
+      });
+    });
+
+    // CSV Styling
+    const csv_string = `${header}
+    
+    ${tp_details}
+    
+    
+    ${task_header}
+    
+    ${task_table_header}
+    ${task_records}\n`;
+
+    res.contentType('text/csv');
+    return res.status(200).send(csv_string);
+  } catch (error) {
+    captureException(error);
+    return console.error(error);
+  }
 }
