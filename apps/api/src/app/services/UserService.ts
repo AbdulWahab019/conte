@@ -7,8 +7,9 @@ import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { UpdateUserTPTaskAPIRequest } from '@conte/models';
+import moment = require('moment');
 
-async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
+export async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
   if (!user) throw new APIError(400, USER_NOT_FOUND);
 
@@ -18,7 +19,7 @@ async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   return true;
 }
 
-async function isOrientationVideoWatched(user_id: number, hasWatched = true) {
+export async function isOrientationVideoWatched(user_id: number, hasWatched = true) {
   const user = await User.findOne({ where: { id: user_id } });
   if (!user) throw new APIError(400, USER_NOT_FOUND);
 
@@ -48,7 +49,7 @@ export async function updateUser(
   return user;
 }
 
-async function getUsersData() {
+export async function getUsersData() {
   return await User.findAll({
     attributes: {
       include: [
@@ -70,7 +71,7 @@ async function getUsersData() {
   });
 }
 
-async function getUserTPData(user_id: number) {
+export async function getUserTPData(user_id: number) {
   return await UserTreatmentPlan.findOne({
     where: { user_id },
     include: [
@@ -91,8 +92,38 @@ async function getUserTPData(user_id: number) {
   });
 }
 
-async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
+export async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
   return await UserTreatmentPlanTasks.update({ ...data }, { where: { user_id, id: task_id } });
 }
 
-export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData, getUserTPData, updateTaskWeb };
+export async function renderTPDetails(user_id: number) {
+  const dataObj = (await getUserTPData(user_id)).toJSON();
+
+  const header = 'User Treatment Plan';
+
+  const tp_details = `Name, ${dataObj.name}
+    Assigned At, ${moment(dataObj.assigned_at).format('YYYY-MM-DD')}`;
+
+  const task_header = 'Tasks Report';
+
+  const task_table_header = 'Treatment Plan Day, Type, Title, Is_Completed, Is_Skipped';
+
+  let task_records = '';
+
+  dataObj.details.forEach((detail) => {
+    detail.tasks.forEach((task) => {
+      task_records += `${detail.tp_day}, ${task.task_type}, ${task.title}, ${task.is_completed},${task.is_skipped} \n`;
+    });
+  });
+
+  // CSV Styling
+  return `${header}
+    
+    ${tp_details}
+    
+    
+    ${task_header}
+    
+    ${task_table_header}
+    ${task_records}\n`;
+}
