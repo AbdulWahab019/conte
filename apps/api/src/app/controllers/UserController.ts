@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { sendResponse } from '../utils/appUtils';
 import {
   getUsersData,
-  getUserTPData,
+  getUserTPDetailsWeb,
   isOrientationVideoWatched,
   isTermsOfUseAccepted,
   renderTPDetails,
@@ -51,7 +51,7 @@ export async function getAllUsers(req: Request, res: Response) {
 export async function getUserTreatmentPlanDetails(req: Request, res: Response) {
   const { user_id } = req.params;
 
-  const userData = await getUserTPData(Number(user_id));
+  const userData = await getUserTPDetailsWeb(Number(user_id));
 
   return sendResponse(res, 200, SUCCESS, userData);
 }

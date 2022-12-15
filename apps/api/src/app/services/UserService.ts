@@ -72,8 +72,22 @@ export async function getUsersData() {
   });
 }
 
+export async function getUserTPDetailsWeb(user_id: number) {
+  const dataObj = (await getUserTPData(user_id)).toJSON();
+
+  // TODO -
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  dataObj.details = dataObj.details.map((detail) => ({
+    tp_date: getDateByTpDay(detail.tp_day, dataObj.assigned_at),
+    ...detail,
+  }));
+
+  return dataObj;
+}
+
 export async function getUserTPData(user_id: number) {
-  let data = await UserTreatmentPlan.findOne({
+  return await UserTreatmentPlan.findOne({
     where: { user_id },
     include: [
       {
@@ -91,16 +105,6 @@ export async function getUserTPData(user_id: number) {
       },
     ],
   });
-
-  data = data.toJSON();
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  data.details = data.details.map((detail) => ({
-    tp_date: getDateByTpDay(detail.tp_day, data.assigned_at),
-    ...detail,
-  }));
-  return data;
 }
 
 export async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
@@ -117,13 +121,15 @@ export async function renderTPDetails(user_id: number) {
 
   const task_header = 'Tasks Report';
 
-  const task_table_header = 'Treatment Plan Day, Type, Title, Is_Completed, Is_Skipped';
+  const task_table_header = 'Date, Treatment Plan Day, Type, Title, Completed, Skipped';
 
   let task_records = '';
 
   dataObj.details.forEach((detail) => {
     detail.tasks.forEach((task) => {
-      task_records += `${detail.tp_day}, ${task.task_type}, ${task.title}, ${task.is_completed},${task.is_skipped} \n`;
+      task_records += ` ${moment(getDateByTpDay(detail.tp_day, dataObj.assigned_at)).format('YYYY-MM-DD')},${
+        detail.tp_day
+      }, ${task.task_type}, ${task.title}, ${task.is_completed},${task.is_skipped} \n`;
     });
   });
 
@@ -136,5 +142,5 @@ export async function renderTPDetails(user_id: number) {
     ${task_header}
     
     ${task_table_header}
-    ${task_records}\n`;
+${task_records}\n`;
 }
