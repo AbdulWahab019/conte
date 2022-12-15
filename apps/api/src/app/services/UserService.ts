@@ -129,7 +129,7 @@ export async function renderTPDetails(user_id: number) {
     detail.tasks.forEach((task) => {
       task_records += ` ${moment(getDateByTpDay(detail.tp_day, dataObj.assigned_at)).format('YYYY-MM-DD')},${
         detail.tp_day
-      }, ${task.task_type}, ${task.title}, ${task.is_completed},${task.is_skipped} \n`;
+      }, ${task.task_type}, ${task.title}, ${task.is_completed ? '1' : ''},${task.is_skipped ? '1' : ''} \n`;
     });
   });
 
