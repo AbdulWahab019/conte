@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { TreatmentPlanService } from '../../services/treatmentPlan.service';
 import { TableHeaders } from '../../models/Generic';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-table-pagination-client',
@@ -10,9 +11,12 @@ import { TableHeaders } from '../../models/Generic';
 export class TablePaginationClientComponent implements OnInit {
   @Input() headers: TableHeaders[] = [];
   @Input() data: any = [];
-
+  @Input() tableExpansion: boolean = false;
+  @Input() openModal: boolean = false;
+  @Output() modalData = new EventEmitter<any>();
+  @Input() modalToggle: (args: any) => void = () => null;
+  @Input() onRowClick: (args: any) => void = () => null;
   tableData: { id: number; data: any }[] = [];
-
   constructor(private treatmentPlanService: TreatmentPlanService) {}
 
   ngOnInit(): void {}

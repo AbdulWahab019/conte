@@ -75,53 +75,52 @@ export class AuthenticationComponent implements OnInit {
 
   login() {
     this.buttonState = 'loading';
-    const credentials : LoginCreds = {
+    const credentials: LoginCreds = {
       email: this.f.email.value,
       password: this.f.password.value,
     };
     this.authService
-    .userLogin(credentials)
-    .then((resp) => {
-      localStorage.setItem('token', resp.data.token);
-      localStorage.setItem('user_email', resp.data.email);
-      localStorage.setItem('is_verified', resp.data.is_verified);
-      localStorage.setItem('user_id', resp.data.user_id);
-      this.buttonState = 'static';
+      .userLogin(credentials)
+      .then((resp) => {
+        localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('user_email', resp.data.email);
+        localStorage.setItem('is_verified', resp.data.is_verified);
+        localStorage.setItem('user_id', resp.data.user_id);
+        this.buttonState = 'static';
 
-      this.router.navigate(['dashboard']);
-    })
-    .catch((err) => {
-      console.error(err);
-      this.buttonState = 'static';
-      this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
-    });
+        this.router.navigate(['dashboard/user-managment']);
+      })
+      .catch((err) => {
+        console.error(err);
+        this.buttonState = 'static';
+        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   }
 
   register() {
     this.buttonState = 'loading';
-    const credentials : RegisterCreds = {
+    const credentials: RegisterCreds = {
       email: this.f.email.value,
       password: this.f.password.value,
       confirm_password: this.f.confirm_password.value,
     };
     this.authService
-    .userRegister(credentials)
-    .then((resp) => {
-      localStorage.setItem('token', resp.data.token);
-      localStorage.setItem('user_email', resp.data.email);
-      localStorage.setItem('is_verified', resp.data.is_verified);
-      localStorage.setItem('user_id', resp.data.user_id);
-      this.buttonState = 'static';
+      .userRegister(credentials)
+      .then((resp) => {
+        localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('user_email', resp.data.email);
+        localStorage.setItem('is_verified', resp.data.is_verified);
+        localStorage.setItem('user_id', resp.data.user_id);
+        this.buttonState = 'static';
 
-      this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
+        this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-      this.router.navigate(['dashboard/users']);
-    })
-    .catch((err:any) => {
-      console.error(err);
-      this.buttonState = 'static';
-      this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
-    });
-
+        this.router.navigate(['dashboard/user-managment']);
+      })
+      .catch((err: any) => {
+        console.error(err);
+        this.buttonState = 'static';
+        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   }
 }

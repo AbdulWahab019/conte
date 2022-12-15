@@ -1,0 +1,24 @@
+.card {
+  padding: 25px;
+  margin: 10px;
+}
+
+.row-click:hover {
+  cursor: pointer;
+  color: rgb(7, 40, 227);
+  background-color: rgb(174, 180, 180);
+}
+.edit-link:hover {
+  cursor: pointer;
+  color: rgb(7, 40, 227);
+}
+.heading {
+  font-size: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 400;
+  color: #003ea0;
+}
+.heading-container {
+  padding: 10px;
+}

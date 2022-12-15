@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { UserService } from '../../../Shared/services/user.service';
 import { TableHeaders } from '../../../Shared/models/Generic';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'conte-user-managment',
@@ -22,7 +23,7 @@ export class UserManagmentComponent implements OnInit {
     { title: 'completed tasks', value: 'num_completed_tasks', sort: false },
   ];
 
-  constructor(private UsersService: UserService) {}
+  constructor(private UsersService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.UsersService.getAllUsers().then((resp) => {
@@ -36,4 +37,7 @@ export class UserManagmentComponent implements OnInit {
       }));
     });
   }
+  onRowClick = (record: any) => {
+    this.router.navigate(['dashboard/user-treatment'], record.id);
+  };
 }
