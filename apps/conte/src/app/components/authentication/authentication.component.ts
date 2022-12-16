@@ -91,7 +91,6 @@ export class AuthenticationComponent implements OnInit {
         this.router.navigate(['dashboard/user-managment']);
       })
       .catch((err) => {
-        console.error(err);
         this.buttonState = 'static';
         this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
@@ -118,7 +117,6 @@ export class AuthenticationComponent implements OnInit {
         this.router.navigate(['dashboard/user-managment']);
       })
       .catch((err: any) => {
-        console.error(err);
         this.buttonState = 'static';
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });

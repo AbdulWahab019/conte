@@ -50,7 +50,7 @@ export class UserTreatmentPlanComponent implements OnInit {
         }
       })
       .catch((err: any) => {
-        console.error(err);
+        
       });
   };
 }
