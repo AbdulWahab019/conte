@@ -81,7 +81,7 @@ export async function getUserTPDetailsWeb(user_id: number) {
     ...detail,
   }));
 
-  return { dataObj, ...details };
+  return { ...dataObj, details };
 }
 
 export async function getUserTPData(user_id: number) {
