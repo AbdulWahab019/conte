@@ -1,13 +1,14 @@
-import { User, UserModel, UserProfile } from '../models/User';
+import moment = require('moment');
 import { Op, Transaction } from 'sequelize';
+
+import { UpdateUserTPTaskAPIRequest } from '@conte/models';
+import { User, UserModel, UserProfile } from '../models/User';
 import { APIError } from '../utils/apiError';
 import { USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
 import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
-import { UpdateUserTPTaskAPIRequest } from '@conte/models';
-import moment = require('moment');
 import { getDateByTpDay } from '../helpers/TreatmentPlanHelper';
 
 export async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
@@ -75,15 +76,12 @@ export async function getUsersData() {
 export async function getUserTPDetailsWeb(user_id: number) {
   const dataObj = (await getUserTPData(user_id)).toJSON();
 
-  // TODO -
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  dataObj.details = dataObj.details.map((detail) => ({
+  const details = dataObj.details.map((detail) => ({
     tp_date: getDateByTpDay(detail.tp_day, dataObj.assigned_at),
     ...detail,
   }));
 
-  return dataObj;
+  return { dataObj, ...details };
 }
 
 export async function getUserTPData(user_id: number) {
