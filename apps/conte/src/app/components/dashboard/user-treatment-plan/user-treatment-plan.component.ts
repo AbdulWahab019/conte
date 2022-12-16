@@ -36,7 +36,7 @@ export class UserTreatmentPlanComponent implements OnInit {
   }
   updateTask = (userId: any, task: any): void => {
     const ids = {
-      userId: userId,
+      userId,
       taskId: task.id,
     };
     this.modal = this.modalService.open(GenericModalComponent, { centered: true });
