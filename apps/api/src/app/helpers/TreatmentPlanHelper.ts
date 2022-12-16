@@ -132,3 +132,9 @@ export function getUserTreatmentPlanDayByDate(date: string | Date, treatmentPlan
   const tp_day = moment(formattedDate).diff(moment(formattedTpDate), 'days') + 1;
   return { tp_day, formattedDate, formattedTpDate };
 }
+
+export function getDateByTpDay(tp_day: number, assigned_at: Date | string) {
+  return moment(assigned_at)
+    .add(tp_day - 1, 'days')
+    .format('YYYY-MM-DD');
+}

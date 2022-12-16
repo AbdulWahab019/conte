@@ -93,3 +93,6 @@ export interface UpdateUserTPTaskAPIRequest {
 }
 
 export type UpdateUserTPTaskAPIResponse = GenericResponse;
+
+// This api returns CSV File
+export type RenderUserTreatmentPlanDetailsAPIResponse = GenericResponse;

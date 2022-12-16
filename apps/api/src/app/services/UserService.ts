@@ -1,14 +1,17 @@
-import { User, UserModel, UserProfile } from '../models/User';
+import moment = require('moment');
 import { Op, Transaction } from 'sequelize';
+
+import { UpdateUserTPTaskAPIRequest } from '@conte/models';
+import { User, UserModel, UserProfile } from '../models/User';
 import { APIError } from '../utils/apiError';
 import { USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
 import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
-import { UpdateUserTPTaskAPIRequest } from '@conte/models';
+import { getDateByTpDay } from '../helpers/TreatmentPlanHelper';
 
-async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
+export async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
   if (!user) throw new APIError(400, USER_NOT_FOUND);
 
@@ -18,7 +21,7 @@ async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   return true;
 }
 
-async function isOrientationVideoWatched(user_id: number, hasWatched = true) {
+export async function isOrientationVideoWatched(user_id: number, hasWatched = true) {
   const user = await User.findOne({ where: { id: user_id } });
   if (!user) throw new APIError(400, USER_NOT_FOUND);
 
@@ -48,7 +51,7 @@ export async function updateUser(
   return user;
 }
 
-async function getUsersData() {
+export async function getUsersData() {
   return await User.findAll({
     attributes: {
       include: [
@@ -70,7 +73,18 @@ async function getUsersData() {
   });
 }
 
-async function getUserTPData(user_id: number) {
+export async function getUserTPDetailsWeb(user_id: number) {
+  const dataObj = (await getUserTPData(user_id)).toJSON();
+
+  const details = dataObj.details.map((detail) => ({
+    tp_date: getDateByTpDay(detail.tp_day, dataObj.assigned_at),
+    ...detail,
+  }));
+
+  return { ...dataObj, details };
+}
+
+export async function getUserTPData(user_id: number) {
   return await UserTreatmentPlan.findOne({
     where: { user_id },
     include: [
@@ -91,8 +105,40 @@ async function getUserTPData(user_id: number) {
   });
 }
 
-async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
+export async function updateTaskWeb(user_id: number, task_id: number, data: UpdateUserTPTaskAPIRequest) {
   return await UserTreatmentPlanTasks.update({ ...data }, { where: { user_id, id: task_id } });
 }
 
-export { isTermsOfUseAccepted, isOrientationVideoWatched, getUsersData, getUserTPData, updateTaskWeb };
+export async function renderTPDetails(user_id: number) {
+  const dataObj = (await getUserTPData(user_id)).toJSON();
+
+  const header = 'User Treatment Plan';
+
+  const tp_details = `Name, ${dataObj.name}
+    Assigned At, ${moment(dataObj.assigned_at).format('YYYY-MM-DD')}`;
+
+  const task_header = 'Tasks Report';
+
+  const task_table_header = 'Date, Treatment Plan Day, Type, Title, Completed, Skipped';
+
+  let task_records = '';
+
+  dataObj.details.forEach((detail) => {
+    detail.tasks.forEach((task) => {
+      task_records += ` ${moment(getDateByTpDay(detail.tp_day, dataObj.assigned_at)).format('YYYY-MM-DD')},${
+        detail.tp_day
+      }, ${task.task_type}, ${task.title}, ${task.is_completed ? '1' : ''},${task.is_skipped ? '1' : ''} \n`;
+    });
+  });
+
+  // CSV Styling
+  return `${header}
+    
+    ${tp_details}
+    
+    
+    ${task_header}
+    
+    ${task_table_header}
+${task_records}\n`;
+}

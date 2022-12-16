@@ -3,15 +3,17 @@ import { Request, Response } from 'express';
 import { sendResponse } from '../utils/appUtils';
 import {
   getUsersData,
-  getUserTPData,
+  getUserTPDetailsWeb,
   isOrientationVideoWatched,
   isTermsOfUseAccepted,
+  renderTPDetails,
   updateTaskWeb,
 } from '../services/UserService';
 import { BAD_REQUEST, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
 import { UserModel } from '../models/User';
+import { captureException } from '@sentry/node';
 
 export async function getUserProfile(req: Request, res: Response) {
   const user: UserModel = req['user'];
@@ -49,7 +51,7 @@ export async function getAllUsers(req: Request, res: Response) {
 export async function getUserTreatmentPlanDetails(req: Request, res: Response) {
   const { user_id } = req.params;
 
-  const userData = await getUserTPData(Number(user_id));
+  const userData = await getUserTPDetailsWeb(Number(user_id));
 
   return sendResponse(res, 200, SUCCESS, userData);
 }
@@ -68,4 +70,17 @@ export async function updateUserTPTask(req: Request, res: Response) {
   const apiResp = await updateTaskWeb(Number(user_id), Number(task_id), dataObj);
 
   return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function renderUserTreatmentPlanDetails(req: Request, res: Response) {
+  try {
+    const { user_id } = req.params;
+
+    const apiResp = await renderTPDetails(Number(user_id));
+    res.contentType('text/csv');
+    return res.status(200).send(apiResp);
+  } catch (error) {
+    captureException(error);
+    return console.error(error);
+  }
 }
