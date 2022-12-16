@@ -76,7 +76,6 @@ export class GenericModalComponent implements OnInit {
     this.questionAnswers.splice(index, 1);
   }
   onSubmit() {
-    console.log(this.form);
     const data = { data: { title: this.form.toString() } };
     this.userService
       .updateTask(this.miscData.userId, this.miscData.taskId, data)
@@ -84,7 +83,6 @@ export class GenericModalComponent implements OnInit {
         this.activeModal.close(this.form);
       })
       .catch((err) => {
-        console.error(err);
         this.buttonState = 'static';
         this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
       });
