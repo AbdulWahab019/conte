@@ -1,40 +1,23 @@
+@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+* {
+  outline: none;
+}
+
 a {
   font-size: 14px;
   font-weight: 700;
-}
-.superNav {
-  font-size: 13px;
 }
 .form-control {
   outline: none !important;
   box-shadow: none !important;
 }
-@media screen and (max-width: 540px) {
-  .centerOnMobile {
-    text-align: center;
-  }
-}
-.search_color {
+.search-color {
   background-color: #196aeb;
 }
 
 // table
 
-@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
-
-body {
-  background-color: #673ab7;
-  font-family: 'Calibri', sans-serif !important;
-}
-
-.tableMain {
-  margin-top: 2%;
-  margin-left: 3%;
-  margin-right: 2%;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 6px;
-}
 .card {
   position: relative;
   display: -webkit-box;
@@ -70,10 +53,6 @@ body {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
-}
-
-* {
-  outline: none;
 }
 
 .table th,

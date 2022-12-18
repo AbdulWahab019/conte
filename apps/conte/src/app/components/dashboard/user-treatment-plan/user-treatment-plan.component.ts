@@ -3,6 +3,8 @@ import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.ser
 import { UserService } from '../../../Shared/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GenericModalComponent } from '../../../Shared/components/modals/generic/generic-modal.component';
+import { Tasks } from '../../../Shared/models/Generic';
+import { TreatmentPlanDetails } from '../../../Shared/models/Generic';
 
 @Component({
   selector: 'conte-user-treatment-plan',
@@ -15,10 +17,19 @@ export class UserTreatmentPlanComponent implements OnInit {
     private userService: UserService,
     private modalService: NgbModal
   ) {}
-  completedTasks: [] = [];
-  pendingTasks: [] = [];
-  skippedTasks: [] = [];
-  userTreatmentPlan: any;
+  completedTasks: Tasks[] = [];
+  pendingTasks: Tasks[] = [];
+  skippedTasks: Tasks[] = [];
+  userTreatmentPlan: TreatmentPlanDetails = {
+    assigned_at: '',
+    createdAt: '',
+    details: '',
+    id: 0,
+    name: '',
+    tp_id: 0,
+    updatedAt: '',
+    user_id: 0,
+  };
   modal: any;
   ngOnInit(): void {
     this.fetchTasks();
@@ -34,7 +45,7 @@ export class UserTreatmentPlanComponent implements OnInit {
       this.userTreatmentPlan = resp.data;
     });
   }
-  updateTask = (userId: any, task: any): void => {
+  updateTask = (userId?: number, task?: any): void => {
     const ids = {
       userId,
       taskId: task.id,
@@ -49,8 +60,6 @@ export class UserTreatmentPlanComponent implements OnInit {
           this.fetchTasks();
         }
       })
-      .catch((err: any) => {
-        
-      });
+      .catch((err: any) => {});
   };
 }

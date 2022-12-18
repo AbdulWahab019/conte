@@ -5,15 +5,15 @@
     <tbody>
       <tr>
         <th>Completed Tasks</th>
-        <td>{{ completedTasks.length }}</td>
+        <td>{{ completedTasks?.length }}</td>
       </tr>
       <tr>
         <th>Pending Tasks</th>
-        <td>{{ pendingTasks.length }}</td>
+        <td>{{ pendingTasks?.length }}</td>
       </tr>
       <tr>
         <th>Skipped Tasks</th>
-        <td>{{ skippedTasks.length }}</td>
+        <td>{{ skippedTasks?.length }}</td>
       </tr>
     </tbody>
   </table>
@@ -58,11 +58,11 @@
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
-              <tbody *ngFor="let task of tpDays.tasks">
+              <tbody *ngFor="let task of tpDays?.tasks">
                 <tr>
-                  <td>{{ task.title }}</td>
-                  <td>{{ task.is_completed === true ? 'Completed' : 'Skipped' }}</td>
-                  <td (click)="updateTask(userTreatmentPlan.user_id, task)" class="edit-link">
+                  <td>{{ task?.title }}</td>
+                  <td>{{ task?.is_completed === true ? 'Completed' : 'Skipped' }}</td>
+                  <td (click)="updateTask(userTreatmentPlan?.user_id, task)" class="edit-link">
                     <i class="bi bi-pencil-square"></i>
                   </td>
                 </tr>
