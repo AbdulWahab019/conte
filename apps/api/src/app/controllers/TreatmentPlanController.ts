@@ -161,7 +161,7 @@ export async function updateTreatmentPlanDetails(req: Request, res: Response) {
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
 
-export async function uploadTreatmentVideo(req: Request, res: Response) {
+export function uploadTreatmentVideo(req: Request, res: Response) {
   if (!req.file) return sendResponse(res, 400, FILE_NOT_UPLOADED);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
