@@ -4,7 +4,7 @@ import { Op, Transaction } from 'sequelize';
 import { UpdateUserTPTaskAPIRequest } from '@conte/models';
 import { User, UserModel, UserProfile } from '../models/User';
 import { APIError } from '../utils/apiError';
-import { USER_NOT_FOUND } from '../utils/constants';
+import { TREATMENT_PLAN_NOT_ASSIGNED, USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
 import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
@@ -74,7 +74,9 @@ export async function getUsersData() {
 }
 
 export async function getUserTPDetailsWeb(user_id: number) {
-  const dataObj = (await getUserTPData(user_id)).toJSON();
+  let dataObj = await getUserTPData(user_id);
+  if (dataObj) dataObj = dataObj.toJSON();
+  else throw new APIError(404, TREATMENT_PLAN_NOT_ASSIGNED);
 
   const details = dataObj.details.map((detail) => ({
     tp_date: getDateByTpDay(detail.tp_day, dataObj.assigned_at),
