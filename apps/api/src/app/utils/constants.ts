@@ -97,9 +97,12 @@ export const WEEK_OF_THROWING_NOT_NUMBER = 'Week of throwing must be a number';
 export const MONTH_OF_THROWING_NOT_NUMBER = 'Month of throwing must be a number';
 export const PLYO_THROW_NOT_NUMBER = 'Plyo throw must be a number';
 export const MAX_DISTANCE_NOT_NUMBER = 'Max distance must be a nuumber';
-export const MAX_VELOCITY_NOT_NUMBER = 'Max velocity must be a number';
+export const MAX_VELOCITY_PERCENT_NOT_NUMBER = 'Max velocity percent must be a number';
+export const MAX_VELOCITY_ABSOLUTE_NOT_NUMBER = 'Max velocity absolute must be a number';
+export const NUM_OF_THROWS_NOT_NUMBER = 'Number of throws at max distance must be a number';
 export const POST_MAX_DISTANCE_FLAT_GROUND_NOT_NUMBER = 'Flat ground must be a number';
-export const POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_NOT_NUMBER = 'Flat ground velocity must be a number';
+export const POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_PERCENT_NOT_NUMBER =
+  'Flat ground velocity percent must be a number';
 export const POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_ABSOLUTE_NOT_NUMBER =
   'Flat ground velocity absolute must be a number';
 export const POST_MAX_DISTANCE_FLAT_GROUND_PITCHES_NOT_STRING = 'Flat ground pitches must be a string';
