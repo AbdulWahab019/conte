@@ -20,6 +20,8 @@ import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import moment = require('moment');
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { APIError } from '../utils/apiError';
+import { Doctor } from '../models/Doctor';
+import { Surgery } from '../models/Surgery';
 
 export async function createTreatmentPlan(
   name: string,
@@ -138,4 +140,31 @@ export async function getUserSkippedAndCompletedTasks(user_id: number) {
 
 export async function getTreatmentPlanByPK(id: number) {
   return await TreatmentPlan.findByPk(id);
+}
+
+export async function getTPDetailsWeb(id: number) {
+  const dataObj = (await getTPData(id)).toJSON();
+
+  return { ...dataObj };
+}
+
+export async function getTPData(id: number) {
+  return await TreatmentPlan.findOne({
+    where: { id },
+    attributes: ['id', 'name', 'week_from_surgery', 'month_from_surgery', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: TreatmentPlanDetail,
+        attributes: ['tp_day', 'tp_weekday', 'video_url'],
+      },
+      {
+        model: Doctor,
+        attributes: ['name'],
+      },
+      {
+        model: Surgery,
+        attributes: ['name'],
+      },
+    ],
+  });
 }
