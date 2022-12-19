@@ -57,10 +57,10 @@ export class UserManagmentComponent implements OnInit {
         this.treatmentPlanService.userTreatmentPlanData.userTreatmentPlan = resp.data;
         this.treatmentPlanService
           .getTasks(record.id)
-          .then((resp) => {
-            this.treatmentPlanService.userTreatmentPlanData.completed_tasks = resp.data.completed_tasks;
-            this.treatmentPlanService.userTreatmentPlanData.pending_tasks = resp.data.pending_tasks;
-            this.treatmentPlanService.userTreatmentPlanData.skipped_tasks = resp.data.skipped_tasks;
+          .then((response) => {
+            this.treatmentPlanService.userTreatmentPlanData.completed_tasks = response.data.completed_tasks;
+            this.treatmentPlanService.userTreatmentPlanData.pending_tasks = response.data.pending_tasks;
+            this.treatmentPlanService.userTreatmentPlanData.skipped_tasks = response.data.skipped_tasks;
             this.router.navigate(['dashboard/user-treatment']);
           })
           .catch((err) => {
