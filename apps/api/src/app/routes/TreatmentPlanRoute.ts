@@ -48,8 +48,8 @@ router.post('/video/upload', uploadTreatmentTypeVideo.single('video'), authorize
 
 router.put(
   '/tp_day/:tp_day/tp_id/:tp_id/update',
-  validateTreatmentPlanData,
   authorizeWebUser,
+  validateTreatmentPlanData,
   updateTreatmentPlanDetails
 );
 
