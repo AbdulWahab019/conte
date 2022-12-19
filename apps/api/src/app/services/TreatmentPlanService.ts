@@ -164,10 +164,10 @@ export async function getTPDetailsData(id: number) {
   });
 }
 
-export async function updateTreatmentPlan(
+export async function updateTreatmentPlanDetailsData(
   tp_id: number,
   tp_day: number,
   data: Omit<TreatmentPlanDetailDefinedAttributes, 'tp_id' | 'tp_day' | 'tp_weekday'>
 ) {
-  return await TreatmentPlanDetail.update({ ...data }, { where: { tp_id, tp_day } });
+  return await TreatmentPlanDetail.update(data, { where: { tp_id, tp_day } });
 }

@@ -44,13 +44,8 @@ router.get('/tasks/:user_id/web', authorizeWebUser, getSkippedAndCompletedTasks)
 
 router.get('/:id', authorizeWebUser, getTreatmentPlanDetails);
 
-router.post('/video/upload', uploadTreatmentTypeVideo.single('video'), authorizeWebUser, uploadTreatmentVideo);
+router.post('/video/upload', authorizeWebUser, uploadTreatmentTypeVideo.single('video'), uploadTreatmentVideo);
 
-router.put(
-  '/tp_day/:tp_day/tp_id/:tp_id/update',
-  authorizeWebUser,
-  validateTreatmentPlanData,
-  updateTreatmentPlanDetails
-);
+router.put('/tp_day/:tp_day/tp_id/:tp_id', authorizeWebUser, validateTreatmentPlanData, updateTreatmentPlanDetails);
 
 export default router;
