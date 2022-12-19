@@ -1,6 +1,5 @@
 import multer = require('multer');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const MulterAzureStorage = require('multer-azure-blob-storage').MulterAzureStorage;
+import { MulterAzureStorage } from 'multer-azure-blob-storage';
 
 import { environment } from '../../config/config';
 export const azureStorage = (containerName: string) =>
