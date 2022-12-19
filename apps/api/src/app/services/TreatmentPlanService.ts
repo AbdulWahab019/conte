@@ -142,13 +142,7 @@ export async function getTreatmentPlanByPK(id: number) {
   return await TreatmentPlan.findByPk(id);
 }
 
-export async function getTPDetailsWeb(id: number) {
-  const dataObj = (await getTPData(id)).toJSON();
-
-  return { ...dataObj };
-}
-
-export async function getTPData(id: number) {
+export async function getTPDetailsData(id: number) {
   return await TreatmentPlan.findOne({
     where: { id },
     attributes: ['id', 'name', 'week_from_surgery', 'month_from_surgery', 'createdAt', 'updatedAt'],

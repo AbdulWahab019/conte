@@ -10,7 +10,7 @@ import {
   getTreatmentPlans,
   getTreatmentPlanByPK,
   parseTreatmentPlanFileForSurgery,
-  getTPDetailsWeb,
+  getTPDetailsData,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -121,7 +121,7 @@ export async function getTreatmentPlanById(req: Request, res: Response) {
 export async function getTreatmentPlanDetails(req: Request, res: Response) {
   const { id } = req.params;
 
-  const treatmentPlanData = await getTPDetailsWeb(Number(id));
+  const treatmentPlanData = await getTPDetailsData(Number(id));
 
   return sendResponse(res, 200, SUCCESS, treatmentPlanData);
 }
