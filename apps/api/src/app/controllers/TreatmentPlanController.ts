@@ -11,7 +11,7 @@ import {
   getTreatmentPlanByPK,
   parseTreatmentPlanFileForSurgery,
   getTPDetailsData,
-  updateTreatmentPlan,
+  updateTreatmentPlanDetailsData,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -131,7 +131,7 @@ export async function updateTreatmentPlanDetails(req: Request, res: Response) {
   const { tp_id, tp_day } = req.params;
   const { data } = req.body;
 
-  const apiResp = await updateTreatmentPlan(Number(tp_id), Number(tp_day), data);
+  const apiResp = await updateTreatmentPlanDetailsData(Number(tp_id), Number(tp_day), data);
 
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
@@ -139,8 +139,6 @@ export async function updateTreatmentPlanDetails(req: Request, res: Response) {
 export function uploadTreatmentVideo(req: Request, res: Response) {
   if (!req.file) return sendResponse(res, 400, FILE_NOT_UPLOADED);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const { originalname: name, url } = req.file;
-  return sendResponse(res, 200, 'Success', { name, url: url.substr(0, url.indexOf('?se')) });
+  const { originalname: name, url } = req.file as Express.Multer.File & { url: string };
+  return sendResponse(res, 200, 'Success', { name, url: url.substring(0, url.indexOf('?se')) });
 }
