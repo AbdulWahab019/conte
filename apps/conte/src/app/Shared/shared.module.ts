@@ -12,7 +12,7 @@ import { TablePaginationClientComponent } from './components/table-pagination-cl
 
 @NgModule({
   declarations: [TablePaginationClientComponent, ToastComponent, GenericModalComponent],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule, BrowserAnimationsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule],
   exports: [TablePaginationClientComponent, ToastComponent, GenericModalComponent],
 })
 export class SharedModule {}

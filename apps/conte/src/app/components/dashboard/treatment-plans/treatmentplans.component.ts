@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
 import { GenericModalComponent } from '../../../Shared/components/modals/generic/generic-modal.component';
-import { TreatmentPlan } from '../../../Shared/models/Generic';
+import { TreatmentPlan } from '../../../Shared/models/TreatmentPlan';
 
 @Component({
   selector: 'conte-treatmentplans',

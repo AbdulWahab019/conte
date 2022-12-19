@@ -5,15 +5,15 @@
     <tbody>
       <tr>
         <th>Completed Tasks</th>
-        <td>{{ completedTasks?.length }}</td>
+        <td>{{ completedTasks.length }}</td>
       </tr>
       <tr>
         <th>Pending Tasks</th>
-        <td>{{ pendingTasks?.length }}</td>
+        <td>{{ pendingTasks.length }}</td>
       </tr>
       <tr>
         <th>Skipped Tasks</th>
-        <td>{{ skippedTasks?.length }}</td>
+        <td>{{ skippedTasks.length }}</td>
       </tr>
     </tbody>
   </table>
@@ -26,11 +26,11 @@
     <tbody>
       <tr>
         <th>Name</th>
-        <td>{{ userTreatmentPlan?.name }}</td>
+        <td>{{ userTreatmentPlan.name }}</td>
       </tr>
       <tr>
         <th>Assigned At</th>
-        <td>{{ userTreatmentPlan?.assigned_at }}</td>
+        <td>{{ userTreatmentPlan.assigned_at }}</td>
       </tr>
     </tbody>
   </table>
@@ -46,7 +46,7 @@
       <tbody *ngFor="let tpDays of userTreatmentPlan?.details">
         <tr class="row-click" (click)="tpDays.isExpanded = !tpDays.isExpanded">
           <td>Day - {{ tpDays?.tp_day }}</td>
-          <td>{{ tpDays?.tasks.length }}</td>
+          <td>{{ tpDays?.tasks?.length }}</td>
         </tr>
         <tr *ngIf="tpDays.isExpanded">
           <div class="card">
@@ -62,7 +62,7 @@
                 <tr>
                   <td>{{ task?.title }}</td>
                   <td>{{ task?.is_completed === true ? 'Completed' : 'Skipped' }}</td>
-                  <td (click)="updateTask(userTreatmentPlan?.user_id, task)" class="edit-link">
+                  <td (click)="updateTask(userTreatmentPlan.user_id, task)" class="edit-link">
                     <i class="bi bi-pencil-square"></i>
                   </td>
                 </tr>
