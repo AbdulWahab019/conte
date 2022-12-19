@@ -11,10 +11,11 @@ import {
   getTreatmentPlanByPK,
   parseTreatmentPlanFileForSurgery,
   getTPDetailsData,
+  updateTreatmentPlan,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
-import { INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
+import { FILE_NOT_UPLOADED, INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIRequest } from '@conte/models';
 import { getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
@@ -124,4 +125,47 @@ export async function getTreatmentPlanDetails(req: Request, res: Response) {
   const treatmentPlanData = await getTPDetailsData(Number(id));
 
   return sendResponse(res, 200, SUCCESS, treatmentPlanData);
+}
+
+export async function updateTreatmentPlanDetails(req: Request, res: Response) {
+  const { tp_id, tp_day } = req.params;
+  const { data } = req.body;
+
+  const tp_data = {
+    week_from_sx: data.week_from_sx,
+    month_from_sx: data.month_from_sx,
+    week_of_throwing: data.week_of_throwing,
+    month_of_throwing: data.month_of_throwing,
+    plyo_throw: data.plyo_throw,
+    max_distance: data.max_distance,
+    max_velocity_percent: data.max_velocity_percent,
+    max_velocity_absolute: data.max_velocity_percent,
+    num_throws_at_max_distance: data.num_throws_at_max_distance,
+    post_max_distance_flat_ground: data.post_max_distance_flat_ground,
+    post_max_distance_flat_ground_velocity_percent: data.post_max_distance_flat_ground_velocity_percent,
+    post_max_distance_flat_ground_velocity_absolute: data.post_max_distance_flat_ground_velocity_absolute,
+    post_max_flat_ground_pitches: data.post_max_flat_ground_pitches,
+    bullpen: data.bullpen,
+    bullpen_max_velocity_percent: data.bullpen_max_velocity_percent,
+    bullpen_max_velocity_absolute: data.bullpen_max_velocity_absolute,
+    bullpen_pitches: data.bullpen_pitches,
+    live_simulated_game: data.live_simulated_game,
+    innings: data.innings,
+    video_url: data.video_url,
+  };
+
+  if (!data.video_url) throw new Error('Video Url is not provided');
+
+  const apiResp = await updateTreatmentPlan(Number(tp_id), Number(tp_day), tp_data);
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function uploadTreatmentVideo(req: Request, res: Response) {
+  if (!req.file) return sendResponse(res, 400, FILE_NOT_UPLOADED);
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { originalname: name, url } = req.file;
+  return sendResponse(res, 200, 'Success', { name, url: url.substr(0, url.indexOf('?se')) });
 }

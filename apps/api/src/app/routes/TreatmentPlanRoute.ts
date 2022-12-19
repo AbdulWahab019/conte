@@ -12,9 +12,13 @@ import {
   getSkippedAndCompletedTasks,
   getTreatmentPlanById,
   getTreatmentPlanDetails,
+  updateTreatmentPlanDetails,
+  uploadTreatmentVideo,
 } from '../controllers/TreatmentPlanController';
 import { authorize, authorizeWebUser } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
+import { uploadTreatmentTypeVideo } from '../middlewares/azureStorage';
+import { validateTreatmentPlanData } from '../validations/validation';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -39,5 +43,14 @@ router.get('/:id/web', authorizeWebUser, getTreatmentPlanById);
 router.get('/tasks/:user_id/web', authorizeWebUser, getSkippedAndCompletedTasks);
 
 router.get('/:id', authorizeWebUser, getTreatmentPlanDetails);
+
+router.post('/video/upload', uploadTreatmentTypeVideo.single('video'), authorizeWebUser, uploadTreatmentVideo);
+
+router.put(
+  '/tp_day/:tp_day/tp_id/:tp_id/update',
+  validateTreatmentPlanData,
+  authorizeWebUser,
+  updateTreatmentPlanDetails
+);
 
 export default router;

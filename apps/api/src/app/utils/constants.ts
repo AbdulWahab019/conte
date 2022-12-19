@@ -71,6 +71,7 @@ export const TREATMENT_PLAN_NAME_INVALID_LENGTH =
   'Treatment plan name should be greater than 5 characters and less than 30 characters';
 export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'A Treatment Plan is already assigned to user';
 export const TREATMENT_PLAN_NOT_ASSIGNED = 'No Treatment Plan assigned to user';
+export const FILE_NOT_UPLOADED = "File couldn't be uploaded due to an error";
 
 // Task Feedback
 export const TASK_ID_REQUIRED = 'Task id is required';
@@ -85,3 +86,26 @@ export const TASK_TYPE_NUMBER = 'Task type must be a number ';
 export const TITLE_STRING = 'Title must be a string';
 export const IS_COMPLETED = 'Is Completed must be true or false';
 export const IS_SKIPPED = 'Is Skipped must be true or false';
+
+// Treatment Plan Update
+export const TP_ID_NOT_UPDATE = 'TP Id cannot be updated';
+export const TP_DAY_NOT_UPDATE = 'TP day cannot be updated';
+export const TP_WEEKDAY_NOT_UPDATE = 'TP weekday cannot be updated';
+export const WEEK_FROM_SX_NUMBER = 'Week from sx must be a number';
+export const MONTH_FROM_SX_NUMBER = 'Month from sx must be a number';
+export const WEEK_OF_THROWING_NUMBER = 'Week of throwing must be a number';
+export const MONTH_OF_THROWING_NUMBER = 'Month of throwing must be a number';
+export const PLYO_THROW_NUMBER = 'Plyo throw must be a number';
+export const MAX_DISTANCE_NUMBER = 'Max distance must be a nuumber';
+export const MAX_VELOCITY_NUMBER = 'Max velocity must be a number';
+export const POST_MAX_DISTANCE_FLAT_GROUND_NUMBER = 'Flat ground must be a number';
+export const POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_NUMBER = 'Flat ground velocity must be a number';
+export const POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_ABSOLUTE = 'Flat ground velocity absolute must be a number';
+export const POST_MAX_DISTANCE_FLAT_GROUND_PITCHES = 'Flat ground pitches must be a string';
+export const BULLPEN = 'Bullpen must be a number';
+export const BULLPEN_MAX_VELOCITY = ' Bullpen max velocity percent must be a number';
+export const BULLPEN_MAX_VELOCITY_ABSOLUTE = 'Bullpen max velocity absolute must be a number';
+export const BULLPEN_PITCHES = 'Bullpen pitches must be a string';
+export const LIVE_SIMULATED_GAME = 'Live simulated game must be a number';
+export const INNINGS = 'Innings must be a number';
+export const VIDEO_URL = 'Video url must be a string';
