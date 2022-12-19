@@ -4,6 +4,7 @@ import { Attributes, FindOptions, Op, Transaction } from 'sequelize';
 import { TreatmentPlan, TreatmentPlanSurgeryData } from '../models/TreatmentPlan';
 import {
   TreatmentPlanDetail,
+  TreatmentPlanDetailDefinedAttributes,
   TreatmentPlanDetailModel,
   TreatmentPlanDetailsFileAttributes,
 } from '../models/TreatmentPlanDetail';
@@ -161,4 +162,12 @@ export async function getTPDetailsData(id: number) {
       },
     ],
   });
+}
+
+export async function updateTreatmentPlanDetailsData(
+  tp_id: number,
+  tp_day: number,
+  data: Omit<TreatmentPlanDetailDefinedAttributes, 'tp_id' | 'tp_day' | 'tp_weekday'>
+) {
+  return await TreatmentPlanDetail.update(data, { where: { tp_id, tp_day } });
 }

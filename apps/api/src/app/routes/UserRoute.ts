@@ -10,7 +10,7 @@ import {
   watchOrientationVideo,
 } from '../controllers/UserController';
 import { authorize, authorizeWebUser } from '../middlewares/auth';
-import { validateTaskUpdate } from '../validations/validation';
+import { validateTaskUpdate } from '../validations/UserValidation';
 
 const router = Router();
 

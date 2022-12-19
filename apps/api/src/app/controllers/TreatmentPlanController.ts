@@ -11,10 +11,11 @@ import {
   getTreatmentPlanByPK,
   parseTreatmentPlanFileForSurgery,
   getTPDetailsData,
+  updateTreatmentPlanDetailsData,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
-import { INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
+import { FILE_NOT_UPLOADED, INTERNAL_SERVER_ERROR, SUCCESS, TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { updateUserTask, getUserTasksByDate } from '../services/UserTreatmentPlanService';
 import { UploadTreatmentPlanAPIRequest } from '@conte/models';
 import { getUserTreatmentPlanDayByDate } from '../helpers/TreatmentPlanHelper';
@@ -124,4 +125,20 @@ export async function getTreatmentPlanDetails(req: Request, res: Response) {
   const treatmentPlanData = await getTPDetailsData(Number(id));
 
   return sendResponse(res, 200, SUCCESS, treatmentPlanData);
+}
+
+export async function updateTreatmentPlanDetails(req: Request, res: Response) {
+  const { tp_id, tp_day } = req.params;
+  const { data } = req.body;
+
+  const apiResp = await updateTreatmentPlanDetailsData(Number(tp_id), Number(tp_day), data);
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export function uploadTreatmentVideo(req: Request, res: Response) {
+  if (!req.file) return sendResponse(res, 400, FILE_NOT_UPLOADED);
+
+  const { originalname: name, url } = req.file as Express.Multer.File & { url: string };
+  return sendResponse(res, 200, 'Success', { name, url: url.substring(0, url.indexOf('?se')) });
 }
