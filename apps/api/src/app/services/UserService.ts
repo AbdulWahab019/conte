@@ -75,8 +75,10 @@ export async function getUsersData() {
 
 export async function getUserTPDetailsWeb(user_id: number) {
   let dataObj = await getUserTPData(user_id);
-  if (dataObj) dataObj = dataObj.toJSON();
-  else throw new APIError(404, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  if (!dataObj) throw new APIError(404, TREATMENT_PLAN_NOT_ASSIGNED);
+
+  dataObj = dataObj.toJSON();
 
   const details = dataObj.details.map((detail) => ({
     tp_date: getDateByTpDay(detail.tp_day, dataObj.assigned_at),
