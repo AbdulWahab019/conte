@@ -18,7 +18,7 @@ import {
 import { authorize, authorizeWebUser } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
 import { uploadTreatmentTypeVideo } from '../middlewares/azureStorage';
-import { validateTreatmentPlanData } from '../validations/validation';
+import { validateTreatmentPlanData } from '../validations/TreatmentPlanValidation';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
