@@ -5,21 +5,21 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { DashboardModule } from './components/dashboard/dashboard.module';
 
 const appRoutes: Routes = [
-    {
-      path: '',
-      component: AuthenticationComponent,
-    },
-    {
-      path: 'home',
-      title: 'home',
-      component: DashboardComponent,
-      loadChildren: () => import('./components/dashboard/dashboard.module').then((child) => child.DashboardModule),
-    },
-    { path: '**', component: AuthenticationComponent },
-  ];
+  {
+    path: '',
+    component: AuthenticationComponent,
+  },
+  {
+    path: 'dashboard',
+    title: 'dashboard',
+    component: DashboardComponent,
+    loadChildren: () => import('./components/dashboard/dashboard.module').then((child) => child.DashboardModule),
+  },
+  { path: '**', component: AuthenticationComponent },
+];
 
-  @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
-    exports: [RouterModule],
-  })
-  export class AppRoutingModule {}
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}

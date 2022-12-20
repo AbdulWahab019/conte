@@ -1,6 +1,8 @@
-    <div class="card">
-      <app-table-pagination-client
-      [headers]="tableHeaders"
-      [data]="users"
-      ></app-table-pagination-client>
-    </div>
+<div class="heading-container"><h3 class="heading">User Managment</h3></div>
+<div class="card">
+  <app-table-pagination-client
+    [headers]="tableHeaders"
+    [data]="usersTableData"
+    [onRowClick]="onRowClick"
+  ></app-table-pagination-client>
+</div>
