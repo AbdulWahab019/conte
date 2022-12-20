@@ -14,7 +14,7 @@ export class TreatmentPlanService {
   async getTreatmentPlans(): Promise<any> {
     return await this.http.get<any>(`${TREATMENTPLAN}/web`).toPromise();
   }
-  async getTasks(user_id: string): Promise<any> {
+  async getTasks(user_id: number): Promise<any> {
     return await this.http.get<any>(`${TREATMENTPLAN}/tasks/${user_id}/web`).toPromise();
   }
 }

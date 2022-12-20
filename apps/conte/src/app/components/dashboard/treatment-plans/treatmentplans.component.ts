@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
 import { GenericModalComponent } from '../../../Shared/components/modals/generic/generic-modal.component';
 import { TreatmentPlan } from '../../../Shared/models/TreatmentPlan';
+import { TableHeaders } from '../../../Shared/models/Generic';
 
 @Component({
   selector: 'conte-treatmentplans',
@@ -12,7 +13,7 @@ import { TreatmentPlan } from '../../../Shared/models/TreatmentPlan';
 export class TreatmentplansComponent implements OnInit {
   treatmentPlans: TreatmentPlan[] = [];
   treatmentPlanModalRef: any;
-  tableHeaders: any = [
+  tableHeaders: TableHeaders[] = [
     { title: 'id', value: 'id', sort: false },
     {
       title: 'name',

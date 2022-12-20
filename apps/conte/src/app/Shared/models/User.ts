@@ -1,5 +1,5 @@
 export interface User { 
-    id: string;
+    id: number;
     name: string,
     estimated_max_velocity: string,
     email: string,

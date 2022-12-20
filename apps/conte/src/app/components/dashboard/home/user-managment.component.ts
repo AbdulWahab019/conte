@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../Shared/services/user.service';
 import { TableHeaders } from '../../../Shared/models/Generic';
 import { Router } from '@angular/router';
@@ -36,8 +36,6 @@ export class UserManagmentComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUsers();
   }
-
-  fetchUserId = () => {};
 
   fetchUsers = () => {
     this.UsersService.getAllUsers().then((resp) => {

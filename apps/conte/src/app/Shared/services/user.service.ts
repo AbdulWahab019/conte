@@ -13,7 +13,7 @@ export class UserService {
   async getAllUsers(): Promise<any> {
     return await this.http.get<any>(`${USER}/web`).toPromise();
   }
-  async getTreatmentPlanDetails(user_id: string): Promise<any> {
+  async getTreatmentPlanDetails(user_id: number): Promise<any> {
     return await this.http.get<any>(`${USER}/${user_id}/web`).toPromise();
   }
   async updateTask(user_id: number, task_id: number, data: { data: { title: string } }): Promise<any> {
