@@ -6,7 +6,7 @@ import {
   parseTreatmentPlanFile,
   createUserTaskFeedBack,
   skipTPDayTasks,
-  getUserSkippedAndCompletedTasks,
+  getUserTaskReport,
   getTreatmentPlans,
   getTreatmentPlanByPK,
   parseTreatmentPlanFileForSurgery,
@@ -103,10 +103,10 @@ export async function getAllTreatmentPlans(req: Request, res: Response) {
   return sendResponse(res, 200, SUCCESS, apiResp);
 }
 
-export async function getSkippedAndCompletedTasks(req: Request, res: Response) {
+export async function getUserTasksReport(req: Request, res: Response) {
   const { user_id } = req.params;
 
-  const apiResp = await getUserSkippedAndCompletedTasks(Number(user_id));
+  const apiResp = await getUserTaskReport(Number(user_id));
 
   return sendResponse(res, 200, SUCCESS, apiResp);
 }

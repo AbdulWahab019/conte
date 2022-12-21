@@ -1,5 +1,5 @@
 import { parse } from 'csv-parse';
-import { Attributes, FindOptions, Op, Transaction } from 'sequelize';
+import { Attributes, FindOptions, Transaction } from 'sequelize';
 
 import { TreatmentPlan, TreatmentPlanSurgeryData } from '../models/TreatmentPlan';
 import {
@@ -9,20 +9,16 @@ import {
   TreatmentPlanDetailsFileAttributes,
 } from '../models/TreatmentPlanDetail';
 
-import {
-  getUserTreatmentPlanDayByDate,
-  transformToTreatmentPlanDetails,
-  validateTreatmentPlanFile,
-} from '../helpers/TreatmentPlanHelper';
+import { transformToTreatmentPlanDetails, validateTreatmentPlanFile } from '../helpers/TreatmentPlanHelper';
 import { UserTreatmentPlanTaskFeedback } from '../models/UserTreatmentPlanTaskFeedback';
 import { PostTaskFeedbackApiRequest } from '@conte/models';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
-import moment = require('moment');
 import { TREATMENT_PLAN_NOT_ASSIGNED } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { Doctor } from '../models/Doctor';
 import { Surgery } from '../models/Surgery';
+import { sequelize } from '../models';
 
 export async function createTreatmentPlan(
   name: string,
@@ -114,29 +110,26 @@ export async function getTreatmentPlans() {
   return await TreatmentPlan.findAll();
 }
 
-export async function getUserSkippedAndCompletedTasks(user_id: number) {
+export async function getUserTaskReport(user_id: number) {
   const treatmentPlan = await UserTreatmentPlan.findOne({ where: { user_id }, attributes: ['assigned_at'] });
   if (!treatmentPlan) throw new APIError(400, TREATMENT_PLAN_NOT_ASSIGNED);
 
-  const date = moment().toDate();
-
-  const { tp_day } = getUserTreatmentPlanDayByDate(date, treatmentPlan.assigned_at);
-
-  const tasks = await UserTreatmentPlanTasks.findAll({
-    where: { user_id, [Op.or]: { is_completed: 1, is_skipped: 1, tp_day: { [Op.lte]: tp_day } } },
+  const tasksCount = await UserTreatmentPlanTasks.findAll({
+    where: { user_id },
+    attributes: ['is_completed', 'is_skipped', [sequelize.fn('COUNT', '*'), 'count']],
+    group: ['is_completed', 'is_skipped'],
   });
 
-  const completed_tasks = [];
-  const skipped_tasks = [];
-  const pending_tasks = [];
+  const tasksReport = { is_pending: 0, is_skipped: 0, is_completed: 0 };
+  tasksCount.forEach((taskCount) => {
+    const task = taskCount.toJSON();
 
-  tasks.forEach((task) => {
-    if (task.is_completed) completed_tasks.push(task);
-    else if (task.is_skipped) skipped_tasks.push(task);
-    else pending_tasks.push(task);
+    if (task.is_completed) tasksReport.is_completed = task.count;
+    else if (task.is_skipped) tasksReport.is_skipped = task.count;
+    else tasksReport.is_pending = task.count;
   });
 
-  return { completed_tasks, skipped_tasks, pending_tasks };
+  return tasksReport;
 }
 
 export async function getTreatmentPlanByPK(id: number) {

@@ -32,6 +32,7 @@ export interface UserTreatmentPlanTasksModel
   total_tasks?: number;
   completed_tasks?: number;
   skipped_tasks?: number;
+  count?: number;
 }
 
 export const UserTreatmentPlanTasks = sequelize.define<

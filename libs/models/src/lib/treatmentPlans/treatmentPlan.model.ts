@@ -131,14 +131,14 @@ export interface GetAllTreatmentPlansAPIResponse extends GenericResponse {
   data: TreatmentPlan[];
 }
 
-export interface GetUserSkippedAndCompletedTasksAPIResponse extends GenericResponse {
-  data: GetUserSkippedAndCompletedTasks;
+export interface GetUserTasksReportAPIResponse extends GenericResponse {
+  data: GetUserTaskReport;
 }
 
-export interface GetUserSkippedAndCompletedTasks {
-  completed_tasks: Task[];
-  skipped_tasks: Task[];
-  pending_tasks: Task[];
+export interface GetUserTaskReport {
+  is_pending: number;
+  is_skipped: number;
+  is_completed: number;
 }
 
 export type SkipUserTasksAPIResponse = GenericResponse;
