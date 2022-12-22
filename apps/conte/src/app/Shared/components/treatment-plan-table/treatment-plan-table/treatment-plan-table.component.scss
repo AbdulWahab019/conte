@@ -1,0 +1,21 @@
+.card {
+  padding: 25px;
+  margin: 10px;
+}
+
+.row-click:hover {
+  cursor: pointer;
+  color: rgb(7, 40, 227);
+  background-color: rgb(174, 180, 180);
+}
+.edit-link {
+  display: flex;
+  justify-content: space-between;
+}
+.action-link{
+  margin: 0px 20px 0px 20px;
+}
+.action-button:hover {
+  cursor: pointer;
+  color: rgb(7, 40, 227);
+}

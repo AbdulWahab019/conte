@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* components */
 import { DashboardComponent } from './dashboard.component';
-import { SharedModule } from '../../Shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserManagmentComponent } from './home/user-managment.component';
 import { TreatmentplansComponent } from './treatment-plans/treatmentplans.component';
@@ -26,20 +26,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    NavbarComponent,
-    UserManagmentComponent,
-    TreatmentplansComponent,
-    UserTreatmentPlanComponent,
-  ],
-  imports: [
-    CommonModule,
-    NgbModule,
-    FormsModule,
-    SharedModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-  ],
+    declarations: [
+        DashboardComponent,
+        NavbarComponent,
+        UserManagmentComponent,
+        TreatmentplansComponent,
+        UserTreatmentPlanComponent,
+    ],
+    imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        SharedModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+    ]
 })
 export class DashboardModule {}

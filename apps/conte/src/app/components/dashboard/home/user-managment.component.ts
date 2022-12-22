@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../Shared/services/user.service';
-import { TableHeaders } from '../../../Shared/models/Generic';
+import { UserService } from '../../../shared/services/user.service';
+import { TableHeaders } from '../../../shared/models/Generic';
 import { Router } from '@angular/router';
-import { User } from '../../../Shared/models/User';
-import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
-import { ToastService } from '../../../Shared/services/toast.service';
+import { User } from '../../../shared/models/User';
+import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'conte-user-managment',
@@ -16,8 +16,8 @@ export class UserManagmentComponent implements OnInit {
   tableHeaders: TableHeaders[] = [
     { title: 'id', value: 'id', sort: false },
     {
-      title: 'Name',
-      value: 'Name',
+      title: 'name',
+      value: 'name',
       sort: false,
     },
     { title: 'estimated max velocity', value: 'estimated_max_velocity', sort: false },
@@ -52,13 +52,14 @@ export class UserManagmentComponent implements OnInit {
   onRowClick = (record: User) => {
     this.UsersService.getTreatmentPlanDetails(record.id)
       .then((resp) => {
+        this.treatmentPlanService.clearUserTreatmentPlanDataForTp();
         this.treatmentPlanService.userTreatmentPlanData.userTreatmentPlan = resp.data;
         this.treatmentPlanService
           .getTasks(record.id)
           .then((response) => {
-            this.treatmentPlanService.userTreatmentPlanData.completed_tasks = response.data.completed_tasks;
-            this.treatmentPlanService.userTreatmentPlanData.pending_tasks = response.data.pending_tasks;
-            this.treatmentPlanService.userTreatmentPlanData.skipped_tasks = response.data.skipped_tasks;
+            this.treatmentPlanService.userTreatmentPlanData.completed_tasks = response.data.is_completed;
+            this.treatmentPlanService.userTreatmentPlanData.pending_tasks = response.data.is_pending;
+            this.treatmentPlanService.userTreatmentPlanData.skipped_tasks = response.data.is_skipped;
             this.router.navigate(['dashboard/user-treatment']);
           })
           .catch((err) => {

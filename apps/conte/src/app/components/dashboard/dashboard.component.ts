@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ToastService } from '../../Shared/services/toast.service';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'conte-dashboard',

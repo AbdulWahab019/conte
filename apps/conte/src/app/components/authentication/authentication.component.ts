@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastService } from '../../Shared/services/toast.service';
-import { AuthenticationService } from '../../Shared/services/auth.service';
-import { RegisterCreds } from '../../Shared/models/AuthCreds';
-import { LoginCreds } from '../../Shared/models/AuthCreds';
+import { ToastService } from '../../shared/services/toast.service';
+import { AuthenticationService } from '../../shared/services/auth.service';
+import { RegisterCreds } from '../../shared/models/AuthCreds';
+import { LoginCreds } from '../../shared/models/AuthCreds';
 
 @Component({
   selector: 'conte-dashboard',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
-import { GenericModalComponent } from '../../../Shared/components/modals/generic/generic-modal.component';
-import { TreatmentPlan } from '../../../Shared/models/TreatmentPlan';
-import { TableHeaders } from '../../../Shared/models/Generic';
+import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
+import { TreatmentPlan } from '../../../shared/models/TreatmentPlan';
+import { TableHeaders } from '../../../shared/models/Generic';
+import { Router } from '@angular/router';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'conte-treatmentplans',
@@ -24,12 +24,17 @@ export class TreatmentplansComponent implements OnInit {
     { title: 'doctor id', value: 'doctor_id', sort: false },
     { title: 'created at', value: 'createdAt', sort: false },
   ];
-  constructor(private treatmentPlanService: TreatmentPlanService, private modalService: NgbModal) {}
+  constructor(
+    private treatmentPlanService: TreatmentPlanService,
+    private router: Router,
+    private toast: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.fetchTreatmentPlan();
   }
-  fetchTreatmentPlan = ():void =>{
+
+  fetchTreatmentPlan = (): void => {
     this.treatmentPlanService.getTreatmentPlans().then((resp) => {
       this.treatmentPlans = resp.data.map((plan: TreatmentPlan) => ({
         id: plan.id,
@@ -39,10 +44,24 @@ export class TreatmentplansComponent implements OnInit {
         createdAt: plan.createdAt,
       }));
     });
-  }
-  modalToggle = (record: any): void => {
-    this.treatmentPlanModalRef = this.modalService.open(GenericModalComponent, { centered: true });
-    this.treatmentPlanModalRef.heading = '';
-    this.treatmentPlanModalRef.form = true;
+  };
+
+  onRowClick = (record: any): void => {
+    this.treatmentPlanService
+      .getTreatmentPlanDetails(record.id)
+      .then((resp) => {
+        this.treatmentPlanService.clearUserTreatmentPlanData();
+        this.treatmentPlanService.userTreatmentPlanDataForTp.id = resp.data.id;
+        this.treatmentPlanService.userTreatmentPlanDataForTp.name = resp.data.name;
+        this.treatmentPlanService.userTreatmentPlanDataForTp.createdAt = resp.data.createdAt;
+        this.treatmentPlanService.userTreatmentPlanDataForTp.TreatmentPlanDetails = resp.data.TreatmentPlanDetails;
+        this.router.navigate(['dashboard/user-treatment']);
+      })
+      .catch((err) => {
+        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+      })
+      .catch((err) => {
+        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+      });
   };
 }

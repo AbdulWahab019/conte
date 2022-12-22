@@ -1,0 +1,71 @@
+<div class="card">
+  <div class="heading-container"><h3 class="heading">User Treatment Plan</h3></div>
+
+  <hr />
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Name</th>
+        <td>{{ userTreatmentPlan?.userTreatmentPlan?.name || userTreatmentPlan?.name }}</td>
+      </tr>
+      <tr>
+        <th>{{ userTreatmentPlan?.userTreatmentPlan?.assigned_at ? 'Assigned At' : 'Created At' }}</th>
+        <td>{{ userTreatmentPlan?.userTreatmentPlan?.assigned_at || userTreatmentPlan?.createdAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Treatment Plan</th>
+          <th>{{ userTreatmentPlan?.createdAt ? 'Day' : 'Number of tasks' }}</th>
+          <th *ngIf="userTreatmentPlan?.createdAt">Videos</th>
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let tpDays of userTreatmentPlan?.details">
+        <tr class="row-click" (click)="tpDays.isExpanded = !tpDays.isExpanded">
+          <td>Day - {{ tpDays?.tp_day }}</td>
+          <td>{{ tpDays?.tasks?.length || tpDays?.tp_weekday }}</td>
+          <td *ngIf="userTreatmentPlan?.createdAt">
+            <i
+              *ngIf="tpDays?.video_url"
+              (click)="openVideo(tpDays?.video_url)"
+              class="bi bi-fast-forward-btn action-link"
+            ></i
+            ><i class="bi bi-upload action-link"
+            (click)="Videofile.click()"
+              ><input (change)="onVideoFileSelected($event.target,tpDays)" type="file" hidden #Videofile
+            /></i>
+          </td>
+        </tr>
+        <tr *ngIf="tpDays.isExpanded && tpDays?.tasks">
+          <div class="card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let task of tpDays?.tasks">
+                <tr>
+                  <td>{{ task?.title }}</td>
+                  <td>{{ task?.is_completed === true ? 'Completed' : 'Skipped' }}</td>
+                  <td class="edit-link">
+                    <i
+                      (click)="updateTask(userTreatmentPlan.userTreatmentPlan.user_id, task)"
+                      class="bi bi-pencil-square action-button"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
