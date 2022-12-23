@@ -9,7 +9,7 @@ import { GenericModalComponent } from '../../shared/modals/generic/generic-modal
 import { dailyData } from '../../../models/treatmentplan';
 import { DashboardService } from '../../../services/dashboard.service';
 import { TreatmentPlanService } from '../../../services/treatment-plan.service';
-import { delay } from '../../../utils/constants';
+import { delay, TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
 
 @Component({
   selector: 'conte-home',
@@ -90,7 +90,10 @@ export class HomeComponent implements OnInit {
             })
             .catch((err) => {
               console.error(err);
-              this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+              this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+                classname: 'bg-danger text-light',
+                icon: 'error',
+              });
             });
         } else {
           this.apiLoaded = true;
@@ -102,7 +105,10 @@ export class HomeComponent implements OnInit {
       })
       .catch((err) => {
         console.error(err);
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 
@@ -201,7 +207,10 @@ export class HomeComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.spinner.hide();
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   };
 

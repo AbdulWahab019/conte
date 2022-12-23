@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { delay, STRIPE_FAIL, STRIPE_SUCCESS } from '../../utils/constants';
+import { delay, STRIPE_FAIL, STRIPE_SUCCESS, TECHNICAL_DIFFICULTIES } from '../../utils/constants';
 import { SubscriptionService } from '../../services/subscription.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
@@ -61,7 +61,10 @@ export class SubscriptionComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 
@@ -81,7 +84,10 @@ export class SubscriptionComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 }

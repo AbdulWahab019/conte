@@ -6,6 +6,7 @@ import { GenericModalComponent } from '../../../shared/components/modals/generic
 import { ToastService } from '../../../shared/services/toast.service';
 import { TreatmentPlanTaskDetailsForTp } from '../../../shared/models/TreatmentPlan';
 import { UserService } from '../../../shared/services/user.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
 
 @Component({
   selector: 'conte-user-treatment-plan',
@@ -53,7 +54,7 @@ export class UserTreatmentPlanComponent implements OnInit {
       });
     } else {
       this.toast.show('Unable to fetch task data', { classname: 'bg-danger text-light', icon: 'error' });
-      this.router.navigate(['dashboard/user-managment']);
+      this.router.navigate(['dashboard/user-management']);
     }
   }
 
@@ -79,11 +80,17 @@ export class UserTreatmentPlanComponent implements OnInit {
             };
           })
           .catch((err) => {
-            this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+            this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+              classname: 'bg-danger text-light',
+              icon: 'error',
+            });
           });
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 
@@ -107,10 +114,16 @@ export class UserTreatmentPlanComponent implements OnInit {
         });
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 

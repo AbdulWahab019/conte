@@ -2,8 +2,8 @@ import { NavbarComponentModel } from '../../shared/models/Generic';
 
 export const NAVBAR_COMPONENTS: NavbarComponentModel[] = [
   {
-    title: 'User Managment',
-    activePath: '/dashboard/user-managment',
+    title: 'User Management',
+    activePath: '/dashboard/user-management',
     svgSrc: '/assets/icons/dashboard.svg',
     activeSvgSrc: '/assets/icons/dashboard-active.svg',
   },

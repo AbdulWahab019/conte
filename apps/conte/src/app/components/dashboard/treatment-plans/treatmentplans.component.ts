@@ -5,6 +5,7 @@ import { TableHeaders } from '../../../shared/models/Generic';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/services/toast.service';
 import { SpinnerService } from '../../../shared/services/spinner.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
 
 @Component({
   selector: 'conte-treatmentplans',
@@ -29,7 +30,7 @@ export class TreatmentplansComponent implements OnInit {
     private treatmentPlanService: TreatmentPlanService,
     private router: Router,
     private toast: ToastService,
-    private spinner : SpinnerService,
+    private spinner: SpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -64,11 +65,17 @@ export class TreatmentplansComponent implements OnInit {
         this.spinner.hide();
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
         this.spinner.hide();
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
         this.spinner.hide();
       });
   };

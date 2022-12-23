@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { delay } from '../../utils/constants';
+import { delay, TECHNICAL_DIFFICULTIES } from '../../utils/constants';
 import { SubmitQuestionnaire, SubmitQuestionnaireAPIRequest, UserDemographics } from '@conte/models';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
@@ -251,7 +251,10 @@ export class SurveyComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.submissionState = 'static';
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 }
