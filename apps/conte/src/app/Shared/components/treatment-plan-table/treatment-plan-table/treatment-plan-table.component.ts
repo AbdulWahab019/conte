@@ -13,9 +13,7 @@ export class TreatmentPlanTableComponent implements OnInit {
   @Input() userTreatmentPlan: any = [];
   @Input() buttonState: number = 0;
 
-  ngOnInit(): void {
-    console.log(this.userTreatmentPlan);
-  }
+  ngOnInit(): void {}
 
   openVideo(link: string) {
     window.open(link);
