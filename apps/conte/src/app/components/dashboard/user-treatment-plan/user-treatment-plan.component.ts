@@ -13,6 +13,13 @@ import { UserService } from '../../../shared/services/user.service';
   styleUrls: ['./user-treatment-plan.component.scss'],
 })
 export class UserTreatmentPlanComponent implements OnInit {
+  name = '';
+  createdAt = '';
+  TreatmentPlanDetails: TreatmentPlanTaskDetailsForTp[] = [];
+  modal: any;
+  userId = '';
+  treatmentPlanData: any;
+
   constructor(
     private treatmentPlanService: TreatmentPlanService,
     private userService: UserService,
@@ -20,12 +27,6 @@ export class UserTreatmentPlanComponent implements OnInit {
     private toast: ToastService,
     private router: Router
   ) {}
-  name = '';
-  createdAt = '';
-  TreatmentPlanDetails: TreatmentPlanTaskDetailsForTp[] = [];
-  modal: any;
-  userId = '';
-  treatmentPlanData: any;
 
   ngOnInit(): void {
     this.fetchUserTpData();
@@ -47,6 +48,9 @@ export class UserTreatmentPlanComponent implements OnInit {
         createdAt: this.treatmentPlanService.userTreatmentPlanDataForTp.createdAt,
         details: this.treatmentPlanService.userTreatmentPlanDataForTp.TreatmentPlanDetails,
       };
+      this.treatmentPlanData.details.forEach((element: TreatmentPlanTaskDetailsForTp) => {
+        element.is_uploading = false;
+      });
     } else {
       this.toast.show('Unable to fetch task data', { classname: 'bg-danger text-light', icon: 'error' });
       this.router.navigate(['dashboard/user-managment']);
@@ -98,6 +102,9 @@ export class UserTreatmentPlanComponent implements OnInit {
           createdAt: this.treatmentPlanService.userTreatmentPlanDataForTp.createdAt,
           details: this.treatmentPlanService.userTreatmentPlanDataForTp.TreatmentPlanDetails,
         };
+        this.treatmentPlanData.details.forEach((element: TreatmentPlanTaskDetailsForTp) => {
+          element.is_uploading = false;
+        });
       })
       .catch((err) => {
         this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
@@ -117,7 +124,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     this.modal.componentInstance.form = task.title;
     this.modal.componentInstance.miscData = ids;
     this.modal.result
-      .then(async (result: any) => {
+      .then((result: any) => {
         if (result) {
           this.reloadServiceData(userId);
         }
@@ -127,10 +134,9 @@ export class UserTreatmentPlanComponent implements OnInit {
 
   updateVideo = async (file: any, tpDay: any) => {
     const resp = await this.treatmentPlanService.uploadVideo(file);
-    this.treatmentPlanService
-      .updateTask({ video_url: resp.data.url }, tpDay, this.treatmentPlanData.id)
-      .then((response) => {
-        this.reloadServiceDataForTp(this.treatmentPlanData.id);
-      });
+    this.treatmentPlanService.updateTask({ video_url: resp.data.url }, tpDay, this.treatmentPlanData.id).then(() => {
+      this.toast.show('Video uploaded successfully', { classname: 'bg-success text-light', icon: 'success' });
+      this.reloadServiceDataForTp(this.treatmentPlanData.id);
+    });
   };
 }

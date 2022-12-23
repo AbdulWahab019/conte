@@ -28,16 +28,19 @@
         <tr class="row-click" (click)="tpDays.isExpanded = !tpDays.isExpanded">
           <td>Day - {{ tpDays?.tp_day }}</td>
           <td>{{ tpDays?.tasks?.length || tpDays?.tp_weekday }}</td>
-          <td *ngIf="userTreatmentPlan?.createdAt">
+          <td *ngIf="userTreatmentPlan?.createdAt" class="d-flex">
             <i
               *ngIf="tpDays?.video_url"
               (click)="openVideo(tpDays?.video_url)"
               class="bi bi-fast-forward-btn action-link"
-            ></i
-            ><i class="bi bi-upload action-link"
-            (click)="Videofile.click()"
-              ><input (change)="onVideoFileSelected($event.target,tpDays)" type="file" hidden #Videofile
-            /></i>
+            ></i>
+            <span *ngIf="!tpDays?.is_uploading"
+              ><i class="bi bi-upload action-link" (click)="Videofile.click()"
+                ><input (change)="onVideoFileSelected($event.target, tpDays)" type="file" hidden #Videofile /></i
+            ></span>
+            <div *ngIf="tpDays?.is_uploading">
+              <span class="action-link spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
           </td>
         </tr>
         <tr *ngIf="tpDays.isExpanded && tpDays?.tasks">

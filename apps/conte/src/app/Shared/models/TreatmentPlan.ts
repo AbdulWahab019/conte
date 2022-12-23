@@ -31,6 +31,7 @@ export interface TreatmentPlanTaskDetailsForTp {
   tp_day: number;
   tp_weekday: string;
   video_url: string;
+  is_uploading?: boolean;
 }
 
 export interface TreatmentPlanTask {
@@ -49,7 +50,7 @@ export interface UserTreatmentPlanData {
 }
 
 export interface UserTreatmentPlanDataForTp {
-  id : number;
+  id: number;
   name: string;
   createdAt: string;
   TreatmentPlanDetails: TreatmentPlanTaskDetailsForTp[];
