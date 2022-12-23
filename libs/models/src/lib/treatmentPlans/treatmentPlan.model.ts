@@ -1,4 +1,27 @@
 import { GenericResponse } from '../api/api.model';
+export interface TreatmentPlanDetails {
+  tp_weekday?: string;
+  week_from_sx?: number;
+  month_from_sx?: number;
+  week_of_throwing?: number;
+  month_of_throwing?: number;
+  plyo_throw?: number;
+  max_distance?: number;
+  max_velocity_percent?: number;
+  max_velocity_absolute?: number;
+  num_throws_at_max_distance?: number;
+  post_max_distance_flat_ground?: number;
+  post_max_distance_flat_ground_velocity_percent?: number;
+  post_max_distance_flat_ground_velocity_absolute?: number;
+  post_max_flat_ground_pitches?: number;
+  bullpen?: number;
+  bullpen_max_velocity_percent?: number;
+  bullpen_max_velocity_absolute?: number;
+  bullpen_pitches?: number;
+  live_simulated_game?: number;
+  innings?: number;
+  video_url?: string;
+}
 
 export interface Task {
   id: number;
@@ -159,7 +182,7 @@ export interface UserTreatmentPlan {
   createdAt: string;
 }
 
-export interface GetTreatmentPlanById extends GenericResponse {
+export interface GetTreatmentPlanByIdAPIResponse extends GenericResponse {
   data: TreatmentPlan;
 }
 
@@ -170,4 +193,21 @@ export interface TreatmentPlan {
   surgery_id: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface UploadTreatmentTypeVideoAPIResponse extends GenericResponse {
+  data: UploadTreatmentTypeVideo;
+}
+
+export interface UploadTreatmentTypeVideo {
+  name: string;
+  url: string;
+}
+
+export interface UpdateTreatmentPlanDetailsAPIRequest {
+  data: TreatmentPlanDetails;
+}
+
+export interface UpdateTreatmentPlanDetailsAPIResponse {
+  data: TreatmentPlanDetails;
 }

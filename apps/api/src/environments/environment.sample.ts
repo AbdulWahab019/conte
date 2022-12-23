@@ -3,10 +3,14 @@ export const environment = {
   PORT: 0,
 
   SQL_PORT: 0,
+
   SQL_USERNAME: '',
   SQL_PASSWORD: '',
   SQL_SERVER: '',
   SQL_DATABASE: '',
+
+  SENTRY_DSN: '',
+  SENTRY_RELEASE: '',
 
   STRIPE_PUBLISHABLE_KEY: '',
   STRIPE_SECRET_KEY: '',
@@ -14,8 +18,9 @@ export const environment = {
 
   JWT_TOKEN_SECRET: '',
 
-  SENTRY_DSN: '',
-  SENTRY_RELEASE: '',
+  AZURE_STORAGE_ACCESS_KEY: '',
+  AZURE_STORAGE_CONNECTION_STRING: '',
+  AZURE_STORAGE_ACCOUNT_NAME: '',
 
   ENV: '',
 };
