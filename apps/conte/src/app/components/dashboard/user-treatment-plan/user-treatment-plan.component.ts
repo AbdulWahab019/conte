@@ -53,7 +53,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     }
   }
 
-  async reloadServiceData(userId: number) {
+  reloadServiceData(userId: number) {
     this.userService
       .getTreatmentPlanDetails(userId)
       .then((resp) => {
@@ -83,7 +83,7 @@ export class UserTreatmentPlanComponent implements OnInit {
       });
   }
 
-  async reloadServiceDataForTp(userId: number) {
+  reloadServiceDataForTp(userId: number) {
     this.treatmentPlanService
       .getTreatmentPlanDetails(userId)
       .then((resp) => {
@@ -119,7 +119,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     this.modal.result
       .then(async (result: any) => {
         if (result) {
-          await this.reloadServiceData(userId);
+          this.reloadServiceData(userId);
         }
       })
       .catch((err: any) => {});
@@ -129,7 +129,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     const resp = await this.treatmentPlanService.uploadVideo(file);
     this.treatmentPlanService
       .updateTask({ video_url: resp.data.url }, tpDay, this.treatmentPlanData.id)
-      .then((resp) => {
+      .then((response) => {
         this.reloadServiceDataForTp(this.treatmentPlanData.id);
       });
   };

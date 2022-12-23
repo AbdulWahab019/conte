@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../shared/models/User';
 import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
 import { ToastService } from '../../../shared/services/toast.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'conte-user-managment',
@@ -30,7 +31,8 @@ export class UserManagmentComponent implements OnInit {
     private UsersService: UserService,
     private router: Router,
     private treatmentPlanService: TreatmentPlanService,
-    private toast: ToastService
+    private toast: ToastService,
+    private spinner : SpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class UserManagmentComponent implements OnInit {
   }
 
   fetchUsers = () => {
+    this.spinner.show();
     this.UsersService.getAllUsers().then((resp) => {
       this.usersTableData = resp.data.users.map((user: any) => ({
         id: user.id,
@@ -47,9 +50,12 @@ export class UserManagmentComponent implements OnInit {
         num_completed_tasks: user.num_completed_tasks,
         num_skipped_tasks: user.num_skipped_tasks,
       }));
+      this.spinner.hide();
     });
+   
   };
   onRowClick = (record: User) => {
+    this.spinner.show();
     this.UsersService.getTreatmentPlanDetails(record.id)
       .then((resp) => {
         this.treatmentPlanService.clearUserTreatmentPlanDataForTp();
@@ -60,14 +66,18 @@ export class UserManagmentComponent implements OnInit {
             this.treatmentPlanService.userTreatmentPlanData.completed_tasks = response.data.is_completed;
             this.treatmentPlanService.userTreatmentPlanData.pending_tasks = response.data.is_pending;
             this.treatmentPlanService.userTreatmentPlanData.skipped_tasks = response.data.is_skipped;
+            this.spinner.hide();
             this.router.navigate(['dashboard/user-treatment']);
           })
           .catch((err) => {
             this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+            this.spinner.hide();
           });
+          this.spinner.hide();
       })
       .catch((err) => {
         this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.spinner.hide();
       });
   };
 }

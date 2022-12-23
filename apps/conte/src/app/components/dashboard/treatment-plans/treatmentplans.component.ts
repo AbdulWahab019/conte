@@ -4,6 +4,7 @@ import { TreatmentPlan } from '../../../shared/models/TreatmentPlan';
 import { TableHeaders } from '../../../shared/models/Generic';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/services/toast.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'conte-treatmentplans',
@@ -27,7 +28,8 @@ export class TreatmentplansComponent implements OnInit {
   constructor(
     private treatmentPlanService: TreatmentPlanService,
     private router: Router,
-    private toast: ToastService
+    private toast: ToastService,
+    private spinner : SpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class TreatmentplansComponent implements OnInit {
   }
 
   fetchTreatmentPlan = (): void => {
+    this.spinner.show();
     this.treatmentPlanService.getTreatmentPlans().then((resp) => {
       this.treatmentPlans = resp.data.map((plan: TreatmentPlan) => ({
         id: plan.id,
@@ -43,10 +46,12 @@ export class TreatmentplansComponent implements OnInit {
         doctor_id: plan.doctor_id,
         createdAt: plan.createdAt,
       }));
+      this.spinner.hide();
     });
   };
 
   onRowClick = (record: any): void => {
+    this.spinner.show();
     this.treatmentPlanService
       .getTreatmentPlanDetails(record.id)
       .then((resp) => {
@@ -56,12 +61,15 @@ export class TreatmentplansComponent implements OnInit {
         this.treatmentPlanService.userTreatmentPlanDataForTp.createdAt = resp.data.createdAt;
         this.treatmentPlanService.userTreatmentPlanDataForTp.TreatmentPlanDetails = resp.data.TreatmentPlanDetails;
         this.router.navigate(['dashboard/user-treatment']);
+        this.spinner.hide();
       })
       .catch((err) => {
         this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.spinner.hide();
       })
       .catch((err) => {
         this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.spinner.hide();
       });
   };
 }
