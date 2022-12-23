@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../shared/models/User';
 import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
 import { ToastService } from '../../../shared/services/toast.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
 
 @Component({
   selector: 'conte-user-managment',
@@ -63,11 +64,17 @@ export class UserManagmentComponent implements OnInit {
             this.router.navigate(['dashboard/user-treatment']);
           })
           .catch((err) => {
-            this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+            this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+              classname: 'bg-danger text-light',
+              icon: 'error',
+            });
           });
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   };
 }

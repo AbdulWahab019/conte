@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/user.service';
+import { TECHNICAL_DIFFICULTIES } from '../../utils/constants';
 
 @Component({
   selector: 'conte-orientation',
@@ -31,7 +32,10 @@ export class OrientationComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 }

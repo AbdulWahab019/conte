@@ -1,23 +1,27 @@
-<div class="container_table">
-  <div class="row">
-    <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
-      <div class="container">
-        <img
-          src="../../../assets/logos/ThrowingProgressionPro.png"
-          alt="logo"
-          width="100"
-          height="73"
-          alt="ThrowingProgression"
-        />
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <div class="ms-auto d-none d-lg-block">
-            <!-- <div class="input-group">
+<div class="dashboard-screen">
+  <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
+    <div class="d-flex w-100">
+      <img
+        src="../../../assets/logos/ThrowingProgressionPro.png"
+        alt="logo"
+        width="100"
+        height="80"
+        alt="ThrowingProgression"
+      />
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i>Logout</a>
+        </li>
+      </ul>
+      <!--<div class="collapse navbar-collapse" id="navbarNavDropdown">
+         <div class="ms-auto d-none d-lg-block">
+           <div class="input-group">
               <span class="input-group-text search-color text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
               <input type="text" class="form-control" style="color: #7a7a7a" />
               <button class="btn search-color text-white">Search</button>
-            </div> -->
+            </div> 
           </div>
-          <!-- <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link mx-2 text-uppercase active" aria-current="page" href="#">Tasks</a>
             </li>
@@ -30,18 +34,31 @@
             <li class="nav-item">
               <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
             </li>
-          </ul> -->
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i>Logout</a>
-            </li>
-          </ul>
+          </ul> 
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i>Logout</a>
+          </li>
+        </ul>
+      </div>-->
+    </div>
+  </nav>
+
+  <div class="row">
+    <!-- SIDE NAV -->
+    <div class="col-2 side-nav shadow-sm">
+      <div *ngFor="let comp of navbarComponents">
+        <div
+          (click)="navigate(comp.activePath)"
+          [ngClass]="comp.activePath === url ? 'active-link nav-link' : 'nav-link'"
+        >
+          <img [src]="comp.activePath === url ? comp.activeSvgSrc : comp.svgSrc" class="me-2" />
+          <span>{{ comp.title }}</span>
         </div>
       </div>
-    </nav>
-    <div class="col-2">
-      <app-navbar></app-navbar>
     </div>
+
+    <!-- MAIN CONTENT -->
     <div class="col-10">
       <router-outlet></router-outlet>
     </div>

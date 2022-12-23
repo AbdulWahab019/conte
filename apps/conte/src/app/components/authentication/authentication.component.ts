@@ -6,6 +6,7 @@ import { ToastService } from '../../shared/services/toast.service';
 import { AuthenticationService } from '../../shared/services/auth.service';
 import { RegisterCreds } from '../../shared/models/AuthCreds';
 import { LoginCreds } from '../../shared/models/AuthCreds';
+import { TECHNICAL_DIFFICULTIES } from '../../shared/utils/constants';
 
 @Component({
   selector: 'conte-dashboard',
@@ -88,11 +89,14 @@ export class AuthenticationComponent implements OnInit {
         localStorage.setItem('user_id', resp.data.user_id);
         this.buttonState = 'static';
 
-        this.router.navigate(['dashboard/user-managment']);
+        this.router.navigate(['dashboard/user-management']);
       })
       .catch((err) => {
         this.buttonState = 'static';
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 
@@ -114,11 +118,14 @@ export class AuthenticationComponent implements OnInit {
 
         this.toast.show('Signed up successfully.', { classname: 'bg-success text-light', icon: 'success' });
 
-        this.router.navigate(['dashboard/user-managment']);
+        this.router.navigate(['dashboard/user-management']);
       })
       .catch((err: any) => {
         this.buttonState = 'static';
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 }

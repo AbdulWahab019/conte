@@ -37,11 +37,12 @@ export class TreatmentPlanService {
     const formData = new FormData();
     formData.append('video', video);
 
-    return await this.http.post<any>(`${TREATMENTPLAN}/video/upload`, formData).toPromise();
+    return await this.http
+      .post<any>(`${TREATMENTPLAN}/video/upload`, formData, { headers: { is_blob: 'true' } })
+      .toPromise();
   }
 
-  async updateTask(data : {video_url : string} ,tp_day : number,tp_Id : number): Promise<any> {
-   return await this.http.put<any>(`${TREATMENTPLAN}/tp_day/${tp_day}/tp_id/${tp_Id}`,{data}).toPromise();
+  async updateTask(data: { video_url: string }, tp_day: number, tp_Id: number): Promise<any> {
+    return await this.http.put<any>(`${TREATMENTPLAN}/tp_day/${tp_day}/tp_id/${tp_Id}`, { data }).toPromise();
   }
-
 }

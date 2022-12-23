@@ -4,6 +4,7 @@ import { TreatmentPlan } from '../../../shared/models/TreatmentPlan';
 import { TableHeaders } from '../../../shared/models/Generic';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/services/toast.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
 
 @Component({
   selector: 'conte-treatmentplans',
@@ -58,10 +59,16 @@ export class TreatmentplansComponent implements OnInit {
         this.router.navigate(['dashboard/user-treatment']);
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       })
       .catch((err) => {
-        this.toast.show(err?.error?.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   };
 }
