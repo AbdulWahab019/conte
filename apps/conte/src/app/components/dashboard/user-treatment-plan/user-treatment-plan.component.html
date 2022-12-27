@@ -1,10 +1,6 @@
 <div
   class="card"
-  *ngIf="
-    this.treatmentPlanData?.completedTasks ||
-    this.treatmentPlanData?.pendingTasks ||
-    this.treatmentPlanData?.skippedTasks
-  "
+  *ngIf="treatmentPlanData?.completedTasks || treatmentPlanData?.pendingTasks || treatmentPlanData?.skippedTasks"
 >
   <div class="heading-container"><h3 class="heading">Task Report</h3></div>
   <hr />
@@ -12,15 +8,15 @@
     <tbody>
       <tr>
         <th>Completed Tasks</th>
-        <td>{{ this.treatmentPlanData.completedTasks }}</td>
+        <td>{{ treatmentPlanData.completedTasks }}</td>
       </tr>
       <tr>
         <th>Pending Tasks</th>
-        <td>{{ this.treatmentPlanData.pendingTasks }}</td>
+        <td>{{ treatmentPlanData.pendingTasks }}</td>
       </tr>
       <tr>
         <th>Skipped Tasks</th>
-        <td>{{ this.treatmentPlanData.skippedTasks }}</td>
+        <td>{{ treatmentPlanData.skippedTasks }}</td>
       </tr>
     </tbody>
   </table>
@@ -28,5 +24,5 @@
 <conte-treatment-plan-table
   [updateTask]="updateTask"
   [updateVideo]="updateVideo"
-  [userTreatmentPlan]="this.treatmentPlanData"
+  [TreatmentPlanData]="treatmentPlanData"
 ></conte-treatment-plan-table>

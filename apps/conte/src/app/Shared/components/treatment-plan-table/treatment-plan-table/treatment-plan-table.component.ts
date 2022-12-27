@@ -10,7 +10,7 @@ import { GenericModalComponent } from '../../modals/generic/generic-modal.compon
 export class TreatmentPlanTableComponent implements OnInit {
   @Input() updateTask: (...args: any) => void = () => null;
   @Input() updateVideo: (...args: any) => void = () => null;
-  @Input() userTreatmentPlan: any = [];
+  @Input() TreatmentPlanData: any = [];
   @Input() buttonState: number = 0;
 
   constructor(private modalService: NgbModal) {}
@@ -24,9 +24,9 @@ export class TreatmentPlanTableComponent implements OnInit {
   }
 
   onVideoFileSelected = (e: any, tpDay: any) => {
-    const index = this.userTreatmentPlan.details.findIndex((x: any) => x.tp_day === tpDay.tp_day);
+    const index = this.TreatmentPlanData.details.findIndex((x: any) => x.tp_day === tpDay.tp_day);
 
-    this.userTreatmentPlan.details[index].is_uploading = true;
+    this.TreatmentPlanData.details[index].is_uploading = true;
     this.updateVideo(e.files[0], tpDay.tp_day);
   };
 }

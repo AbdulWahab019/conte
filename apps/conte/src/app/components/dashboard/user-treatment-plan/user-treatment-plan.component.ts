@@ -34,7 +34,7 @@ export class UserTreatmentPlanComponent implements OnInit {
   }
 
   fetchUserTpData() {
-    if (this.treatmentPlanService.userTreatmentPlanData.userTreatmentPlan !== undefined) {
+    if (this.treatmentPlanService.userTreatmentPlanData.userTreatmentPlan) {
       this.treatmentPlanData = {
         completedTasks: this.treatmentPlanService.userTreatmentPlanData.completed_tasks,
         pendingTasks: this.treatmentPlanService.userTreatmentPlanData.pending_tasks,
@@ -42,7 +42,7 @@ export class UserTreatmentPlanComponent implements OnInit {
         userTreatmentPlan: this.treatmentPlanService.userTreatmentPlanData.userTreatmentPlan,
         details: this.treatmentPlanService.userTreatmentPlanData.userTreatmentPlan.details,
       };
-    } else if (this.treatmentPlanService.userTreatmentPlanDataForTp.name !== undefined) {
+    } else if (this.treatmentPlanService.userTreatmentPlanDataForTp.name) {
       this.treatmentPlanData = {
         id: this.treatmentPlanService.userTreatmentPlanDataForTp.id,
         name: this.treatmentPlanService.userTreatmentPlanDataForTp.name,
@@ -111,12 +111,6 @@ export class UserTreatmentPlanComponent implements OnInit {
         };
         this.treatmentPlanData.details.forEach((element: TreatmentPlanTaskDetailsForTp) => {
           element.is_uploading = false;
-        });
-      })
-      .catch((err) => {
-        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
-          classname: 'bg-danger text-light',
-          icon: 'error',
         });
       })
       .catch((err) => {

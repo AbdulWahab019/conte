@@ -6,14 +6,14 @@
     <tbody>
       <tr>
         <th>Name</th>
-        <td>{{ userTreatmentPlan?.userTreatmentPlan?.name || userTreatmentPlan?.name }}</td>
+        <td>{{ TreatmentPlanData?.userTreatmentPlan?.name || TreatmentPlanData?.name }}</td>
       </tr>
       <tr>
-        <th>{{ userTreatmentPlan?.userTreatmentPlan?.assigned_at ? 'Assigned At' : 'Created At' }}</th>
+        <th>{{ TreatmentPlanData?.userTreatmentPlan?.assigned_at ? 'Assigned At' : 'Created At' }}</th>
         <td>
           {{
-            (userTreatmentPlan?.userTreatmentPlan?.assigned_at | date: 'dd/MM/yyyy') ||
-              (userTreatmentPlan?.createdAt | date: 'dd/MM/yyyy')
+            (TreatmentPlanData?.userTreatmentPlan?.assigned_at | date: 'dd/MM/yyyy') ||
+              (TreatmentPlanData?.createdAt | date: 'dd/MM/yyyy')
           }}
         </td>
       </tr>
@@ -24,16 +24,16 @@
       <thead>
         <tr>
           <th>Treatment Plan</th>
-          <th>{{ userTreatmentPlan?.createdAt ? 'Day' : 'Number of tasks' }}</th>
-          <th *ngIf="userTreatmentPlan?.createdAt">Videos</th>
+          <th>{{ TreatmentPlanData?.createdAt ? 'Day' : 'Number of tasks' }}</th>
+          <th *ngIf="TreatmentPlanData?.createdAt">Videos</th>
         </tr>
       </thead>
 
-      <tbody *ngFor="let tpDays of userTreatmentPlan?.details">
+      <tbody *ngFor="let tpDays of TreatmentPlanData?.details">
         <tr [ngClass]="tpDays?.tasks ? 'row-click' : null" (click)="tpDays.isExpanded = !tpDays.isExpanded">
           <td>Day - {{ tpDays?.tp_day }}</td>
           <td>{{ tpDays?.tasks?.length || tpDays?.tp_weekday }}</td>
-          <td *ngIf="userTreatmentPlan?.createdAt" class="d-flex">
+          <td *ngIf="TreatmentPlanData?.createdAt" class="d-flex">
             <i
               *ngIf="tpDays?.video_url"
               (click)="openVideo(tpDays?.video_url, tpDays?.tp_day)"
@@ -66,10 +66,12 @@
               <tbody *ngFor="let task of tpDays?.tasks">
                 <tr>
                   <td>{{ task?.title }}</td>
-                  <td>{{ task?.is_completed === true ? 'Completed' : 'Skipped' }}</td>
+                  <td>
+                    {{ task?.is_completed === true ? 'Completed' : task?.is_skipped === true ? 'Skipped' : 'Pending' }}
+                  </td>
                   <td class="edit-link">
                     <i
-                      (click)="updateTask(userTreatmentPlan.userTreatmentPlan.user_id, task)"
+                      (click)="updateTask(TreatmentPlanData.userTreatmentPlan.user_id, task)"
                       class="bi bi-pencil-square action-button"
                     ></i>
                   </td>

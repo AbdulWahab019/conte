@@ -39,16 +39,25 @@ export class TreatmentplansComponent implements OnInit {
 
   fetchTreatmentPlan = (): void => {
     this.spinner.show();
-    this.treatmentPlanService.getTreatmentPlans().then((resp) => {
-      this.treatmentPlans = resp.data.map((plan: TreatmentPlan) => ({
-        id: plan.id,
-        name: plan.name,
-        surgery_id: plan.surgery_id,
-        doctor_id: plan.doctor_id,
-        createdAt: plan.createdAt,
-      }));
-      this.spinner.hide();
-    });
+    this.treatmentPlanService
+      .getTreatmentPlans()
+      .then((resp) => {
+        this.treatmentPlans = resp.data.map((plan: TreatmentPlan) => ({
+          id: plan.id,
+          name: plan.name,
+          surgery_id: plan.surgery_id,
+          doctor_id: plan.doctor_id,
+          createdAt: plan.createdAt,
+        }));
+        this.spinner.hide();
+      })
+      .catch((err) => {
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
+        this.spinner.hide();
+      });
   };
 
   onRowClick = (record: any): void => {
@@ -62,13 +71,6 @@ export class TreatmentplansComponent implements OnInit {
         this.treatmentPlanService.userTreatmentPlanDataForTp.createdAt = resp.data.createdAt;
         this.treatmentPlanService.userTreatmentPlanDataForTp.TreatmentPlanDetails = resp.data.TreatmentPlanDetails;
         this.router.navigate(['dashboard/user-treatment']);
-        this.spinner.hide();
-      })
-      .catch((err) => {
-        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
-          classname: 'bg-danger text-light',
-          icon: 'error',
-        });
         this.spinner.hide();
       })
       .catch((err) => {
