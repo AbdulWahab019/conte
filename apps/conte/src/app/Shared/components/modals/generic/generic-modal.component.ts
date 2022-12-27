@@ -31,9 +31,7 @@ export class GenericModalComponent implements OnInit {
   @Input() listSecActionText = '';
   @Input() listSecActionLogo = '';
   @Input() listSecAction!: (args: any, secArgs: any) => void;
-  @Input() questionAnswers: taskFeedback[] = [];
-  @Input() QAbuttonText = '';
-  @Input() QAbuttonLogo = '';
+  @Input() videoURL = '';
   @Input() buttonText = '';
   @Input() buttonLoadingText = '';
   @Input() buttonAction!: (args: any) => void;
@@ -54,28 +52,9 @@ export class GenericModalComponent implements OnInit {
       await delay(1500);
     }
 
-    if (this.questionAnswers?.length) {
-      for (const question of this.questionAnswers) {
-        if (!question.answer) {
-          this.toast.show('Please answer every question first.', { classname: 'bg-danger text-light', icon: 'error' });
-          this.buttonState = 'static';
-          return;
-        }
-      }
-      const data = { QA: this.questionAnswers, task_id: this.miscData };
-      this.buttonAction(data);
-    }
-
     this.activeModal.close();
   }
 
-  addQuestion() {
-    this.questionAnswers.push({ question: '', answer: '' });
-  }
-
-  removeQuestion(index: number) {
-    this.questionAnswers.splice(index, 1);
-  }
   onSubmit() {
     const data = { data: { title: this.form.toString() } };
     this.userService

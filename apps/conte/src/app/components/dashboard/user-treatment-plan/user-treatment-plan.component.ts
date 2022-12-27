@@ -54,7 +54,7 @@ export class UserTreatmentPlanComponent implements OnInit {
       });
     } else {
       this.toast.show('Unable to fetch task data', { classname: 'bg-danger text-light', icon: 'error' });
-      this.router.navigate(['dashboard/user-management']);
+      this.router.navigate(['dashboard/treatment-plans']);
     }
   }
 

@@ -31,16 +31,21 @@
           <td *ngIf="userTreatmentPlan?.createdAt" class="d-flex">
             <i
               *ngIf="tpDays?.video_url"
-              (click)="openVideo(tpDays?.video_url)"
-              class="bi bi-fast-forward-btn action-link"
+              (click)="openVideo(tpDays?.video_url, tpDays?.tp_day)"
+              class="bi bi-play-circle action-link"
             ></i>
-            <span *ngIf="!tpDays?.is_uploading"
-              ><i class="bi bi-upload action-link" (click)="Videofile.click()"
-                ><input (change)="onVideoFileSelected($event.target, tpDays)" type="file" hidden #Videofile /></i
+
+            <i *ngIf="!tpDays?.is_uploading" class="bi bi-upload action-link" (click)="videoFile.click()"
+              ><input (change)="onVideoFileSelected($event.target, tpDays)" type="file" hidden #videoFile
+            /></i>
+
+            <span
+              *ngIf="tpDays?.is_uploading"
+              class="action-link spinner-border spinner-border-sm"
+              style="margin-top: 0.2rem"
+              role="status"
+              aria-hidden="true"
             ></span>
-            <div *ngIf="tpDays?.is_uploading">
-              <span class="action-link spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            </div>
           </td>
         </tr>
         <tr *ngIf="tpDays.isExpanded && tpDays?.tasks">

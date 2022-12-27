@@ -48,11 +48,8 @@
     <!-- SIDE NAV -->
     <div class="col-2 side-nav shadow-sm">
       <div *ngFor="let comp of navbarComponents">
-        <div
-          (click)="navigate(comp.activePath)"
-          [ngClass]="comp.activePath === url ? 'active-link nav-link' : 'nav-link'"
-        >
-          <img [src]="comp.activePath === url ? comp.activeSvgSrc : comp.svgSrc" class="me-2" />
+        <div class="nav-link" [routerLink]="comp.activePath" routerLinkActive="active-link">
+          <img [src]="comp.activePath === router.url ? comp.activeSvgSrc : comp.svgSrc" class="me-2" />
           <span>{{ comp.title }}</span>
         </div>
       </div>

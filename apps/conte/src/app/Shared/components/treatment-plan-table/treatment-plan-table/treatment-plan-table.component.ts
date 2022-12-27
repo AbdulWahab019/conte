@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GenericModalComponent } from '../../modals/generic/generic-modal.component';
 
 @Component({
   selector: 'conte-treatment-plan-table',
@@ -6,17 +8,19 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./treatment-plan-table.component.scss'],
 })
 export class TreatmentPlanTableComponent implements OnInit {
-  // @ViewChild('Videofile') input: ElementRef<HTMLInputElement> = {} as ElementRef;
-  constructor() {}
   @Input() updateTask: (...args: any) => void = () => null;
   @Input() updateVideo: (...args: any) => void = () => null;
   @Input() userTreatmentPlan: any = [];
   @Input() buttonState: number = 0;
 
+  constructor(private modalService: NgbModal) {}
+
   ngOnInit(): void {}
 
-  openVideo(link: string) {
-    window.open(link);
+  openVideo(url: string, day: string) {
+    const modalRef = this.modalService.open(GenericModalComponent, { centered: true });
+    modalRef.componentInstance.heading = `Task Video: Day - ${day}`;
+    modalRef.componentInstance.videoURL = url;
   }
 
   onVideoFileSelected = (e: any, tpDay: any) => {

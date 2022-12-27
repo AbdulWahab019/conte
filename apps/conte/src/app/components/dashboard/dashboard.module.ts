@@ -25,19 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        DashboardComponent,
-        UserManagmentComponent,
-        TreatmentplansComponent,
-        UserTreatmentPlanComponent,
-    ],
-    imports: [
-        CommonModule,
-        NgbModule,
-        FormsModule,
-        SharedModule,
-        ReactiveFormsModule,
-        RouterModule.forChild(routes),
-    ]
+  declarations: [DashboardComponent, UserManagmentComponent, TreatmentplansComponent, UserTreatmentPlanComponent],
+  imports: [CommonModule, NgbModule, FormsModule, SharedModule, ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class DashboardModule {}

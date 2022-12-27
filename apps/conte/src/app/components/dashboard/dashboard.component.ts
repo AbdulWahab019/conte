@@ -12,16 +12,9 @@ export class DashboardComponent implements OnInit {
   url = '';
   navbarComponents = NAVBAR_COMPONENTS;
 
-  constructor(private router: Router, private toast: ToastService) {}
+  constructor(public router: Router, private toast: ToastService) {}
 
-  ngOnInit(): void {
-    this.url = this.router.url;
-  }
-
-  navigate(url: string) {
-    this.url = url;
-    this.router.navigate([url]);
-  }
+  ngOnInit(): void {}
 
   logout() {
     localStorage.clear();
