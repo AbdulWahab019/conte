@@ -11,16 +11,25 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (request.headers.get('skip')) return next.handle(request);
+
     const token = localStorage.getItem('token');
+    const is_blob = request.headers.get('is_blob');
     let authRequest = request;
 
     if (token) {
-      authRequest = request.clone({
-        setHeaders: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (is_blob) {
+        authRequest = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } else
+        authRequest = request.clone({
+          setHeaders: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
     }
 
     return next.handle(authRequest).pipe(

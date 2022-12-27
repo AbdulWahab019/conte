@@ -13,7 +13,12 @@ import { delay } from '../../utils/constants';
 export class DashboardComponent implements OnInit {
   url = '';
 
-  constructor(private treatmentPlanService : TreatmentPlanService,private router: Router, private spinner: SpinnerService, private toast: ToastService) {}
+  constructor(
+    private treatmentPlanService: TreatmentPlanService,
+    private router: Router,
+    private spinner: SpinnerService,
+    private toast: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.url = this.router.url;

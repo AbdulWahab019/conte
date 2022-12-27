@@ -7,8 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* components */
 import { DashboardComponent } from './dashboard.component';
-import { SharedModule } from '../../Shared/shared.module';
-import { NavbarComponent } from './navbar/navbar.component';
+import { SharedModule } from '../../shared/shared.module';
 import { UserManagmentComponent } from './home/user-managment.component';
 import { TreatmentplansComponent } from './treatment-plans/treatmentplans.component';
 import { UserTreatmentPlanComponent } from './user-treatment-plan/user-treatment-plan.component';
@@ -18,7 +17,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     children: [
-      { path: 'user-managment', title: 'Home', component: UserManagmentComponent },
+      { path: 'user-management', title: 'Home', component: UserManagmentComponent },
       { path: 'treatment-plans', title: 'Treatment Plan', component: TreatmentplansComponent },
       { path: 'user-treatment', title: 'User Treatment Plan', component: UserTreatmentPlanComponent },
     ],
@@ -26,20 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    NavbarComponent,
-    UserManagmentComponent,
-    TreatmentplansComponent,
-    UserTreatmentPlanComponent,
-  ],
-  imports: [
-    CommonModule,
-    NgbModule,
-    FormsModule,
-    SharedModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-  ],
+  declarations: [DashboardComponent, UserManagmentComponent, TreatmentplansComponent, UserTreatmentPlanComponent],
+  imports: [CommonModule, NgbModule, FormsModule, SharedModule, ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class DashboardModule {}
