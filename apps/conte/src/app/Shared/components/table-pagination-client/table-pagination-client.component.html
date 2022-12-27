@@ -21,7 +21,11 @@
           <td *ngFor="let header of headers">
             <span>
               <div *ngIf="record[header['value']]; else noGroup">
-                {{ record[header['value']] }}
+                {{
+                  header['title'] === 'created at'
+                    ? (record[header['value']] | date: 'dd/MM/yyyy')
+                    : record[header['value']]
+                }}
               </div>
               <ng-template #noGroup>
                 <div style="color: gray">
