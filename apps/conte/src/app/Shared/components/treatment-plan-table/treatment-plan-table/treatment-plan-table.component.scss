@@ -12,9 +12,15 @@
   display: flex;
   justify-content: space-between;
 }
-.action-link{
+.action-link {
   margin: 0px 20px 0px 20px;
 }
+
+.action-link:hover {
+  cursor: pointer;
+  color: rgb(7, 40, 227);
+}
+
 .action-button:hover {
   cursor: pointer;
   color: rgb(7, 40, 227);

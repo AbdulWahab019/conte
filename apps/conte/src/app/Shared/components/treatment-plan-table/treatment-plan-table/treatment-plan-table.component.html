@@ -10,7 +10,12 @@
       </tr>
       <tr>
         <th>{{ userTreatmentPlan?.userTreatmentPlan?.assigned_at ? 'Assigned At' : 'Created At' }}</th>
-        <td>{{ userTreatmentPlan?.userTreatmentPlan?.assigned_at || userTreatmentPlan?.createdAt }}</td>
+        <td>
+          {{
+            (userTreatmentPlan?.userTreatmentPlan?.assigned_at | date: 'dd/MM/yyyy') ||
+              (userTreatmentPlan?.createdAt | date: 'dd/MM/yyyy')
+          }}
+        </td>
       </tr>
     </tbody>
   </table>
@@ -25,7 +30,7 @@
       </thead>
 
       <tbody *ngFor="let tpDays of userTreatmentPlan?.details">
-        <tr class="row-click" (click)="tpDays.isExpanded = !tpDays.isExpanded">
+        <tr [ngClass]="tpDays?.tasks ? 'row-click' : null" (click)="tpDays.isExpanded = !tpDays.isExpanded">
           <td>Day - {{ tpDays?.tp_day }}</td>
           <td>{{ tpDays?.tasks?.length || tpDays?.tp_weekday }}</td>
           <td *ngIf="userTreatmentPlan?.createdAt" class="d-flex">
