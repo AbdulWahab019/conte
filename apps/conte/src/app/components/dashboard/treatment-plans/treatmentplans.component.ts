@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
-import { TreatmentPlan } from '../../../shared/models/TreatmentPlan';
-import { TableHeaders } from '../../../shared/models/Generic';
+import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
+import { TreatmentPlan } from '../../../Shared/models/TreatmentPlan';
+import { TableHeaders } from '../../../Shared/models/Generic';
 import { Router } from '@angular/router';
-import { ToastService } from '../../../shared/services/toast.service';
-import { SpinnerService } from '../../../shared/services/spinner.service';
-import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
+import { ToastService } from '../../../Shared/services/toast.service';
+import { SpinnerService } from '../../../Shared/services/spinner.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../Shared/utils/constants';
 
 @Component({
   selector: 'conte-treatmentplans',

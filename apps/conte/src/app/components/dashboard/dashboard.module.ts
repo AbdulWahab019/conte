@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* components */
 import { DashboardComponent } from './dashboard.component';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../Shared/shared.module';
 import { UserManagmentComponent } from './home/user-managment.component';
 import { TreatmentplansComponent } from './treatment-plans/treatmentplans.component';
 import { UserTreatmentPlanComponent } from './user-treatment-plan/user-treatment-plan.component';
