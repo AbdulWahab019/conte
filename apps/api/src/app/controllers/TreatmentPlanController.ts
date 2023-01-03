@@ -12,6 +12,8 @@ import {
   parseTreatmentPlanFileForSurgery,
   getTPDetailsData,
   updateTreatmentPlanDetailsData,
+  createTreatmentPlanWeb,
+  createTreatmentPlanDetails,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -141,4 +143,22 @@ export function uploadTreatmentVideo(req: Request, res: Response) {
 
   const { originalname: name, url } = req.file as Express.Multer.File & { url: string };
   return sendResponse(res, 200, 'Success', { name, url: url.substring(0, url.indexOf('?se')) });
+}
+
+export async function uploadTreatmentPlanWeb(req: Request, res: Response) {
+  const { name, doctor_id, surgery_id, week_from_surgery, month_from_surgery, details } = req.body;
+
+  const treatmentPlan = await createTreatmentPlanWeb(
+    name,
+    doctor_id,
+    surgery_id,
+    week_from_surgery,
+    month_from_surgery
+  );
+
+  const tpDetails = details.map((data) => ({ tp_id: treatmentPlan.id, ...data }));
+
+  const treatmentPlanDetails = await createTreatmentPlanDetails(tpDetails);
+
+  return sendResponse(res, 200, 'Success', treatmentPlan, treatmentPlanDetails);
 }

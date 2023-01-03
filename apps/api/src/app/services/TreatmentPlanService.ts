@@ -171,3 +171,17 @@ export async function updateTreatmentPlanDetailsData(
 ) {
   return await TreatmentPlanDetail.update(data, { where: { tp_id, tp_day } });
 }
+
+export async function createTreatmentPlanWeb(
+  name: string,
+  doctor_id: number,
+  surgery_id: number,
+  week_from_surgery: number,
+  month_from_surgery: number
+) {
+  return await TreatmentPlan.create({ name, doctor_id, surgery_id, week_from_surgery, month_from_surgery });
+}
+
+export async function createTreatmentPlanDetails(data: TreatmentPlanDetailDefinedAttributes[]) {
+  return await TreatmentPlanDetail.create({ ...data });
+}

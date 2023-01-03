@@ -14,6 +14,7 @@ import {
   getTreatmentPlanDetails,
   updateTreatmentPlanDetails,
   uploadTreatmentVideo,
+  uploadTreatmentPlanWeb,
 } from '../controllers/TreatmentPlanController';
 import { authorize, authorizeWebUser } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
@@ -47,5 +48,7 @@ router.get('/:id', authorizeWebUser, getTreatmentPlanDetails);
 router.post('/video/upload', authorizeWebUser, uploadTreatmentTypeVideo.single('video'), uploadTreatmentVideo);
 
 router.put('/tp_day/:tp_day/tp_id/:tp_id', authorizeWebUser, validateTreatmentPlanData, updateTreatmentPlanDetails);
+
+router.post('/upload/web', authorizeWebUser, uploadTreatmentPlanWeb);
 
 export default router;
