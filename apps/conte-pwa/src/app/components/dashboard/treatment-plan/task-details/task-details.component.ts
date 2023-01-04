@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
 import { TreatmentPlanService } from 'apps/conte-pwa/src/app/services/treatment-plan.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { TECHNICAL_DIFFICULTIES } from 'apps/conte-pwa/src/app/utils/constants';
 
 @Component({
   selector: 'conte-task-details',
@@ -35,7 +36,8 @@ export class TaskDetailsComponent implements OnInit {
         break;
       }
       case 3: {
-        this.videoURL = 'https://conteassets.blob.core.windows.net/tasktutorial/3_Post_Max_Distance_Flat_Ground_Tutorial.mp4';
+        this.videoURL =
+          'https://conteassets.blob.core.windows.net/tasktutorial/3_Post_Max_Distance_Flat_Ground_Tutorial.mp4';
         break;
       }
       case 4: {
@@ -72,7 +74,10 @@ export class TaskDetailsComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.buttonState = 'static';
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 }

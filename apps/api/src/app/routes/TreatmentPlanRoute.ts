@@ -9,7 +9,7 @@ import {
   getTaskFeedback,
   skipUserTasks,
   getAllTreatmentPlans,
-  getSkippedAndCompletedTasks,
+  getUserTasksReport,
   getTreatmentPlanById,
   getTreatmentPlanDetails,
   updateTreatmentPlanDetails,
@@ -41,7 +41,7 @@ router.get('/web', authorizeWebUser, getAllTreatmentPlans);
 
 router.get('/:id/web', authorizeWebUser, getTreatmentPlanById);
 
-router.get('/tasks/:user_id/web', authorizeWebUser, getSkippedAndCompletedTasks);
+router.get('/user/:user_id/tasks/web', authorizeWebUser, getUserTasksReport);
 
 router.get('/:id', authorizeWebUser, getTreatmentPlanDetails);
 

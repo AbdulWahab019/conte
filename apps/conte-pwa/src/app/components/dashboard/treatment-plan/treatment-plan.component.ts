@@ -8,6 +8,7 @@ import { TaskDetailsComponent } from './task-details/task-details.component';
 import { GenericModalComponent } from '../../shared/modals/generic/generic-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { submitFeedbackData, therapyTask } from '../../../models/treatmentplan';
+import { TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -66,7 +67,10 @@ export class TreatmentPlanComponent implements OnInit {
       .catch((err) => {
         this.spinner.hide();
         console.error(err);
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 
@@ -107,7 +111,10 @@ export class TreatmentPlanComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.spinner.hide();
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   };
 
@@ -126,7 +133,10 @@ export class TreatmentPlanComponent implements OnInit {
       .catch((err) => {
         console.error(err);
         this.getTasks();
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   }
 
@@ -185,7 +195,10 @@ export class TreatmentPlanComponent implements OnInit {
       })
       .catch((err) => {
         console.error(err);
-        this.toast.show(err.error.message, { classname: 'bg-danger text-light', icon: 'error' });
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
       });
   };
 

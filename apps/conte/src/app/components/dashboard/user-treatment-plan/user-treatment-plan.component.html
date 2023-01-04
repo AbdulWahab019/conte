@@ -1,76 +1,28 @@
-<div class="card">
+<div
+  class="card"
+  *ngIf="treatmentPlanData?.completedTasks || treatmentPlanData?.pendingTasks || treatmentPlanData?.skippedTasks"
+>
   <div class="heading-container"><h3 class="heading">Task Report</h3></div>
   <hr />
   <table class="table">
     <tbody>
       <tr>
         <th>Completed Tasks</th>
-        <td>{{ completedTasks.length }}</td>
+        <td>{{ treatmentPlanData.completedTasks }}</td>
       </tr>
       <tr>
         <th>Pending Tasks</th>
-        <td>{{ pendingTasks.length }}</td>
+        <td>{{ treatmentPlanData.pendingTasks }}</td>
       </tr>
       <tr>
         <th>Skipped Tasks</th>
-        <td>{{ skippedTasks.length }}</td>
+        <td>{{ treatmentPlanData.skippedTasks }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-<div class="card">
-  <div class="heading-container"><h3 class="heading">User Treatment Plan</h3></div>
-
-  <hr />
-  <table class="table">
-    <tbody>
-      <tr>
-        <th>Name</th>
-        <td>{{ userTreatmentPlan.name }}</td>
-      </tr>
-      <tr>
-        <th>Assigned At</th>
-        <td>{{ userTreatmentPlan.assigned_at }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="card">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Treatment Plan Day</th>
-          <th>Number of tasks</th>
-        </tr>
-      </thead>
-
-      <tbody *ngFor="let tpDays of userTreatmentPlan?.details">
-        <tr class="row-click" (click)="tpDays.isExpanded = !tpDays.isExpanded">
-          <td>Day - {{ tpDays?.tp_day }}</td>
-          <td>{{ tpDays?.tasks?.length }}</td>
-        </tr>
-        <tr *ngIf="tpDays.isExpanded">
-          <div class="card">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let task of tpDays?.tasks">
-                <tr>
-                  <td>{{ task?.title }}</td>
-                  <td>{{ task?.is_completed === true ? 'Completed' : 'Skipped' }}</td>
-                  <td (click)="updateTask(userTreatmentPlan.user_id, task)" class="edit-link">
-                    <i class="bi bi-pencil-square"></i>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<conte-treatment-plan-table
+  [updateTask]="updateTask"
+  [updateVideo]="updateVideo"
+  [TreatmentPlanData]="treatmentPlanData"
+></conte-treatment-plan-table>

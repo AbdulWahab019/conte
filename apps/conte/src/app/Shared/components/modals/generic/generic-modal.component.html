@@ -22,8 +22,13 @@
       </div>
     </div>
 
+    <!-- Video -->
+    <video class="mt-3 mb-3" controls playsinline loop autoplay *ngIf="videoURL" [src]="videoURL" [@fade]>
+      Your browser does not support the video playback.
+    </video>
+
     <!-- Form -->
-    <div *ngIf="form" [@fade]>
+    <div *ngIf="form?.length" [@fade]>
       <form (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Title</label>
@@ -33,36 +38,6 @@
         <br />
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-    </div>
-    <!-- Question/Answers -->
-    <div *ngIf="questionAnswers">
-      <div *ngFor="let item of questionAnswers; index as i" class="mt-1 mb-3" [@fade]>
-        <div class="d-flex align-items-center">
-          <select [(ngModel)]="this.questionAnswers[i].question" class="feedback-field" autofocus="false">
-            <option hidden selected value="">Select a question</option>
-            <option value="question1">Question 1</option>
-            <option value="question2">Question 2</option>
-            <option value="question3">Question 3</option>
-            <option value="question4">Question 4</option>
-          </select>
-          <i *ngIf="i != 0" class="bi bi-x-lg ms-1" (click)="removeQuestion(i)"></i>
-        </div>
-
-        <input
-          class="feedback-field mt-1"
-          type="text"
-          [disabled]="!this.questionAnswers[i].question"
-          [(ngModel)]="this.questionAnswers[i].answer"
-          placeholder="Enter the answer to the question"
-          autocomplete="off"
-        />
-      </div>
-
-      <div class="QA-btn-container">
-        <button *ngIf="QAbuttonText" (click)="addQuestion()">
-          {{ QAbuttonText }}<i *ngIf="QAbuttonLogo === 'add'" class="bi bi-plus-circle-dotted ms-2"></i>
-        </button>
-      </div>
     </div>
 
     <!-- Main Buttons -->

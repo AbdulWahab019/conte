@@ -1,0 +1,86 @@
+<div class="card">
+  <div class="heading-container"><h3 class="heading">User Treatment Plan</h3></div>
+
+  <hr />
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Name</th>
+        <td>{{ TreatmentPlanData?.userTreatmentPlan?.name || TreatmentPlanData?.name }}</td>
+      </tr>
+      <tr>
+        <th>{{ TreatmentPlanData?.userTreatmentPlan?.assigned_at ? 'Assigned At' : 'Created At' }}</th>
+        <td>
+          {{
+            (TreatmentPlanData?.userTreatmentPlan?.assigned_at | date: 'dd/MM/yyyy') ||
+              (TreatmentPlanData?.createdAt | date: 'dd/MM/yyyy')
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Treatment Plan</th>
+          <th>{{ TreatmentPlanData?.createdAt ? 'Day' : 'Number of tasks' }}</th>
+          <th *ngIf="TreatmentPlanData?.createdAt">Videos</th>
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let tpDays of TreatmentPlanData?.details">
+        <tr [ngClass]="tpDays?.tasks ? 'row-click' : null" (click)="tpDays.isExpanded = !tpDays.isExpanded">
+          <td>Day - {{ tpDays?.tp_day }}</td>
+          <td>{{ tpDays?.tasks?.length || tpDays?.tp_weekday }}</td>
+          <td *ngIf="TreatmentPlanData?.createdAt" class="d-flex">
+            <i
+              *ngIf="tpDays?.video_url"
+              (click)="openVideo(tpDays?.video_url, tpDays?.tp_day)"
+              class="bi bi-play-circle action-link"
+            ></i>
+
+            <i *ngIf="!tpDays?.is_uploading" class="bi bi-upload action-link" (click)="videoFile.click()"
+              ><input (change)="onVideoFileSelected($event.target, tpDays)" type="file" hidden #videoFile
+            /></i>
+
+            <span
+              *ngIf="tpDays?.is_uploading"
+              class="action-link spinner-border spinner-border-sm"
+              style="margin-top: 0.2rem"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </td>
+        </tr>
+        <tr *ngIf="tpDays.isExpanded && tpDays?.tasks">
+          <div class="card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let task of tpDays?.tasks">
+                <tr>
+                  <td>{{ task?.title }}</td>
+                  <td>
+                    {{ task?.is_completed === true ? 'Completed' : task?.is_skipped === true ? 'Skipped' : 'Pending' }}
+                  </td>
+                  <td class="edit-link">
+                    <i
+                      (click)="updateTask(TreatmentPlanData.userTreatmentPlan.user_id, task)"
+                      class="bi bi-pencil-square action-button"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
