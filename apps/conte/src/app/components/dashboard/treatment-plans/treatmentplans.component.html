@@ -1,5 +1,20 @@
+<ng-container *ngIf="!csvEdit">
+  <button type="button" class="btn btn-primary upload-button" (click)="csvFilePicker.click()">Upload file</button>
+  <input (change)="onFileSelected($event.target)" type="file" hidden #csvFilePicker />
+  <app-table-pagination-client
+    [headers]="tableHeaders"
+    [data]="treatmentPlans"
+    [onRowClick]="onRowClick"
+  ></app-table-pagination-client
+></ng-container>
+
 <app-table-pagination-client
-  [headers]="tableHeaders"
-  [data]="treatmentPlans"
-  [onRowClick]="onRowClick"
+  *ngIf="csvEdit"
+  [headers]="csvFileHeaders"
+  [data]="csvFileTableData"
+  [tableEditable]="true"
+  [onGoBack]="onSwitchTable"
+  [onCsvFileUpdate]="onCsvFileUpdate"
+  [csvFileName]="uploadedFileName"
+  (tpUpdateData)="tpDataToUpdate($event)"
 ></app-table-pagination-client>

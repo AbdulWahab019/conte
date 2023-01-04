@@ -24,6 +24,7 @@ export class GenericModalComponent implements OnInit {
   @Input() logo = '';
   @Input() body = '';
   @Input() list = [];
+  @Input() tableData = [];
   @Input() form = [];
   @Input() listActionText = '';
   @Input() listActionLogo = '';

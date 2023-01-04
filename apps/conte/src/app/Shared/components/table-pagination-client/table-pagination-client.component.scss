@@ -1,10 +1,17 @@
-
 .primary-btn {
   background-color: #073786;
 }
-
+.btn-update-file {
+  margin: 10px;
+  background-color: #003ea0;
+}
 .c-point {
   cursor: pointer;
+}
+
+.input-file {
+  margin: 10px;
+  width: 20vw;
 }
 
 .desc-sort {
@@ -19,7 +26,7 @@
 .table-data__wrapper {
   padding: 0 20px;
   margin-top: 17px;
-  font-family: "IBM Plex Sans, sans serif";
+  font-family: 'IBM Plex Sans, sans serif';
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -73,17 +80,17 @@ table.table.table-data {
   padding-top: 0.57rem;
   padding-bottom: 0.56rem;
 }
-.record-container{
+.record-container {
   height: 300px;
   width: 79vw;
   overflow-y: scroll;
   padding: 50px;
 }
-.child-container{
+.child-container {
   width: 33%;
   float: left;
   padding: 25px;
-  h4{
+  h4 {
     font-style: normal;
   }
 }
@@ -91,7 +98,7 @@ table.table.table-data {
 table {
   border-collapse: collapse;
 }
-.expansion{
+.expansion {
   max-width: 200px;
 }
 

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TREATMENTPLAN } from '../utils/constants';
 import { UserTreatmentPlanData, UserTreatmentPlanDataForTp } from '../models/TreatmentPlan';
+import { DOCTOR } from '../utils/constants';
+import { SURGERIES } from '../utils/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,8 @@ export class TreatmentPlanService {
   public userTreatmentPlanData = {} as UserTreatmentPlanData;
 
   public userTreatmentPlanDataForTp = {} as UserTreatmentPlanDataForTp;
+
+  public csvFiledata = [];
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +27,14 @@ export class TreatmentPlanService {
 
   async getTreatmentPlanDetails(user_id: number): Promise<any> {
     return await this.http.get<any>(`${TREATMENTPLAN}/${user_id}`).toPromise();
+  }
+
+  async getAllDoctors(): Promise<any> {
+    return await this.http.get<any>(`${DOCTOR}`).toPromise();
+  }
+
+  async getSurgeries(doctor_id: number): Promise<any> {
+    return await this.http.get<any>(`${SURGERIES}/doctor/${doctor_id}`).toPromise();
   }
 
   async getTreatmentPlans(): Promise<any> {
@@ -44,5 +56,9 @@ export class TreatmentPlanService {
 
   async updateTask(data: { video_url: string }, tp_day: number, tp_Id: number): Promise<any> {
     return await this.http.put<any>(`${TREATMENTPLAN}/tp_day/${tp_day}/tp_id/${tp_Id}`, { data }).toPromise();
+  }
+
+  async createTreatmentPlan(data: any): Promise<any> {
+    return await this.http.post<any>(`${TREATMENTPLAN}/upload/web`, { data }).toPromise();
   }
 }

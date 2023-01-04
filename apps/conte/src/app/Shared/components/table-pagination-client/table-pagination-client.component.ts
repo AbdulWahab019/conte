@@ -13,15 +13,47 @@ export class TablePaginationClientComponent implements OnInit {
   @Input() data: any = [];
   @Input() tableExpansion: boolean = false;
   @Input() openModal: boolean = false;
+  @Input() tableEditable: boolean = false;
   @Output() modalData = new EventEmitter<any>();
   @Input() modalToggle: (args: any) => void = () => null;
   @Input() onRowClick: (args: any) => void = () => null;
+  @Input() onGoBack: () => void = () => null;
+  @Input() onCsvFileUpdate: (args: any) => void = () => null;
+  @Input() csvFileName: string = '';
   tableData: { id: number; data: any }[] = [];
+  doctors: { id: number; name: string; position: string }[] = [];
+  surgery: { id: number; name: string }[] = [];
+  tpData: { doctorId: number; doctorName: string; surgeryId: number } = { doctorId: 0, doctorName: '', surgeryId: 0 };
+  @Output() tpUpdateData = new EventEmitter<any>();
+
   constructor(private treatmentPlanService: TreatmentPlanService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.tableEditable) {
+      this.treatmentPlanService.getAllDoctors().then((res: any) => {
+        this.doctors = res.data;
+      });
+    }
+  }
 
   ngOnChanges(): void {}
+
+  onDoctorChange(record: any) {
+    const docObject = this.doctors.find((x) => x.id == record.value);
+    if (docObject) {
+      this.tpData.doctorId = docObject.id;
+      this.tpData.doctorName = docObject.name;
+    }
+    this.treatmentPlanService.getSurgeries(record.value).then((res: any) => {
+      this.surgery = res.data;
+    });
+  }
+
+  onSurgeryChange(record: any) {
+    console.log(record.value);
+    this.tpData.surgeryId = record.value;
+    this.tpUpdateData.emit(this.tpData);
+  }
 
   expansionToggle(record: any) {
     if (record.expansion === true) {

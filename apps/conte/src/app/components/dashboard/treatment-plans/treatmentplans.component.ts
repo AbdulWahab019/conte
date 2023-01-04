@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../../Shared/services/toast.service';
 import { SpinnerService } from '../../../Shared/services/spinner.service';
 import { TECHNICAL_DIFFICULTIES } from '../../../Shared/utils/constants';
+import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 
 @Component({
   selector: 'conte-treatmentplans',
@@ -14,7 +15,15 @@ import { TECHNICAL_DIFFICULTIES } from '../../../Shared/utils/constants';
 })
 export class TreatmentplansComponent implements OnInit {
   treatmentPlans: TreatmentPlan[] = [];
+  csvRecords: any[] = [];
+  csvFileTableData: any = [];
+  csvFileTableRow: any = [];
+  csvFileHeaders: any = [];
+  tpDataForUpdate: any;
+  uploadedFileName: string = '';
+
   treatmentPlanModalRef: any;
+  csvEdit = false;
   tableHeaders: TableHeaders[] = [
     { title: 'id', value: 'id', sort: false },
     {
@@ -26,8 +35,10 @@ export class TreatmentplansComponent implements OnInit {
     { title: 'doctor id', value: 'doctor_id', sort: false },
     { title: 'created at', value: 'createdAt', sort: false },
   ];
+
   constructor(
     private treatmentPlanService: TreatmentPlanService,
+    private ngxCsvParser: NgxCsvParser,
     private router: Router,
     private toast: ToastService,
     private spinner: SpinnerService
@@ -60,6 +71,46 @@ export class TreatmentplansComponent implements OnInit {
       });
   };
 
+  onFileSelected = (event: any): void => {
+    const file = event.files[0];
+    this.uploadedFileName = file.name;
+    this.ngxCsvParser
+      .parse(file, { header: true, delimiter: ',' })
+      .pipe()
+      .subscribe(
+        (result: any) => {
+          this.treatmentPlanService.csvFiledata = result;
+          result[1].map((header: string) => {
+            this.csvFileHeaders.push({
+              title: header,
+              value: header,
+              sort: false,
+            });
+          });
+          // console.log(this.csvFileHeaders);
+          result.map((row: [], index: any) => {
+            if (index > 1) {
+              this.csvFileTableRow = {};
+
+              row.forEach((value: string, index: number) => {
+                this.csvFileTableRow[this.csvFileHeaders[index].title] = value;
+              });
+
+              this.csvFileTableData.push(this.csvFileTableRow);
+            }
+          });
+          this.csvEdit = true;
+        },
+        (error: NgxCSVParserError) => {
+          console.log('Error', error);
+        }
+      );
+  };
+
+  onSwitchTable = (): void => {
+    this.csvEdit = false;
+  };
+
   onRowClick = (record: any): void => {
     this.spinner.show();
     this.treatmentPlanService
@@ -80,5 +131,24 @@ export class TreatmentplansComponent implements OnInit {
         });
         this.spinner.hide();
       });
+  };
+  tpDataToUpdate = (data: any): void => {
+    this.tpDataForUpdate = data;
+  };
+
+  onCsvFileUpdate = (csvFileName: any): void => {
+    this.csvFileTableData[0]['Week From Sx'];
+    this.csvFileTableData[0]['Month From Sx'];
+    const obj = {
+      doctor_id: this.tpDataForUpdate.doctorId,
+      surgery_id: this.tpDataForUpdate.surgeryId,
+      name: csvFileName,
+      week_from_surgery: this.csvFileTableData[0]['Week From Sx'],
+      month_from_surgery: this.csvFileTableData[0]['Month From Sx'],
+      details: this.csvFileTableData,
+    };
+    this.treatmentPlanService.createTreatmentPlan(obj).then((res) => {
+      console.log(res);
+    });
   };
 }

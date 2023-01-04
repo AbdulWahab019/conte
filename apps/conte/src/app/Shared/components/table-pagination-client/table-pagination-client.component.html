@@ -1,4 +1,41 @@
 <div class="table-data__wrapper">
+  <button class="btn btn-primary btn-update-file" *ngIf="tableEditable" (click)="onGoBack()">Go Back</button>
+  <button class="btn btn-primary btn-update-file" *ngIf="tableEditable" (click)="onCsvFileUpdate(csvFileName)">
+    Update File
+  </button>
+  <input
+    class="input-file form-control"
+    [(ngModel)]="csvFileName"
+    placeholder="Week From Sx"
+    *ngIf="tableEditable"
+    type="text"
+  />
+  <input
+    class="input-file form-control"
+    [(ngModel)]="data[0]['Week From Sx']"
+    placeholder="Week From Sx"
+    *ngIf="tableEditable"
+    type="text"
+  />
+  <input
+    class="input-file form-control"
+    [(ngModel)]="data[0]['Month From Sx']"
+    placeholder="Month From Sx"
+    *ngIf="tableEditable"
+    type="text"
+  />
+  <select (change)="onDoctorChange($event.target)" *ngIf="tableEditable" class="input-file form-control">
+    <option value="">Select Doctor</option>
+    <option *ngFor="let doc of doctors" value="{{ doc.id }}">{{ doc.name }}</option>
+  </select>
+  <select
+    (change)="onSurgeryChange($event.target)"
+    *ngIf="tableEditable && surgery.length > 0"
+    class="input-file form-control"
+  >
+    <option value="">Select Surgery</option>
+    <option *ngFor="let doc of surgery" value="{{ doc.id }}">{{ doc.name }}</option>
+  </select>
   <table class="table table-data">
     <thead>
       <tr>
@@ -19,7 +56,7 @@
         <tr container="body" (click)="openModal ? modalToggle(record) : onRowClick(record)">
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">
-            <span>
+            <span *ngIf="!tableEditable">
               <div *ngIf="record[header['value']]; else noGroup">
                 {{
                   header['title'] === 'created at'
@@ -33,6 +70,11 @@
                   <i class="fa fa-pencil-square fa-lg ml-1 c-point" aria-hidden="true"></i>
                 </div>
               </ng-template>
+            </span>
+            <span *ngIf="tableEditable">
+              <!-- <div *ngIf="record[header['value']]"> -->
+              <input type="text" [(ngModel)]="record[header['value']]" />
+              <!-- </div> -->
             </span>
           </td>
 
