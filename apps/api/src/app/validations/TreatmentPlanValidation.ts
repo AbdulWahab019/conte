@@ -150,7 +150,7 @@ export async function validateTreatmentPlanDataWeb(req: Request, res: Response, 
 
   validationPromises.push(body('doctor_id').notEmpty().isNumeric().withMessage(DOCTOR_ID_NOT_NUMBER).run(req));
 
-  validationPromises.push(body('surgery_id').notEmpty().isNumeric().withMessage(SURGERY_ID_NOT_NUMBER).run(req));
+  validationPromises.push(body('surgery_id').optional().isNumeric().withMessage(SURGERY_ID_NOT_NUMBER).run(req));
 
   validationPromises.push(
     body('week_from_surgery').notEmpty().isNumeric().withMessage(WEEK_FROM_SX_NOT_NUMBER).run(req)
