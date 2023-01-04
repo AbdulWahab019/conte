@@ -1,5 +1,5 @@
 import { parse } from 'csv-parse';
-import { Attributes, FindOptions, Model, Op, Transaction } from 'sequelize';
+import { Attributes, FindOptions, Op, Transaction } from 'sequelize';
 
 import { TreatmentPlan, TreatmentPlanSurgeryData } from '../models/TreatmentPlan';
 import {
