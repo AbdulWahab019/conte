@@ -1,5 +1,5 @@
 import { parse } from 'csv-parse';
-import { Attributes, FindOptions, Op, Transaction } from 'sequelize';
+import { Attributes, FindOptions, Model, Op, Transaction } from 'sequelize';
 
 import { TreatmentPlan, TreatmentPlanSurgeryData } from '../models/TreatmentPlan';
 import {
@@ -111,7 +111,20 @@ export async function skipTPDayTasks(user_id: number, tp_day: number) {
 }
 
 export async function getTreatmentPlans() {
-  return await TreatmentPlan.findAll();
+  return await TreatmentPlan.findAll({
+    include: [
+      {
+        model: Doctor,
+        as: 'doctor',
+        attributes: ['id', 'name'],
+      },
+      {
+        model: Surgery,
+        as: 'surgery',
+        attributes: ['id', 'name'],
+      },
+    ],
+  });
 }
 
 export async function getUserSkippedAndCompletedTasks(user_id: number) {
