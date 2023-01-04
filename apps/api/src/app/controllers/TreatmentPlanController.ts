@@ -12,8 +12,6 @@ import {
   parseTreatmentPlanFileForSurgery,
   getTPDetailsData,
   updateTreatmentPlanDetailsData,
-  createTreatmentPlanWeb,
-  createTreatmentPlanDetails,
 } from '../services/TreatmentPlanService';
 import { APIError } from '../utils/apiError';
 import { sendResponse } from '../utils/appUtils';
@@ -148,17 +146,22 @@ export function uploadTreatmentVideo(req: Request, res: Response) {
 export async function uploadTreatmentPlanWeb(req: Request, res: Response) {
   const { name, doctor_id, surgery_id, week_from_surgery, month_from_surgery, details } = req.body;
 
-  const treatmentPlan = await createTreatmentPlanWeb(
-    name,
-    doctor_id,
-    surgery_id,
-    week_from_surgery,
-    month_from_surgery
-  );
+  const transaction = await sequelize.transaction();
+  try {
+    // Save in DB
+    const treatmentPlan = await createTreatmentPlan(
+      name,
+      doctor_id,
+      surgery_id,
+      details,
+      { week_from_surgery, month_from_surgery },
+      { transaction }
+    );
 
-  const tpDetails = details.map((data) => ({ tp_id: treatmentPlan.id, ...data }));
-
-  const treatmentPlanDetails = await createTreatmentPlanDetails(tpDetails);
-
-  return sendResponse(res, 200, 'Success', treatmentPlan, treatmentPlanDetails);
+    transaction.commit();
+    return sendResponse(res, 200, SUCCESS, treatmentPlan);
+  } catch (err) {
+    await transaction.rollback();
+    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
+  }
 }
