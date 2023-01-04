@@ -42,8 +42,8 @@ TreatmentPlan.sync();
 
 // Associations
 TreatmentPlan.afterSync(() => {
-  TreatmentPlan.belongsTo(Doctor, { foreignKey: 'doctor_id', targetKey: 'id' });
-  TreatmentPlan.belongsTo(Surgery, { foreignKey: 'surgery_id', targetKey: 'id' });
+  TreatmentPlan.belongsTo(Doctor, { foreignKey: 'doctor_id', as: 'doctor', targetKey: 'id' });
+  TreatmentPlan.belongsTo(Surgery, { foreignKey: 'surgery_id', as: 'surgery', targetKey: 'id' });
 
   TreatmentPlan.hasMany(TreatmentPlanDetail, { foreignKey: 'tp_id', sourceKey: 'id' });
 });
