@@ -113,3 +113,6 @@ export const BULLPEN_PITCHES_NOT_STRING = 'Bullpen pitches must be a string';
 export const LIVE_SIMULATED_GAME_NOT_NUMBER = 'Live simulated game must be a number';
 export const INNINGS_NOT_NUMBER = 'Innings must be a number';
 export const VIDEO_URL_NOT_STRING = 'Video url must be a string';
+export const NAME_NOT_STRING = 'Name must be string';
+export const DOCTOR_ID_NOT_NUMBER = 'Doctor id must be a number';
+export const SURGERY_ID_NOT_NUMBER = 'Surgery id must be a number';
