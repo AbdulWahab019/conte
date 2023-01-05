@@ -5,13 +5,13 @@
   margin: 10px;
   background-color: #003ea0;
 }
+
 .c-point {
   cursor: pointer;
 }
 
-.input-file {
-  margin: 10px;
-  width: 20vw;
+.form-control {
+  height: 60px;
 }
 
 .desc-sort {
@@ -95,9 +95,14 @@ table.table.table-data {
   }
 }
 
+select {
+  width: 200px;
+}
+
 table {
   border-collapse: collapse;
 }
+
 .expansion {
   max-width: 200px;
 }

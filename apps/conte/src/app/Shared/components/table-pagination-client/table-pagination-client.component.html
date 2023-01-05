@@ -1,41 +1,53 @@
 <div class="table-data__wrapper">
-  <button class="btn btn-primary btn-update-file" *ngIf="tableEditable" (click)="onGoBack()">Go Back</button>
-  <button class="btn btn-primary btn-update-file" *ngIf="tableEditable" (click)="onCsvFileUpdate(csvFileName)">
-    Update File
-  </button>
-  <input
-    class="input-file form-control"
-    [(ngModel)]="csvFileName"
-    placeholder="Week From Sx"
-    *ngIf="tableEditable"
-    type="text"
-  />
-  <input
-    class="input-file form-control"
-    [(ngModel)]="data[0]['Week From Sx']"
-    placeholder="Week From Sx"
-    *ngIf="tableEditable"
-    type="text"
-  />
-  <input
-    class="input-file form-control"
-    [(ngModel)]="data[0]['Month From Sx']"
-    placeholder="Month From Sx"
-    *ngIf="tableEditable"
-    type="text"
-  />
-  <select (change)="onDoctorChange($event.target)" *ngIf="tableEditable" class="input-file form-control">
-    <option value="">Select Doctor</option>
-    <option *ngFor="let doc of doctors" value="{{ doc.id }}">{{ doc.name }}</option>
-  </select>
-  <select
-    (change)="onSurgeryChange($event.target)"
-    *ngIf="tableEditable && surgery.length > 0"
-    class="input-file form-control"
-  >
-    <option value="">Select Surgery</option>
-    <option *ngFor="let doc of surgery" value="{{ doc.id }}">{{ doc.name }}</option>
-  </select>
+  <ng-container *ngIf="tableEditable">
+    <div class="d-flex justify-content-end mb-3" *ngIf="showFilters" [@fade]>
+      <div class="form-floating me-2">
+        <input class="form-control" [(ngModel)]="csvFileName" placeholder="Name" type="text" />
+        <label>Name</label>
+      </div>
+
+      <div class="form-floating me-2">
+        <input class="form-control" [(ngModel)]="data[0]['week_from_sx']" placeholder="Week From Sx" type="text" />
+        <label>Week From Sx</label>
+      </div>
+
+      <div class="form-floating">
+        <input class="form-control" [(ngModel)]="data[0]['month_from_sx']" placeholder="Month From Sx" type="text" />
+        <label>Month From Sx</label>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3" *ngIf="showFilters" [@fade]>
+      <div class="form-floating me-2">
+        <select (change)="onDoctorChange($event.target)" class="form-control">
+          <option value="">Select Doctor</option>
+          <option *ngFor="let doc of doctors" value="{{ doc.id }}">{{ doc.name }}</option>
+        </select>
+        <label>Select Doctor</label>
+      </div>
+
+      <div class="form-floating" *ngIf="surgery.length > 0 && showFilters" [@fade]>
+        <select (change)="onSurgeryChange($event.target)" class="form-control">
+          <option value="">Select Surgery</option>
+          <option *ngFor="let doc of surgery" value="{{ doc.id }}">{{ doc.name }}</option>
+        </select>
+        <label>Select Surgery</label>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary btn-update-file me-auto" (click)="onGoBack()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <button class="btn btn-primary btn-update-file" (click)="showFilters = !showFilters">
+        <i class="bi bi-funnel"></i>
+      </button>
+
+      <button class="btn btn-primary btn-update-file" (click)="onCsvFileUpdate(csvFileName)">Update File</button>
+    </div>
+  </ng-container>
+
   <table class="table table-data">
     <thead>
       <tr>
@@ -73,7 +85,9 @@
             </span>
             <span *ngIf="tableEditable">
               <!-- <div *ngIf="record[header['value']]"> -->
+
               <input type="text" [(ngModel)]="record[header['value']]" />
+
               <!-- </div> -->
             </span>
           </td>

@@ -81,9 +81,12 @@ export class TreatmentplansComponent implements OnInit {
         (result: any) => {
           this.treatmentPlanService.csvFiledata = result;
           result[1].map((header: string) => {
+            if (header === 'Week Day') {
+              header = 'tp_weekday';
+            }
             this.csvFileHeaders.push({
-              title: header,
-              value: header,
+              title: header.replace(/ /g, '_').toLowerCase(),
+              value: header.replace(/ /g, '_').toLowerCase(),
               sort: false,
             });
           });
@@ -92,8 +95,25 @@ export class TreatmentplansComponent implements OnInit {
             if (index > 1) {
               this.csvFileTableRow = {};
 
-              row.forEach((value: string, index: number) => {
-                this.csvFileTableRow[this.csvFileHeaders[index].title] = value;
+              row.forEach((value: any, index: number) => {
+                // console.log(this.csvFileHeaders[index].title);
+                switch (this.csvFileHeaders[index].title) {
+                  case 'tp_weekday':
+                    this.csvFileHeaders[index].title = 'tp_weekday';
+                    break;
+                  case 'post_max_flat_ground_pitches':
+                    value = value;
+                    break;
+                  case 'bullpen_pitches':
+                    value = value;
+                    break;
+                  case 'video_url':
+                    value = value;
+                    break;
+                  default:
+                    value = Number(value);
+                }
+                this.csvFileTableRow[this.csvFileHeaders[index].title.toLowerCase()] = value;
               });
 
               this.csvFileTableData.push(this.csvFileTableRow);
@@ -137,18 +157,39 @@ export class TreatmentplansComponent implements OnInit {
   };
 
   onCsvFileUpdate = (csvFileName: any): void => {
-    this.csvFileTableData[0]['Week From Sx'];
-    this.csvFileTableData[0]['Month From Sx'];
-    const obj = {
-      doctor_id: this.tpDataForUpdate.doctorId,
-      surgery_id: this.tpDataForUpdate.surgeryId,
-      name: csvFileName,
-      week_from_surgery: this.csvFileTableData[0]['Week From Sx'],
-      month_from_surgery: this.csvFileTableData[0]['Month From Sx'],
-      details: this.csvFileTableData,
-    };
-    this.treatmentPlanService.createTreatmentPlan(obj).then((res) => {
-      console.log(res);
-    });
+    // console.log(this.csvFileTableData);
+    // const tempObj = [...this.csvFileTableData];
+    // const apiRequest = tempObj.map((row: any, index: any) => {
+    //   delete row.tp_day;
+    //   delete row.tp_weekday;
+    //   return {
+    //     ...row,
+    //   };
+    // });
+    // console.log(apiRequest);
+    if (
+      this.tpDataForUpdate?.doctorId &&
+      this.tpDataForUpdate?.surgeryId &&
+      csvFileName &&
+      this.csvFileTableData[0]['week_from_sx'] &&
+      this.csvFileTableData[0]['month_from_sx'] &&
+      this.csvFileTableData
+    ) {
+      const obj = {
+        doctor_id: this.tpDataForUpdate?.doctorId,
+        surgery_id: this.tpDataForUpdate?.surgeryId,
+        name: csvFileName,
+        week_from_surgery: this.csvFileTableData[0]['week_from_sx'],
+        month_from_surgery: this.csvFileTableData[0]['month_from_sx'],
+        details: this.csvFileTableData,
+      };
+
+      this.treatmentPlanService.createTreatmentPlan(obj).then((res) => {
+        this.toast.show('Treatment Plan Updated', { classname: 'bg-success text-light', icon: 'success' });
+      });
+    } else {
+      console.log('in');
+      this.toast.show('Please fill out all the file details', { classname: 'bg-danger text-light', icon: 'error' });
+    }
   };
 }

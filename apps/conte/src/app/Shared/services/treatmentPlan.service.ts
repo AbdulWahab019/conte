@@ -59,6 +59,6 @@ export class TreatmentPlanService {
   }
 
   async createTreatmentPlan(data: any): Promise<any> {
-    return await this.http.post<any>(`${TREATMENTPLAN}/upload/web`, { data }).toPromise();
+    return await this.http.post<any>(`${TREATMENTPLAN}/upload/web`, data).toPromise();
   }
 }

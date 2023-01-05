@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { TreatmentPlanService } from '../../services/treatmentPlan.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TableHeaders } from '../../models/Generic';
 import { EventEmitter } from '@angular/core';
 
@@ -7,6 +8,13 @@ import { EventEmitter } from '@angular/core';
   selector: 'app-table-pagination-client',
   templateUrl: './table-pagination-client.component.html',
   styleUrls: ['./table-pagination-client.component.scss'],
+  animations: [
+    trigger('fade', [
+      state('in', style({ opacity: 1 })),
+      transition(':enter', [style({ opacity: 0 }), animate(600)]),
+      transition(':leave', animate(600, style({ opacity: 0 }))),
+    ]),
+  ],
 })
 export class TablePaginationClientComponent implements OnInit {
   @Input() headers: TableHeaders[] = [];
@@ -20,6 +28,7 @@ export class TablePaginationClientComponent implements OnInit {
   @Input() onGoBack: () => void = () => null;
   @Input() onCsvFileUpdate: (args: any) => void = () => null;
   @Input() csvFileName: string = '';
+  showFilters = true;
   tableData: { id: number; data: any }[] = [];
   doctors: { id: number; name: string; position: string }[] = [];
   surgery: { id: number; name: string }[] = [];
