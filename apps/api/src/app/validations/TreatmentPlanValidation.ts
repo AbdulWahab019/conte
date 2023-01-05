@@ -23,8 +23,10 @@ import {
   POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_ABSOLUTE_NOT_NUMBER,
   POST_MAX_DISTANCE_FLAT_GROUND_VELOCITY_PERCENT_NOT_NUMBER,
   SURGERY_ID_NOT_NUMBER,
+  TP_DAY_NOT_NUMBER,
   TP_DAY_NOT_UPDATE,
   TP_ID_NOT_UPDATE,
+  TP_WEEKDAY_NOT_STRING,
   TP_WEEKDAY_NOT_UPDATE,
   VIDEO_URL_NOT_STRING,
   WEEK_FROM_SX_NOT_NUMBER,
@@ -160,10 +162,10 @@ export async function validateTreatmentPlanDataWeb(req: Request, res: Response, 
     body('month_from_surgery').notEmpty().isNumeric().withMessage(MONTH_FROM_SX__NOT_NUMBER).run(req)
   );
 
-  validationPromises.push(body('details.*.tp_day').optional().isNumeric().withMessage(TP_DAY_NOT_UPDATE).run(req));
+  validationPromises.push(body('details.*.tp_day').optional().isNumeric().withMessage(TP_DAY_NOT_NUMBER).run(req));
 
   validationPromises.push(
-    body('details.*.tp_weekday').optional().isNumeric().withMessage(TP_WEEKDAY_NOT_UPDATE).run(req)
+    body('details.*.tp_weekday').optional().isString().withMessage(TP_WEEKDAY_NOT_STRING).run(req)
   );
 
   validationPromises.push(
