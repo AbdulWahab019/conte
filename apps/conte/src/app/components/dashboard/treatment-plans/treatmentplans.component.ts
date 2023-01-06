@@ -157,16 +157,6 @@ export class TreatmentplansComponent implements OnInit {
   };
 
   onCsvFileUpdate = (csvFileName: any): void => {
-    // console.log(this.csvFileTableData);
-    // const tempObj = [...this.csvFileTableData];
-    // const apiRequest = tempObj.map((row: any, index: any) => {
-    //   delete row.tp_day;
-    //   delete row.tp_weekday;
-    //   return {
-    //     ...row,
-    //   };
-    // });
-    // console.log(apiRequest);
     if (
       this.tpDataForUpdate?.doctorId &&
       this.tpDataForUpdate?.surgeryId &&
@@ -188,7 +178,6 @@ export class TreatmentplansComponent implements OnInit {
         this.toast.show('Treatment Plan Updated', { classname: 'bg-success text-light', icon: 'success' });
       });
     } else {
-      console.log('in');
       this.toast.show('Please fill out all the file details', { classname: 'bg-danger text-light', icon: 'error' });
     }
   };
