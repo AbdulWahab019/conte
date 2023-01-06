@@ -174,9 +174,18 @@ export class TreatmentplansComponent implements OnInit {
         details: this.csvFileTableData,
       };
 
-      this.treatmentPlanService.createTreatmentPlan(obj).then((res) => {
-        this.toast.show('Treatment Plan Updated', { classname: 'bg-success text-light', icon: 'success' });
-      });
+      this.treatmentPlanService
+        .createTreatmentPlan(obj)
+        .then((res) => {
+          this.toast.show('Treatment Plan Updated', { classname: 'bg-success text-light', icon: 'success' });
+        })
+        .catch((err) => {
+          this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+            classname: 'bg-danger text-light',
+            icon: 'error',
+          });
+          this.spinner.hide();
+        });
     } else {
       this.toast.show('Please fill out all the file details', { classname: 'bg-danger text-light', icon: 'error' });
     }

@@ -2,7 +2,10 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { TreatmentPlanService } from '../../services/treatmentPlan.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TableHeaders } from '../../models/Generic';
+import { ToastService } from '../../../Shared/services/toast.service';
 import { EventEmitter } from '@angular/core';
+import { SpinnerService } from '../../services/spinner.service';
+import { TECHNICAL_DIFFICULTIES } from '../../utils/constants';
 
 @Component({
   selector: 'app-table-pagination-client',
@@ -35,13 +38,26 @@ export class TablePaginationClientComponent implements OnInit {
   tpData: { doctorId: number; doctorName: string; surgeryId: number } = { doctorId: 0, doctorName: '', surgeryId: 0 };
   @Output() tpUpdateData = new EventEmitter<any>();
 
-  constructor(private treatmentPlanService: TreatmentPlanService) {}
+  constructor(
+    private treatmentPlanService: TreatmentPlanService,
+    private toast: ToastService,
+    private spinner: SpinnerService
+  ) {}
 
   ngOnInit(): void {
     if (this.tableEditable) {
-      this.treatmentPlanService.getAllDoctors().then((res: any) => {
-        this.doctors = res.data;
-      });
+      this.treatmentPlanService
+        .getAllDoctors()
+        .then((res: any) => {
+          this.doctors = res.data;
+        })
+        .catch((err) => {
+          this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+            classname: 'bg-danger text-light',
+            icon: 'error',
+          });
+          this.spinner.hide();
+        });
     }
   }
 
@@ -53,9 +69,18 @@ export class TablePaginationClientComponent implements OnInit {
       this.tpData.doctorId = docObject.id;
       this.tpData.doctorName = docObject.name;
     }
-    this.treatmentPlanService.getSurgeries(record.value).then((res: any) => {
-      this.surgery = res.data;
-    });
+    this.treatmentPlanService
+      .getSurgeries(record.value)
+      .then((res: any) => {
+        this.surgery = res.data;
+      })
+      .catch((err) => {
+        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+          classname: 'bg-danger text-light',
+          icon: 'error',
+        });
+        this.spinner.hide();
+      });
   }
 
   onSurgeryChange(record: any) {
@@ -68,13 +93,22 @@ export class TablePaginationClientComponent implements OnInit {
     if (record.expansion === true) {
       record.expansion = false;
     } else {
-      this.treatmentPlanService.getTasks(record.id).then((resp) => {
-        const match = this.tableData.find((item) => item.id === record.id);
+      this.treatmentPlanService
+        .getTasks(record.id)
+        .then((resp) => {
+          const match = this.tableData.find((item) => item.id === record.id);
 
-        if (!match) {
-          this.tableData.push({ id: record.id, data: resp.data });
-        }
-      });
+          if (!match) {
+            this.tableData.push({ id: record.id, data: resp.data });
+          }
+        })
+        .catch((err) => {
+          this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+            classname: 'bg-danger text-light',
+            icon: 'error',
+          });
+          this.spinner.hide();
+        });
       record.expansion = true;
     }
   }
