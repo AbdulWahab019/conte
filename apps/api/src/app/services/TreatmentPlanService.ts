@@ -160,10 +160,12 @@ export async function getTPDetailsData(id: number) {
       },
       {
         model: Doctor,
+        as: 'doctor',
         attributes: ['name'],
       },
       {
         model: Surgery,
+        as: 'surgery',
         attributes: ['name'],
       },
     ],
