@@ -173,14 +173,10 @@ export interface TreatmentPlan {
 }
 
 export interface GetTreatmentPlanDetailsAPIResponse extends GenericResponse {
-  data: TreatmentPlanDetail;
+  data: GetTreatmentPlanDetailsAPIResponseData;
 }
 
-export interface TreatmentPlanDetail extends GenericResponse {
-  data: TreatmentPlanDetailsObject;
-}
-
-export interface TreatmentPlanDetailsObject {
+export interface GetTreatmentPlanDetailsAPIResponseData {
   id: number;
   name: string;
   week_from_surgery: number;
@@ -193,11 +189,5 @@ export interface TreatmentPlanDetailsObject {
   surgery: {
     name: string;
   };
-  TreatmentPlanDetails: [];
-}
-
-export interface TreatmentPlanDetails {
-  tp_day: number;
-  tp_weekday: string;
-  video_url: string;
+  TreatmentPlanDetails: Pick<TreatmentPlanDetail, 'tp_day' | 'tp_weekday' | 'video_url'>[];
 }
