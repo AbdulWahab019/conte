@@ -19,7 +19,7 @@ import {
 import { authorize, authorizeWebUser } from '../middlewares/auth';
 import { validateCreateFeedback } from '../validations/FeedbackValidation';
 import { uploadTreatmentTypeVideo } from '../middlewares/azureStorage';
-import { validateTreatmentPlanData } from '../validations/TreatmentPlanValidation';
+import { validateTreatmentPlanData, validateTreatmentPlanDataWeb } from '../validations/TreatmentPlanValidation';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -47,8 +47,8 @@ router.get('/:id', authorizeWebUser, getTreatmentPlanDetails);
 
 router.post('/video/upload', authorizeWebUser, uploadTreatmentTypeVideo.single('video'), uploadTreatmentVideo);
 
-router.put('/tp_day/:tp_day/tp_id/:tp_id', authorizeWebUser, validateTreatmentPlanData, updateTreatmentPlanDetails);
+router.put('/tp_day/:tp_day/tp_id/:tp_id', validateTreatmentPlanData, authorizeWebUser, updateTreatmentPlanDetails);
 
-router.post('/upload/web', authorizeWebUser, uploadTreatmentPlanWeb);
+router.post('/upload/web', validateTreatmentPlanDataWeb, authorizeWebUser, uploadTreatmentPlanWeb);
 
 export default router;

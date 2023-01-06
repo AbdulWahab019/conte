@@ -41,7 +41,7 @@ export async function uploadTreatmentPlan(req: Request, res: Response) {
       { transaction }
     );
 
-    transaction.commit();
+    await transaction.commit();
     return sendResponse(res, 200, SUCCESS, treatmentPlan);
   } catch (err) {
     await transaction.rollback();
@@ -158,7 +158,7 @@ export async function uploadTreatmentPlanWeb(req: Request, res: Response) {
       { transaction }
     );
 
-    transaction.commit();
+    await transaction.commit();
     return sendResponse(res, 200, SUCCESS, treatmentPlan);
   } catch (err) {
     await transaction.rollback();

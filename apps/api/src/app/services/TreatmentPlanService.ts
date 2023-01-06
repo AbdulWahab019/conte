@@ -107,7 +107,20 @@ export async function skipTPDayTasks(user_id: number, tp_day: number) {
 }
 
 export async function getTreatmentPlans() {
-  return await TreatmentPlan.findAll();
+  return await TreatmentPlan.findAll({
+    include: [
+      {
+        model: Doctor,
+        as: 'doctor',
+        attributes: ['id', 'name'],
+      },
+      {
+        model: Surgery,
+        as: 'surgery',
+        attributes: ['id', 'name'],
+      },
+    ],
+  });
 }
 
 export async function getUserTaskReport(user_id: number) {
