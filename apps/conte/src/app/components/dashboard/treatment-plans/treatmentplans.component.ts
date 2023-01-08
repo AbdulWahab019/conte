@@ -80,7 +80,7 @@ export class TreatmentplansComponent implements OnInit {
       .subscribe(
         (result: any) => {
           this.treatmentPlanService.csvFiledata = result;
-          result[1].map((header: string) => {
+          result[1].forEach((header: string) => {
             if (header === 'Week Day') {
               header = 'tp_weekday';
             }
@@ -90,25 +90,20 @@ export class TreatmentplansComponent implements OnInit {
               sort: false,
             });
           });
-          // console.log(this.csvFileHeaders);
-          result.map((row: [], index: any) => {
+          result.forEach((row: [], index: any) => {
             if (index > 1) {
               this.csvFileTableRow = {};
 
               row.forEach((value: any, index: number) => {
-                // console.log(this.csvFileHeaders[index].title);
                 switch (this.csvFileHeaders[index].title) {
                   case 'tp_weekday':
                     this.csvFileHeaders[index].title = 'tp_weekday';
                     break;
                   case 'post_max_flat_ground_pitches':
-                    value = value;
                     break;
                   case 'bullpen_pitches':
-                    value = value;
                     break;
                   case 'video_url':
-                    value = value;
                     break;
                   default:
                     value = Number(value);
@@ -122,7 +117,10 @@ export class TreatmentplansComponent implements OnInit {
           this.csvEdit = true;
         },
         (error: NgxCSVParserError) => {
-          console.log('Error', error);
+          this.toast.show(error.message || TECHNICAL_DIFFICULTIES, {
+            classname: 'bg-danger text-light',
+            icon: 'error',
+          });
         }
       );
   };

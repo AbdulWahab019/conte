@@ -25,7 +25,7 @@ export class TablePaginationClientComponent implements OnInit {
   @Input() tableExpansion: boolean = false;
   @Input() openModal: boolean = false;
   @Input() tableEditable: boolean = false;
-  @Output() modalData = new EventEmitter<any>();
+  @Output() readonly modalData = new EventEmitter<any>();
   @Input() modalToggle: (args: any) => void = () => null;
   @Input() onRowClick: (args: any) => void = () => null;
   @Input() onGoBack: () => void = () => null;
@@ -36,7 +36,7 @@ export class TablePaginationClientComponent implements OnInit {
   doctors: { id: number; name: string; position: string }[] = [];
   surgery: { id: number; name: string }[] = [];
   tpData: { doctorId: number; doctorName: string; surgeryId: number } = { doctorId: 0, doctorName: '', surgeryId: 0 };
-  @Output() tpUpdateData = new EventEmitter<any>();
+  @Output() readonly tpUpdateData = new EventEmitter<any>();
 
   constructor(
     private treatmentPlanService: TreatmentPlanService,
@@ -61,8 +61,6 @@ export class TablePaginationClientComponent implements OnInit {
     }
   }
 
-  ngOnChanges(): void {}
-
   onDoctorChange(record: any) {
     const docObject = this.doctors.find((x) => x.id == record.value);
     if (docObject) {
@@ -84,7 +82,6 @@ export class TablePaginationClientComponent implements OnInit {
   }
 
   onSurgeryChange(record: any) {
-    console.log(record.value);
     this.tpData.surgeryId = record.value;
     this.tpUpdateData.emit(this.tpData);
   }

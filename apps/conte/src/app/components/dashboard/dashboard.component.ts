@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastService } from '../../Shared/services/toast.service';
 import { NAVBAR_COMPONENTS } from '../../Shared/constants/navbar-config';
 
@@ -8,13 +8,11 @@ import { NAVBAR_COMPONENTS } from '../../Shared/constants/navbar-config';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   url = '';
   navbarComponents = NAVBAR_COMPONENTS;
 
   constructor(public router: Router, private toast: ToastService) {}
-
-  ngOnInit(): void {}
 
   logout() {
     localStorage.clear();
