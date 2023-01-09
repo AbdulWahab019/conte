@@ -90,8 +90,8 @@ export class TreatmentplansComponent implements OnInit {
               sort: false,
             });
           });
-          result.forEach((row: [], index: any) => {
-            if (index > 1) {
+          result.forEach((row: [], rownum: number) => {
+            if (rownum > 1) {
               this.csvFileTableRow = {};
 
               row.forEach((value: any, index: number) => {

@@ -62,7 +62,7 @@ export class TablePaginationClientComponent implements OnInit {
   }
 
   onDoctorChange(record: any) {
-    const docObject = this.doctors.find((x) => x.id == record.value);
+    const docObject = this.doctors.find((x) => x.id === Number(record.value));
     if (docObject) {
       this.tpData.doctorId = docObject.id;
       this.tpData.doctorName = docObject.name;
