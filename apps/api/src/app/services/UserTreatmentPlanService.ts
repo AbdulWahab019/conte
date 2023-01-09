@@ -198,3 +198,31 @@ export async function getUserTasksCalendarService(user_id: number, date: string)
 
   return user_tasks;
 }
+
+export async function createUserTasks(tasks) {
+  return await UserTreatmentPlanTasks.bulkCreate(tasks);
+}
+
+export async function updateUserTPDetails(user_tp_id: number, data: UserTreatmentPlanDetailDefinedAttributes) {
+  return await UserTreatmentPlanDetail.update({ ...data }, { where: { user_tp_id } });
+}
+
+export async function doesTpDayExists(tp_day: number, user_tp_id: number) {
+  return await UserTreatmentPlanDetail.findOne({ where: { tp_day, user_tp_id }, attributes: ['tp_day', 'user_tp_id'] });
+}
+
+export async function createTPDay(user_tp_id: number, tp_day: number, tp_weekday: string) {
+  return UserTreatmentPlanDetail.create({ user_tp_id, tp_day, tp_weekday });
+}
+
+export async function getUserTreatmentPlanByID(id: number) {
+  return await UserTreatmentPlan.findOne({ where: { id }, attributes: ['assigned_at'] });
+}
+
+export async function reAssignTask(tp_day: number, id: number, user_tp_id: number) {
+  return await UserTreatmentPlanTasks.update({ tp_day }, { where: { id, user_tp_id } });
+}
+
+export async function removeTask(user_tp_id: number, id: number) {
+  return await UserTreatmentPlanTasks.destroy({ where: { user_tp_id, id } });
+}

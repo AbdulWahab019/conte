@@ -14,6 +14,16 @@ import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
 import { UserModel } from '../models/User';
 import { captureException } from '@sentry/node';
+import {
+  createTPDay,
+  createUserTasks,
+  doesTpDayExists,
+  getUserTreatmentPlanByID,
+  reAssignTask,
+  removeTask,
+  updateUserTPDetails,
+} from '../services/UserTreatmentPlanService';
+import moment = require('moment');
 
 export async function getUserProfile(req: Request, res: Response) {
   const user: UserModel = req['user'];
@@ -83,4 +93,56 @@ export async function renderUserTreatmentPlanDetails(req: Request, res: Response
     captureException(error);
     return console.error(error);
   }
+}
+
+export async function createUserTreatmentPlanTasks(req: Request, res: Response) {
+  const { user_tp_id, user_id } = req.params;
+  const { tp_day, tasks = [] } = req.body;
+
+  if (!tasks.length) return sendResponse(res, 200, SUCCESS, []);
+
+  let tpDay = await doesTpDayExists(tp_day, Number(user_tp_id));
+
+  if (!tpDay) {
+    const { assigned_at } = await getUserTreatmentPlanByID(Number(user_tp_id));
+
+    const t = moment(assigned_at)
+      .add(tp_day - 1, 'days')
+      .format('dddd');
+
+    tpDay = await createTPDay(Number(user_tp_id), tp_day, t);
+  }
+
+  const tasksDetails = tasks.map((task) => {
+    return {
+      user_id: Number(user_id),
+      user_tp_id: Number(user_tp_id),
+      tp_day: tp_day || tpDay.tp_day,
+      ...task,
+    };
+  });
+
+  const apiResp = await createUserTasks(tasksDetails);
+
+  return sendResponse(res, 200, SUCCESS, apiResp);
+}
+
+export async function updateUserTreatmentPlanDetails(req: Request, res: Response) {
+  const { user_tp_id } = req.params;
+  const { data } = req.body;
+
+  await updateUserTPDetails(Number(user_tp_id), data);
+
+  return sendResponse(res, 200, SUCCESS);
+}
+
+export async function reAssignUserTask(req: Request, res: Response) {
+  const { user_tp_id, task_id } = req.params;
+  const { tp_day } = req.body;
+
+  await reAssignTask(tp_day, Number(user_tp_id), Number(task_id));
+
+  await removeTask(Number(user_tp_id), Number(task_id));
+
+  return sendResponse(res, 200, SUCCESS);
 }
