@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './components/dashboard/dashboard.module';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './Shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 
 /* components */
@@ -15,7 +15,7 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { CommonModule } from '@angular/common';
 
 /* Interceptors */
-import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, AuthenticationComponent],

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { taskFeedback } from 'apps/conte-pwa/src/app/models/treatmentplan';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -18,12 +18,13 @@ import { TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
     ]),
   ],
 })
-export class GenericModalComponent implements OnInit {
+export class GenericModalComponent {
   @Input() heading = '';
   @Input() subHeading = '';
   @Input() logo = '';
   @Input() body = '';
   @Input() list = [];
+  @Input() tableData = [];
   @Input() form = [];
   @Input() listActionText = '';
   @Input() listActionLogo = '';
@@ -43,8 +44,6 @@ export class GenericModalComponent implements OnInit {
   title = '';
 
   constructor(public activeModal: NgbActiveModal, private toast: ToastService, private userService: UserService) {}
-
-  ngOnInit(): void {}
 
   async buttonFunction() {
     if (this.buttonLoadingText) {
