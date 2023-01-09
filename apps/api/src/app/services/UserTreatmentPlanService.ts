@@ -212,7 +212,7 @@ export async function doesTpDayExists(tp_day: number, user_tp_id: number) {
 }
 
 export async function createTPDay(user_tp_id: number, tp_day: number, tp_weekday: string) {
-  return UserTreatmentPlanDetail.create({ user_tp_id, tp_day, tp_weekday });
+  return await UserTreatmentPlanDetail.create({ user_tp_id, tp_day, tp_weekday });
 }
 
 export async function getUserTreatmentPlanByID(id: number) {
