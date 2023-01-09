@@ -106,11 +106,11 @@ export async function createUserTreatmentPlanTasks(req: Request, res: Response) 
   if (!tpDay) {
     const { assigned_at } = await getUserTreatmentPlanByID(Number(user_tp_id));
 
-    const t = moment(assigned_at)
+    const formattedTpDay = moment(assigned_at)
       .add(tp_day - 1, 'days')
       .format('dddd');
 
-    tpDay = await createTPDay(Number(user_tp_id), tp_day, t);
+    tpDay = await createTPDay(Number(user_tp_id), tp_day, formattedTpDay);
   }
 
   const tasksDetails = tasks.map((task) => {
