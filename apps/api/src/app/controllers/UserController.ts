@@ -20,7 +20,6 @@ import {
   doesTpDayExists,
   getUserTreatmentPlanByID,
   reAssignTask,
-  removeTask,
   updateUserTPDetails,
 } from '../services/UserTreatmentPlanService';
 import moment = require('moment');
@@ -128,21 +127,18 @@ export async function createUserTreatmentPlanTasks(req: Request, res: Response) 
 }
 
 export async function updateUserTreatmentPlanDetails(req: Request, res: Response) {
-  const { user_tp_id } = req.params;
-  const { data } = req.body;
+  const { user_tp_id, id } = req.params;
+  const data = req.body;
 
-  await updateUserTPDetails(Number(user_tp_id), data);
+  await updateUserTPDetails(Number(user_tp_id), Number(id), data);
 
   return sendResponse(res, 200, SUCCESS);
 }
 
 export async function reAssignUserTask(req: Request, res: Response) {
-  const { user_tp_id, task_id } = req.params;
-  const { tp_day } = req.body;
+  const { tp_day, task_ids = [] } = req.body;
 
-  await reAssignTask(tp_day, Number(user_tp_id), Number(task_id));
-
-  await removeTask(Number(user_tp_id), Number(task_id));
+  await reAssignTask(tp_day, task_ids);
 
   return sendResponse(res, 200, SUCCESS);
 }

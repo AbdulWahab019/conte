@@ -79,6 +79,9 @@ export const QUESTION_REQUIRED = 'Question is required';
 export const FEEDBACK_REQUIRED = 'Feedback is required';
 export const TYPE_REQUIRED = 'Task type is required';
 
+// User Treatment Plan
+export const USER_TP_ID_NOT_UPDATE = 'User treatment plan id cannot be updated';
+
 // Tasks
 export const NO_SKIPPED_TASKS = 'No tasks are skipped by the user';
 export const DATA_NOT_OBJECT = 'Data must be an object';
@@ -86,6 +89,7 @@ export const TASK_TYPE_NUMBER = 'Task type must be a number ';
 export const TITLE_STRING = 'Title must be a string';
 export const IS_COMPLETED = 'Is Completed must be true or false';
 export const IS_SKIPPED = 'Is Skipped must be true or false';
+export const TP_DAY_NOT_NUMBER = 'TP day must be a number';
 
 // Treatment Plan Update
 export const TP_ID_NOT_UPDATE = 'TP Id cannot be updated';
