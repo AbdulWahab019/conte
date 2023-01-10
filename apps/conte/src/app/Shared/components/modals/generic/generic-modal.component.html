@@ -58,13 +58,134 @@
       Your browser does not support the video playback.
     </video>
 
+    <!-- taskCreationForm -->
+
+    <div *ngIf="taskCreationForm || taskCreationFormWithTpDay" [@fade]>
+      <form (ngSubmit)="onTaskUpdate()">
+        <div class="form-group">
+          <div *ngIf="taskCreationFormWithTpDay">
+            <label>TP Day</label>
+            <input class="form-control" [(ngModel)]="tpDay" [ngModelOptions]="{ standalone: true }" />
+          </div>
+          <label>Task Type</label>
+          <br />
+          <select name="TaskType" class="form-control" [(ngModel)]="taskType">
+            <option value="">Select Type</option>
+            <option value="1">Plyo Throw</option>
+            <option value="2">Max Distance</option>
+            <option value="3">Post Max Distance Flat Ground</option>
+            <option value="4">Bullpen</option>
+            <option value="5">Live Simulated / Game Innings</option>
+          </select>
+          <div *ngIf="taskType === '3' || taskType === '4'">
+            <label>Task Sub Type</label>
+            <br />
+            <select name="TaskSubTypes" class="form-control" [(ngModel)]="taskSubType">
+              <option value="">Select Sub Type</option>
+              <option value="FB">Fork Ball</option>
+              <option value="CH">Change Up</option>
+              <option value="All Types">All</option>
+            </select>
+          </div>
+          <div *ngIf="taskType === '5'">
+            <label>Inings</label>
+            <br />
+            <input class="form-control" [(ngModel)]="innings" [ngModelOptions]="{ standalone: true }" />
+          </div>
+          <!-- <input class="form-control" [(ngModel)]="form" [ngModelOptions]="{ standalone: true }" /> -->
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <p *ngIf="taskCreationFormWithTpDay">
+          <small>* If you add an existing Tp day task will be automatically added to the given Tp Day.</small>
+        </p>
+      </form>
+    </div>
+
+    <!-- taskTransfer -->
+
+    <div *ngIf="transferTasks" [@fade]>
+      <form (ngSubmit)="onTaskTransfer()">
+        <div class="form-group">
+          <div class="inlineInput">
+            <label>TP Day</label>
+            <input style="width: 100px" class="form-control" [value]="miscData.tp_day" />
+            <label>To</label>
+            <input style="width: 100px" class="form-control" />
+          </div>
+          <label>Tasks</label>
+          <div *ngFor="let task of miscData.tasks">
+            <input
+              style="margin-right: 5px"
+              class="form-check-input"
+              id="tasks"
+              [value]="task.id"
+              type="checkbox"
+              (change)="onTaskCheckChange($event, task.id)"
+            />
+            <!-- [checked]="taskIdsToUpdate.includes(task.id)" -->
+            <!-- (change)="form.status = 'completed'"
+              [checked]="form.status == 'completed'" -->
+            <label class="form-check-label"> {{ task.title }} </label>
+          </div>
+          <br />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <p *ngIf="taskCreationFormWithTpDay">
+          <small>* If you add an existing Tp day task will be automatically added to the given Tp Day.</small>
+        </p>
+      </form>
+    </div>
+
     <!-- Form -->
-    <div *ngIf="form?.length" [@fade]>
+    <div *ngIf="form.title !== ''" [@fade]>
       <form (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label>Title</label>
           <br />
-          <input class="form-control" [(ngModel)]="form" [ngModelOptions]="{ standalone: true }" />
+          <input class="form-control" [(ngModel)]="form.title" [ngModelOptions]="{ standalone: true }" />
+          <label>Change Status</label>
+          <br />
+          <div class="checkboxes">
+            <div>
+              <input
+                style="margin-right: 3px"
+                class="form-check-input"
+                id="status"
+                value="completed"
+                type="checkbox"
+                (change)="form.status = 'completed'"
+                [checked]="form.status == 'completed'"
+              />
+              <label class="form-check-label"> Completed </label>
+            </div>
+            <div>
+              <input
+                style="margin-right: 3px"
+                class="form-check-input"
+                id="status"
+                value="skipped"
+                type="checkbox"
+                (change)="form.status = 'skipped'"
+                [checked]="form.status == 'skipped'"
+              />
+              <label class="form-check-label"> Skipped </label>
+            </div>
+            <div>
+              <input
+                style="margin-right: 3px"
+                class="form-check-input"
+                id="status"
+                type="checkbox"
+                value="pending"
+                (change)="form.status = 'pending'"
+                [checked]="form.status == 'pending'"
+              />
+              <label class="form-check-label"> Pending </label>
+            </div>
+          </div>
+          <br />
         </div>
         <br />
         <button type="submit" class="btn btn-primary">Submit</button>

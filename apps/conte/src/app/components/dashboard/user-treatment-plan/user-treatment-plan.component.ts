@@ -121,14 +121,26 @@ export class UserTreatmentPlanComponent implements OnInit {
       });
   }
 
-  updateTask = (userId: number, task?: any): void => {
+  updateTaskDetails = (userId: number, task?: any): void => {
     const ids = {
       userId,
       taskId: task.id,
     };
+    let status;
+    if (task.is_completed === true) {
+      status = 'completed';
+    } else if (task.is_skipped === true) {
+      status = 'skipped';
+    } else {
+      status = 'pending';
+    }
+    const formData = {
+      title: task.title,
+      status: status,
+    };
     this.modal = this.modalService.open(GenericModalComponent, { centered: true });
-    this.modal.componentInstance.heading = 'Update Task';
-    this.modal.componentInstance.form = task.title;
+    this.modal.componentInstance.heading = 'Update Task Details';
+    this.modal.componentInstance.form = formData;
     this.modal.componentInstance.miscData = ids;
     this.modal.result
       .then((result: any) => {
@@ -137,6 +149,89 @@ export class UserTreatmentPlanComponent implements OnInit {
         }
       })
       .catch((err: any) => {});
+  };
+
+  CreateTaskWithoutTpDay = (tpData: any, tpDay: any): void => {
+    this.modal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.modal.componentInstance.heading = 'Add Task';
+    this.modal.componentInstance.taskCreationForm = true;
+    this.modal.result
+      .then((result: any) => {
+        if (result) {
+          const task = [
+            {
+              title: result.taskTitle,
+              is_completed: false,
+              is_skipped: false,
+              task_type: Number(result.taskType),
+            },
+          ];
+          const userParams = {
+            user_tp_id: tpData.userTreatmentPlan.id,
+            user_id: tpData.userTreatmentPlan.user_id,
+          };
+          const tpParams = {
+            tp_day: tpDay.tp_day,
+            tasks: task,
+          };
+          this.CreateTask(userParams, tpParams);
+          // this.reloadServiceData();
+        }
+      })
+      .catch((err: any) => {});
+  };
+
+  transferTask = (tpDay: any): void => {
+    console.log(tpDay);
+    this.modal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.modal.componentInstance.heading = 'Add Task';
+    this.modal.componentInstance.transferTasks = true;
+    this.modal.componentInstance.miscData = tpDay;
+    this.modal.result
+      .then((result: any) => {
+        if (result) {
+          console.log(result);
+          console.log(tpDay);
+          // this.CreateTask(result);
+          // this.reloadServiceData();
+        }
+      })
+      .catch((err: any) => {});
+  };
+
+  CreateTaskWithTpDay = (TreatmentPlanData: any): void => {
+    this.modal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.modal.componentInstance.heading = 'Add Task';
+    this.modal.componentInstance.taskCreationFormWithTpDay = true;
+    this.modal.result
+      .then((result: any) => {
+        if (result) {
+          const task = [
+            {
+              title: result.taskTitle,
+              is_completed: false,
+              is_skipped: false,
+              task_type: Number(result.taskType),
+            },
+          ];
+          const userParams = {
+            user_tp_id: TreatmentPlanData.userTreatmentPlan.id,
+            user_id: TreatmentPlanData.userTreatmentPlan.user_id,
+          };
+          const tpParams = {
+            tp_day: result.tpDay,
+            tasks: task,
+          };
+          this.CreateTask(userParams, tpParams);
+        }
+      })
+      .catch((err: any) => {});
+  };
+
+  CreateTask = (userData: any, tpData: any) => {
+    this.userService.createTask(tpData, userData.user_tp_id, userData.user_id).then((res) => {
+      this.reloadServiceData(userData.user_id);
+    });
   };
 
   updateVideo = async (file: any, tpDay: any) => {
