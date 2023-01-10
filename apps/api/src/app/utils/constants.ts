@@ -81,6 +81,9 @@ export const QUESTION_REQUIRED = 'Question is required';
 export const FEEDBACK_REQUIRED = 'Feedback is required';
 export const TYPE_REQUIRED = 'Task type is required';
 
+// User Treatment Plan
+export const USER_TP_ID_NOT_UPDATE = 'User treatment plan id cannot be updated';
+
 // Tasks
 export const NO_SKIPPED_TASKS = 'No tasks are skipped by the user';
 export const DATA_NOT_OBJECT = 'Data must be an object';

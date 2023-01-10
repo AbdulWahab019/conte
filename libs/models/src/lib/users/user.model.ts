@@ -96,3 +96,25 @@ export type UpdateUserTPTaskAPIResponse = GenericResponse;
 
 // This api returns CSV File
 export type RenderUserTreatmentPlanDetailsAPIResponse = GenericResponse;
+
+export interface CreateUserTreatmentPlanTaskAPIRequest {
+  tp_day: number;
+  tasks: Pick<Tasks, 'title' | 'is_completed' | 'is_skipped' | 'task_type'>[];
+}
+
+export interface CreateUserTreatmentPlanTaskAPIResponse extends GenericResponse {
+  data: Tasks[];
+}
+
+export interface Tasks {
+  id: number;
+  user_id: number;
+  user_tp_id: number;
+  tp_day: number;
+  title: string;
+  is_completed: boolean;
+  is_skipped: boolean;
+  task_type: number;
+  createdAt: string;
+  updatedAt: string;
+}
