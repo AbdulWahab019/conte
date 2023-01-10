@@ -41,7 +41,7 @@ export async function uploadTreatmentPlan(req: Request, res: Response) {
       { transaction }
     );
 
-    transaction.commit();
+    await transaction.commit();
     return sendResponse(res, 200, SUCCESS, treatmentPlan);
   } catch (err) {
     await transaction.rollback();
@@ -141,4 +141,27 @@ export function uploadTreatmentVideo(req: Request, res: Response) {
 
   const { originalname: name, url } = req.file as Express.Multer.File & { url: string };
   return sendResponse(res, 200, 'Success', { name, url: url.substring(0, url.indexOf('?se')) });
+}
+
+export async function uploadTreatmentPlanWeb(req: Request, res: Response) {
+  const { name, doctor_id, surgery_id, week_from_surgery, month_from_surgery, details } = req.body;
+
+  const transaction = await sequelize.transaction();
+  try {
+    // Save in DB
+    const treatmentPlan = await createTreatmentPlan(
+      name,
+      doctor_id,
+      surgery_id,
+      details,
+      { week_from_surgery, month_from_surgery },
+      { transaction }
+    );
+
+    await transaction.commit();
+    return sendResponse(res, 200, SUCCESS, treatmentPlan);
+  } catch (err) {
+    await transaction.rollback();
+    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
+  }
 }

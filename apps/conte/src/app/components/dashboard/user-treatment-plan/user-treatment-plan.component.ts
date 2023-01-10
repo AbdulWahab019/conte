@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
+import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { GenericModalComponent } from '../../../shared/components/modals/generic/generic-modal.component';
-import { ToastService } from '../../../shared/services/toast.service';
-import { TreatmentPlanTaskDetailsForTp } from '../../../shared/models/TreatmentPlan';
-import { UserService } from '../../../shared/services/user.service';
-import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
+import { GenericModalComponent } from '../../../Shared/components/modals/generic/generic-modal.component';
+import { ToastService } from '../../../Shared/services/toast.service';
+import { TreatmentPlanTaskDetailsForTp } from '../../../Shared/models/TreatmentPlan';
+import { UserService } from '../../../Shared/services/user.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../Shared/utils/constants';
 
 @Component({
   selector: 'conte-user-treatment-plan',

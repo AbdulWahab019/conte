@@ -1,4 +1,4 @@
-import { NavbarComponentModel } from '../../shared/models/Generic';
+import { NavbarComponentModel } from '../../Shared/models/Generic';
 
 export const NAVBAR_COMPONENTS: NavbarComponentModel[] = [
   {

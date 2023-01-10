@@ -72,6 +72,8 @@ export const TREATMENT_PLAN_NAME_INVALID_LENGTH =
 export const TREATMENT_PLAN_ALREADY_ASSIGNED = 'A Treatment Plan is already assigned to user';
 export const TREATMENT_PLAN_NOT_ASSIGNED = 'No Treatment Plan assigned to user';
 export const FILE_NOT_UPLOADED = "File couldn't be uploaded due to an error";
+export const TP_DAY_NOT_NUMBER = 'Tp day must be a number';
+export const TP_WEEKDAY_NOT_STRING = 'Tp weekday must be a string';
 
 // Task Feedback
 export const TASK_ID_REQUIRED = 'Task id is required';
@@ -89,7 +91,6 @@ export const TASK_TYPE_NUMBER = 'Task type must be a number ';
 export const TITLE_STRING = 'Title must be a string';
 export const IS_COMPLETED = 'Is Completed must be true or false';
 export const IS_SKIPPED = 'Is Skipped must be true or false';
-export const TP_DAY_NOT_NUMBER = 'TP day must be a number';
 export const TP_DAY_NOT_EMPTY = 'Tp day cannot be empty';
 
 // Treatment Plan Update
@@ -118,3 +119,6 @@ export const BULLPEN_PITCHES_NOT_STRING = 'Bullpen pitches must be a string';
 export const LIVE_SIMULATED_GAME_NOT_NUMBER = 'Live simulated game must be a number';
 export const INNINGS_NOT_NUMBER = 'Innings must be a number';
 export const VIDEO_URL_NOT_STRING = 'Video url must be a string';
+export const NAME_NOT_STRING = 'Name must be string';
+export const DOCTOR_ID_NOT_NUMBER = 'Doctor id must be a number';
+export const SURGERY_ID_NOT_NUMBER = 'Surgery id must be a number';

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../shared/services/user.service';
-import { TableHeaders } from '../../../shared/models/Generic';
+import { UserService } from '../../../Shared/services/user.service';
+import { TableHeaders } from '../../../Shared/models/Generic';
 import { Router } from '@angular/router';
-import { User } from '../../../shared/models/User';
-import { TreatmentPlanService } from '../../../shared/services/treatmentPlan.service';
-import { ToastService } from '../../../shared/services/toast.service';
-import { SpinnerService } from '../../../shared/services/spinner.service';
-import { TECHNICAL_DIFFICULTIES } from '../../../shared/utils/constants';
+import { User } from '../../../Shared/models/User';
+import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
+import { ToastService } from '../../../Shared/services/toast.service';
+import { SpinnerService } from '../../../Shared/services/spinner.service';
+import { TECHNICAL_DIFFICULTIES } from '../../../Shared/utils/constants';
 
 @Component({
   selector: 'conte-user-managment',
@@ -33,7 +33,7 @@ export class UserManagmentComponent implements OnInit {
     private router: Router,
     private treatmentPlanService: TreatmentPlanService,
     private toast: ToastService,
-    private spinner : SpinnerService,
+    private spinner: SpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +53,6 @@ export class UserManagmentComponent implements OnInit {
       }));
       this.spinner.hide();
     });
-   
   };
 
   onRowClick = (record: User) => {
