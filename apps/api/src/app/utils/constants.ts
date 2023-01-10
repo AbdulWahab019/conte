@@ -90,6 +90,7 @@ export const TITLE_STRING = 'Title must be a string';
 export const IS_COMPLETED = 'Is Completed must be true or false';
 export const IS_SKIPPED = 'Is Skipped must be true or false';
 export const TP_DAY_NOT_NUMBER = 'TP day must be a number';
+export const TP_DAY_NOT_EMPTY = 'Tp day cannot be empty';
 
 // Treatment Plan Update
 export const TP_ID_NOT_UPDATE = 'TP Id cannot be updated';
