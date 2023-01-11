@@ -130,6 +130,8 @@ export class GenericModalComponent implements OnInit {
       case '5':
         taskTitle = 'live_simulated_game & innings';
         break;
+      default:
+        break;
     }
     const taskDetails = {
       taskTitle,

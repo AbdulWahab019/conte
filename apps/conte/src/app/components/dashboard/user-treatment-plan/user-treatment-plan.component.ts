@@ -136,7 +136,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     }
     const formData = {
       title: task.title,
-      status: status,
+      status,
     };
     this.modal = this.modalService.open(GenericModalComponent, { centered: true });
     this.modal.componentInstance.heading = 'Update Task Details';
