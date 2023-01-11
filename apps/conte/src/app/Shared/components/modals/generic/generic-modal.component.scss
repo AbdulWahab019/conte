@@ -140,3 +140,18 @@
   font-size: x-large;
   cursor: pointer;
 }
+
+small {
+  font-size: smaller;
+}
+
+.checkboxes {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+.inlineInput {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
