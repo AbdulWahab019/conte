@@ -181,8 +181,7 @@ export class UserTreatmentPlanComponent implements OnInit {
       .catch((err: any) => {});
   };
 
-  transferTask = (tpDay: any): void => {
-    console.log(tpDay);
+  transferTask = (treatmentPlanData: any, tpDay: any): void => {
     this.modal = this.modalService.open(GenericModalComponent, { centered: true });
     this.modal.componentInstance.heading = 'Add Task';
     this.modal.componentInstance.transferTasks = true;
@@ -190,10 +189,13 @@ export class UserTreatmentPlanComponent implements OnInit {
     this.modal.result
       .then((result: any) => {
         if (result) {
-          console.log(result);
-          console.log(tpDay);
-          // this.CreateTask(result);
-          // this.reloadServiceData();
+          const taskDeatils = {
+            tp_day: result.dayToTransfer,
+            task_ids: result.taskIds,
+          };
+          this.userService.transferTask(taskDeatils, treatmentPlanData.userTreatmentPlan.id).then((res) => {
+            this.reloadServiceData(treatmentPlanData.userTreatmentPlan.user_id);
+          });
         }
       })
       .catch((err: any) => {});

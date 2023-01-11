@@ -48,7 +48,8 @@ export class GenericModalComponent implements OnInit {
   buttonState = 'static';
   secButtonState = 'static';
   title = '';
-  taskIdsToUpdate = [];
+  dayToTransfer = 0;
+  taskIdsToUpdate: Number[] = [];
 
   constructor(public activeModal: NgbActiveModal, private toast: ToastService, private userService: UserService) {}
   async buttonFunction() {
@@ -102,9 +103,13 @@ export class GenericModalComponent implements OnInit {
       });
   }
 
-  onTaskCheckChange(event: any, taskId: number) {
-    console.log(event);
-    console.log(taskId);
+  onTaskCheckChange(taskId: number) {
+    if (this.taskIdsToUpdate.includes(taskId)) {
+      const index = this.taskIdsToUpdate.indexOf(taskId);
+      this.taskIdsToUpdate.splice(index, 1);
+    } else {
+      this.taskIdsToUpdate.push(taskId);
+    }
   }
 
   onTaskUpdate() {
@@ -136,13 +141,11 @@ export class GenericModalComponent implements OnInit {
     this.activeModal.close(taskDetails);
   }
   onTaskTransfer() {
-    // const taskDetails = {
-    //   taskTitle,
-    //   taskType: this.taskType,
-    //   taskSubType: this.taskSubType,
-    //   innings: this.innings,
-    //   tpDay: this.tpDay,
-    // };
-    // this.activeModal.close(taskDetails);
+    const taskTransferDetails = {
+      taskIds: this.taskIdsToUpdate,
+      tpDay: this.miscData.tp_day,
+      dayToTransfer: this.dayToTransfer,
+    };
+    this.activeModal.close(taskTransferDetails);
   }
 }

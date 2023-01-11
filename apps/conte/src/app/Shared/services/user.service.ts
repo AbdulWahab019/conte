@@ -20,7 +20,9 @@ export class UserService {
     return await this.http.put<any>(`${USER}/${user_id}/task/${task_id}/web`, data).toPromise();
   }
   async createTask(data: { tp_day: number; tasks: [] }, user_Id: number, tp_Id: number): Promise<any> {
-    console.log();
     return await this.http.post<any>(`${USER}/${tp_Id}/user-treatment-plan/${user_Id}`, data).toPromise();
+  }
+  async transferTask(data: { tp_day: number; task_ids: [] }, tp_Id: number): Promise<any> {
+    return await this.http.post<any>(`${USER}/user-treatment-plan/${tp_Id}/reassign-tasks`, data).toPromise();
   }
 }

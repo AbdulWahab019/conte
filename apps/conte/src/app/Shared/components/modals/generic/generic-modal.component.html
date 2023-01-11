@@ -111,7 +111,12 @@
             <label>TP Day</label>
             <input style="width: 100px" class="form-control" [value]="miscData.tp_day" />
             <label>To</label>
-            <input style="width: 100px" class="form-control" />
+            <input
+              style="width: 100px"
+              class="form-control"
+              [(ngModel)]="dayToTransfer"
+              [ngModelOptions]="{ standalone: true }"
+            />
           </div>
           <label>Tasks</label>
           <div *ngFor="let task of miscData.tasks">
@@ -120,12 +125,10 @@
               class="form-check-input"
               id="tasks"
               [value]="task.id"
+              [checked]="taskIdsToUpdate.includes(task.id)"
               type="checkbox"
-              (change)="onTaskCheckChange($event, task.id)"
+              (change)="onTaskCheckChange(task.id)"
             />
-            <!-- [checked]="taskIdsToUpdate.includes(task.id)" -->
-            <!-- (change)="form.status = 'completed'"
-              [checked]="form.status == 'completed'" -->
             <label class="form-check-label"> {{ task.title }} </label>
           </div>
           <br />
