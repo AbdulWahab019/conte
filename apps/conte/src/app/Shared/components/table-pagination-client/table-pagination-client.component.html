@@ -69,7 +69,7 @@
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">
             <span *ngIf="!tableEditable">
-              <div *ngIf="record[header['value']]; else noGroup">
+              <div class="td-text" *ngIf="record[header['value']]; else noGroup">
                 {{
                   header['title'] === 'created at'
                     ? (record[header['value']] | date: 'dd/MM/yyyy')
