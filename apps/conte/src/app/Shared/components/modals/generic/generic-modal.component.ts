@@ -6,6 +6,8 @@ import { delay } from 'apps/conte-pwa/src/app/utils/constants';
 import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
 import { UserService } from '../../../services/user.service';
 import { TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
+import { taskToTransfer } from '../../../models/TreatmentPlan';
+
 @Component({
   selector: 'conte-generic-modal',
   templateUrl: './generic-modal.component.html',
@@ -63,7 +65,7 @@ export class GenericModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.transferTasks === true) {
-      this.miscData.tasks.forEach((task: any) => {
+      this.miscData.tasks.forEach((task: taskToTransfer) => {
         this.taskIdsToUpdate.push(task.id as never);
       });
     }
