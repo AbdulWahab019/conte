@@ -1,3 +1,15 @@
+<div *ngIf="search" class="d-none d-lg-block search-bar ms-3 mt-4">
+  <div class="input-group">
+    <span class="input-group-text btn-color"><i style="color: white" class="bi bi-search"></i></span>
+    <input
+      placeholder="Search by Id ,Name, Email"
+      type="text"
+      class="form-control search-fied"
+      style="color: blue"
+      [(ngModel)]="searchText"
+    />
+  </div>
+</div>
 <div class="table-data__wrapper">
   <ng-container *ngIf="tableEditable">
     <div class="d-flex justify-content-end mb-3" *ngIf="showFilters" [@fade]>
@@ -64,7 +76,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let record of data">
+      <ng-container *ngFor="let record of data | filter: searchText">
         <tr class="row-styling" container="body" (click)="openModal ? modalToggle(record) : onRowClick(record)">
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">

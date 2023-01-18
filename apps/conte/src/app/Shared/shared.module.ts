@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 /* components */
 import { ToastComponent } from './components/toast/toast.component';
@@ -19,7 +20,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     TreatmentPlanTableComponent,
     SpinnerComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule, Ng2SearchPipeModule],
   exports: [
     TablePaginationClientComponent,
     ToastComponent,
