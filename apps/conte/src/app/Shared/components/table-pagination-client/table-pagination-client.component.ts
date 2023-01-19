@@ -44,9 +44,7 @@ export class TablePaginationClientComponent implements OnInit {
     private treatmentPlanService: TreatmentPlanService,
     private toast: ToastService,
     private spinner: SpinnerService
-  ) {
-    console.log(this.searchText);
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.tableEditable) {
