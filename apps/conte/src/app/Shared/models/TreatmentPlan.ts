@@ -68,3 +68,11 @@ export interface Task {
   user_id: number;
   user_tp_id: number;
 }
+
+export interface taskToTransfer {
+  id: number;
+  is_completed: boolean;
+  is_skipped: boolean;
+  task_type: number;
+  title: string;
+}
