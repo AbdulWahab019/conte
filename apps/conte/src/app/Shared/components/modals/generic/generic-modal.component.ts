@@ -66,7 +66,7 @@ export class GenericModalComponent implements OnInit {
   ngOnInit(): void {
     if (this.transferTasks === true) {
       this.miscData.tasks.forEach((task: taskToTransfer) => {
-        this.taskIdsToUpdate.push(task.id as never);
+        this.taskIdsToUpdate.push(task.id);
       });
     }
   }
