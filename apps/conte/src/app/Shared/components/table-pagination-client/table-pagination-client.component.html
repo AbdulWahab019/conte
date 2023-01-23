@@ -1,3 +1,15 @@
+<div *ngIf="search" class="d-none d-lg-block search-bar ms-3 mt-4">
+  <div class="input-group">
+    <span class="input-group-text btn-color"><i style="color: white" class="bi bi-search"></i></span>
+    <input
+      placeholder="Search by Id ,Name, Email"
+      type="text"
+      class="form-control search-fied"
+      style="color: blue"
+      [(ngModel)]="searchText"
+    />
+  </div>
+</div>
 <div class="table-data__wrapper">
   <ng-container *ngIf="tableEditable">
     <div class="d-flex justify-content-end mb-3" *ngIf="showFilters" [@fade]>
@@ -51,9 +63,9 @@
   <table class="table table-data">
     <thead>
       <tr>
-        <th *ngFor="let header of headers" scope="col">
+        <th class="header-style" *ngFor="let header of headers" scope="col">
           <!-- start//header -->
-          <span>
+          <span class="header-font">
             {{ header['title'] }}
           </span>
           <ng-template #noSort>
@@ -64,12 +76,12 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let record of data">
-        <tr container="body" (click)="openModal ? modalToggle(record) : onRowClick(record)">
+      <ng-container *ngFor="let record of data | filter: searchText">
+        <tr class="row-styling" container="body" (click)="openModal ? modalToggle(record) : onRowClick(record)">
           <!-- start//Table Data -->
           <td *ngFor="let header of headers">
             <span *ngIf="!tableEditable">
-              <div *ngIf="record[header['value']]; else noGroup">
+              <div class="td-text" *ngIf="record[header['value']]; else noGroup">
                 {{
                   header['title'] === 'created at'
                     ? (record[header['value']] | date: 'dd/MM/yyyy')

@@ -6,7 +6,8 @@
 .row-click:hover {
   cursor: pointer;
   color: rgb(7, 40, 227);
-  background-color: rgb(174, 180, 180);
+  background-color: rgb(240, 240, 240);
+  font-weight: 550 !important;
 }
 .edit-link {
   display: flex;
@@ -14,6 +15,9 @@
 }
 .action-link {
   margin: 0px 20px 0px 20px;
+}
+tr {
+  border-color: black;
 }
 
 .action-link:hover {

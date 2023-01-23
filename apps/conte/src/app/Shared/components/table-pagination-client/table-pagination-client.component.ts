@@ -31,6 +31,8 @@ export class TablePaginationClientComponent implements OnInit {
   @Input() onGoBack: () => void = () => null;
   @Input() onCsvFileUpdate: (args: any) => void = () => null;
   @Input() csvFileName: string = '';
+  @Input() search: boolean = false;
+  searchText = '';
   showFilters = true;
   tableData: { id: number; data: any }[] = [];
   doctors: { id: number; name: string; position: string }[] = [];

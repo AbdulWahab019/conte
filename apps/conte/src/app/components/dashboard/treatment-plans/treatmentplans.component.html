@@ -4,6 +4,7 @@
     <input (change)="onFileSelected($event.target)" type="file" hidden #csvFilePicker />
 
     <app-table-pagination-client
+      [search]="true"
       [headers]="tableHeaders"
       [data]="treatmentPlans"
       [onRowClick]="onRowClick"
