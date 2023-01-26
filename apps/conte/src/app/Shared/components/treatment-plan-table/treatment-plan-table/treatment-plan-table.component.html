@@ -19,14 +19,32 @@
       </tr>
     </tbody>
   </table>
-  <button
-    *ngIf="TreatmentPlanData?.userTreatmentPlan?.assigned_at"
-    (click)="CreateTaskWithTpDay(TreatmentPlanData)"
-    class="btn btn-primary add-tasks"
-  >
-    Create Tasks
-    <i class="bi bi-plus-lg"></i>
-  </button>
+  <div>
+    <button
+      *ngIf="TreatmentPlanData?.userTreatmentPlan?.assigned_at"
+      (click)="CreateTaskWithTpDay(TreatmentPlanData)"
+      class="btn btn-primary add-tasks"
+    >
+      Create Tasks
+      <i class="bi bi-plus-lg"></i>
+    </button>
+    <button
+      *ngIf="TreatmentPlanData?.userTreatmentPlan?.assigned_at"
+      (click)="toggleRows(TreatmentPlanData?.details, true)"
+      class="btn btn-primary add-tasks"
+    >
+      Expand All
+      <i class="bi bi-plus-lg"></i>
+    </button>
+    <button
+      *ngIf="TreatmentPlanData?.userTreatmentPlan?.assigned_at"
+      (click)="toggleRows(TreatmentPlanData?.details, false)"
+      class="btn btn-primary add-tasks"
+    >
+      Collapse All
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
   <div class="card">
     <table class="table">
       <thead>

@@ -30,4 +30,15 @@ export class TreatmentPlanTableComponent {
     this.TreatmentPlanData.details[index].is_uploading = true;
     this.updateVideo(e.files[0], tpDay.tp_day);
   };
+  toggleRows(tpDays: any, expanded: boolean) {
+    if (expanded) {
+      tpDays.forEach((row: any) => {
+        row.isExpanded = true;
+      });
+    } else if (!expanded) {
+      tpDays.forEach((row: any) => {
+        row.isExpanded = false;
+      });
+    }
+  }
 }
