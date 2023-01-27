@@ -51,10 +51,6 @@ export class HomeComponent implements OnInit {
     this.getTreatmentPlanDetail();
   }
 
-  handleNav = (): void => {
-    this.ngOnInit();
-  };
-
   getTreatmentPlanDetail() {
     this.apiLoaded = false;
 
@@ -114,7 +110,7 @@ export class HomeComponent implements OnInit {
   }
 
   getCalendarData() {
-    if (this.currentMonth != moment(this.date).format('MMMM') || !this.calendarApiLoaded) {
+    if (this.currentMonth !== moment(this.date).format('MMMM') || !this.calendarApiLoaded) {
       this.calendarApiLoaded = false;
       this.currentMonth = moment(this.date).format('MMMM');
       this.currentYear = moment(this.date).format('YYYY');
@@ -187,9 +183,10 @@ export class HomeComponent implements OnInit {
   }
 
   navByMonth(direction: string) {
-    if (direction == 'next')
+    if (direction === 'next')
       this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).add(1, 'month').format('YYYY-MM-DD'));
     else this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).subtract(1, 'month').format('YYYY-MM-DD'));
+
     this.date = this.treatmentPlanService.getTreatmentPlanDate();
     this.calendarApiLoaded = false;
     this.getTreatmentPlanDetail();
