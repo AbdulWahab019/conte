@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   pendingTasks: any;
   pendingTasksModal: any;
   taskFeedbackModal: any;
+  swipeCoord!: [number, number];
+  swipeTime!: number;
   monthlyData: dailyData[] = [];
   currentMonth = moment().format('MMMM');
   currentYear = moment().format('YYYY');
@@ -47,12 +49,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.date = this.treatmentPlanService.getTreatmentPlanDate();
     this.getTreatmentPlanDetail();
-    this.getCalendarData();
   }
-
-  handleNav = (): void => {
-    this.ngOnInit();
-  };
 
   getTreatmentPlanDetail() {
     this.apiLoaded = false;
@@ -113,26 +110,28 @@ export class HomeComponent implements OnInit {
   }
 
   getCalendarData() {
-    this.calendarApiLoaded = false;
-    this.currentMonth = moment(this.date).format('MMMM');
-    this.currentYear = moment(this.date).format('YYYY');
+    if (this.currentMonth !== moment(this.date).format('MMMM') || !this.calendarApiLoaded) {
+      this.calendarApiLoaded = false;
+      this.currentMonth = moment(this.date).format('MMMM');
+      this.currentYear = moment(this.date).format('YYYY');
 
-    this.dashboardService
-      .getCalendarDetails(this.date)
-      .then((resp) => {
-        this.monthlyData = resp.data;
-        this.monthlyData.forEach((date) => {
-          date.selected = false;
+      this.dashboardService
+        .getCalendarDetails(this.date)
+        .then((resp) => {
+          this.monthlyData = resp.data;
+          this.monthlyData.forEach((date) => {
+            date.selected = false;
+          });
+
+          this.monthlyData[this.monthlyData.findIndex((day: dailyData) => day.date === this.date)].selected = true;
+          this.calendarApiLoaded = true;
+
+          this.scrollToSelectedDay();
+        })
+        .catch((err) => {
+          console.error(err);
         });
-
-        this.monthlyData[this.monthlyData.findIndex((day: dailyData) => day.date === this.date)].selected = true;
-        this.calendarApiLoaded = true;
-
-        this.scrollToSelectedDay();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    }
   }
 
   async scrollToSelectedDay() {
@@ -155,19 +154,64 @@ export class HomeComponent implements OnInit {
     });
 
     this.monthlyData[index].selected = true;
+    this.scrollToSelectedDay();
+
     this.getTreatmentPlanDetail();
   }
 
-  previousMonth() {
-    this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).subtract(1, 'month').format('YYYY-MM-DD'));
-    this.date = this.treatmentPlanService.getTreatmentPlanDate();
-    this.getCalendarData();
+  navOnSwipe(swipe: string) {
+    if (swipe === 'right') {
+      this.date = moment(this.date).add(1, 'd').format('YYYY-MM-DD');
+    } else {
+      this.date = moment(this.date).subtract(1, 'd').format('YYYY-MM-DD');
+    }
+
+    this.treatmentPlanService.setTreatmentPlanDate(this.date);
+
+    if (this.currentMonth === moment(this.date).format('MMMM')) {
+      let index = 0;
+      this.monthlyData.forEach((day: dailyData, i) => {
+        if (day.selected) index = i;
+        day.selected = false;
+      });
+
+      if (swipe === 'right') this.monthlyData[index + 1].selected = true;
+      else this.monthlyData[index - 1].selected = true;
+    } else this.calendarApiLoaded = false;
+
+    this.getTreatmentPlanDetail();
   }
 
-  nextMonth() {
-    this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).add(1, 'month').format('YYYY-MM-DD'));
+  navByMonth(direction: string) {
+    if (direction === 'next')
+      this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).add(1, 'month').format('YYYY-MM-DD'));
+    else this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).subtract(1, 'month').format('YYYY-MM-DD'));
+
     this.date = this.treatmentPlanService.getTreatmentPlanDate();
-    this.getCalendarData();
+    this.calendarApiLoaded = false;
+    this.getTreatmentPlanDetail();
+  }
+
+  swipe(e: TouchEvent, when: string): void {
+    const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
+    const time = new Date().getTime();
+
+    if (when === 'start') {
+      this.swipeCoord = coord;
+      this.swipeTime = time;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+      const duration = time - this.swipeTime;
+
+      if (
+        duration < 1000 && //
+        Math.abs(direction[0]) > 30 && // Long enough
+        Math.abs(direction[0]) > Math.abs(direction[1] * 3)
+      ) {
+        const swipe = direction[0] < 0 ? 'right' : 'left';
+        this.navOnSwipe(swipe);
+      }
+    }
   }
 
   checkPendingTasks() {
