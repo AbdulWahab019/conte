@@ -6,6 +6,7 @@ import {
   getAllUsers,
   getUserProfile,
   getUserTreatmentPlanDetails,
+  postponeTPTaskdays,
   reAssignUserTask,
   renderUserTreatmentPlanDetails,
   updateUserTPTask,
@@ -50,5 +51,7 @@ router.put(
 );
 
 router.post('/user-treatment-plan/:user_tp_id/reassign-tasks', authorizeWebUser, reAssignUserTask);
+
+router.put('/user-treatment-plan/:user_tp_id/postpone-tp-days', postponeTPTaskdays);
 
 export default router;
