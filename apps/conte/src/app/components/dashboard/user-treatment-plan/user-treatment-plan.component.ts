@@ -230,6 +230,26 @@ export class UserTreatmentPlanComponent implements OnInit {
       .catch((err: any) => {});
   };
 
+  postponeTasks = (TreatmentPlanData: any): void => {
+    this.modal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.modal.componentInstance.heading = 'Enter Days Information';
+    this.modal.componentInstance.postponeDays = true;
+    this.modal.result
+      .then((result: any) => {
+        if (result) {
+          const postponeTask = {
+            tp_day: result.dayToPostpone,
+            num_gap_days: result.daysForPostpone,
+          };
+          this.userService.postponeTask(postponeTask, TreatmentPlanData.userTreatmentPlan.id).then((res) => {
+            this.reloadServiceData(TreatmentPlanData.userTreatmentPlan.user_id);
+            this.toast.show('successfully postponed', { classname: 'bg-success text-light', icon: 'success' });
+          });
+        }
+      })
+      .catch((err: any) => {});
+  };
+
   CreateTask = (userData: any, tpData: any) => {
     this.userService.createTask(tpData, userData.user_tp_id, userData.user_id).then((res) => {
       this.reloadServiceData(userData.user_id);

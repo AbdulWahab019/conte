@@ -10,6 +10,7 @@ import { GenericModalComponent } from '../../modals/generic/generic-modal.compon
 export class TreatmentPlanTableComponent {
   @Input() updateTaskDetails: (...args: any) => void = () => null;
   @Input() CreateTaskWithTpDay: (...args: any) => void = () => null;
+  @Input() postponeTasks: (...args: any) => void = () => null;
   @Input() CreateTask: (...args: any) => void = () => null;
   @Input() transferTask: (...args: any) => void = () => null;
   @Input() updateVideo: (...args: any) => void = () => null;

@@ -109,6 +109,36 @@
       </form>
     </div>
 
+    <!--Postpone Days-->
+    <div *ngIf="postponeDays" [@fade]>
+      <form (ngSubmit)="onPostponeDays()">
+        <div class="form-group">
+          <div>
+            <div class="inlineInput">
+              <label>Postpone TP Day</label>
+              <input
+                style="width: 100px; height: 40px"
+                class="form-control"
+                [(ngModel)]="dayToPostpone"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <label style="margin: 10px">For</label>
+              <input
+                style="width: 100px; height: 40px"
+                class="form-control"
+                [(ngModel)]="daysForPostpone"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <label>Days</label>
+            </div>
+            <br />
+          </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
     <!-- Form -->
     <div *ngIf="form.title !== ''" [@fade]>
       <form (ngSubmit)="onSubmit()">
