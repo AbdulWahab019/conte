@@ -74,7 +74,7 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
   if (detail.max_distance && detail.max_velocity_absolute && detail.num_throws_at_max_distance) {
     tasks.push({
       type: 2,
-      title: `Do ${detail.num_throws_at_max_distance} throws at ${detail.max_distance} feet with ${detail.max_velocity_absolute} velocity.`,
+      title: `Catch play build up to max distance of ${detail.max_distance}  feet. ${detail.num_throws_at_max_distance} throws at this distance with gradual buildup to max velocity of ${detail.max_velocity_absolute} mph.`,
     });
   }
   if (
@@ -85,40 +85,40 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
     if (detail.post_max_flat_ground_pitches === 'FB')
       tasks.push({
         type: 3,
-        title: `Throw Forkball at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`,
+        title: `Throw ALL Forkball pitches in today’s ${detail.post_max_flat_ground_pitches} pitch flat ground with a max velocity of ${detail.post_max_distance_flat_ground_velocity_absolute} mph.`,
       });
     else if (detail.post_max_flat_ground_pitches === 'CH')
       tasks.push({
         type: 3,
-        title: `Throw Changeup at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`,
+        title: `Throw ALL changeup pitches in today’s ${detail.post_max_flat_ground_pitches} pitch flat ground with a max velocity of ${detail.post_max_distance_flat_ground_velocity_absolute} mph.`,
       });
     else
       tasks.push({
         type: 3,
-        title: `Throw any type of pitches at ${detail.post_max_distance_flat_ground} feet with ${detail.post_max_distance_flat_ground_velocity_absolute} velocity.`,
+        title: `Throw ALL pitches in today’s ${detail.post_max_flat_ground_pitches} pitch flat ground with a max velocity of ${detail.post_max_distance_flat_ground_velocity_absolute} mph.`,
       });
   }
   if (detail.bullpen && detail.bullpen_max_velocity_absolute && detail.bullpen_pitches) {
     if (detail.bullpen_pitches === 'FB')
       tasks.push({
         type: 4,
-        title: `Throw Forkball bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`,
+        title: `Throw ALL Forkball pitches in today’s ${detail.bullpen} pitch bullpen with a max velocity of ${detail.bullpen_max_velocity_absolute} mph.`,
       });
     else if (detail.bullpen_pitches === 'CH')
       tasks.push({
         type: 4,
-        title: `Throw Changeup bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`,
+        title: `Throw ALL changeup pitches in today’s ${detail.bullpen} pitch bullpen with a max velocity of ${detail.bullpen_max_velocity_absolute} mph.`,
       });
     else
       tasks.push({
         type: 4,
-        title: `Throw any type of bullpen pitches ${detail.bullpen} times with ${detail.bullpen_max_velocity_absolute} velocity.`,
+        title: `Throw ALL pitches in today’s ${detail.bullpen} pitch bullpen with a max velocity of ${detail.bullpen_max_velocity_absolute} mph.`,
       });
   }
   if (detail.live_simulated_game && detail.innings) {
     tasks.push({
       type: 5,
-      title: `Play ${detail.live_simulated_game} pitches per innings in live/simulated game. Play ${detail.innings} innings.`,
+      title: `Throw a ${detail.innings} inning live/simulated game today, 25 pitches each inning.`,
     });
   }
 
