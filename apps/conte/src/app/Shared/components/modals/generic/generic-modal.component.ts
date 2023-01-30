@@ -30,6 +30,7 @@ export class GenericModalComponent implements OnInit {
   @Input() form = { title: '', status: '' };
   @Input() taskCreationForm = false;
   @Input() taskCreationFormWithTpDay = false;
+  @Input() postponeDays = false;
   @Input() transferTasks = false;
   @Input() listActionText = '';
   @Input() listActionLogo = '';
@@ -52,6 +53,8 @@ export class GenericModalComponent implements OnInit {
   title = '';
   dayToTransfer = 0;
   taskIdsToUpdate: Number[] = [];
+  dayToPostpone = 0;
+  daysForPostpone = 0;
 
   constructor(public activeModal: NgbActiveModal, private toast: ToastService, private userService: UserService) {}
   async buttonFunction() {
@@ -151,5 +154,12 @@ export class GenericModalComponent implements OnInit {
       dayToTransfer: this.dayToTransfer,
     };
     this.activeModal.close(taskTransferDetails);
+  }
+  onPostponeDays() {
+    const postponeDetails = {
+      dayToPostpone: this.dayToPostpone,
+      daysForPostpone: this.daysForPostpone,
+    };
+    this.activeModal.close(postponeDetails);
   }
 }

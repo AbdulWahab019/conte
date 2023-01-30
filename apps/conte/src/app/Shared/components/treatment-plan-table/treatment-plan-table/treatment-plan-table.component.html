@@ -44,6 +44,14 @@
       Collapse All
       <i class="bi bi-arrows-collapse"></i>
     </button>
+    <button
+      *ngIf="TreatmentPlanData?.userTreatmentPlan?.assigned_at"
+      (click)="postponeTasks(TreatmentPlanData, false)"
+      class="btn btn-primary add-tasks"
+    >
+      Postpone Tasks
+      <i class="bi bi-shift"></i>
+    </button>
   </div>
   <div class="card">
     <table class="table">
