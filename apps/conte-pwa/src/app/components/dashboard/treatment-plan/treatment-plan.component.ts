@@ -101,7 +101,6 @@ export class TreatmentPlanComponent implements OnInit {
   };
 
   swipe(e: TouchEvent, when: string): void {
-    console.log(1);
     const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
     const time = new Date().getTime();
 
