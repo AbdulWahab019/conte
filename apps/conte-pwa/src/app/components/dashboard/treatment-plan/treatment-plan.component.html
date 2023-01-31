@@ -1,4 +1,8 @@
-<div class="container-fluid treatment-plan-screen">
+<div
+  class="container-fluid treatment-plan-screen"
+  (touchstart)="swipe($event, 'start')"
+  (touchend)="swipe($event, 'end')"
+>
   <div class="d-flex treatment-plan-container">
     <div class="title-tab">
       <i class="bi bi-arrow-left mt-1" (click)="navBack()"></i>
@@ -9,16 +13,16 @@
     <div class="d-flex justify-content-center display-5 mb-2">{{ date }}</div>
 
     <!-- <div class="d-flex info-tab mb-2">
-      <div class="speed-info me-2">
-        Today's<br />Max Speed<br />
-        <p class="display-5">45 MPH</p>
-      </div>
+        <div class="speed-info me-2">
+          Today's<br />Max Speed<br />
+          <p class="display-5">45 MPH</p>
+        </div>
 
-      <div class="progress-info">
-        Overall<br />Progress<br />
-        <p class="display-5">19%</p>
-      </div>
-    </div> -->
+        <div class="progress-info">
+          Overall<br />Progress<br />
+          <p class="display-5">19%</p>
+        </div>
+      </div> -->
 
     <!--Treatment Plan-->
     <div class="treatment-plan">
@@ -73,25 +77,25 @@
       </div>
 
       <!-- Case: No Assigned Tasks -->
-      <div class="mt-5 mb-5" *ngIf="noTasks">
-        <img src="assets/images/no_tasks_found.png" height="150" width="150" />
+      <div class="mt-5 mb-5 w-100" *ngIf="noTasks">
+        <img src="assets/logos/Throwing Progression Pro-02.png" height="150" width="180" />
         <p class="display-6">No Tasks Assigned for Today</p>
       </div>
     </div>
 
     <!-- <div class="d-flex button-container mt-4 mb-2" *ngIf="!noTasks">
-      <button
-        class="btn btn-primary btn-confirm"
-        type="button"
-        [disabled]="buttonState === 'loading'"
-        (click)="navBack()"
-      >
-        <span *ngIf="buttonState === 'static'" class="display-6"
-          >Complete Daily Treatment Plan <i class="bi bi-check2-all"></i
-        ></span>
-        <span *ngIf="buttonState === 'loading'" class="display-6">Daily Tasks are in progress...</span>
-      </button>
-    </div> -->
+        <button
+          class="btn btn-primary btn-confirm"
+          type="button"
+          [disabled]="buttonState === 'loading'"
+          (click)="navBack()"
+        >
+          <span *ngIf="buttonState === 'static'" class="display-6"
+            >Complete Daily Treatment Plan <i class="bi bi-check2-all"></i
+          ></span>
+          <span *ngIf="buttonState === 'loading'" class="display-6">Daily Tasks are in progress...</span>
+        </button>
+      </div> -->
 
     <!-- Daily Therapy::Status -->
     <div

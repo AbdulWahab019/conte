@@ -9,6 +9,7 @@ import { GenericModalComponent } from '../../shared/modals/generic/generic-modal
 import { animate, style, transition, trigger } from '@angular/animations';
 import { submitFeedbackData, therapyTask } from '../../../models/treatmentplan';
 import { TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
+import * as moment from 'moment';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -25,6 +26,8 @@ export class TreatmentPlanComponent implements OnInit {
   pendingTasks!: any;
   noTasks = false;
   areTasksCompleted = false;
+  swipeCoord!: [number, number];
+  swipeTime!: number;
   pendingTasksModal: any;
   taskFeedbackModal: any;
 
@@ -96,6 +99,40 @@ export class TreatmentPlanComponent implements OnInit {
     this.modalService.dismissAll(this.pendingTasksModal);
     this.getTasks();
   };
+
+  swipe(e: TouchEvent, when: string): void {
+    const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
+    const time = new Date().getTime();
+
+    if (when === 'start') {
+      this.swipeCoord = coord;
+      this.swipeTime = time;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+      const duration = time - this.swipeTime;
+
+      if (
+        duration < 1000 && //
+        Math.abs(direction[0]) > 30 && // Long enough
+        Math.abs(direction[0]) > Math.abs(direction[1] * 3)
+      ) {
+        const swipe = direction[0] < 0 ? 'right' : 'left';
+        this.navOnSwipe(swipe);
+      }
+    }
+  }
+
+  navOnSwipe(swipe: string) {
+    if (swipe === 'right') {
+      this.date = moment(this.date).add(1, 'd').format('YYYY-MM-DD');
+    } else {
+      this.date = moment(this.date).subtract(1, 'd').format('YYYY-MM-DD');
+    }
+
+    this.treatmentPlanService.setTreatmentPlanDate(this.date);
+
+    this.getTasks();
+  }
 
   skipSpecificTask = (date: string, pending_tasks: any): void => {
     this.spinner.show();
