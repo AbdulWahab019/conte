@@ -85,7 +85,7 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
     if (detail.post_max_flat_ground_pitches === 'FB')
       tasks.push({
         type: 3,
-        title: `Throw ALL Forkball pitches in today’s ${detail.post_max_flat_ground_pitches} pitch flat ground with a max velocity of ${detail.post_max_distance_flat_ground_velocity_absolute} mph.`,
+        title: `Throw ALL Fastball pitches in today’s ${detail.post_max_flat_ground_pitches} pitch flat ground with a max velocity of ${detail.post_max_distance_flat_ground_velocity_absolute} mph.`,
       });
     else if (detail.post_max_flat_ground_pitches === 'CH')
       tasks.push({
@@ -102,7 +102,7 @@ export function getTasksFromTPDay(detail: UserTreatmentPlanDetailDefinedAttribut
     if (detail.bullpen_pitches === 'FB')
       tasks.push({
         type: 4,
-        title: `Throw ALL Forkball pitches in today’s ${detail.bullpen} pitch bullpen with a max velocity of ${detail.bullpen_max_velocity_absolute} mph.`,
+        title: `Throw ALL Fastball pitches in today’s ${detail.bullpen} pitch bullpen with a max velocity of ${detail.bullpen_max_velocity_absolute} mph.`,
       });
     else if (detail.bullpen_pitches === 'CH')
       tasks.push({
