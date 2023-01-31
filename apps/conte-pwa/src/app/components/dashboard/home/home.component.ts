@@ -159,29 +159,6 @@ export class HomeComponent implements OnInit {
     this.getTreatmentPlanDetail();
   }
 
-  navOnSwipe(swipe: string) {
-    if (swipe === 'right') {
-      this.date = moment(this.date).add(1, 'd').format('YYYY-MM-DD');
-    } else {
-      this.date = moment(this.date).subtract(1, 'd').format('YYYY-MM-DD');
-    }
-
-    this.treatmentPlanService.setTreatmentPlanDate(this.date);
-
-    if (this.currentMonth === moment(this.date).format('MMMM')) {
-      let index = 0;
-      this.monthlyData.forEach((day: dailyData, i) => {
-        if (day.selected) index = i;
-        day.selected = false;
-      });
-
-      if (swipe === 'right') this.monthlyData[index + 1].selected = true;
-      else this.monthlyData[index - 1].selected = true;
-    } else this.calendarApiLoaded = false;
-
-    this.getTreatmentPlanDetail();
-  }
-
   navByMonth(direction: string) {
     if (direction === 'next')
       this.treatmentPlanService.setTreatmentPlanDate(moment(this.date).add(1, 'month').format('YYYY-MM-DD'));
@@ -212,6 +189,29 @@ export class HomeComponent implements OnInit {
         this.navOnSwipe(swipe);
       }
     }
+  }
+
+  navOnSwipe(swipe: string) {
+    if (swipe === 'right') {
+      this.date = moment(this.date).add(1, 'd').format('YYYY-MM-DD');
+    } else {
+      this.date = moment(this.date).subtract(1, 'd').format('YYYY-MM-DD');
+    }
+
+    this.treatmentPlanService.setTreatmentPlanDate(this.date);
+
+    if (this.currentMonth === moment(this.date).format('MMMM')) {
+      let index = 0;
+      this.monthlyData.forEach((day: dailyData, i) => {
+        if (day.selected) index = i;
+        day.selected = false;
+      });
+
+      if (swipe === 'right') this.monthlyData[index + 1].selected = true;
+      else this.monthlyData[index - 1].selected = true;
+    } else this.calendarApiLoaded = false;
+
+    this.getTreatmentPlanDetail();
   }
 
   checkPendingTasks() {
