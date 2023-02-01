@@ -205,13 +205,15 @@ export class TreatmentPlanComponent implements OnInit {
 
   bullpenFeedback(task_id: number) {
     this.taskFeedbackModal = this.modalService.open(GenericModalComponent, { centered: true });
-    this.taskFeedbackModal.componentInstance.heading = 'Conte; Task Feedback';
-    this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
-    this.taskFeedbackModal.componentInstance.body = 'Please share your feedback regarding this task';
+    this.taskFeedbackModal.componentInstance.heading = 'Checkpoint';
+    // this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
+    this.taskFeedbackModal.componentInstance.body = 'Please share your feedback regarding current progress:';
     this.taskFeedbackModal.componentInstance.buttonText = 'Submit';
-    this.taskFeedbackModal.componentInstance.questionAnswers = [{ question: '', answer: '' }];
-    this.taskFeedbackModal.componentInstance.QAbuttonText = 'Add question';
-    this.taskFeedbackModal.componentInstance.QAbuttonLogo = 'add';
+    this.taskFeedbackModal.componentInstance.questionAnswers = [
+      { question: 'How would you rate your progress in the treatment plan?', answer: '' },
+    ];
+    // this.taskFeedbackModal.componentInstance.QAbuttonText = 'Add question';
+    // this.taskFeedbackModal.componentInstance.QAbuttonLogo = 'add';
     this.taskFeedbackModal.componentInstance.buttonLoadingText = 'Submitting your feedback';
     this.taskFeedbackModal.componentInstance.buttonAction = this.submitFeedback;
     this.taskFeedbackModal.componentInstance.closeButtonText = 'Skip';
