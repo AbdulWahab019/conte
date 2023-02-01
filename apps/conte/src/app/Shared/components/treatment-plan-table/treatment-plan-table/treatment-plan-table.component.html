@@ -89,43 +89,47 @@
             ></span>
           </td>
         </tr>
-        <tr *ngIf="tpDays.isExpanded && tpDays?.tasks">
-          <button (click)="CreateTask(TreatmentPlanData, tpDays)" class="btn btn-primary add-tasks">
-            Add Tasks
-            <i class="bi bi-plus-lg"> </i>
-          </button>
-          <button (click)="transferTask(TreatmentPlanData, tpDays)" class="btn btn-primary add-tasks">
-            Transfer Tasks
-            <i class="bi bi-arrow-down-up"> </i>
-          </button>
+        <tr scope="row" *ngIf="tpDays.isExpanded && tpDays?.tasks">
+          <td colspan="3">
+            <button (click)="CreateTask(TreatmentPlanData, tpDays)" class="btn btn-primary add-tasks">
+              Add Tasks
+              <i class="bi bi-plus-lg"> </i>
+            </button>
+            <button (click)="transferTask(TreatmentPlanData, tpDays)" class="btn btn-primary add-tasks">
+              Transfer Tasks
+              <i class="bi bi-arrow-down-up"> </i>
+            </button>
 
-          <div class="card">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let task of tpDays?.tasks">
-                <tr>
-                  <td>{{ task?.title }}</td>
-                  <td>
-                    {{ task?.is_completed === true ? 'Completed' : task?.is_skipped === true ? 'Skipped' : 'Pending' }}
-                  </td>
-                  <td>
-                    <h5>
-                      <i
-                        (click)="updateTaskDetails(TreatmentPlanData.userTreatmentPlan.user_id, task)"
-                        class="bi bi-pencil-square action-button"
-                      ></i>
-                    </h5>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="card">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let task of tpDays?.tasks">
+                  <tr>
+                    <td>{{ task?.title }}</td>
+                    <td>
+                      {{
+                        task?.is_completed === true ? 'Completed' : task?.is_skipped === true ? 'Skipped' : 'Pending'
+                      }}
+                    </td>
+                    <td>
+                      <h5>
+                        <i
+                          (click)="updateTaskDetails(TreatmentPlanData.userTreatmentPlan.user_id, task)"
+                          class="bi bi-pencil-square action-button"
+                        ></i>
+                      </h5>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
