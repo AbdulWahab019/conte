@@ -1,216 +1,236 @@
 <!-- Header -->
 <div class="g-modal-content">
-  <div class="g-modal-header">
-    <h4 *ngIf="heading" class="modal-title display-5">{{ heading }}</h4>
-    <h4 *ngIf="subHeading" class="modal-title display-6">{{ subHeading }}</h4>
-    <div *ngIf="logo" class="d-flex justify-content-center">{{ logo }}</div>
-  </div>
+  <div class="main-container">
+    <div class="g-modal-header">
+      <h4 *ngIf="heading" class="modal-title display-5">{{ heading }}</h4>
+      <h4 *ngIf="subHeading" class="modal-title display-6">{{ subHeading }}</h4>
+      <div *ngIf="logo" class="d-flex justify-content-center">{{ logo }}</div>
+    </div>
 
-  <div class="g-modal-body">
-    <div class="d-flex justify-content-center mb-3">{{ body }}</div>
+    <div class="g-modal-body">
+      <div class="d-flex justify-content-center mb-3">{{ body }}</div>
 
-    <!-- List -->
-    <div *ngIf="list">
-      <div *ngFor="let item of list" class="list mt-1">
-        <li>{{ item }}</li>
-        <button *ngIf="listSecAction" (click)="listSecAction(item, list)" class="list-btn">
-          {{ listSecActionText }}<i *ngIf="listSecActionLogo === 'skip'" class="bi bi-skip-forward ms-1"></i>
+      <!-- List -->
+      <div *ngIf="list">
+        <div *ngFor="let item of list" class="list mt-1">
+          <li>{{ item }}</li>
+          <button *ngIf="listSecAction" (click)="listSecAction(item, list)" class="list-btn">
+            {{ listSecActionText }}<i *ngIf="listSecActionLogo === 'skip'" class="bi bi-skip-forward ms-1"></i>
+          </button>
+          <button *ngIf="listAction" (click)="listAction(item)" class="list-btn">
+            {{ listActionText }}<i *ngIf="listActionLogo === 'navigate'" class="bi bi-arrow-bar-right ms-1"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Video -->
+      <video class="mt-3 mb-3" controls playsinline loop autoplay *ngIf="videoURL" [src]="videoURL" [@fade]>
+        Your browser does not support the video playback.
+      </video>
+
+      <!-- taskCreationForm -->
+
+      <div *ngIf="taskCreationForm || taskCreationFormWithTpDay" [@fade]>
+        <form (ngSubmit)="onTaskUpdate()">
+          <div class="form-group">
+            <div *ngIf="taskCreationFormWithTpDay">
+              <label>TP Day</label>
+              <input class="form-control" [(ngModel)]="tpDay" [ngModelOptions]="{ standalone: true }" />
+            </div>
+            <label>Task Type</label>
+            <br />
+            <select name="TaskType" class="form-control" [(ngModel)]="taskType">
+              <option value="">Select Type</option>
+              <option value="1">Plyo Throw</option>
+              <option value="2">Max Distance</option>
+              <option value="3">Post Max Distance Flat Ground</option>
+              <option value="4">Bullpen</option>
+              <option value="5">Live Simulated / Game Innings</option>
+            </select>
+            <div *ngIf="taskType === '3' || taskType === '4'">
+              <label>Task Sub Type</label>
+              <br />
+              <select name="TaskSubTypes" class="form-control" [(ngModel)]="taskSubType">
+                <option value="">Select Sub Type</option>
+                <option value="FB">Fork Ball</option>
+                <option value="CH">Change Up</option>
+                <option value="All Types">All</option>
+              </select>
+            </div>
+            <div *ngIf="taskType === '5'">
+              <label>Inings</label>
+              <br />
+              <input class="form-control" [(ngModel)]="innings" [ngModelOptions]="{ standalone: true }" />
+            </div>
+          </div>
+          <br />
+          <div class="buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button (click)="activeModal.close()" class="btn btn-primary close">Close</button>
+          </div>
+          <p *ngIf="taskCreationFormWithTpDay">
+            <small>* If you add an existing Tp day task will be automatically added to the given Tp Day.</small>
+          </p>
+        </form>
+      </div>
+
+      <!-- taskTransfer -->
+
+      <div *ngIf="transferTasks" [@fade]>
+        <form (ngSubmit)="onTaskTransfer()">
+          <div class="form-group">
+            <div class="inlineInput">
+              <label>TP Day</label>
+              <input style="width: 100px" class="form-control" [value]="miscData.tp_day" />
+              <label>To</label>
+              <input
+                style="width: 100px"
+                class="form-control"
+                [(ngModel)]="dayToTransfer"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <label>Tasks</label>
+            <div *ngFor="let task of miscData.tasks">
+              <input
+                style="margin-right: 5px"
+                class="form-check-input"
+                id="tasks"
+                [value]="task.id"
+                [checked]="taskIdsToUpdate.includes(task.id)"
+                type="checkbox"
+                (change)="onTaskCheckChange(task.id)"
+              />
+              <label class="form-check-label"> {{ task.title }} </label>
+            </div>
+            <br />
+          </div>
+          <br />
+          <div class="buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button (click)="activeModal.close()" class="btn btn-primary close">Close</button>
+          </div>
+          <p *ngIf="taskCreationFormWithTpDay">
+            <small>* If you add an existing Tp day task will be automatically added to the given Tp Day.</small>
+          </p>
+        </form>
+      </div>
+
+      <!--Postpone Days-->
+      <div *ngIf="postponeDays" [@fade]>
+        <form (ngSubmit)="onPostponeDays()">
+          <div class="form-group">
+            <div>
+              <div class="inlineInput">
+                <label>Postpone TP Day</label>
+                <input
+                  style="width: 100px; height: 40px"
+                  class="form-control"
+                  [(ngModel)]="dayToPostpone"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <label style="margin: 10px">For</label>
+                <input
+                  style="width: 100px; height: 40px"
+                  class="form-control"
+                  [(ngModel)]="daysForPostpone"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <label>Days</label>
+              </div>
+              <br />
+            </div>
+          </div>
+          <br />
+          <div class="buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button (click)="activeModal.close()" class="btn btn-primary close">Close</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Form -->
+      <div *ngIf="form.title !== ''" [@fade]>
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Title</label>
+            <br />
+            <textarea
+              style="margin-bottom: 12px"
+              class="form-control"
+              [(ngModel)]="form.title"
+              [ngModelOptions]="{ standalone: true }"
+              >{{ form.title }}</textarea
+            >
+            <label style="margin-bottom: 8px">Change Status</label>
+            <br />
+            <div class="checkboxes">
+              <div>
+                <input
+                  class="form-check-input me-1"
+                  value="completed"
+                  type="checkbox"
+                  (change)="form.status = 'completed'"
+                  [checked]="form.status == 'completed'"
+                />
+                <label class="form-check-label"> Completed </label>
+              </div>
+              <div>
+                <input
+                  class="form-check-input me-1"
+                  value="skipped"
+                  type="checkbox"
+                  (change)="form.status = 'skipped'"
+                  [checked]="form.status == 'skipped'"
+                />
+                <label class="form-check-label"> Skipped </label>
+              </div>
+              <div>
+                <input
+                  class="form-check-input me-1"
+                  type="checkbox"
+                  value="pending"
+                  (change)="form.status = 'pending'"
+                  [checked]="form.status == 'pending'"
+                />
+                <label class="form-check-label"> Pending </label>
+              </div>
+            </div>
+            <br />
+          </div>
+          <br />
+          <div class="buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button (click)="activeModal.close()" class="btn btn-primary close">Close</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Main Buttons -->
+      <div class="d-flex button-container mt-4 mb-2" *ngIf="buttonText || closeButtonText">
+        <button
+          class="btn btn-primary btn-confirm me-2"
+          *ngIf="closeButtonText"
+          type="button"
+          (click)="activeModal.close()"
+        >
+          <span class="display-6">{{ closeButtonText }}</span>
         </button>
-        <button *ngIf="listAction" (click)="listAction(item)" class="list-btn">
-          {{ listActionText }}<i *ngIf="listActionLogo === 'navigate'" class="bi bi-arrow-bar-right ms-1"></i>
+
+        <button
+          class="btn btn-primary btn-confirm"
+          type="button"
+          [disabled]="buttonState === 'loading'"
+          (click)="buttonFunction()"
+          ngbAutofocus
+        >
+          <span *ngIf="buttonState === 'static'" class="display-6">{{ buttonText }}</span>
+          <div *ngIf="buttonState === 'loading' && buttonLoadingText">
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <span class="display-6">{{ buttonLoadingText }}</span>
+          </div>
         </button>
       </div>
-    </div>
-
-    <!-- Video -->
-    <video class="mt-3 mb-3" controls playsinline loop autoplay *ngIf="videoURL" [src]="videoURL" [@fade]>
-      Your browser does not support the video playback.
-    </video>
-
-    <!-- taskCreationForm -->
-
-    <div *ngIf="taskCreationForm || taskCreationFormWithTpDay" [@fade]>
-      <form (ngSubmit)="onTaskUpdate()">
-        <div class="form-group">
-          <div *ngIf="taskCreationFormWithTpDay">
-            <label>TP Day</label>
-            <input class="form-control" [(ngModel)]="tpDay" [ngModelOptions]="{ standalone: true }" />
-          </div>
-          <label>Task Type</label>
-          <br />
-          <select name="TaskType" class="form-control" [(ngModel)]="taskType">
-            <option value="">Select Type</option>
-            <option value="1">Plyo Throw</option>
-            <option value="2">Max Distance</option>
-            <option value="3">Post Max Distance Flat Ground</option>
-            <option value="4">Bullpen</option>
-            <option value="5">Live Simulated / Game Innings</option>
-          </select>
-          <div *ngIf="taskType === '3' || taskType === '4'">
-            <label>Task Sub Type</label>
-            <br />
-            <select name="TaskSubTypes" class="form-control" [(ngModel)]="taskSubType">
-              <option value="">Select Sub Type</option>
-              <option value="FB">Fork Ball</option>
-              <option value="CH">Change Up</option>
-              <option value="All Types">All</option>
-            </select>
-          </div>
-          <div *ngIf="taskType === '5'">
-            <label>Inings</label>
-            <br />
-            <input class="form-control" [(ngModel)]="innings" [ngModelOptions]="{ standalone: true }" />
-          </div>
-        </div>
-        <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <p *ngIf="taskCreationFormWithTpDay">
-          <small>* If you add an existing Tp day task will be automatically added to the given Tp Day.</small>
-        </p>
-      </form>
-    </div>
-
-    <!-- taskTransfer -->
-
-    <div *ngIf="transferTasks" [@fade]>
-      <form (ngSubmit)="onTaskTransfer()">
-        <div class="form-group">
-          <div class="inlineInput">
-            <label>TP Day</label>
-            <input style="width: 100px" class="form-control" [value]="miscData.tp_day" />
-            <label>To</label>
-            <input
-              style="width: 100px"
-              class="form-control"
-              [(ngModel)]="dayToTransfer"
-              [ngModelOptions]="{ standalone: true }"
-            />
-          </div>
-          <label>Tasks</label>
-          <div *ngFor="let task of miscData.tasks">
-            <input
-              style="margin-right: 5px"
-              class="form-check-input"
-              id="tasks"
-              [value]="task.id"
-              [checked]="taskIdsToUpdate.includes(task.id)"
-              type="checkbox"
-              (change)="onTaskCheckChange(task.id)"
-            />
-            <label class="form-check-label"> {{ task.title }} </label>
-          </div>
-          <br />
-        </div>
-        <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <p *ngIf="taskCreationFormWithTpDay">
-          <small>* If you add an existing Tp day task will be automatically added to the given Tp Day.</small>
-        </p>
-      </form>
-    </div>
-
-    <!--Postpone Days-->
-    <div *ngIf="postponeDays" [@fade]>
-      <form (ngSubmit)="onPostponeDays()">
-        <div class="form-group">
-          <div>
-            <div class="inlineInput">
-              <label>Postpone TP Day</label>
-              <input
-                style="width: 100px; height: 40px"
-                class="form-control"
-                [(ngModel)]="dayToPostpone"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              <label style="margin: 10px">For</label>
-              <input
-                style="width: 100px; height: 40px"
-                class="form-control"
-                [(ngModel)]="daysForPostpone"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              <label>Days</label>
-            </div>
-            <br />
-          </div>
-        </div>
-        <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-
-    <!-- Form -->
-    <div *ngIf="form.title !== ''" [@fade]>
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>Title</label>
-          <br />
-          <input class="form-control" [(ngModel)]="form.title" [ngModelOptions]="{ standalone: true }" />
-          <label>Change Status</label>
-          <br />
-          <div class="checkboxes">
-            <div>
-              <input
-                class="form-check-input me-1"
-                value="completed"
-                type="checkbox"
-                (change)="form.status = 'completed'"
-                [checked]="form.status == 'completed'"
-              />
-              <label class="form-check-label"> Completed </label>
-            </div>
-            <div>
-              <input
-                class="form-check-input me-1"
-                value="skipped"
-                type="checkbox"
-                (change)="form.status = 'skipped'"
-                [checked]="form.status == 'skipped'"
-              />
-              <label class="form-check-label"> Skipped </label>
-            </div>
-            <div>
-              <input
-                class="form-check-input me-1"
-                type="checkbox"
-                value="pending"
-                (change)="form.status = 'pending'"
-                [checked]="form.status == 'pending'"
-              />
-              <label class="form-check-label"> Pending </label>
-            </div>
-          </div>
-          <br />
-        </div>
-        <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-
-    <!-- Main Buttons -->
-    <div class="d-flex button-container mt-4 mb-2" *ngIf="buttonText || closeButtonText">
-      <button
-        class="btn btn-primary btn-confirm me-2"
-        *ngIf="closeButtonText"
-        type="button"
-        (click)="activeModal.close()"
-      >
-        <span class="display-6">{{ closeButtonText }}</span>
-      </button>
-
-      <button
-        class="btn btn-primary btn-confirm"
-        type="button"
-        [disabled]="buttonState === 'loading'"
-        (click)="buttonFunction()"
-        ngbAutofocus
-      >
-        <span *ngIf="buttonState === 'static'" class="display-6">{{ buttonText }}</span>
-        <div *ngIf="buttonState === 'loading' && buttonLoadingText">
-          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          <span class="display-6">{{ buttonLoadingText }}</span>
-        </div>
-      </button>
     </div>
   </div>
 </div>

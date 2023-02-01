@@ -144,9 +144,22 @@
 small {
   font-size: smaller;
 }
-
+.main-container {
+  margin: 15px;
+}
+.parent-container {
+  background-color: #6c9fef;
+  color: #6c9fef;
+}
+.close {
+  margin-left: 65%;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+}
 .checkboxes {
-  width: 70%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
 }
