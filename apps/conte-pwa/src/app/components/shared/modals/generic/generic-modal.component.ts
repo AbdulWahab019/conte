@@ -4,6 +4,7 @@ import { taskFeedback } from 'apps/conte-pwa/src/app/models/treatmentplan';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { delay } from 'apps/conte-pwa/src/app/utils/constants';
 import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
+import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
   selector: 'conte-generic-modal',
@@ -38,12 +39,22 @@ export class GenericModalComponent implements OnInit {
   @Input() closeButtonText = '';
   @Input() miscData: any;
 
+  config: PaginationInstance = {
+    id: 'custom',
+    itemsPerPage: 10,
+    currentPage: 1,
+  };
+
   buttonState = 'static';
   secButtonState = 'static';
 
   constructor(public activeModal: NgbActiveModal, private toast: ToastService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.list.length) {
+      this.config = { id: '', itemsPerPage: 0, currentPage: 0 };
+    }
+  }
 
   async buttonFunction() {
     if (this.buttonLoadingText) {
