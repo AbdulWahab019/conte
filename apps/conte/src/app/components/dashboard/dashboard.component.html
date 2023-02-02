@@ -10,7 +10,12 @@
       />
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i>Logout</a>
+          <a class="nav-link mx-2 text-uppercase" href="#"
+            ><h3 class="logout" title="Logout">
+              <i class="bi bi-box-arrow-right me-1"></i>
+            </h3>
+            <!-- Logout -->
+          </a>
         </li>
       </ul>
       <!--<div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -49,8 +54,10 @@
     <div class="col-2 side-nav shadow-sm">
       <div *ngFor="let comp of navbarComponents">
         <div class="nav-link" [routerLink]="comp.activePath" routerLinkActive="active-link">
-          <img [src]="comp.activePath === router.url ? comp.activeSvgSrc : comp.svgSrc" class="me-2" />
-          <span>{{ comp.title }}</span>
+          <div class="link-container">
+            <img [src]="comp.activePath === router.url ? comp.activeSvgSrc : comp.svgSrc" class="me-2" />
+            <span>{{ comp.title }}</span>
+          </div>
         </div>
       </div>
     </div>

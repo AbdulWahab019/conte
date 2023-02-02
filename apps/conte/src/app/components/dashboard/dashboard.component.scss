@@ -3,11 +3,11 @@
 }
 
 /* HEADER */
-.navbar-nav{
+.navbar-nav {
   display: flex;
   align-items: center;
 
-  a{
+  a {
     font-size: large;
     font-weight: 700;
   }
@@ -26,17 +26,26 @@
 //   background-color: #196aeb;
 // }
 
-
 /* SIDE NAV */
+.col-2 {
+  width: 15%;
+}
+.logout {
+  :hover {
+    color: #003ea0;
+  }
+}
 .side-nav {
   padding-top: 3%;
   min-height: 100vh;
 
   .nav-link {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     height: 25px;
-
+    .link-container {
+      margin-left: 15%;
+    }
     margin-bottom: 1.5rem;
     &:hover {
       color: rgb(2, 2, 178);

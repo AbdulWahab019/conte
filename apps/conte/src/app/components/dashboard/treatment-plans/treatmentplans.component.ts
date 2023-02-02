@@ -72,6 +72,7 @@ export class TreatmentplansComponent implements OnInit {
   };
 
   onFileSelected = (event: any): void => {
+    this.spinner.show();
     const file = event.files[0];
     this.uploadedFileName = file.name;
     this.ngxCsvParser
@@ -115,12 +116,14 @@ export class TreatmentplansComponent implements OnInit {
             }
           });
           this.csvEdit = true;
+          this.spinner.hide();
         },
         (error: NgxCSVParserError) => {
           this.toast.show(error.message || TECHNICAL_DIFFICULTIES, {
             classname: 'bg-danger text-light',
             icon: 'error',
           });
+          this.spinner.hide();
         }
       );
   };
@@ -163,6 +166,7 @@ export class TreatmentplansComponent implements OnInit {
       this.csvFileTableData[0]['month_from_sx'] &&
       this.csvFileTableData
     ) {
+      this.spinner.show();
       const obj = {
         doctor_id: this.tpDataForUpdate?.doctorId,
         surgery_id: this.tpDataForUpdate?.surgeryId,
@@ -175,6 +179,7 @@ export class TreatmentplansComponent implements OnInit {
       this.treatmentPlanService
         .createTreatmentPlan(obj)
         .then((res) => {
+          this.spinner.hide();
           this.toast.show('Treatment Plan Updated', { classname: 'bg-success text-light', icon: 'success' });
         })
         .catch((err) => {
@@ -182,9 +187,9 @@ export class TreatmentplansComponent implements OnInit {
             classname: 'bg-danger text-light',
             icon: 'error',
           });
-          this.spinner.hide();
         });
     } else {
+      this.spinner.hide();
       this.toast.show('Please fill out all the file details', { classname: 'bg-danger text-light', icon: 'error' });
     }
   };

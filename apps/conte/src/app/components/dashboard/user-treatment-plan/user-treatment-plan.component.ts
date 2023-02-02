@@ -7,6 +7,7 @@ import { ToastService } from '../../../Shared/services/toast.service';
 import { TreatmentPlanTaskDetailsForTp } from '../../../Shared/models/TreatmentPlan';
 import { UserService } from '../../../Shared/services/user.service';
 import { TECHNICAL_DIFFICULTIES } from '../../../Shared/utils/constants';
+import { SpinnerService } from '../../../Shared/services/spinner.service';
 
 @Component({
   selector: 'conte-user-treatment-plan',
@@ -26,7 +27,8 @@ export class UserTreatmentPlanComponent implements OnInit {
     private userService: UserService,
     private modalService: NgbModal,
     private toast: ToastService,
-    private router: Router
+    private router: Router,
+    private spinner: SpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,7 @@ export class UserTreatmentPlanComponent implements OnInit {
         this.treatmentPlanService
           .getTasks(userId)
           .then((response) => {
+            this.spinner.hide();
             this.treatmentPlanService.userTreatmentPlanData.completed_tasks = response.data.is_completed;
             this.treatmentPlanService.userTreatmentPlanData.pending_tasks = response.data.is_pending;
             this.treatmentPlanService.userTreatmentPlanData.skipped_tasks = response.data.is_skipped;
@@ -84,6 +87,7 @@ export class UserTreatmentPlanComponent implements OnInit {
               classname: 'bg-danger text-light',
               icon: 'error',
             });
+            this.spinner.hide();
           });
       })
       .catch((err) => {
@@ -91,6 +95,7 @@ export class UserTreatmentPlanComponent implements OnInit {
           classname: 'bg-danger text-light',
           icon: 'error',
         });
+        this.spinner.hide();
       });
   }
 
@@ -112,12 +117,15 @@ export class UserTreatmentPlanComponent implements OnInit {
         this.treatmentPlanData.details.forEach((element: TreatmentPlanTaskDetailsForTp) => {
           element.is_uploading = false;
         });
+        this.spinner.hide();
       })
       .catch((err) => {
+        this.spinner.hide();
         this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
           classname: 'bg-danger text-light',
           icon: 'error',
         });
+        this.spinner.hide();
       });
   }
 
@@ -145,6 +153,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     this.modal.result
       .then((result: any) => {
         if (result) {
+          this.spinner.show();
           this.reloadServiceData(userId);
         }
       })
@@ -189,6 +198,7 @@ export class UserTreatmentPlanComponent implements OnInit {
     this.modal.result
       .then((result: any) => {
         if (result) {
+          this.spinner.show();
           const taskDeatils = {
             tp_day: result.dayToTransfer,
             task_ids: result.taskIds,
@@ -198,7 +208,9 @@ export class UserTreatmentPlanComponent implements OnInit {
           });
         }
       })
-      .catch((err: any) => {});
+      .catch((err: any) => {
+        this.spinner.hide();
+      });
   };
 
   CreateTaskWithTpDay = (TreatmentPlanData: any): void => {
@@ -251,12 +263,14 @@ export class UserTreatmentPlanComponent implements OnInit {
   };
 
   CreateTask = (userData: any, tpData: any) => {
+    this.spinner.show();
     this.userService.createTask(tpData, userData.user_tp_id, userData.user_id).then((res) => {
       this.reloadServiceData(userData.user_id);
     });
   };
 
   updateVideo = async (file: any, tpDay: any) => {
+    this.spinner.show();
     const resp = await this.treatmentPlanService.uploadVideo(file);
     this.treatmentPlanService.updateTask({ video_url: resp.data.url }, tpDay, this.treatmentPlanData.id).then(() => {
       this.toast.show('Video uploaded successfully', { classname: 'bg-success text-light', icon: 'success' });
