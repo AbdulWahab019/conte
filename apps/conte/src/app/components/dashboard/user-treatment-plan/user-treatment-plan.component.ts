@@ -125,7 +125,6 @@ export class UserTreatmentPlanComponent implements OnInit {
           classname: 'bg-danger text-light',
           icon: 'error',
         });
-        this.spinner.hide();
       });
   }
 
