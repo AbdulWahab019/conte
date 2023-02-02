@@ -9,13 +9,16 @@
   background-color: rgb(240, 240, 240);
   font-weight: 550 !important;
 }
+
 .edit-link {
   display: flex;
   justify-content: space-between;
 }
+
 .action-link {
   margin: 0px 20px 0px 20px;
 }
+
 tr {
   border-color: black;
 }
@@ -29,6 +32,7 @@ tr {
   cursor: pointer;
   color: rgb(7, 40, 227);
 }
+
 .add-tasks {
   background-color: #003ea0;
   width: fit-content;
