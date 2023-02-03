@@ -14,23 +14,6 @@
   text-align: center;
   flex-wrap: wrap;
 
-  .footer-tab {
-    width: 100%;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-
-    .title {
-      width: 100%;
-
-      font-size: medium;
-      color: gray;
-      font-weight: 400;
-    }
-  }
-
   hr {
     border: 0;
     clear: both;
@@ -361,4 +344,21 @@
 
 .placeholder {
   border-radius: 8px;
+}
+
+.footer-tab {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+
+  .title {
+    width: 100%;
+
+    font-size: medium;
+    color: gray;
+    font-weight: 400;
+  }
 }

@@ -98,13 +98,19 @@
   </div>
 
   <!-- Place Holders -->
-  <span *ngIf="!apiLoaded" class="placeholder-glow">
-    <span class="placeholder col-12 mt-3" style="height: 30vh"></span>
-  </span>
-  <span *ngIf="!apiLoaded" class="placeholder-glow">
-    <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
-  </span>
-  <span *ngIf="!apiLoaded" class="placeholder-glow">
-    <span class="placeholder col-12 mt-5" style="height: 10vh"></span>
-  </span>
+  <div *ngIf="!apiLoaded">
+    <span class="placeholder-glow">
+      <span class="placeholder col-12 mt-3" style="height: 30vh"></span>
+    </span>
+    <span class="placeholder-glow">
+      <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
+    </span>
+    <span class="placeholder-glow">
+      <span class="placeholder col-12 mt-5" style="height: 10vh"></span>
+    </span>
+    <div class="footer-tab pb-2 pt-2">
+      <hr />
+      <span class="title display-4">powered by VYTLsft</span>
+    </div>
+  </div>
 </div>
