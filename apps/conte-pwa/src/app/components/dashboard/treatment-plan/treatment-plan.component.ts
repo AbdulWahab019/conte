@@ -165,7 +165,8 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         this.dailyTasks[index].is_completed = status;
         this.checkForCompletion();
-        if (status && this.dailyTasks[index].task_type === 4) this.bullpenFeedback(task_id);
+        if (status && moment().isoWeekday() === 5 && this.treatmentPlanService.getFeedbackStatus() === '')
+          this.getFeedback(task_id);
       })
       .catch((err) => {
         console.error(err);
@@ -187,8 +188,8 @@ export class TreatmentPlanComponent implements OnInit {
           const index = this.dailyTasks.findIndex((task: any) => task.id === result.task_id);
           this.dailyTasks[index].is_completed = result.status;
           this.checkForCompletion();
-          if (result.status && this.dailyTasks[index].task_type === 4) {
-            this.bullpenFeedback(this.dailyTasks[index].id);
+          if (result.status && moment().isoWeekday() === 5 && this.treatmentPlanService.getFeedbackStatus() === '') {
+            this.getFeedback(this.dailyTasks[index].id);
           }
         }
       })
@@ -203,8 +204,9 @@ export class TreatmentPlanComponent implements OnInit {
     else this.areTasksCompleted = true;
   }
 
-  bullpenFeedback(task_id: number) {
+  getFeedback(task_id: number) {
     this.taskFeedbackModal = this.modalService.open(GenericModalComponent, { centered: true });
+    this.taskFeedbackModal.componentInstance.feedback = true;
     this.taskFeedbackModal.componentInstance.heading = 'Checkpoint';
     // this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
     this.taskFeedbackModal.componentInstance.body = 'Please share your feedback regarding current progress:';

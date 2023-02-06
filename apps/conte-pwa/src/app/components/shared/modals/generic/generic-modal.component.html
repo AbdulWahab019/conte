@@ -44,7 +44,7 @@
     </div>
 
     <!-- Question/Answers -->
-    <div *ngIf="questionAnswers">
+    <div *ngIf="feedback">
       <div *ngFor="let item of questionAnswers; index as i" class="mt-1 mb-3" [@fade]>
         <!-- Multiple question case -->
         <!--<div class="d-flex align-items-center">
@@ -85,7 +85,7 @@
         class="btn btn-primary btn-confirm me-2"
         *ngIf="closeButtonText"
         type="button"
-        (click)="activeModal.close()"
+        (click)="feedback && treatmentPlanService.skipFeedback(); activeModal.close()"
       >
         <span class="display-6">{{ closeButtonText }}</span>
       </button>
