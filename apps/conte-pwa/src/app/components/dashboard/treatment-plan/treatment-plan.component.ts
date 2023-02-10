@@ -44,7 +44,6 @@ export class TreatmentPlanComponent implements OnInit {
 
     this.dailyTasks = await this.treatmentPlanService.getTherapyTasks();
     this.pendingTasks = await this.treatmentPlanService.getPendingTasks();
-    if (this.pendingTasks) this.checkPendingTasks(this.pendingTasks);
     if (!this.dailyTasks.length) this.getTasks();
   }
 
@@ -56,7 +55,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
         if (resp.data.pending_tasks_dates?.length) {
-          this.checkPendingTasks(resp.data.pending_tasks_dates);
+          this.pendingTasks = resp.data.pending_tasks_dates;
         }
 
         if (this.dailyTasks?.length) {
@@ -142,6 +141,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         const pending_tasks_dates = pending_tasks.filter((task: string) => task !== date);
         this.pendingTasksModal.componentInstance.list = pending_tasks_dates;
+
         this.spinner.hide();
         this.toast.show('Task Updated Successfully', { classname: 'bg-success text-light', icon: 'success' });
       })
@@ -164,7 +164,9 @@ export class TreatmentPlanComponent implements OnInit {
       .updateTask(task_id, status)
       .then((resp) => {
         this.dailyTasks[index].is_completed = status;
+
         this.checkForCompletion();
+
         if (status && moment().isoWeekday() === 5 && this.treatmentPlanService.getFeedbackStatus() === '')
           this.getFeedback(task_id);
       })
@@ -187,7 +189,9 @@ export class TreatmentPlanComponent implements OnInit {
         if (result) {
           const index = this.dailyTasks.findIndex((task: any) => task.id === result.task_id);
           this.dailyTasks[index].is_completed = result.status;
+
           this.checkForCompletion();
+
           if (result.status && moment().isoWeekday() === 5 && this.treatmentPlanService.getFeedbackStatus() === '') {
             this.getFeedback(this.dailyTasks[index].id);
           }
@@ -201,7 +205,10 @@ export class TreatmentPlanComponent implements OnInit {
   checkForCompletion() {
     const searchIndex = this.dailyTasks.findIndex((task: any) => task.is_completed === false);
     if (searchIndex > -1) this.areTasksCompleted = false;
-    else this.areTasksCompleted = true;
+    else {
+      if (this.pendingTasks) this.checkPendingTasks(this.pendingTasks);
+      this.areTasksCompleted = true;
+    }
   }
 
   getFeedback(task_id: number) {
