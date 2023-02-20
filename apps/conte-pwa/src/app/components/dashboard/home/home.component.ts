@@ -211,6 +211,7 @@ export class HomeComponent implements OnInit {
       else this.monthlyData[index - 1].selected = true;
     } else this.calendarApiLoaded = false;
 
+    this.scrollToSelectedDay();
     this.getTreatmentPlanDetail();
   }
 
