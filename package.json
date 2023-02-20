@@ -10,7 +10,7 @@
     "start": "npx nx run-many --target=serve --projects=conte-pwa,api --parallel=true",
     "build": "npx nx run-many --target=build --projects=conte-pwa,api --prod --parallel=true",
     "build:pwa": "nx build conte-pwa --prod",
-    "build:api": "nx build api --prod",
+    "build:api": "nx build api --prod --verbose",
     "build:web": "nx build conte --prod",
     "test": "nx test"
   },
