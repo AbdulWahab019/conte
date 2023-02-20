@@ -24,7 +24,7 @@ jobs:
 
       - name: npm install and npm build
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build:api --if-present
 
       - name: Create Sentry Release & Upload Sourcemaps
@@ -65,7 +65,7 @@ jobs:
         run: unzip release.zip
 
       - name: install dependencies
-        run: npm i
+        run: npm i --legacy-peer-deps
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
