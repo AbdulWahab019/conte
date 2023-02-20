@@ -43,6 +43,12 @@
       </pagination-template>
     </div>
 
+    <div *ngIf="videoURL">
+      <video class="mt-2 mb-2" controls playsinline loop autoplay [src]="videoURL" [@fade]>
+        Your browser does not support the video playback.
+      </video>
+    </div>
+
     <!-- Question/Answers -->
     <div *ngIf="feedback">
       <div *ngFor="let item of questionAnswers; index as i" class="mt-1 mb-3" [@fade]>

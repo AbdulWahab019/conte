@@ -180,6 +180,12 @@ export class TreatmentPlanComponent implements OnInit {
       });
   }
 
+  playInfoVideo() {
+    const modal = this.modalService.open(GenericModalComponent, { centered: true });
+    modal.componentInstance.heading = 'Task Info';
+    modal.componentInstance.videoURL = 'https://conteassets.blob.core.windows.net/videos/Info_btton.mp4';
+  }
+
   taskDetails(task = {}) {
     const taskDetailRef = this.modalService.open(TaskDetailsComponent, { centered: true, size: 'xl' });
     taskDetailRef.componentInstance.task = task;
