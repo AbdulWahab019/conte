@@ -24,7 +24,7 @@ jobs:
 
       - name: npm install and npm build
         run: |
-          npm ci --legacy-peer-deps
+          npm i --legacy-peer-deps
           npm run build:api --if-present
 
       - name: Create Sentry Release & Upload Sourcemaps
