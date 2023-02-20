@@ -24,6 +24,7 @@ export class GenericModalComponent implements OnInit {
   @Input() subHeading = '';
   @Input() logo = '';
   @Input() body = '';
+  @Input() videoURL = '';
   @Input() list = [];
   @Input() listActionText = '';
   @Input() listActionLogo = '';
