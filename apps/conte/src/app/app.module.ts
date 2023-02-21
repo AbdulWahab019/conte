@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 /* components */
 import { AppComponent } from './app.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 /* Interceptors */
 import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
@@ -31,7 +31,10 @@ import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
