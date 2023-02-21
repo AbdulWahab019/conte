@@ -84,7 +84,7 @@
               <div class="td-text" *ngIf="record[header['value']]; else noGroup">
                 {{
                   header['title'] === 'created at'
-                    ? (record[header['value']] | date: 'dd/MM/yyyy')
+                    ? (record[header['value']] | date: 'MM/dd/yyyy')
                     : record[header['value']]
                 }}
               </div>

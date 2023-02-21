@@ -45,6 +45,27 @@ export class GenericModalComponent implements OnInit {
   @Input() closeButtonText = '';
   @Input() miscData: any;
   tpDay = '';
+  plyoThrowDescription = { times: '' };
+  maxDistanceDescription = { distance: '', num_throws: '', max_velocity: '' };
+  flateGroundDescription = {
+    forkBallNum: '',
+    forkBallVelocity: '',
+    changeupNum: '',
+    changeupVelocity: '',
+    allNum: '',
+    allVelocity: '',
+  };
+  bullPenDescription = {
+    forkBallNum: '',
+    forkBallVelocity: '',
+    changeupNum: '',
+    changeupVelocity: '',
+    allNum: '',
+    allVelocity: '',
+  };
+  liveSimulatedDescription = {
+    innings: '',
+  };
   taskType = '';
   taskSubType = '';
   innings = '';
@@ -119,27 +140,40 @@ export class GenericModalComponent implements OnInit {
 
   onTaskUpdate() {
     let taskTitle;
+    let taskDescription;
     switch (this.taskType) {
       case '1':
         taskTitle = 'plyo_throw';
+        taskDescription = `Throw Plyo ball ${this.plyoThrowDescription.times} times.`;
         break;
       case '2':
         taskTitle = 'max_distance';
+        taskDescription = `Catch play build up to max distance of ${this.maxDistanceDescription.distance}  feet. ${this.maxDistanceDescription.num_throws} throws at this distance with gradual buildup to max velocity of ${this.maxDistanceDescription.max_velocity} mph.`;
         break;
       case '3':
         taskTitle = 'post_max_distance_flat_ground';
+        taskDescription = `Throw ALL Forkball pitches in today’s ${this.flateGroundDescription.forkBallNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.forkBallVelocity} mph.
+        Throw ALL changeup pitches in today’s ${this.flateGroundDescription.changeupNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.changeupVelocity} mph.
+        Throw ALL pitches in today’s ${this.flateGroundDescription.allNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.allVelocity} mph.`;
         break;
       case '4':
         taskTitle = 'bullpen';
+        taskDescription = `Throw ALL Forkball pitches in today’s ${this.bullPenDescription.forkBallNum} pitch bullpen with a max velocity of ${this.bullPenDescription.forkBallVelocity} mph.
+
+        Throw ALL changeup pitches in today’s ${this.bullPenDescription.changeupNum} pitch bullpen with a max velocity of ${this.bullPenDescription.changeupVelocity} mph.
+        
+        Throw ALL pitches in today’s ${this.bullPenDescription.allNum} pitch bullpen with a max velocity of ${this.bullPenDescription.allVelocity} mph.`;
         break;
       case '5':
         taskTitle = 'live_simulated_game & innings';
+        taskDescription = `Throw a ${this.liveSimulatedDescription.innings} inning live/simulated game today, 25 pitches each inning.`;
         break;
       default:
         break;
     }
     const taskDetails = {
       taskTitle,
+      taskDescription,
       taskType: this.taskType,
       taskSubType: this.taskSubType,
       innings: this.innings,

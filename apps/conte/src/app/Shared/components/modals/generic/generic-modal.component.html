@@ -47,6 +47,146 @@
               <option value="4">Bullpen</option>
               <option value="5">Live Simulated / Game Innings</option>
             </select>
+            <label *ngIf="taskType === '2' || taskType === '3' || taskType === '4' || taskType === '5'"
+              >Task Description :
+            </label>
+            <br />
+            <div *ngIf="taskType === '1'" style="display: flex; flex-flow: row wrap">
+              <p>Throw Plyo ball</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="plyoThrowDescription.times"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>times.</p>
+            </div>
+            <div *ngIf="taskType === '2'" style="display: flex; flex-flow: row wrap">
+              <p>Catch play build up to max distance of</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="maxDistanceDescription.distance"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>feet.</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="maxDistanceDescription.num_throws"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>throws at this distance with</p>
+              <p>gradual buildup to max velocity of</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="maxDistanceDescription.max_velocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+            </div>
+            <div *ngIf="taskType === '3'" style="display: flex; flex-flow: row wrap">
+              <p>Throw ALL Forkball pitches in today’s</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="flateGroundDescription.forkBallNum"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>pitch flat</p>
+              <p>ground with a max velocity of</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="flateGroundDescription.forkBallVelocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+              <p>Throw ALL changeup pitches in today’s</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="flateGroundDescription.changeupNum"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>pitch flat</p>
+              <p>ground with a max velocity of</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="flateGroundDescription.changeupVelocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+              <p>Throw ALL pitches in today’s</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="flateGroundDescription.allNum"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>pitch flat</p>
+              <p>ground with a max velocity of</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="flateGroundDescription.allVelocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+            </div>
+            <div *ngIf="taskType === '4'" style="display: flex; flex-flow: row wrap">
+              <p>Throw ALL Forkball pitches in today’s</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="bullPenDescription.forkBallNum"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>pitch bullpen</p>
+              <p>with a max velocity of</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="bullPenDescription.forkBallVelocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+              <p>Throw ALL changeup pitches in today’s</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="bullPenDescription.changeupNum"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>pitch bullpen</p>
+              <p>with a max velocity of</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="bullPenDescription.changeupVelocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+              <p>Throw ALL pitches in today’s</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="bullPenDescription.allNum"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>pitch bullpen</p>
+              <p>with a max velocity of</p>
+
+              <input
+                class="form-control small-input"
+                [(ngModel)]="bullPenDescription.allVelocity"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>mph.</p>
+            </div>
+            <div *ngIf="taskType === '5'" style="display: flex; flex-flow: row wrap">
+              <p>Throw a</p>
+              <input
+                class="form-control small-input"
+                [(ngModel)]="liveSimulatedDescription.innings"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p>inning live/simulated game today,</p>
+              <p>25 pitches each inning.</p>
+            </div>
             <div *ngIf="taskType === '3' || taskType === '4'">
               <label>Task Sub Type</label>
               <br />
