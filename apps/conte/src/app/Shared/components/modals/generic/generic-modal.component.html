@@ -39,7 +39,7 @@
             </div>
             <label>Task Type</label>
             <br />
-            <select name="TaskType" class="form-control" [(ngModel)]="taskType">
+            <select name="TaskType" class="form-control" (change)="onchangeTask($event)" [(ngModel)]="taskType">
               <option value="">Select Type</option>
               <option value="1">Plyo Throw</option>
               <option value="2">Max Distance</option>
@@ -47,7 +47,8 @@
               <option value="4">Bullpen</option>
               <option value="5">Live Simulated / Game Innings</option>
             </select>
-            <label *ngIf="taskType === '2' || taskType === '3' || taskType === '4' || taskType === '5'"
+            <label
+              *ngIf="taskType === '2' || taskType === '3' || taskType === '4' || taskType === '5' || taskType === '1'"
               >Task Description :
             </label>
             <br />
@@ -57,6 +58,7 @@
                 class="form-control small-input"
                 [(ngModel)]="plyoThrowDescription.times"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>times.</p>
             </div>
@@ -66,6 +68,7 @@
                 class="form-control small-input"
                 [(ngModel)]="maxDistanceDescription.distance"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>feet.</p>
 
@@ -73,6 +76,7 @@
                 class="form-control small-input"
                 [(ngModel)]="maxDistanceDescription.num_throws"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>throws at this distance with</p>
               <p>gradual buildup to max velocity of</p>
@@ -80,6 +84,7 @@
                 class="form-control small-input"
                 [(ngModel)]="maxDistanceDescription.max_velocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
             </div>
@@ -89,6 +94,7 @@
                 class="form-control small-input"
                 [(ngModel)]="flateGroundDescription.forkBallNum"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>pitch flat</p>
               <p>ground with a max velocity of</p>
@@ -97,6 +103,7 @@
                 class="form-control small-input"
                 [(ngModel)]="flateGroundDescription.forkBallVelocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
               <p>Throw ALL changeup pitches in today’s</p>
@@ -104,6 +111,7 @@
                 class="form-control small-input"
                 [(ngModel)]="flateGroundDescription.changeupNum"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>pitch flat</p>
               <p>ground with a max velocity of</p>
@@ -112,6 +120,7 @@
                 class="form-control small-input"
                 [(ngModel)]="flateGroundDescription.changeupVelocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
               <p>Throw ALL pitches in today’s</p>
@@ -119,6 +128,7 @@
                 class="form-control small-input"
                 [(ngModel)]="flateGroundDescription.allNum"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>pitch flat</p>
               <p>ground with a max velocity of</p>
@@ -127,6 +137,7 @@
                 class="form-control small-input"
                 [(ngModel)]="flateGroundDescription.allVelocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
             </div>
@@ -136,6 +147,7 @@
                 class="form-control small-input"
                 [(ngModel)]="bullPenDescription.forkBallNum"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>pitch bullpen</p>
               <p>with a max velocity of</p>
@@ -144,6 +156,7 @@
                 class="form-control small-input"
                 [(ngModel)]="bullPenDescription.forkBallVelocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
               <p>Throw ALL changeup pitches in today’s</p>
@@ -151,6 +164,7 @@
                 class="form-control small-input"
                 [(ngModel)]="bullPenDescription.changeupNum"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>pitch bullpen</p>
               <p>with a max velocity of</p>
@@ -159,6 +173,7 @@
                 class="form-control small-input"
                 [(ngModel)]="bullPenDescription.changeupVelocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
               <p>Throw ALL pitches in today’s</p>
@@ -166,6 +181,7 @@
                 class="form-control small-input"
                 [(ngModel)]="bullPenDescription.allNum"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>pitch bullpen</p>
               <p>with a max velocity of</p>
@@ -174,6 +190,7 @@
                 class="form-control small-input"
                 [(ngModel)]="bullPenDescription.allVelocity"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>mph.</p>
             </div>
@@ -183,6 +200,7 @@
                 class="form-control small-input"
                 [(ngModel)]="liveSimulatedDescription.innings"
                 [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onchangeDescription($event)"
               />
               <p>inning live/simulated game today,</p>
               <p>25 pitches each inning.</p>
@@ -190,7 +208,12 @@
             <div *ngIf="taskType === '3' || taskType === '4'">
               <label>Task Sub Type</label>
               <br />
-              <select name="TaskSubTypes" class="form-control" [(ngModel)]="taskSubType">
+              <select
+                name="TaskSubTypes"
+                class="form-control"
+                (change)="onchangeSubType($event)"
+                [(ngModel)]="taskSubType"
+              >
                 <option value="">Select Sub Type</option>
                 <option value="FB">Fast Ball</option>
                 <option value="CH">Change Up</option>
@@ -205,7 +228,13 @@
           </div>
           <br />
           <div class="buttons">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!this.descriptionAdded || taskType === '' || !subType"
+            >
+              Submit
+            </button>
             <button (click)="activeModal.close()" class="btn btn-primary close">Close</button>
           </div>
           <p *ngIf="taskCreationFormWithTpDay">

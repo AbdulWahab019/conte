@@ -45,6 +45,8 @@ export class GenericModalComponent implements OnInit {
   @Input() closeButtonText = '';
   @Input() miscData: any;
   tpDay = '';
+  descriptionAdded = false;
+  subType = false;
   plyoThrowDescription = { times: '' };
   maxDistanceDescription = { distance: '', num_throws: '', max_velocity: '' };
   flateGroundDescription = {
@@ -137,7 +139,61 @@ export class GenericModalComponent implements OnInit {
       this.taskIdsToUpdate.push(taskId);
     }
   }
-
+  onchangeTask(e: any) {
+    if (this.taskType !== '') {
+      this.descriptionAdded = false;
+      this.subType = false;
+    }
+  }
+  onchangeSubType(val: any) {
+    if (this.taskSubType) {
+      this.subType = true;
+    } else {
+      this.subType = false;
+    }
+  }
+  onchangeDescription(inputVal: any) {
+    switch (this.taskType) {
+      case '1':
+        this.plyoThrowDescription.times !== '' ? (this.descriptionAdded = true) : (this.descriptionAdded = false);
+        this.subType = true;
+        break;
+      case '2':
+        this.maxDistanceDescription.distance !== '' &&
+        this.maxDistanceDescription.num_throws !== '' &&
+        this.maxDistanceDescription.max_velocity !== ''
+          ? (this.descriptionAdded = true)
+          : (this.descriptionAdded = false);
+        this.subType = true;
+        break;
+      case '3':
+        this.flateGroundDescription.forkBallNum !== '' &&
+        this.flateGroundDescription.forkBallVelocity !== '' &&
+        this.flateGroundDescription.changeupNum !== '' &&
+        this.flateGroundDescription.changeupVelocity !== '' &&
+        this.flateGroundDescription.allNum !== '' &&
+        this.flateGroundDescription.allVelocity !== ''
+          ? (this.descriptionAdded = true)
+          : (this.descriptionAdded = false);
+        break;
+      case '4':
+        this.bullPenDescription.forkBallNum !== '' &&
+        this.bullPenDescription.forkBallVelocity !== '' &&
+        this.bullPenDescription.changeupNum !== '' &&
+        this.bullPenDescription.changeupVelocity !== '' &&
+        this.bullPenDescription.allNum !== '' &&
+        this.bullPenDescription.allVelocity !== ''
+          ? (this.descriptionAdded = true)
+          : (this.descriptionAdded = false);
+        break;
+      case '5':
+        this.liveSimulatedDescription.innings !== '' ? (this.descriptionAdded = true) : (this.descriptionAdded = false);
+        this.subType = true;
+        break;
+      default:
+        break;
+    }
+  }
   onTaskUpdate() {
     let taskTitle;
     let taskDescription;
