@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 import { Questionnaire, QuestionnaireModel } from './Questionnaire';
+import { UserTreatmentPlan } from './UserTreatmentPlan';
 
 export interface UserProfile {
   email?: string;
@@ -83,4 +84,6 @@ User.sync();
 // Associations
 User.afterSync(() => {
   User.hasMany(Questionnaire, { foreignKey: 'user_id' });
+
+  User.hasOne(UserTreatmentPlan, { foreignKey: 'user_id' });
 });
