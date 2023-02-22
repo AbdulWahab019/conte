@@ -167,22 +167,16 @@ export class GenericModalComponent implements OnInit {
         this.subType = true;
         break;
       case '3':
-        this.flateGroundDescription.forkBallNum !== '' &&
-        this.flateGroundDescription.forkBallVelocity !== '' &&
-        this.flateGroundDescription.changeupNum !== '' &&
-        this.flateGroundDescription.changeupVelocity !== '' &&
-        this.flateGroundDescription.allNum !== '' &&
-        this.flateGroundDescription.allVelocity !== ''
+        (this.flateGroundDescription.forkBallNum !== '' && this.flateGroundDescription.forkBallVelocity !== '') ||
+        (this.flateGroundDescription.changeupNum !== '' && this.flateGroundDescription.changeupVelocity !== '') ||
+        (this.flateGroundDescription.allNum !== '' && this.flateGroundDescription.allVelocity !== '')
           ? (this.descriptionAdded = true)
           : (this.descriptionAdded = false);
         break;
       case '4':
-        this.bullPenDescription.forkBallNum !== '' &&
-        this.bullPenDescription.forkBallVelocity !== '' &&
-        this.bullPenDescription.changeupNum !== '' &&
-        this.bullPenDescription.changeupVelocity !== '' &&
-        this.bullPenDescription.allNum !== '' &&
-        this.bullPenDescription.allVelocity !== ''
+        (this.bullPenDescription.forkBallNum !== '' && this.bullPenDescription.forkBallVelocity !== '') ||
+        (this.bullPenDescription.changeupNum !== '' && this.bullPenDescription.changeupVelocity !== '') ||
+        (this.bullPenDescription.allNum !== '' && this.bullPenDescription.allVelocity !== '')
           ? (this.descriptionAdded = true)
           : (this.descriptionAdded = false);
         break;
@@ -208,17 +202,27 @@ export class GenericModalComponent implements OnInit {
         break;
       case '3':
         taskTitle = 'post_max_distance_flat_ground';
-        taskDescription = `Throw ALL Forkball pitches in today’s ${this.flateGroundDescription.forkBallNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.forkBallVelocity} mph.
-        Throw ALL changeup pitches in today’s ${this.flateGroundDescription.changeupNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.changeupVelocity} mph.
-        Throw ALL pitches in today’s ${this.flateGroundDescription.allNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.allVelocity} mph.`;
+        this.taskSubType === 'FB'
+          ? (taskDescription = `Throw ALL Forkball pitches in today’s ${this.flateGroundDescription.forkBallNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.forkBallVelocity} mph.`)
+          : null;
+        this.taskSubType === 'CH'
+          ? (taskDescription = `Throw ALL changeup pitches in today’s ${this.flateGroundDescription.changeupNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.changeupVelocity} mph.`)
+          : null;
+        this.taskSubType === 'All Types'
+          ? (taskDescription = `Throw ALL pitches in today’s ${this.flateGroundDescription.allNum} pitch flat ground with a max velocity of ${this.flateGroundDescription.allVelocity} mph.`)
+          : null;
         break;
       case '4':
         taskTitle = 'bullpen';
-        taskDescription = `Throw ALL Forkball pitches in today’s ${this.bullPenDescription.forkBallNum} pitch bullpen with a max velocity of ${this.bullPenDescription.forkBallVelocity} mph.
-
-        Throw ALL changeup pitches in today’s ${this.bullPenDescription.changeupNum} pitch bullpen with a max velocity of ${this.bullPenDescription.changeupVelocity} mph.
-        
-        Throw ALL pitches in today’s ${this.bullPenDescription.allNum} pitch bullpen with a max velocity of ${this.bullPenDescription.allVelocity} mph.`;
+        this.taskSubType === 'FB'
+          ? (taskDescription = `Throw ALL Forkball pitches in today’s ${this.bullPenDescription.forkBallNum} pitch bullpen with a max velocity of ${this.bullPenDescription.forkBallVelocity} mph.`)
+          : null;
+        this.taskSubType === 'CH'
+          ? (taskDescription = `Throw ALL changeup pitches in today’s ${this.bullPenDescription.changeupNum} pitch bullpen with a max velocity of ${this.bullPenDescription.changeupVelocity} mph.`)
+          : null;
+        this.taskSubType === 'All Types'
+          ? (taskDescription = `Throw ALL pitches in today’s ${this.bullPenDescription.allNum} pitch bullpen with a max velocity of ${this.bullPenDescription.allVelocity} mph.`)
+          : null;
         break;
       case '5':
         taskTitle = 'live_simulated_game & innings';
