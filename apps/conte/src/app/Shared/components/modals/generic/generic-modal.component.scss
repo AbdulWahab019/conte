@@ -135,7 +135,12 @@
 .display-5 {
   font-size: x-large;
 }
-
+.small-input {
+  height: 40px;
+  width: 80px;
+  margin: 0px 5px 0px 5px;
+  display: flex;
+}
 .bi-x-lg {
   font-size: x-large;
   cursor: pointer;

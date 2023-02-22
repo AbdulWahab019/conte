@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TreatmentPlanService } from '../../../Shared/services/treatmentPlan.service';
-import { TreatmentPlan } from '../../../Shared/models/TreatmentPlan';
+import { TreatmentPlan, TreatmentPlanTableData } from '../../../Shared/models/TreatmentPlan';
 import { TableHeaders } from '../../../Shared/models/Generic';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../Shared/services/toast.service';
@@ -14,7 +14,7 @@ import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
   styleUrls: ['./treatmentplans.component.scss'],
 })
 export class TreatmentplansComponent implements OnInit {
-  treatmentPlans: TreatmentPlan[] = [];
+  treatmentPlans: TreatmentPlanTableData[] = [];
   csvRecords: any[] = [];
   csvFileTableData: any = [];
   csvFileTableRow: any = [];
@@ -31,8 +31,8 @@ export class TreatmentplansComponent implements OnInit {
       value: 'name',
       sort: false,
     },
-    { title: 'surgery id', value: 'surgery_id', sort: false },
-    { title: 'doctor id', value: 'doctor_id', sort: false },
+    { title: 'surgery', value: 'surgery', sort: false },
+    { title: 'doctor', value: 'doctor', sort: false },
     { title: 'created at', value: 'createdAt', sort: false },
   ];
 
@@ -56,14 +56,14 @@ export class TreatmentplansComponent implements OnInit {
         this.treatmentPlans = resp.data.map((plan: TreatmentPlan) => ({
           id: plan.id,
           name: plan.name,
-          surgery_id: plan.surgery_id,
-          doctor_id: plan.doctor_id,
+          surgery: plan.surgery?.name,
+          doctor: plan.doctor.name,
           createdAt: plan.createdAt,
         }));
         this.spinner.hide();
       })
       .catch((err) => {
-        this.toast.show(err.error.message || TECHNICAL_DIFFICULTIES, {
+        this.toast.show(err?.error?.message || TECHNICAL_DIFFICULTIES, {
           classname: 'bg-danger text-light',
           icon: 'error',
         });

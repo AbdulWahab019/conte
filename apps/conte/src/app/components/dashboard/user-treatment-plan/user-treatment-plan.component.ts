@@ -168,7 +168,7 @@ export class UserTreatmentPlanComponent implements OnInit {
         if (result) {
           const task = [
             {
-              title: result.taskTitle,
+              title: result.taskDescription,
               is_completed: false,
               is_skipped: false,
               task_type: Number(result.taskType),
@@ -222,6 +222,7 @@ export class UserTreatmentPlanComponent implements OnInit {
           const task = [
             {
               title: result.taskTitle,
+              description: result.taskDescription,
               is_completed: false,
               is_skipped: false,
               task_type: Number(result.taskType),
