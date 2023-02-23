@@ -1,7 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 import { Questionnaire, QuestionnaireModel } from './Questionnaire';
-import { UserTreatmentPlan } from './UserTreatmentPlan';
+import { UserTreatmentPlan, UserTreatmentPlanModel } from './UserTreatmentPlan';
+import { TreatmentPlanModel } from './TreatmentPlan';
+import { DoctorModel } from './Doctor';
+import { SurgeryModel } from './Surgery';
 
 export interface UserProfile {
   email?: string;
@@ -34,6 +37,19 @@ export interface UserDefinedAttributes {
   is_terms_of_use_accepted: boolean;
   is_orientation_video_watched: boolean;
   is_subscribed: boolean;
+}
+
+export interface UserWeb
+  extends Omit<UserModel, 'createdAt' | 'updatedAt' | 'stripe_customer_id' | 'stripe_subscription_id' | 'password'> {
+  num_skipped_tasks: number;
+  num_completed_tasks: number;
+
+  UserTreatmentPlan: Pick<UserTreatmentPlanModel, 'tp_id'> & {
+    TreatmentPlan: Pick<TreatmentPlanModel, 'id' | 'name'> & {
+      doctor: Pick<DoctorModel, 'id' | 'name' | 'position'>;
+      surgery: Pick<SurgeryModel, 'id' | 'name'>;
+    };
+  };
 }
 
 export interface UserModel extends Model<UserModel, UserDefinedAttributes> {
