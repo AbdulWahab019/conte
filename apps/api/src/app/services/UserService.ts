@@ -13,6 +13,7 @@ import { getDateByTpDay } from '../helpers/TreatmentPlanHelper';
 import { TreatmentPlan } from '../models/TreatmentPlan';
 import { Doctor } from '../models/Doctor';
 import { Surgery } from '../models/Surgery';
+import { Questionnaire } from '../models/Questionnaire';
 
 export async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -88,6 +89,12 @@ export async function getUsersData() {
           },
         ],
       },
+      {
+        model: Questionnaire,
+        where: { question_title: 'Surgery Date' },
+        attributes: ['response'],
+        required: false,
+      },
     ],
   });
 
@@ -123,6 +130,7 @@ export async function getUsersData() {
       surgery: {
         id: user.UserTreatmentPlan?.TreatmentPlan?.surgery?.id,
         name: user.UserTreatmentPlan?.TreatmentPlan?.surgery?.name,
+        date_of_surgery: user.questionnaires[0]?.response,
       },
     };
   });
