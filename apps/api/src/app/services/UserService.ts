@@ -2,7 +2,7 @@ import moment = require('moment');
 import { Op, Sequelize, Transaction } from 'sequelize';
 
 import { UpdateUserTPTaskAPIRequest } from '@conte/models';
-import { User, UserModel, UserProfile } from '../models/User';
+import { User, UserModel, UserProfile, UserWeb } from '../models/User';
 import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED, USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
@@ -10,6 +10,9 @@ import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } fro
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { getDateByTpDay } from '../helpers/TreatmentPlanHelper';
+import { TreatmentPlan } from '../models/TreatmentPlan';
+import { Doctor } from '../models/Doctor';
+import { Surgery } from '../models/Surgery';
 
 export async function isTermsOfUseAccepted(user_id: number, isAccepted = true) {
   const user = await User.findOne({ where: { id: user_id } });
@@ -52,7 +55,7 @@ export async function updateUser(
 }
 
 export async function getUsersData() {
-  return await User.findAll({
+  const users = await User.findAll({
     attributes: {
       include: [
         [
@@ -70,6 +73,58 @@ export async function getUsersData() {
       ],
       exclude: ['createdAt', 'updatedAt', 'stripe_customer_id', 'stripe_subscription_id', 'password'],
     },
+    include: [
+      {
+        model: UserTreatmentPlan,
+        attributes: ['tp_id'],
+        include: [
+          {
+            model: TreatmentPlan,
+            attributes: ['id', 'name'],
+            include: [
+              { model: Doctor, as: 'doctor', attributes: ['id', 'name', 'position'] },
+              { model: Surgery, as: 'surgery', attributes: ['id', 'name'] },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  return users.map((userDB) => {
+    const user = userDB.toJSON() as unknown as UserWeb;
+
+    return {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      cell_phone: user.cell_phone,
+      birth_date: user.birth_date,
+      address: user.address,
+      city: user.city,
+      state: user.state,
+      zip_code: user.zip_code,
+      email: user.email,
+      estimated_max_velocity: user.estimated_max_velocity,
+      is_terms_of_use_accepted: user.is_terms_of_use_accepted,
+      is_orientation_video_watched: user.is_orientation_video_watched,
+      is_subscribed: user.is_subscribed,
+      num_skipped_tasks: user.num_skipped_tasks,
+      num_completed_tasks: user.num_completed_tasks,
+      treatment_plan: {
+        id: user.UserTreatmentPlan?.TreatmentPlan?.id,
+        name: user.UserTreatmentPlan?.TreatmentPlan?.name,
+      },
+      doctor: {
+        id: user.UserTreatmentPlan?.TreatmentPlan?.doctor?.id,
+        name: user.UserTreatmentPlan?.TreatmentPlan?.doctor?.name,
+        position: user.UserTreatmentPlan?.TreatmentPlan?.doctor?.position,
+      },
+      surgery: {
+        id: user.UserTreatmentPlan?.TreatmentPlan?.surgery?.id,
+        name: user.UserTreatmentPlan?.TreatmentPlan?.surgery?.name,
+      },
+    };
   });
 }
 
