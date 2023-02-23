@@ -9,6 +9,7 @@ import { GenericModalComponent } from '../../shared/modals/generic/generic-modal
 import { animate, style, transition, trigger } from '@angular/animations';
 import { submitFeedbackData, therapyTask } from '../../../models/treatmentplan';
 import { TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
+import * as moment from 'moment';
 
 @Component({
   selector: 'conte-treatment-plan',
@@ -25,6 +26,8 @@ export class TreatmentPlanComponent implements OnInit {
   pendingTasks!: any;
   noTasks = false;
   areTasksCompleted = false;
+  swipeCoord!: [number, number];
+  swipeTime!: number;
   pendingTasksModal: any;
   taskFeedbackModal: any;
 
@@ -41,7 +44,6 @@ export class TreatmentPlanComponent implements OnInit {
 
     this.dailyTasks = await this.treatmentPlanService.getTherapyTasks();
     this.pendingTasks = await this.treatmentPlanService.getPendingTasks();
-    if (this.pendingTasks) this.checkPendingTasks(this.pendingTasks);
     if (!this.dailyTasks.length) this.getTasks();
   }
 
@@ -53,7 +55,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         this.dailyTasks = resp.data.todays_tasks;
         if (resp.data.pending_tasks_dates?.length) {
-          this.checkPendingTasks(resp.data.pending_tasks_dates);
+          this.pendingTasks = resp.data.pending_tasks_dates;
         }
 
         if (this.dailyTasks?.length) {
@@ -97,6 +99,40 @@ export class TreatmentPlanComponent implements OnInit {
     this.getTasks();
   };
 
+  swipe(e: TouchEvent, when: string): void {
+    const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
+    const time = new Date().getTime();
+
+    if (when === 'start') {
+      this.swipeCoord = coord;
+      this.swipeTime = time;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+      const duration = time - this.swipeTime;
+
+      if (
+        duration < 1000 && //
+        Math.abs(direction[0]) > 30 && // Long enough
+        Math.abs(direction[0]) > Math.abs(direction[1] * 3)
+      ) {
+        const swipe = direction[0] < 0 ? 'right' : 'left';
+        this.navOnSwipe(swipe);
+      }
+    }
+  }
+
+  navOnSwipe(swipe: string) {
+    if (swipe === 'right') {
+      this.date = moment(this.date).add(1, 'd').format('YYYY-MM-DD');
+    } else {
+      this.date = moment(this.date).subtract(1, 'd').format('YYYY-MM-DD');
+    }
+
+    this.treatmentPlanService.setTreatmentPlanDate(this.date);
+
+    this.getTasks();
+  }
+
   skipSpecificTask = (date: string, pending_tasks: any): void => {
     this.spinner.show();
 
@@ -105,6 +141,7 @@ export class TreatmentPlanComponent implements OnInit {
       .then((resp) => {
         const pending_tasks_dates = pending_tasks.filter((task: string) => task !== date);
         this.pendingTasksModal.componentInstance.list = pending_tasks_dates;
+
         this.spinner.hide();
         this.toast.show('Task Updated Successfully', { classname: 'bg-success text-light', icon: 'success' });
       })
@@ -127,8 +164,11 @@ export class TreatmentPlanComponent implements OnInit {
       .updateTask(task_id, status)
       .then((resp) => {
         this.dailyTasks[index].is_completed = status;
+
         this.checkForCompletion();
-        if (status && this.dailyTasks[index].task_type === 4) this.bullpenFeedback(task_id);
+
+        if (status && moment().isoWeekday() === 5 && this.treatmentPlanService.getFeedbackStatus() === '')
+          this.getFeedback(task_id);
       })
       .catch((err) => {
         console.error(err);
@@ -140,6 +180,12 @@ export class TreatmentPlanComponent implements OnInit {
       });
   }
 
+  playInfoVideo() {
+    const modal = this.modalService.open(GenericModalComponent, { centered: true });
+    modal.componentInstance.heading = 'Task Info';
+    modal.componentInstance.videoURL = 'https://conteassets.blob.core.windows.net/videos/Info_btton.mp4';
+  }
+
   taskDetails(task = {}) {
     const taskDetailRef = this.modalService.open(TaskDetailsComponent, { centered: true, size: 'xl' });
     taskDetailRef.componentInstance.task = task;
@@ -149,9 +195,11 @@ export class TreatmentPlanComponent implements OnInit {
         if (result) {
           const index = this.dailyTasks.findIndex((task: any) => task.id === result.task_id);
           this.dailyTasks[index].is_completed = result.status;
+
           this.checkForCompletion();
-          if (result.status && this.dailyTasks[index].task_type === 4) {
-            this.bullpenFeedback(this.dailyTasks[index].id);
+
+          if (result.status && moment().isoWeekday() === 5 && this.treatmentPlanService.getFeedbackStatus() === '') {
+            this.getFeedback(this.dailyTasks[index].id);
           }
         }
       })
@@ -163,18 +211,24 @@ export class TreatmentPlanComponent implements OnInit {
   checkForCompletion() {
     const searchIndex = this.dailyTasks.findIndex((task: any) => task.is_completed === false);
     if (searchIndex > -1) this.areTasksCompleted = false;
-    else this.areTasksCompleted = true;
+    else {
+      if (this.pendingTasks) this.checkPendingTasks(this.pendingTasks);
+      this.areTasksCompleted = true;
+    }
   }
 
-  bullpenFeedback(task_id: number) {
+  getFeedback(task_id: number) {
     this.taskFeedbackModal = this.modalService.open(GenericModalComponent, { centered: true });
-    this.taskFeedbackModal.componentInstance.heading = 'Conte; Task Feedback';
-    this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
-    this.taskFeedbackModal.componentInstance.body = 'Please share your feedback regarding this task';
+    this.taskFeedbackModal.componentInstance.feedback = true;
+    this.taskFeedbackModal.componentInstance.heading = 'Checkpoint';
+    // this.taskFeedbackModal.componentInstance.subHeading = 'Bullpen Throws';
+    this.taskFeedbackModal.componentInstance.body = 'Please share your feedback regarding current progress:';
     this.taskFeedbackModal.componentInstance.buttonText = 'Submit';
-    this.taskFeedbackModal.componentInstance.questionAnswers = [{ question: '', answer: '' }];
-    this.taskFeedbackModal.componentInstance.QAbuttonText = 'Add question';
-    this.taskFeedbackModal.componentInstance.QAbuttonLogo = 'add';
+    this.taskFeedbackModal.componentInstance.questionAnswers = [
+      { question: 'How would you rate your progress in the treatment plan?', answer: '' },
+    ];
+    // this.taskFeedbackModal.componentInstance.QAbuttonText = 'Add question';
+    // this.taskFeedbackModal.componentInstance.QAbuttonLogo = 'add';
     this.taskFeedbackModal.componentInstance.buttonLoadingText = 'Submitting your feedback';
     this.taskFeedbackModal.componentInstance.buttonAction = this.submitFeedback;
     this.taskFeedbackModal.componentInstance.closeButtonText = 'Skip';

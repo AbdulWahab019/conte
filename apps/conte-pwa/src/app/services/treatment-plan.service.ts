@@ -12,13 +12,14 @@ export class TreatmentPlanService {
   private treatmentPlanDate = moment().format('YYYY-MM-DD');
 
   private dailyTasks: therapyTask[] = [] as therapyTask[];
+  private feedbackStatus = '';
   private pendingTasks: any;
 
   constructor(private http: HttpClient) {}
 
   //TODO add interfaces for request and response
 
-  clearAllData(){
+  clearAllData() {
     this.treatmentPlanDate = moment().format('YYYY-MM-DD');
     this.dailyTasks = [];
     this.pendingTasks = [];
@@ -30,6 +31,14 @@ export class TreatmentPlanService {
 
   getTreatmentPlanDate(): string {
     return this.treatmentPlanDate;
+  }
+
+  skipFeedback() {
+    this.feedbackStatus = 'skipped';
+  }
+
+  getFeedbackStatus(): string {
+    return this.feedbackStatus;
   }
 
   setTherapyTasks(tasks: therapyTask[]) {
@@ -61,6 +70,7 @@ export class TreatmentPlanService {
   }
 
   async postTaskFeedback(request: PostTaskFeedbackApiRequest): Promise<any> {
+    this.feedbackStatus = 'submitted';
     return await this.http.post<any>(`${TREATMENTPLAN}/task/${request.data[0].task_id}/feedback`, request).toPromise();
   }
 

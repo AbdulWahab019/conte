@@ -4,6 +4,8 @@ import { taskFeedback } from 'apps/conte-pwa/src/app/models/treatmentplan';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { delay } from 'apps/conte-pwa/src/app/utils/constants';
 import { ToastService } from 'apps/conte-pwa/src/app/services/toast.service';
+import { PaginationInstance } from 'ngx-pagination';
+import { TreatmentPlanService } from 'apps/conte-pwa/src/app/services/treatment-plan.service';
 
 @Component({
   selector: 'conte-generic-modal',
@@ -22,6 +24,7 @@ export class GenericModalComponent implements OnInit {
   @Input() subHeading = '';
   @Input() logo = '';
   @Input() body = '';
+  @Input() videoURL = '';
   @Input() list = [];
   @Input() listActionText = '';
   @Input() listActionLogo = '';
@@ -29,6 +32,7 @@ export class GenericModalComponent implements OnInit {
   @Input() listSecActionText = '';
   @Input() listSecActionLogo = '';
   @Input() listSecAction!: (args: any, secArgs: any) => void;
+  @Input() feedback = false;
   @Input() questionAnswers: taskFeedback[] = [];
   @Input() QAbuttonText = '';
   @Input() QAbuttonLogo = '';
@@ -38,12 +42,26 @@ export class GenericModalComponent implements OnInit {
   @Input() closeButtonText = '';
   @Input() miscData: any;
 
+  config: PaginationInstance = {
+    id: 'custom',
+    itemsPerPage: 10,
+    currentPage: 1,
+  };
+
   buttonState = 'static';
   secButtonState = 'static';
 
-  constructor(public activeModal: NgbActiveModal, private toast: ToastService) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    public treatmentPlanService: TreatmentPlanService,
+    private toast: ToastService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.list.length) {
+      this.config = { id: '', itemsPerPage: 0, currentPage: 0 };
+    }
+  }
 
   async buttonFunction() {
     if (this.buttonLoadingText) {
@@ -54,7 +72,10 @@ export class GenericModalComponent implements OnInit {
     if (this.questionAnswers?.length) {
       for (const question of this.questionAnswers) {
         if (!question.answer) {
-          this.toast.show('Please answer every question first.', { classname: 'bg-danger text-light', icon: 'error' });
+          this.toast.show('Please fill out the form completely, first.', {
+            classname: 'bg-danger text-light',
+            icon: 'error',
+          });
           this.buttonState = 'static';
           return;
         }

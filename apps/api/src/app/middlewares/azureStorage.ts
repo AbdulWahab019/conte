@@ -13,10 +13,10 @@ export const azureStorage = (containerName: string) =>
 
 export const uploadTreatmentTypeVideo = multer({
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === 'video/mp4' || file.mimetype === 'video/x-msvideo') {
+    if (file.mimetype === 'video/mp4' || file.mimetype === 'video/x-msvideo' || file.mimetype === 'video/quicktime') {
       return cb(null, true);
     } else {
-      return cb(new Error('AVI and MP4 are the only formats allowed!'));
+      return cb(new Error('AVI, MOV and MP4 are the only formats allowed!'));
     }
   },
   storage: azureStorage('videos'),

@@ -2,14 +2,17 @@ import { Request, Response } from 'express';
 
 import { sendResponse } from '../utils/appUtils';
 import {
+  createUserTPDetails,
   getUsersData,
   getUserTPDetailsWeb,
+  getUserTreatmentPlanDetailsData,
   isOrientationVideoWatched,
   isTermsOfUseAccepted,
   renderTPDetails,
   updateTaskWeb,
+  updateUserTPTasks,
 } from '../services/UserService';
-import { BAD_REQUEST, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, SOMETHING_WENT_WRONG, SUCCESS } from '../utils/constants';
 import { APIError } from '../utils/apiError';
 import { isUserQuestionnaireSubmitted } from '../services/QuestionnaireService';
 import { UserModel } from '../models/User';
@@ -23,6 +26,7 @@ import {
   updateUserTPDetails,
 } from '../services/UserTreatmentPlanService';
 import moment = require('moment');
+import { sequelize } from '../models';
 
 export async function getUserProfile(req: Request, res: Response) {
   const user: UserModel = req['user'];
@@ -141,4 +145,33 @@ export async function reAssignUserTask(req: Request, res: Response) {
   await reAssignTask(tp_day, task_ids);
 
   return sendResponse(res, 200, SUCCESS);
+}
+
+export async function postponeTPTaskdays(req: Request, res: Response) {
+  const { user_tp_id } = req.params;
+  const { tp_day, num_gap_days } = req.body;
+
+  const detail = await getUserTreatmentPlanDetailsData(Number(user_tp_id));
+
+  const detailsData = [];
+  for (let i = 1; i <= num_gap_days; i++) {
+    detailsData.push({
+      user_tp_id,
+      tp_day: detail.tp_day + i,
+      tp_weekday: moment().day(detail.tp_weekday).add(i, 'day').format('dddd'),
+    });
+  }
+
+  const transaction = await sequelize.transaction();
+  try {
+    await createUserTPDetails(detailsData);
+
+    await updateUserTPTasks(tp_day, num_gap_days, Number(user_tp_id));
+
+    await transaction.commit();
+    return sendResponse(res, 200, SUCCESS);
+  } catch (err) {
+    await transaction.rollback();
+    throw new APIError(500, INTERNAL_SERVER_ERROR, err);
+  }
 }

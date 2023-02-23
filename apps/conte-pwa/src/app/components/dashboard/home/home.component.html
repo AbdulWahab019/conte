@@ -34,7 +34,7 @@
       <i class="bi bi-chevron-right ms-2" (click)="navByMonth('next')"></i>
     </div>
 
-    <div (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" *ngIf="apiLoaded">
+    <div (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" *ngIf="apiLoaded" style="width: 100%">
       <!-- Treatment Plan Video -->
       <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL && apiLoaded">
         Your browser does not support the video playback.
@@ -98,13 +98,19 @@
   </div>
 
   <!-- Place Holders -->
-  <span *ngIf="!apiLoaded" class="placeholder-glow">
-    <span class="placeholder col-12 mt-3" style="height: 30vh"></span>
-  </span>
-  <span *ngIf="!apiLoaded" class="placeholder-glow">
-    <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
-  </span>
-  <span *ngIf="!apiLoaded" class="placeholder-glow">
-    <span class="placeholder col-12 mt-5" style="height: 10vh"></span>
-  </span>
+  <div *ngIf="!apiLoaded">
+    <span class="placeholder-glow">
+      <span class="placeholder col-12 mt-3" style="height: 30vh"></span>
+    </span>
+    <span class="placeholder-glow">
+      <span class="placeholder col-12 mt-4" style="height: 20vh"></span>
+    </span>
+    <span class="placeholder-glow">
+      <span class="placeholder col-12 mt-5" style="height: 10vh"></span>
+    </span>
+    <div class="footer-tab pb-2 pt-2">
+      <hr />
+      <span class="title display-4">powered by VYTLsft</span>
+    </div>
+  </div>
 </div>

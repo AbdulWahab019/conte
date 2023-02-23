@@ -25,4 +25,7 @@ export class UserService {
   async transferTask(data: { tp_day: number; task_ids: [] }, tp_Id: number): Promise<any> {
     return await this.http.post<any>(`${USER}/user-treatment-plan/${tp_Id}/reassign-tasks`, data).toPromise();
   }
+  async postponeTask(data: { tp_day: number; num_gap_days: number }, user_tp_id: number): Promise<any> {
+    return await this.http.put<any>(`${USER}/user-treatment-plan/${user_tp_id}/postpone-tp-days`, data).toPromise();
+  }
 }

@@ -1,12 +1,12 @@
 import moment = require('moment');
-import { Op, Transaction } from 'sequelize';
+import { Op, Sequelize, Transaction } from 'sequelize';
 
 import { UpdateUserTPTaskAPIRequest } from '@conte/models';
 import { User, UserModel, UserProfile, UserWeb } from '../models/User';
 import { APIError } from '../utils/apiError';
 import { TREATMENT_PLAN_NOT_ASSIGNED, USER_NOT_FOUND } from '../utils/constants';
 import { sequelize } from '../models';
-import { UserTreatmentPlanDetail } from '../models/UserTreatmentPlanDetail';
+import { UserTreatmentPlanDetail, UserTreatmentPlanDetailDefinedAttributes } from '../models/UserTreatmentPlanDetail';
 import { UserTreatmentPlan } from '../models/UserTreatmentPlan';
 import { UserTreatmentPlanTasks } from '../models/UserTreatmentPlanTasks';
 import { getDateByTpDay } from '../helpers/TreatmentPlanHelper';
@@ -208,4 +208,19 @@ export async function renderTPDetails(user_id: number) {
     
     ${task_table_header}
 ${task_records}\n`;
+}
+
+export async function getUserTreatmentPlanDetailsData(user_tp_id: number) {
+  return await UserTreatmentPlanDetail.findOne({ where: { user_tp_id }, order: [['tp_day', 'DESC']] });
+}
+
+export async function createUserTPDetails(detailsData: UserTreatmentPlanDetailDefinedAttributes[]) {
+  return await UserTreatmentPlanDetail.bulkCreate(detailsData);
+}
+
+export async function updateUserTPTasks(tp_day: number, num_gap_days: number, user_tp_id: number) {
+  return await UserTreatmentPlanTasks.update(
+    { tp_day: Sequelize.literal(`tp_day + ${num_gap_days}`) },
+    { where: { tp_day: { [Op.gte]: tp_day }, user_tp_id } }
+  );
 }

@@ -1,9 +1,28 @@
 export interface TreatmentPlan {
   id: number;
   name: string;
-  surgery_id: number;
-  doctor_id: number;
+  updatedAt: string;
+  surgery: surgery;
+  doctor: doctor;
   createdAt: string;
+}
+
+export interface TreatmentPlanTableData {
+  id: number;
+  name: string;
+  surgery: string;
+  doctor: string;
+  createdAt: string;
+}
+
+export interface doctor {
+  id: number;
+  name: string;
+}
+
+export interface surgery {
+  id: number;
+  name: string;
 }
 
 export interface TreatmentPlanDetails {

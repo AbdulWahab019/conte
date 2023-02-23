@@ -1,4 +1,5 @@
 .orientation-screen {
+  height: 100%;
   background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.8) 0%, rgb(19, 37, 118) 100%);
   padding: 5%;
   align-items: center;
@@ -19,8 +20,8 @@
   }
 
   .logo {
-    height: 30vh;
-    width: 35vh;
+    height: 20vh;
+    width: 25vh;
   }
 
   iframe {
@@ -29,9 +30,12 @@
     border-radius: 3px;
     box-shadow: 0 5px 10px black;
   }
-  
+
   video {
-    border-radius: 6px;
+    width: 100%;
+
+    border-radius: 26px;
+    box-shadow: 0 5px 10px black;
   }
 
   .btn-confirm {
