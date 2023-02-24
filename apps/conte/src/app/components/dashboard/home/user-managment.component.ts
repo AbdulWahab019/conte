@@ -17,18 +17,18 @@ export class UserManagmentComponent implements OnInit {
   usersTableData: User[] = [];
   tableHeaders: TableHeaders[] = [
     { title: 'id', value: 'id', sort: false },
+    { title: 'tp id', value: 'tp_id', sort: false },
     {
       title: 'name',
       value: 'name',
       sort: false,
     },
-    { title: 'estimated max velocity', value: 'estimated_max_velocity', sort: false },
     { title: 'email', value: 'email', sort: false },
-    { title: 'skipped tasks', value: 'num_skipped_tasks', sort: false },
-    { title: 'treatment plan id', value: 'treatment_plan_id', sort: false },
-    { title: 'surgeon name', value: 'surgeon_name', sort: false },
-    { title: 'surgery Description', value: 'surgery_description', sort: false },
+    { title: 'doctor', value: 'doctor', sort: false },
+    { title: 'surgery', value: 'surgery', sort: false },
     { title: 'date of surgery', value: 'date_of_surgery', sort: false },
+    { title: 'estimated max velocity', value: 'estimated_max_velocity', sort: false },
+    { title: 'skipped tasks', value: 'num_skipped_tasks', sort: false },
     { title: 'completed tasks', value: 'num_completed_tasks', sort: false },
   ];
 
@@ -54,9 +54,9 @@ export class UserManagmentComponent implements OnInit {
         email: user.email,
         num_completed_tasks: user.num_completed_tasks,
         num_skipped_tasks: user.num_skipped_tasks,
-        treatment_plan_id: user.treatment_plan.id,
-        surgeon_name: user.doctor.name,
-        surgery_description: user.surgery.name,
+        tp_id: user.treatment_plan.id,
+        doctor: user.doctor.name,
+        surgery: user.surgery.name,
         date_of_surgery: user.surgery.date_of_surgery,
       }));
       this.spinner.hide();
