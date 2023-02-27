@@ -36,7 +36,7 @@
 
     <div (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" *ngIf="apiLoaded" style="width: 100%">
       <!-- Treatment Plan Video -->
-      <video class="mt-4 mb-4" controls playsinline loop autoplay muted [src]="videoURL" *ngIf="videoURL && apiLoaded">
+      <video class="mt-4 mb-4" controls playsinline loop autoplay [src]="videoURL" *ngIf="videoURL && apiLoaded">
         Your browser does not support the video playback.
       </video>
       <!-- CASE// No Video -->
