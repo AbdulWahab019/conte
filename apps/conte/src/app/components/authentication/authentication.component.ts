@@ -35,7 +35,13 @@ export class AuthenticationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: ToastService,
     private authService: AuthenticationService
-  ) {}
+  ) {
+    const token = localStorage.getItem('token');
+    const isAuth = Boolean(token);
+    if (isAuth) {
+      this.router.navigate(['dashboard/user-management']);
+    }
+  }
 
   ngOnInit(): void {
     if (this.formType === 'login') {

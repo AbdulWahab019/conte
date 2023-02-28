@@ -45,7 +45,7 @@ export class UserManagmentComponent implements OnInit {
   }
 
   fetchUsers = () => {
-    this.spinner.show();
+    // this.spinner.show();
     this.UsersService.getAllUsers().then((resp) => {
       this.usersTableData = resp.data.users.map((user: any) => ({
         id: user.id,
@@ -59,7 +59,7 @@ export class UserManagmentComponent implements OnInit {
         surgery: user.surgery.name,
         date_of_surgery: user.surgery.date_of_surgery,
       }));
-      this.spinner.hide();
+      // this.spinner.hide();
     });
   };
 

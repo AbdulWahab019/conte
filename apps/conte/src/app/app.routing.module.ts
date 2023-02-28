@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { DashboardModule } from './components/dashboard/dashboard.module';
+import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
   {
@@ -12,6 +13,7 @@ const appRoutes: Routes = [
   {
     path: 'dashboard',
     title: 'dashboard',
+    canActivate: [AuthGuard],
     component: DashboardComponent,
     loadChildren: () => import('./components/dashboard/dashboard.module').then((child) => child.DashboardModule),
   },
@@ -19,7 +21,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
