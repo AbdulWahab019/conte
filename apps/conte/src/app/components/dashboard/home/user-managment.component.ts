@@ -41,7 +41,7 @@ export class UserManagmentComponent implements OnInit {
   }
 
   fetchUsers = () => {
-    this.spinner.show();
+    // this.spinner.show();
     this.UsersService.getAllUsers().then((resp) => {
       this.usersTableData = resp.data.users.map((user: any) => ({
         id: user.id,
@@ -51,7 +51,7 @@ export class UserManagmentComponent implements OnInit {
         num_completed_tasks: user.num_completed_tasks,
         num_skipped_tasks: user.num_skipped_tasks,
       }));
-      this.spinner.hide();
+      // this.spinner.hide();
     });
   };
 
