@@ -48,7 +48,7 @@
     "multer": "^1.4.5-lts.1",
     "multer-azure-blob-storage": "^1.2.0",
     "ng2-search-filter": "^0.5.1",
-    "ngx-csv-parser": "1.2.0",
+    "ngx-csv-parser": "1.2.2",
     "ngx-mask": "^14.2.4",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.5.0",
