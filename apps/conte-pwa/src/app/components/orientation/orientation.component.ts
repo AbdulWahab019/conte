@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/user.service';
-import { TECHNICAL_DIFFICULTIES } from '../../utils/constants';
+import { delay, TECHNICAL_DIFFICULTIES } from '../../utils/constants';
 
 @Component({
   selector: 'conte-orientation',
@@ -12,10 +12,25 @@ import { TECHNICAL_DIFFICULTIES } from '../../utils/constants';
 export class OrientationComponent implements OnInit {
   acceptTermsCheck = false;
   buttonState = 'static';
+  videoMuted = true;
+  soundButton = false;
 
   constructor(private userService: UserService, private router: Router, private toast: ToastService) {}
 
   ngOnInit(): void {}
+
+  renderSoundButton() {
+    this.soundButton = true;
+  }
+
+  checkForMute() {
+    const video = <HTMLVideoElement>document.getElementById('video');
+    if (video) {
+      this.videoMuted = video.muted;
+      if (video.muted) this.soundButton = true;
+      else this.soundButton = false;
+    }
+  }
 
   acceptOrientation() {
     this.buttonState = 'loading';
