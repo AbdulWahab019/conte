@@ -3,16 +3,26 @@
     <img class="logo" src="assets/logos/Throwing Progression Pro-02.png" />
     <h1 class="display-6 mb-5">ORIENTATION</h1>
     <!-- Orientation Video -->
-    <video
-      class="mt-2 mb-5"
-      controls
-      playsinline
-      loop
-      autoplay
-      src="https://conteassets.blob.core.windows.net/videos/welcome_pre_questionaire.mp4"
-    >
-      Your browser does not support the video playback.
-    </video>
+    <div class="video-container">
+      <video
+        class="mt-2 mb-5"
+        id="video"
+        controls
+        loop
+        (play)="renderSoundButton()"
+        (volumechange)="checkForMute()"
+        [muted]="videoMuted"
+        autoplay="autoplay"
+        playsinline
+        ngbAutoFocus
+        src="https://conteassets.blob.core.windows.net/videos/welcome_pre_questionaire.mp4"
+      >
+        Your browser does not support the video playback.
+      </video>
+      <div class="unmute-btn" *ngIf="soundButton" (click)="videoMuted = false; soundButton = false">
+        <i class="bi bi-volume-up me-1" style="font-size: 14px"></i>PLAY SOUND
+      </div>
+    </div>
 
     <!-- Checkbox -->
     <div class="d-flex justify-content-center mt-3 mb-3">

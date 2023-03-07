@@ -1,8 +1,13 @@
 .orientation-screen {
-  height: 100%;
   background: radial-gradient(ellipse at right bottom, rgb(161, 129, 59, 0.8) 0%, rgb(19, 37, 118) 100%);
   padding: 5%;
   align-items: center;
+}
+
+@media (max-width: 991px) {
+  .orientation-screen {
+    height: 100%;
+  }
 }
 
 .orientation-container {
@@ -31,11 +36,33 @@
     box-shadow: 0 5px 10px black;
   }
 
-  video {
-    width: 100%;
+  .video-container {
+    position: relative;
 
-    border-radius: 26px;
-    box-shadow: 0 5px 10px black;
+    video {
+      width: 100%;
+
+      border-radius: 26px;
+      box-shadow: 0 5px 10px black;
+    }
+
+    .unmute-btn {
+      position: absolute;
+      top: 2em;
+      left: 10px;
+
+      font-size: 10px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+
+      background: rgb(37, 37, 37, 0.4);
+      color: white;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      transition: 0.3s ease;
+    }
   }
 
   .btn-confirm {

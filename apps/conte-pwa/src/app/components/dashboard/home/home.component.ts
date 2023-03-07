@@ -20,6 +20,8 @@ import { delay, TECHNICAL_DIFFICULTIES } from '../../../utils/constants';
 export class HomeComponent implements OnInit {
   date = '';
   videoURL = '';
+  videoMuted = true;
+  soundButton = false;
   apiLoaded = false;
   calendarApiLoaded = false;
   areTasksCompleted = false;
@@ -53,6 +55,8 @@ export class HomeComponent implements OnInit {
 
   getTreatmentPlanDetail() {
     this.apiLoaded = false;
+    this.videoMuted = true;
+    this.soundButton = false;
 
     this.dashboardService
       .getTreatmentPlanDetails(this.date)
@@ -143,6 +147,19 @@ export class HomeComponent implements OnInit {
         block: 'start',
         inline: 'center',
       });
+    }
+  }
+
+  renderSoundButton() {
+    this.soundButton = true;
+  }
+
+  checkForMute() {
+    const video = <HTMLVideoElement>document.getElementById('video');
+    if (video) {
+      this.videoMuted = video.muted;
+      if (video.muted) this.soundButton = true;
+      else this.soundButton = false;
     }
   }
 

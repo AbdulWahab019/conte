@@ -36,9 +36,27 @@
 
     <div (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" *ngIf="apiLoaded" style="width: 100%">
       <!-- Treatment Plan Video -->
-      <video class="mt-4 mb-4" controls playsinline loop autoplay [src]="videoURL" *ngIf="videoURL && apiLoaded">
-        Your browser does not support the video playback.
-      </video>
+      <div class="video-container" *ngIf="videoURL && apiLoaded">
+        <video
+          class="mt-4 mb-4"
+          id="video"
+          controls
+          loop
+          (play)="renderSoundButton()"
+          (volumechange)="checkForMute()"
+          [muted]="videoMuted"
+          autoplay="autoplay"
+          playsinline
+          ngbAutoFocus
+          [src]="videoURL"
+        >
+          Your browser does not support the video playback.
+        </video>
+        <div class="unmute-btn" *ngIf="soundButton" (click)="videoMuted = false; soundButton = false">
+          <i class="bi bi-volume-up me-1" style="font-size: 14px"></i>PLAY SOUND
+        </div>
+      </div>
+
       <!-- CASE// No Video -->
       <div class="empty-tasks mt-4 mb-4" *ngIf="!videoURL && apiLoaded">
         <img src="assets/logos/Throwing Progression Pro-02.png" />
